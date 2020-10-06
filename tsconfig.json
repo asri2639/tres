@@ -1,0 +1,94 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "paths": {
+      "@/*": ["src/*"],
+      "@": [
+        "src/index.js",
+        "src/index.json",
+        "src/index.tsx",
+        "src/index.ts",
+        "src/index.scss",
+        "src/index.css"
+      ],
+      "@pages/*": ["src/pages/*"],
+      "@pages": [
+        "src/pages/index.js",
+        "src/pages/index.json",
+        "src/pages/index.tsx",
+        "src/pages/index.ts",
+        "src/pages/index.scss",
+        "src/pages/index.css"
+      ],
+      "@i18n/*": ["src/i18n/*"],
+      "@i18n": [
+        "src/i18n/index.js",
+        "src/i18n/index.json",
+        "src/i18n/index.tsx",
+        "src/i18n/index.ts",
+        "src/i18n/index.scss",
+        "src/i18n/index.css"
+      ],
+      "@api/*": ["src/api/*"],
+      "@api": [
+        "src/api/index.js",
+        "src/api/index.json",
+        "src/api/index.tsx",
+        "src/api/index.ts",
+        "src/api/index.scss",
+        "src/api/index.css"
+      ],
+      "@layouts/*": ["src/layouts/*"],
+      "@layouts": [
+        "src/layouts/index.js",
+        "src/layouts/index.json",
+        "src/layouts/index.tsx",
+        "src/layouts/index.ts",
+        "src/layouts/index.scss",
+        "src/layouts/index.css"
+      ],
+      "@components/*": ["src/components/*"],
+      "@components": [
+        "src/components/index.js",
+        "src/components/index.json",
+        "src/components/index.tsx",
+        "src/components/index.ts",
+        "src/components/index.scss",
+        "src/components/index.css"
+      ],
+      "@assets/*": ["src/assets/*"],
+      "@assets": [
+        "src/assets/index.js",
+        "src/assets/index.json",
+        "src/assets/index.tsx",
+        "src/assets/index.ts",
+        "src/assets/index.scss",
+        "src/assets/index.css"
+      ],
+      "@utils/*": ["src/utils/*"],
+      "@utils": [
+        "src/utils/index.js",
+        "src/utils/index.json",
+        "src/utils/index.tsx",
+        "src/utils/index.ts",
+        "src/utils/index.scss",
+        "src/utils/index.css"
+      ]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
