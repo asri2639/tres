@@ -15,14 +15,14 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["/*"],
       "@": [
-        "src/index.js",
-        "src/index.json",
-        "src/index.tsx",
-        "src/index.ts",
-        "src/index.scss",
-        "src/index.css"
+        "/index.js",
+        "/index.json",
+        "/index.tsx",
+        "/index.ts",
+        "/index.scss",
+        "/index.css"
       ],
       "@pages/*": ["src/pages/*"],
       "@pages": [
@@ -60,14 +60,14 @@
         "src/layouts/index.scss",
         "src/layouts/index.css"
       ],
-      "@components/*": ["src/components/*"],
+      "@components/*": ["components/*"],
       "@components": [
-        "src/components/index.js",
-        "src/components/index.json",
-        "src/components/index.tsx",
-        "src/components/index.ts",
-        "src/components/index.scss",
-        "src/components/index.css"
+        "components/index.js",
+        "components/index.json",
+        "components/index.tsx",
+        "components/index.ts",
+        "components/index.scss",
+        "components/index.css"
       ],
       "@assets/*": ["src/assets/*"],
       "@assets": [
