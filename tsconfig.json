@@ -14,6 +14,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "types": ["node", "webpack-env"],
     "paths": {
       "@/*": ["/*"],
       "@": [
@@ -24,41 +25,42 @@
         "/index.scss",
         "/index.css"
       ],
-      "@pages/*": ["src/pages/*"],
+      "@pages/*": ["pages/*"],
       "@pages": [
-        "src/pages/index.js",
-        "src/pages/index.json",
-        "src/pages/index.tsx",
-        "src/pages/index.ts",
-        "src/pages/index.scss",
-        "src/pages/index.css"
+        "pages/index.js",
+        "pages/index.json",
+        "pages/index.tsx",
+        "pages/index.ts",
+        "pages/index.scss",
+        "pages/index.css"
       ],
-      "@i18n/*": ["src/i18n/*"],
+      "@i18n/*": ["i18n/*"],
       "@i18n": [
-        "src/i18n/index.js",
-        "src/i18n/index.json",
-        "src/i18n/index.tsx",
-        "src/i18n/index.ts",
-        "src/i18n/index.scss",
-        "src/i18n/index.css"
+        "i18n/index.js",
+        "i18n/index.json",
+        "i18n/index.tsx",
+        "i18n/index.ts",
+        "i18n/index.scss",
+        "i18n/index.css"
       ],
-      "@api/*": ["src/api/*"],
+      "@services/*": ["services/*"],
+      "@api/*": ["services/api/*"],
       "@api": [
-        "src/api/index.js",
-        "src/api/index.json",
-        "src/api/index.tsx",
-        "src/api/index.ts",
-        "src/api/index.scss",
-        "src/api/index.css"
+        "services/API/index.js",
+        "services/API/index.json",
+        "services/API/index.tsx",
+        "services/API/index.ts",
+        "services/API/index.scss",
+        "services/API/index.css"
       ],
-      "@layouts/*": ["src/layouts/*"],
+      "@layouts/*": ["layouts/*"],
       "@layouts": [
-        "src/layouts/index.js",
-        "src/layouts/index.json",
-        "src/layouts/index.tsx",
-        "src/layouts/index.ts",
-        "src/layouts/index.scss",
-        "src/layouts/index.css"
+        "layouts/index.js",
+        "layouts/index.json",
+        "layouts/index.tsx",
+        "layouts/index.ts",
+        "layouts/index.scss",
+        "layouts/index.css"
       ],
       "@components/*": ["components/*"],
       "@components": [
@@ -69,23 +71,41 @@
         "components/index.scss",
         "components/index.css"
       ],
-      "@assets/*": ["src/assets/*"],
-      "@assets": [
-        "src/assets/index.js",
-        "src/assets/index.json",
-        "src/assets/index.tsx",
-        "src/assets/index.ts",
-        "src/assets/index.scss",
-        "src/assets/index.css"
+      "@modules/*": ["components/*"],
+      "@modules": [
+        "components/index.js",
+        "components/index.json",
+        "components/index.tsx",
+        "components/index.ts",
+        "components/index.scss",
+        "components/index.css"
       ],
-      "@utils/*": ["src/utils/*"],
+      "@assets/*": ["assets/*"],
+      "@assets": [
+        "assets/index.js",
+        "assets/index.json",
+        "assets/index.tsx",
+        "assets/index.ts",
+        "assets/index.scss",
+        "assets/index.css"
+      ],
+      "@utils/*": ["utilities/*"],
       "@utils": [
-        "src/utils/index.js",
-        "src/utils/index.json",
-        "src/utils/index.tsx",
-        "src/utils/index.ts",
-        "src/utils/index.scss",
-        "src/utils/index.css"
+        "utilities/index.js",
+        "utilities/index.json",
+        "utilities/index.tsx",
+        "utilities/index.ts",
+        "utilities/index.scss",
+        "utilities/index.css"
+      ],
+      "@interfaces/*": ["interfaces/*"],
+      "@interfaces": [
+        "interfaces/index.js",
+        "interfaces/index.json",
+        "interfaces/index.tsx",
+        "interfaces/index.ts",
+        "interfaces/index.scss",
+        "interfaces/index.css"
       ]
     }
   },
