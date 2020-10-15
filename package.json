@@ -8,21 +8,28 @@
   },
   "description": "ETV Bharat | NEWS UI",
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_ENV=development PORT=3000 node server.js",
     "build": "next build",
-    "start": "next start",
+    "start": "cross-env NODE_ENV=production PORT=3000 node server.js",
     "local": "next dev"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
     "axios": "^0.20.0",
+    "express": "^4.17.1",
+    "js-service-wrapper": "^1.1.4",
     "next": "9.5.3",
     "next-seo": "^4.11.0",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "swr": "^0.3.5"
   },
   "devDependencies": {
+    "cross-env": "^7.0.2",
+    "http-proxy-middleware": "^1.0.6",
     "@types/node": "^14.11.5",
     "@types/react": "^16.9.51",
+    "@types/webpack-env": "^1.15.3",
     "postcss-preset-env": "^6.7.0",
     "prettier": "2.1.2",
     "sass": "^1.26.12",
