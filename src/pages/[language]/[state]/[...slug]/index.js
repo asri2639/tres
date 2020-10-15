@@ -1,5 +1,7 @@
 import React from 'react';
 import { NextSeo } from 'next-seo';
+import API from '@api/API';
+import APIEnum from '@api/APIEnum';
 
 export default function Article(props) {
   return (
@@ -36,11 +38,16 @@ export default function Article(props) {
           cardType: 'summary_large_image',
         }}
       /> */}
-      <div
-        dangerouslySetInnerHTML={{
-          __html: props.data.html_tag,
-        }}
-      ></div>
+      {props.data ? (
+        <div
+          style={{ 'max-width': '1280px', margin: '0 auto' }}
+          dangerouslySetInnerHTML={{
+            __html: props.data.html_tag,
+          }}
+        ></div>
+      ) : (
+        <div>nothing</div>
+      )}
     </>
   );
 }
@@ -48,20 +55,46 @@ export default function Article(props) {
 export const getServerSideProps = async ({ query, params }) => {
   const id = query.slug.slice(-1)[0];
   if (/na\d+/gi.test(id)) {
-    const res = await fetch(
-      `https://prod.api.etvbharat.com/catalog_lists/web-news-details.gzip?auth_token=xBUKcKnXfngfrqGoF93y&response=r2&item_languages=en&access_token=TjeNsXehJqhh2DGJzBY9&content_id=${id}&gallery_ad=true&page=0&page_size=1&portal_state=na&scroll_no=0`
-    );
-    const data = await res.json();
+    const api = API(APIEnum.CatalogList);
 
-    const resp = await fetch(
-      `https://prod.api.etvbharat.com/get_related_articles.gzip?access_token=TjeNsXehJqhh2DGJzBY9&auth_token=xBUKcKnXfngfrqGoF93y&content_id=${id}&item_languages=en&page=0&page_size=10&response=r1&state=english`
-    );
-    const relatedArticles = await resp.json();
+    const country = 'IN';
+    const auth_token = 'xBUKcKnXfngfrqGoF93y';
+    const access_token = 'TjeNsXehJqhh2DGJzBY9';
+    const selected_language = 'en';
+
+    const response = await api.CatalogList.getArticleDetails({
+      query: {
+        region: country,
+        auth_token,
+        access_token,
+        response: 'r2',
+        item_languages: selected_language,
+        content_id: id, //variable
+        gallery_ad: true,
+        page_size: 1,
+        portal_state: 'na', //national
+        scroll_no: 0,
+      },
+    });
+
+    const relatedResp = await api.CatalogList.getArticleDetails({
+      query: {
+        region: country,
+        auth_token,
+        access_token,
+        response: 'r2',
+        item_languages: selected_language,
+        content_id: id, //variable
+        page_size: 10,
+        portal_state: 'na', //national
+      },
+    });
+    const relatedArticles = relatedResp.data;
 
     // Pass data to the page via props
     return {
       props: {
-        data: data.data.catalog_list_items[0].catalog_list_items[0],
+        data: response.data.data.catalog_list_items[0].catalog_list_items[0],
         related: relatedArticles,
       },
     };
