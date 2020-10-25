@@ -1,42 +1,65 @@
 import Layout from '@components/layout/Layout';
-import '../styles/globals.css'
+import type { AppProps, NextWebVitalsMetric } from 'next/app'
+import '@styles/tailwind.css'
+import '@styles/globals.scss'
+import '@styles/_fonts.scss'
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { i18n, appWithTranslation } from '@i18n'
+import { languageMap } from '@utils/Constants';
+import Head from 'next/head';
+
+
+// export function reportWebVitals(metric: NextWebVitalsMetric) {
+//   console.log(metric)
+// }
+
+let currentLanguage = 'english';
 
 function App({ Component, pageProps, data }) {
-  return (<Layout menuData={data}><Component {...pageProps} /></Layout>)
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      if (url.split('/')[1] !== currentLanguage) {
+        currentLanguage = url.split('/')[1];
+        document.documentElement.lang = languageMap[currentLanguage];
+        i18n.changeLanguage(document.documentElement.lang);
+        console.log('App is changing to: ', url)
+      }
+
+    }
+
+    router.events.on('routeChangeComplete', handleRouteChange)
+
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method:
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [])
+
+
+  return (
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="googlebot" content="all" />
+        <meta name="bingbots" content="all" />
+        <meta name="robots" content="all" />
+      </Head>
+      <Layout><Component {...pageProps} /></Layout>
+    </>)
 }
 
 App.getInitialProps = async ({ Component, ctx }) => {
-
- /*  const menuRes = await fetch(`https://prod.api.etvbharat.com/catalog_lists/web-left-menu.gzip?auth_token=xBUKcKnXfngfrqGoF93y&response=r2&item_languages=en&access_token=TjeNsXehJqhh2DGJzBY9&only_items=catalog_list&pagination=false&portal_state=na`);
-  const menuData = await menuRes.json();
-
-
-  const res = await fetch(
-    `https://prod.api.etvbharat.com/catalogs/city-state/items/india/languages?region=IN&auth_token=xBUKcKnXfngfrqGoF93y&access_token=TjeNsXehJqhh2DGJzBY9`
-  );
-  const langData = await res.json();
-
-  const resp = await fetch(`https://prod.api.etvbharat.com/catalogs/message/items/footer-api?auth_token=xBUKcKnXfngfrqGoF93y&response=r2&item_languages=en&access_token=TjeNsXehJqhh2DGJzBY9&region=IN`);
-  const footerData = await resp.json();
-*/
   let pageProps = {};
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
   }
- 
-  /* const data = {
-    languages: langData.data,
-    footer: footerData.data,
-    menu: menuData.data
-  } */
 
-  const data = {
-    languages: '',
-    footer: '',
-    menu: ''
-  }
-
-  return { pageProps, data };
+  return { pageProps, data: '' };
 };
 
-export default App
+export default appWithTranslation(App)
