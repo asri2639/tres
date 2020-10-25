@@ -22,6 +22,19 @@ export default function CatalogList(inst) {
         config
       );
     },
+    getMobileMenuDetails({ params, query, ...config }: APIRequest) {
+      return inst.get(
+        `${controller}/msite-new-left-menu.gzip?${new URLSearchParams(query)}`,
+        config
+      );
+    },
+    getSubMenuDetails({ params, query, ...config }: APIRequest) {
+      console.log(params);
+      return inst.get(
+        `${controller}/${params.key}.gzip?${new URLSearchParams(query)}`,
+        config
+      );
+    },
   };
 }
 /* 

@@ -2,7 +2,7 @@ import { APIRequest } from '@interfaces/API';
 
 const controller = '/sessions';
 
-export default function (inst) {
+export default function User(inst) {
   return {
     getUserPreferences({ params, query, ...config }: APIRequest) {
       return inst.get(
