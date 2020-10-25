@@ -1,0 +1,130 @@
+.eb-footer-icons {
+  display: flex;
+  margin-top: 30px;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+  }
+
+  .img1 {
+    background: url(https://www.etvbharat.com/src/assets/images/sprite_sheet1.png)
+      no-repeat -134px -1349px;
+    width: 45px;
+    height: 56px;
+    opacity: 1;
+    margin-top: 16px;
+    transition: all 0.4s ease 0s;
+  }
+
+  .img2 {
+    background: url(https://www.etvbharat.com/src/assets/images/sprite_sheet1.png)
+      no-repeat -201px -1349px;
+    width: 45px;
+    height: 56px;
+    opacity: 0;
+    margin-top: -80px;
+    transition: all 0.4s ease 0s;
+  }
+
+  .img3 {
+    background: url(https://www.etvbharat.com/src/assets/images/sprite_sheet1.png)
+      no-repeat -336px -1351px;
+    width: 45px;
+    height: 56px;
+    opacity: 1;
+    margin-top: 16px;
+    transition: all 0.4s ease 0s;
+  }
+
+  .img4 {
+    background: url(https://www.etvbharat.com/src/assets/images/sprite_sheet1.png)
+      no-repeat -269px -1351px;
+    width: 45px;
+    height: 52px;
+    opacity: 0;
+    margin-top: -80px;
+    transition: all 0.4s ease 0s;
+  }
+
+  .img5 {
+    background: url(https://www.etvbharat.com/src/assets/images/sprite_sheet1.png)
+      no-repeat -953px -1349px;
+    width: 56px;
+    height: 56px;
+    opacity: 1;
+    margin-top: 16px;
+    transition: all 0.4s ease 0s;
+  }
+
+  .img6 {
+    background: url(https://www.etvbharat.com/src/assets/images/sprite_sheet1.png)
+      no-repeat -874px -1349px;
+    width: 56px;
+    height: 56px;
+    opacity: 0;
+    margin-top: -80px;
+    transition: all 0.4s ease 0s;
+  }
+
+  .img7 {
+    background: url(https://www.etvbharat.com/src/assets/images/sprite_sheet1.png)
+      no-repeat -482px -1349px;
+    width: 56px;
+    height: 56px;
+    opacity: 1;
+    margin-top: 16px;
+    transition: all 0.4s ease 0s;
+  }
+
+  .img8 {
+    background: url(https://www.etvbharat.com/src/assets/images/sprite_sheet1.png)
+      no-repeat -403px -1349px;
+    width: 56px;
+    height: 56px;
+    opacity: 0;
+    margin-top: -80px;
+    transition: all 0.4s ease 0s;
+  }
+
+  li {
+    position: relative;
+    width: 70px;
+    display: block;
+    float: left;
+    margin-left: 40px;
+    margin-right: 40px;
+    height: 74px;
+    margin-top: 2px;
+    cursor: pointer;
+
+    > a {
+      position: absolute;
+      z-index: -1;
+    }
+
+    &:hover {
+      @for $i from 1 through 8 {
+        @if ($i + 1) % 2 == 0 {
+          .img#{$i} {
+            opacity: 0;
+            margin-top: -10px;
+            transition: all 0.4s ease 0s;
+          }
+        } @else {
+          .img#{$i} {
+            opacity: 1;
+            margin-top: -10px;
+            transition: all 0.4s ease 0s;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.action-menu {
+  font-size: 11px;
+}
