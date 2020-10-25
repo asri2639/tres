@@ -106,9 +106,10 @@
         "interfaces/index.ts",
         "interfaces/index.scss",
         "interfaces/index.css"
-      ]
+      ],
+      "@styles/*": ["styles/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.js", "postcss.config.js", "src/pages/[language]/[state]/[...slug]/index.js", "server.js"],
   "exclude": ["node_modules"]
 }
