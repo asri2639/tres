@@ -1,7 +1,11 @@
-import React from 'react';
+import DesktopHeader from "@components/header/DesktopHeader";
+import MobileHeader from "@components/header/MobileHeader";
 
-const Header = (props) => {
-    return (<div>{JSON.stringify(props)}</div>)
+export default function Header({ data }) {
+    return (
+        <>
+            <DesktopHeader data={data} />
+            <MobileHeader data={data} />
+        </>)
 }
 
-export default Header;
