@@ -1,11 +1,71 @@
 import Header from '@components/header/Header';
 import Footer from '@components/footer/Footer';
 
-const Layout = ({ children, menuData }) => {
+import API from "@api/API";
+import APIEnum from "@api/APIEnum";
+import { useEffect, useState } from "react";
+
+
+const country = 'IN';
+const auth_token = 'xBUKcKnXfngfrqGoF93y';
+const access_token = 'TjeNsXehJqhh2DGJzBY9';
+const selected_language = 'en';
+
+const Layout = ({ children }) => {
+    const api = API(APIEnum.Catalog, APIEnum.CatalogList);
+    const [data, setData] = useState({ footer: [], header: {} });
+    useEffect(() => {
+        const populateData = async () => {
+            const result = await api.Catalog.getFooterDetails({
+                query: {
+                    region: country,
+                    auth_token: auth_token,
+                    access_token: access_token,
+                    response: 'r2',
+                    item_languages: selected_language,
+                }
+            });
+            const requiredData = result.data.data.params_hash2.footer;
+
+            let languageData = {};
+            requiredData.forEach(state => {
+                state.item_languages.forEach(language => {
+                    languageData[language] = languageData[language] || [];
+                    state.state && languageData[language].push(state);
+                })
+
+            });
+            languageData = Object.keys(languageData).sort().reduce((a, c) => (a[c] = languageData[c], a), {})
+
+            setData({
+                header: {
+                    ...data.header, languages: languageData,
+                },
+                footer: requiredData
+            });
+
+            const headerResp = await api.CatalogList.getMenuDetails({
+                query: {
+                    region: country,
+                    auth_token: auth_token,
+                    access_token: access_token,
+                    response: 'r2',
+                    item_languages: selected_language,
+                }
+            });
+
+            setData({
+                header: { languages: languageData, menu: headerResp.data.data.catalog_list_items }, footer: requiredData
+            })
+
+        }
+        populateData();
+    }, []);
+
     return (<>
-        <Header />
-        {children}
-        <Footer footerData={menuData.footer} />
+        <Header data={data.header} />
+        <section className="content">{children}</section>
+        <Footer data={data.footer} />
     </>)
 }
 
