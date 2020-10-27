@@ -66,6 +66,8 @@ export default function slug(props) {
       /> */}
 
       {props.data ? (
+              {data ? <ArticleList articleData={{ articles: [datum], contentId: datum.contentId }} /> : <div>nothing</div>}
+
         <Article data={props.data} html={html} />
       ) : (
         <div>nothing</div>
