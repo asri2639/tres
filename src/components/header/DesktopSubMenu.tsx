@@ -1,3 +1,4 @@
+import NavLink from "@components/common/NavLink";
 import API from "@services/api/API";
 import APIEnum from "@services/api/APIEnum";
 import useSWR from "swr";
@@ -28,7 +29,8 @@ export default function DesktopSubMenu({ category }) {
     }
 
     if (category) {
-        if (category.catalog_list_items.length > 0) {
+        console.log(category)
+        if (category.title==='State' && category.catalog_list_items.length > 0) {
             response = { data: category };
         } else {
             response = useSWR(['CatalogList', 'getSubMenuDetails', JSON.stringify({ key: category.menu_link })], catalogFetcher, { dedupingInterval: 5 * 60 * 1000 });
@@ -40,19 +42,28 @@ export default function DesktopSubMenu({ category }) {
         {
             response && response.data && response.data.catalog_list_items ? (
                 response.data.catalog_list_items.slice(0, 3).map(item => {
+                    const splitUrl = item.web_url ? item.web_url.split('/') : [];
                     return (
-                        <div key={item.content_id} className="p-3 flex-grow-0 flex-shrink-0 whitespace-pre-wrap" style={{ flexBasis: '27%' }}>
-                            <div className="">
-                                {item.thumbnails ?
-                                    <img className="w-full rounded-md" src={item.thumbnails.web_3_2.url} alt={item.thumbnails.web_3_2.alt_tags} />
-                                    :
-                                    <img className="w-full rounded-md" src="/assets/images/placeholder.png" alt="placeholder image" />
-                                }
-                                <div className="text-sm mt-1 font-semibold">
-                                    {item.ml_title[0].text}
+                        !splitUrl.length ? <div></div>
+                            :
+                            <NavLink key={item.content_id} className="p-3 flex-grow-0 flex-shrink-0 whitespace-pre-wrap" style={{ flexBasis: '27%' }}
+                                href={{
+                                    pathname: '/[state]/[...slug]',
+                                    query: { state: splitUrl[1], slug: splitUrl.slice(2).join('/') },
+                                }}
+                                as={`/${item.web_url}`}
+                                passHref>
+                                <div className="">
+                                    {item.thumbnails ?
+                                        <img className="w-full rounded-md" src={item.thumbnails.web_3_2.url} alt={item.thumbnails.web_3_2.alt_tags} />
+                                        :
+                                        <img className="w-full rounded-md" src="/assets/images/placeholder.png" alt="placeholder image" />
+                                    }
+                                    <div className="text-sm mt-1 font-semibold">
+                                        {item.ml_title[0].text}
+                                    </div>
                                 </div>
-                            </div>
-                        </div>)
+                            </NavLink>)
                 })
             ) :
                 [0, 1, 2].map(item => {
