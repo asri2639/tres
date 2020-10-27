@@ -25,8 +25,8 @@ function App({ Component, pageProps, data }) {
         currentLanguage = url.split('/')[1];
         document.documentElement.lang = languageMap[currentLanguage];
         i18n.changeLanguage(document.documentElement.lang);
-        console.log('App is changing to: ', url)
       }
+      console.log('App is changing to: ', url)
 
     }
 
@@ -44,7 +44,7 @@ function App({ Component, pageProps, data }) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="googlebot" content="all" />
         <meta name="bingbots" content="all" />
         <meta name="robots" content="all" />
