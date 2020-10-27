@@ -2,7 +2,7 @@ import NavLink from "@components/common/NavLink";
 import Constants from "@utils/Constants";
 import footer from './Footer.module.scss';
 
-export default function DesktopFooter() {
+export default function MobileFooter() {
 
     const isiOS = true;
 
@@ -16,7 +16,7 @@ export default function DesktopFooter() {
 
     const openSideMenu = () => { }
 
-    return <div className="mobile-footer block md:hidden bg-mbg text-white absolute bottom-0">
+    return <div className="mobile-footer w-full block md:hidden bg-mbg text-white absolute bottom-0">
         <div className="eb-navbar mb-12 pb-1">
             <button className="text-center absolute bg-red-700 w-40 px-4 py-3 rounded-full" style={{
                 top: '-2.5rem',
@@ -153,7 +153,7 @@ export default function DesktopFooter() {
                                     alt="ETV"
                                     src="/assets/images/applegrey.png"
                                 />
-                                <p>INSTALL APP</p>
+                                <p className="whitespace-no-wrap">INSTALL APP</p>
                             </NavLink>
                         }
                     </div>
@@ -167,7 +167,7 @@ export default function DesktopFooter() {
                             alt="ETV"
                             src="/assets/images/etv-grey.png"
                         />
-                        <p>CHANGE STATE</p>
+                        <p className="whitespace-no-wrap">CHANGE STATE</p>
                     </div>
 
                 </div>
@@ -180,7 +180,7 @@ export default function DesktopFooter() {
                             alt="ETV"
                             src="/assets/images/search-grey.png"
                         />
-                        <p>SEARCH</p>
+                        <p className="whitespace-no-wrap">SEARCH</p>
                     </div>
                 </div>
                 <div className="item w-1/4">
@@ -192,7 +192,7 @@ export default function DesktopFooter() {
                             alt="ETV"
                             src="/assets/images/hamburger-grey.png"
                         />
-                        <p>MORE</p>
+                        <p className="whitespace-no-wrap">MORE</p>
                     </div>
                 </div>
             </div>
