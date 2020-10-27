@@ -107,6 +107,15 @@
         "interfaces/index.scss",
         "interfaces/index.css"
       ],
+      "@media/*": ["media/*"],
+      "@media": [
+        "media/index.js",
+        "media/index.json",
+        "media/index.tsx",
+        "media/index.ts",
+        "media/index.scss",
+        "media/index.css"
+      ],
       "@styles/*": ["styles/*"],
     }
   },
