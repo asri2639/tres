@@ -12,7 +12,6 @@ export default function Article({ contentId, data, html, className, rhs }) {
     threshold: 1,
   });
 
-
   useEffect(() => {
     if (inView) {
       const urlParts = data.web_url.split('/');
@@ -36,7 +35,6 @@ export default function Article({ contentId, data, html, className, rhs }) {
                     state,
                     slug: urlParts.slice(2)
                   },
-
                 },
                   '/' + data.web_url, { shallow: true }) */
             }, 2000)
@@ -81,7 +79,6 @@ export default function Article({ contentId, data, html, className, rhs }) {
              state,
              slug: urlParts.slice(2)
            },
-
          },
            '/' + data.web_url, { shallow: true })
        }

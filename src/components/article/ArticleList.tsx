@@ -52,7 +52,6 @@ const ArticleList = ({ articleData }) => {
         setArticles(articleData.articles)
       }
     }
-
     if (data) {
       stopLoading()
       setRelated(data.catalog_list_items.map(v => v.content_id))
