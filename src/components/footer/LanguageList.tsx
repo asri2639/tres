@@ -7,14 +7,13 @@ export default function LanguageList({ languages }) {
     }
 
     const listItems = languages.map((language, index) => {
-        console.log(language)
         return (<li key={language.display_title}
             className="flex-1 text-sm text-center whitespace-no-wrap"
             style={{flexBasis: '10%'}}
         >
             <NavLink
                 href={{
-                    pathname: '/[language]/[state]',
+                    pathname: '/[state]',
                     query: { language: language.item_languages[0], state: language.state || 'national' },
                 }}
                 as={`/${language.item_languages[0]}/${language.state || 'national'}`}
