@@ -10,7 +10,7 @@ import DesktopSidebar from "@components/header/DesktopSidebar";
 import Modal from "@components/modal/Modal";
 import DesktopSubMenu from '@components/header/DesktopSubMenu';
 
-export default function DesktopHeader({ data }) {
+export default function DesktopHeader({ className, data }) {
     const router = useRouter();
     const { i18n: { language, options } } = useContext(I18nContext)
 
@@ -19,7 +19,10 @@ export default function DesktopHeader({ data }) {
 
     const [category, setCategory] = useState(null);
 
-
+    const setInitialCategory = (item) => {
+        const subitem = item.catalog_list_items ? item.catalog_list_items[0] : {};
+        setCategory({ ...subitem, title: item.ml_title[0].text })
+    }
     const languageNStateSelect = () => {
         setOpenStateModal(true)
     }
@@ -39,7 +42,7 @@ export default function DesktopHeader({ data }) {
             <DesktopSidebar onClose={() => toggleSidebar(false)} /> : null}
 
 
-        <div className="divide-y md:block hidden bg-hbg px-2 font-english border-b">
+        <div className={`${className} divide-y md:block hidden bg-hbg px-2 font-english border-b`}>
             <div className="lg:container lg:mx-auto flex justify-between items-center py-1 overflow-x-auto">
                 <div className="flex space-x-6">
                     {
@@ -58,7 +61,7 @@ export default function DesktopHeader({ data }) {
             </div>
         </div>
 
-        <div className="bg-hbg md:block hidden px-2 sticky top-0" onMouseLeave={containerOut}>
+        <div className={`${className} bg-hbg md:block hidden px-2 sticky top-0`} onMouseLeave={containerOut}>
             <div className="lg:container lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ">
                 <div className={header.hamburger} onClick={() => toggleSidebar(true)}></div>
 
@@ -66,7 +69,7 @@ export default function DesktopHeader({ data }) {
                     data.menu ? data.menu.map(item => {
                         return (<div key={item.list_id} className={`${header['header-menu-item']} text-white cursor-pointer whitespace-no-wrap hover:text-red-700`} >
 
-                            <div className=" flex flex-col items-center relative" >
+                            <div className=" flex flex-col items-center relative" onMouseEnter={() => setInitialCategory(item)} >
                                 <div>{item.ml_title[0].text.toUpperCase()}</div>
                                 {item.total_items_count > 0 ? <div className={`${header['arrow-up']} absolute transform translate-y-5`}></div> : null}
                             </div>
@@ -99,8 +102,7 @@ export default function DesktopHeader({ data }) {
 
         </div>
 
-
-        <div className="md:block hidden border-b">
+        <div className={`${className} md:block hidden border-b`}>
             <div className="lg:container lg:mx-auto  flex justify-start px-2 py-1 self-center">
                 <NavLink
                     href={{

@@ -1,3 +1,4 @@
+import { mediaStyles } from 'media';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 export default class ETVDocument extends Document {
@@ -5,6 +6,10 @@ export default class ETVDocument extends Document {
         return (
             <Html lang='en'>
                 <Head>
+                    <style
+                        type="text/css"
+                        dangerouslySetInnerHTML={{ __html: mediaStyles }}
+                    />
                 </Head>
                 <body>
                     <Main />
