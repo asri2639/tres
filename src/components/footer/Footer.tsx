@@ -1,13 +1,14 @@
 import DesktopFooter from "@components/footer/DesktopFooter";
 import MobileFooter from "@components/footer/MobileFooter";
+import { Media, MediaContextProvider } from "media";
 
 export default function Footer({ data }) {
 
     return (
-        <footer className="eb-footer footer">
-            <DesktopFooter data={data} />
-            <MobileFooter />
-        </footer >
+        <MediaContextProvider>
+            <Media at="xs"> <MobileFooter /></Media>
+            <Media greaterThan="xs"><DesktopFooter data={data} /></Media>
+        </MediaContextProvider>
     )
 }
 

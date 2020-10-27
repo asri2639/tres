@@ -29,7 +29,6 @@ export default function CatalogList(inst) {
       );
     },
     getSubMenuDetails({ params, query, ...config }: APIRequest) {
-      console.log(params);
       return inst.get(
         `${controller}/${params.key}.gzip?${new URLSearchParams(query)}`,
         config
