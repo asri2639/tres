@@ -60,7 +60,7 @@ export default function MobileHeader({ data, className }) {
                     <div>
                     </div>
                 </Modal> : null}
-           
+
                 <div className={`${className} ${header['mobile-header']} block md:hidden`}>
                     <div className={`${header['logo-container']} flex justify-start bg-white px-2 py-1 self-center border-b`}>
                         <NavLink

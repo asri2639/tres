@@ -41,8 +41,8 @@ const ArticleList = ({ articleData }) => {
     });
   }
 
+  const { data: adData, error: adError } = useSWR(['CatalogList', 'getArticleDetails', articleData.contentId], relatedArticlesFetcher, { dedupingInterval: 5 * 60 * 1000 })
   const { data, error } = useSWR(['CatalogList', 'getRelatedArticles', articleData.contentId], relatedArticlesFetcher, { dedupingInterval: 5 * 60 * 1000 });
-
   // Set articles from articleData
   useEffect(() => {
     if (articleData) {
@@ -58,11 +58,17 @@ const ArticleList = ({ articleData }) => {
     } else {
       startLoading()
     }
-  }, [articleData, data])
+
+    if (adData) {
+      const article = articles.find(article => article.data.content_id === articleData.contentId);
+      article.rhs = adData.catalog_list_items.slice(1);
+      console.log(article)
+      setArticles(articles)
+    }
+  }, [articleData, data, adData])
 
   // Router event handler
   useEffect(() => {
-
   }, [])
 
   // Listen to scroll positions for loading more data on scroll
@@ -97,6 +103,7 @@ const ArticleList = ({ articleData }) => {
             },
           }).then(res => {
             const newArticle = res.data.data.catalog_list_items[0].catalog_list_items[0];
+            const rhs = res.data.data.catalog_list_items.slice(1);
             const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
             const html = newArticle
               ? newArticle.html_tag.replace(scriptTagExtractionRegex, '')
@@ -111,7 +118,7 @@ const ArticleList = ({ articleData }) => {
               }
             } while (matchedScript);
             console.log(scripts); */
-            const newList = [...articles, { html: html, data: newArticle }]
+            const newList = [...articles, { html: html, data: newArticle, rhs }]
             setArticles(newList)
             stopLoading()
           });
@@ -121,23 +128,15 @@ const ArticleList = ({ articleData }) => {
     }
   }
 
-
   return (
     <>
       <div className="article-count fixed right-0 text-white top-0 z-50 p-3 text-2xl font-bold">{articles.length}</div>
       <ul className="article-list flex flex-col lg:container lg:mx-auto">
         {articles.length > 0 &&
-          articles.map((article, i) => {
-            return (
-              <div key={article.data.content_id} data-content-id={article.data.content_id} className="article w-full border-b-2 border-grey-500">
-                <div className="md:w-7/12">
-                  <Article className='' contentId={article.data.content_id} data={article.data} html={article.html} />
-                </div>
-                <div className="md:w-4/12">
-                </div>
-              </div>
-            )
-          })}
+          articles.map((article, i) => (
+            <Article key={article.data.content_id} className='' rhs={article.rhs} contentId={article.data.content_id} data={article.data} html={article.html} />
+          )
+          )}
         {loading && <h1 className="w-full text-red-700 text-2xl z-10">Loading ...</h1>}
       </ul>
     </>
