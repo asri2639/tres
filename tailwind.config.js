@@ -22,6 +22,9 @@ module.exports = {
       },
       fontFamily: {
         english: ['LikhithEnglish']
+      },
+      boxShadow: {
+        t: '0 -2px 13px rgba(0,0,0,0.2)',
       }
     },
   },

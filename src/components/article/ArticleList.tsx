@@ -6,6 +6,7 @@ import API from "@services/api/API";
 import APIEnum from "@services/api/APIEnum";
 
 import Article from "@components/article/Article"
+import BottomRelatedBar from "@components/article/BottomRelatedBar";
 
 const country = 'IN';
 const auth_token = 'xBUKcKnXfngfrqGoF93y';
@@ -54,16 +55,17 @@ const ArticleList = ({ articleData }) => {
     }
     if (data) {
       stopLoading()
-      setRelated(data.catalog_list_items.map(v => v.content_id))
+      setRelated(data.catalog_list_items)
     } else {
       startLoading()
     }
 
     if (adData) {
       const article = articles.find(article => article.data.content_id === articleData.contentId);
-      article.rhs = adData.catalog_list_items.slice(1);
-      console.log(article)
-      setArticles(articles)
+      if (article) {
+        article.rhs = adData.catalog_list_items.slice(1);
+        setArticles(articles)
+      }
     }
   }, [articleData, data, adData])
 
@@ -86,9 +88,8 @@ const ArticleList = ({ articleData }) => {
     )
     if (lastArticleLoaded) {
       if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-        const curIndex = related.indexOf(lastArticleLoaded.getAttribute('data-content-id'))
-
-        if (curIndex < 9 && !loading) {
+        const curIndex = related.findIndex(v => v.content_id === lastArticleLoaded.getAttribute('data-content-id'))
+        if (curIndex > -1 && curIndex < 9 && !loading) {
           startLoading();
           await api.CatalogList.getArticleDetails({
             query: {
@@ -97,7 +98,7 @@ const ArticleList = ({ articleData }) => {
               access_token,
               response: 'r2',
               item_languages: language,
-              content_id: related[curIndex + 1], //variable
+              content_id: related[curIndex + 1].content_id, //variable
               page_size: 10,
               portal_state: 'na', //national
             },
@@ -108,6 +109,8 @@ const ArticleList = ({ articleData }) => {
             const html = newArticle
               ? newArticle.html_tag.replace(scriptTagExtractionRegex, '')
               : '';
+
+            console.log(res.data.data)
             /* const scripts = [];
 
             let matchedScript = null;
@@ -127,7 +130,7 @@ const ArticleList = ({ articleData }) => {
 
     }
   }
-
+  console.log(related)
   return (
     <>
       <div className="article-count fixed right-0 text-white top-0 z-50 p-3 text-2xl font-bold">{articles.length}</div>
@@ -139,6 +142,11 @@ const ArticleList = ({ articleData }) => {
           )}
         {loading && <h1 className="w-full text-red-700 text-2xl z-10">Loading ...</h1>}
       </ul>
+
+
+      {related ?
+        <BottomRelatedBar data={related} /> : null}
+
     </>
   )
 }

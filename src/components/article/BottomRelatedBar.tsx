@@ -1,0 +1,58 @@
+import NavLink from "@components/common/NavLink";
+import { thumbnailExtractor } from "@utils/Helpers";
+import { useEffect, useState } from "react";
+
+import bottom from './BottomRelatedBar.module.scss';
+const BottomRelatedBar = ({ data }) => {
+
+    const [startIndex, setStartIndex] = useState(0)
+    const [visible, setVisible] = useState([])
+
+    useEffect(() => {
+        setVisible(data.slice(startIndex, startIndex + 5))
+    }, [startIndex, data])
+
+    const moveLeft = () => {
+        if (startIndex > 0) {
+            setStartIndex(prevIndex => prevIndex - 1)
+        }
+    }
+
+    const moveRight = () => {
+        if (startIndex + 5 < data.length) {
+            setStartIndex(prevIndex => prevIndex + 1)
+        }
+    }
+
+    return (
+        <div className="fixed bottom-0 w-screen h-16 flex shadow-t bg-white z-10" >
+            <div className={`px-1 pt-2 pb-1 border-t ${startIndex <= 0 ? 'cursor-not-allowed' : 'cursor-pointer '}`} onClick={() => { moveLeft() }}>
+                <div className={`${bottom['left-icon']} h-full`}></div>
+            </div>
+            {
+                visible.map(rel => {
+                    const splitUrl = rel.web_url.split('/');
+                    const thumbnail = thumbnailExtractor(rel.thumbnails, '3_2', 's2b');
+
+                    return (
+                        <NavLink key={rel.friendly_id} className={`flex px-1 pt-2 pb-1 cursor-pointer border`}
+                            style={{ flexBasis: '20%' }}
+                            href={{
+                                pathname: '/[state]/[...slug]',
+                                query: { state: splitUrl[1], slug: splitUrl.slice(2).join('/') },
+                            }}
+                            as={`/${rel.web_url}`}
+                            passHref>
+                            <img className="rounded-md w-20" src={thumbnail.url} alt={thumbnail.alt_tags} />
+                            <div className=" px-1 text-xs text-gray-700 leading-tight">{rel.display_title}</div>
+                        </NavLink>
+                    )
+                })
+            }
+            <div className={`cursor-pointer pl-1 pt-2 pb-1 border-t ${startIndex + 5 >= data.length ? 'cursor-not-allowed' : 'cursor-pointer '}`} onClick={() => { moveRight() }}>
+                <div className={`${bottom['right-icon']} h-full`}></div>
+            </div>
+        </div>)
+}
+
+export default BottomRelatedBar;

@@ -19,7 +19,7 @@ const DesktopFooter = ({ data, t }: IDesktopFooter) => {
 
     return (
         <footer className="eb-footer footer">
-            <div className="desktop-footer absolute bottom-0 w-full divide-y md:block hidden font-english">
+            <div className="desktop-footer absolute bottom-0 w-full divide-y md:block hidden font-english mb-20">
                 {/* {t('top_news')} */}
                 <div className="border-t" >
                     <div className="lg:container lg:mx-auto  flex justify-center py-1 self-center">
