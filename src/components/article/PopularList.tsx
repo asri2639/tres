@@ -1,4 +1,5 @@
 import NavLink from "@components/common/NavLink";
+import { thumbnailExtractor } from "@utils/Helpers";
 import { useEffect, useState } from "react"
 import popular from './PopularList.module.scss';
 
@@ -9,7 +10,6 @@ const PopularList = ({ data }) => {
     useEffect(() => {
         setSelectedList(data.catalog_list_items.find(v => v.list_id === currentSelection).catalog_list_items);
     }, [currentSelection, selectedList])
-    console.log(selectedList)
 
     return (
         <div className={`w-full border rounded-lg p-4`}>
@@ -26,6 +26,8 @@ const PopularList = ({ data }) => {
                 {
                     selectedList.map(v => {
                         const splitUrl = v.web_url.split('/');
+                        const thumbnail = thumbnailExtractor(v.thumbnails, '3_2', 's2b');
+
                         return (
                             <NavLink key={v.friendly_id} className="flex cursor-pointer"
                                 href={{
@@ -34,7 +36,7 @@ const PopularList = ({ data }) => {
                                 }}
                                 as={`/${v.web_url}`}
                                 passHref>
-                                <img className="rounded-md w-32 max-w-32 min-w-32" src={v.thumbnails.medium_3_2.url} alt={v.thumbnails.medium_3_2.alt_tags} />
+                                <img className="rounded-md w-32 max-w-32 min-w-32" src={thumbnail.url} alt={v.alt_tags} />
                                 <div className=" px-3 text-sm text-gray-700">{v.display_title}</div>
                             </NavLink>
                         )

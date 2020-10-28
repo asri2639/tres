@@ -12,7 +12,7 @@ const devProxy = {
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const env = process.env.NODE_ENV;
-const dev = true;
+const dev = env !== 'production'
 const app = next({
   dir: '.', // base directory where everything is, could move to src later
   dev,

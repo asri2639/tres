@@ -29,7 +29,6 @@ export default function DesktopSubMenu({ category }) {
     }
 
     if (category) {
-        console.log(category)
         if (category.title==='State' && category.catalog_list_items.length > 0) {
             response = { data: category };
         } else {
