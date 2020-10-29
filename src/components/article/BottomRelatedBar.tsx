@@ -7,10 +7,30 @@ const BottomRelatedBar = ({ data }) => {
 
     const [startIndex, setStartIndex] = useState(0)
     const [visible, setVisible] = useState([])
+    const [contentId, setContentId] = useState('')
+    const handler = (e) => {
+        const contentIdFromUrl = window.location.href.split('/').slice(-1)[0]
+        setContentId(contentIdFromUrl)
+
+        const index = data.findIndex(v => v.content_id === contentIdFromUrl);
+        if (index > -1 && (index < startIndex || index >= startIndex + 5)) {
+            setStartIndex(() => {
+                return (index >= 5) ? 10 - index : index;
+            })
+
+        }
+    }
 
     useEffect(() => {
+        const contentIdFromUrl = window.location.href.split('/').slice(-1)[0]
+        setContentId(contentIdFromUrl)
         setVisible(data.slice(startIndex, startIndex + 5))
+        window.addEventListener("newurl", handler);
+
+        return () => window.removeEventListener("newurl", handler);
     }, [startIndex, data])
+
+
 
     const moveLeft = () => {
         if (startIndex > 0) {
@@ -30,12 +50,12 @@ const BottomRelatedBar = ({ data }) => {
                 <div className={`${bottom['left-icon']} h-full`}></div>
             </div>
             {
-                visible.map(rel => {
+                visible.map((rel, ind) => {
                     const splitUrl = rel.web_url.split('/');
                     const thumbnail = thumbnailExtractor(rel.thumbnails, '3_2', 's2b');
 
                     return (
-                        <NavLink key={rel.friendly_id} className={`flex px-1 pt-2 pb-1 cursor-pointer border`}
+                        <NavLink key={rel.friendly_id} className={`flex px-1 pt-2 pb-1 cursor-pointer ${rel.content_id === contentId ? 'border-t-2 border-red-700' : 'border'}`}
                             style={{ flexBasis: '20%' }}
                             href={{
                                 pathname: '/[state]/[...slug]',

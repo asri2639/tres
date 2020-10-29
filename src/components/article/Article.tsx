@@ -28,6 +28,11 @@ export default function Article({ contentId, data, html, className, rhs }) {
             document.title = data.title
             window.history.pushState({ "id": data.title }, data.title, '/' + data.web_url);
 
+            var event = new CustomEvent<string>("newurl", {
+              detail: contentId
+            });
+
+            window.dispatchEvent(event);
             setTimeout(() => {
               /*   router.push({
                   pathname: '/[state]/[...slug]',
@@ -44,7 +49,9 @@ export default function Article({ contentId, data, html, className, rhs }) {
       }
       //  router.push(data.web_url, undefined, { shallow: true })
     }
-  })
+    console.log(rhs)
+
+  },[rhs])
 
 
   const setRefs = useCallback(
@@ -91,7 +98,6 @@ export default function Article({ contentId, data, html, className, rhs }) {
     const date = new Date(uts * 1000);
     return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour12: true, hour: 'numeric', minute: 'numeric' }) + ' IST'
   }
-
   let filteredRHS = [];
   if (rhs) {
     filteredRHS = rhs.filter(v => {
@@ -125,7 +131,7 @@ export default function Article({ contentId, data, html, className, rhs }) {
 
         </div>
       </div>
-      <div className="hidden md:block md:w-4/12 flex flex-col items-center space-y-6">
+      <div className="hidden md:block md:w-4/12 flex flex-col items-center space-y-6 pt-4 pb-4">
         {!rhs ? 'Loading...' : (
           <AdContainer data={filteredRHS} />
         )}

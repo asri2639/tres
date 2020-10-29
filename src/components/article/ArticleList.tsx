@@ -61,17 +61,15 @@ const ArticleList = ({ articleData }) => {
     }
 
     if (adData) {
-      const article = articles.find(article => article.data.content_id === articleData.contentId);
+      let article = articles.find(article => article.data.content_id === articleData.contentId);
       if (article) {
         article.rhs = adData.catalog_list_items.slice(1);
+        article = {...article}
         setArticles(articles)
       }
     }
-  }, [articleData, data, adData])
+  }, [articleData, articles, data, adData])
 
-  // Router event handler
-  useEffect(() => {
-  }, [])
 
   // Listen to scroll positions for loading more data on scroll
   useEffect(() => {
@@ -110,7 +108,6 @@ const ArticleList = ({ articleData }) => {
               ? newArticle.html_tag.replace(scriptTagExtractionRegex, '')
               : '';
 
-            console.log(res.data.data)
             /* const scripts = [];
 
             let matchedScript = null;
@@ -127,17 +124,15 @@ const ArticleList = ({ articleData }) => {
           });
         };
       }
-
     }
   }
-  console.log(related)
   return (
     <>
       <div className="article-count fixed right-0 text-white top-0 z-50 p-3 text-2xl font-bold">{articles.length}</div>
       <ul className="article-list flex flex-col lg:container lg:mx-auto">
         {articles.length > 0 &&
           articles.map((article, i) => (
-            <Article key={article.data.content_id} className='' rhs={article.rhs} contentId={article.data.content_id} data={article.data} html={article.html} />
+            <Article key={article.data.content_id}  {...article} />
           )
           )}
         {loading && <h1 className="w-full text-red-700 text-2xl z-10">Loading ...</h1>}
