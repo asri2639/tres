@@ -26,6 +26,7 @@ export default function Modal({ open, title, onClose, children }) {
                 right: 0;
                 bottom: 0;
                 left: 0;
+                z-index:1000;
               }
               .modal {
                 background-color: white;

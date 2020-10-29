@@ -23,8 +23,14 @@ export default function DesktopHeader({ className, data }) {
         const subitem = item.catalog_list_items ? item.catalog_list_items[0] : {};
         setCategory({ ...subitem, title: item.ml_title[0].text })
     }
-    const languageNStateSelect = () => {
-        setOpenStateModal(true)
+    const languageNStateSelect = (language, states) => {
+        if (states.length === 1) {
+            setTimeout(() => {
+                router.push(`/${states[0].state}`, `/${language}/${states[0].state}`)
+            }, 100)
+        } else {
+            setOpenStateModal(true)
+        }
     }
 
     const containerOut = (ev) => {
@@ -48,7 +54,7 @@ export default function DesktopHeader({ className, data }) {
                     {
                         data.languages ? Object.entries(data.languages).map(([language, states]) => {
                             return (
-                                <div key={language} onClick={languageNStateSelect} className="flex-1 flex flex-col justify-center items-center cursor-pointer">
+                                <div key={language} onClick={() => languageNStateSelect(language, states)} className="flex-1 flex flex-col justify-center items-center cursor-pointer">
                                     <div className={`language-icon ${language}`}></div>
                                     <div className="text-white text-xs">{language.charAt(0).toUpperCase() + language.slice(1)}</div>
                                 </div>
