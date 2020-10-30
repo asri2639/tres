@@ -22,6 +22,7 @@ body {
 
 section.content {
   display: flex;
+  flex-direction: column;
   // footer height -> padding bottom
   padding-bottom: 400px;
 }
@@ -40,7 +41,6 @@ body > div {
 .footer {
   flex-shrink: 0;
 } */
-
 
 /* Start - Icons from Sprite */
 
@@ -88,9 +88,25 @@ body > div {
   }
 }
 
+.fb-icon {
+  background: url('/assets/images/etv_sprite.png') no-repeat -420px -818px;
+  width: 28px;
+  height: 28px;
+}
+.twitter-icon {
+  background: url('/assets/images/etv_sprite.png') no-repeat -228px -818px;
+  width: 28px;
+  height: 28px;
+}
+.search-icon {
+  background: url('/assets/images/search.png') no-repeat;
+  background-size: contain;
+  width: 32px;
+  height: 32px;
+}
 .language-icon {
   width: 26px;
-	height: 26px;
+  height: 26px;
   &.assamese {
     background: url('/assets/images/etv_sprite.png') no-repeat -61px -134px;
   }
@@ -133,3 +149,14 @@ body > div {
 }
 
 /* End - Icons from Sprite */
+
+.-top-1 {
+  top: -1px;
+}
+
+button:focus {
+  outline: none;
+}
+.lg-social {
+  left: '-8px';
+}

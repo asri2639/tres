@@ -1,12 +1,24 @@
 import { APIRequest } from '@interfaces/API';
+import { stateCodeConverter } from '@utils/Helpers';
 
 const controller = '/catalog_lists';
+
+const getProperParam = (params) => {
+  if (!params && typeof window !== 'undefined') {
+    params = { state: location.pathname.split('/')[2] };
+  }
+  return params && params.state && params.state !== 'national'
+    ? '-' + params.state
+    : '';
+};
 
 export default function CatalogList(inst) {
   return {
     getArticleDetails({ params, query, ...config }: APIRequest) {
       return inst.get(
-        `${controller}/web-news-details.gzip?${new URLSearchParams(query)}`,
+        `${controller}/web-news-details${getProperParam(
+          params
+        )}.gzip?${new URLSearchParams(query)}`,
         config
       );
     },
@@ -18,13 +30,17 @@ export default function CatalogList(inst) {
     },
     getMenuDetails({ params, query, ...config }: APIRequest) {
       return inst.get(
-        `${controller}/web-left-menu.gzip?${new URLSearchParams(query)}`,
+        `${controller}/web-left-menu${getProperParam(
+          params
+        )}.gzip?${new URLSearchParams(query)}`,
         config
       );
     },
     getMobileMenuDetails({ params, query, ...config }: APIRequest) {
       return inst.get(
-        `${controller}/msite-new-left-menu.gzip?${new URLSearchParams(query)}`,
+        `${controller}/msite-new-left-menu${getProperParam(
+          params
+        )}.gzip?${new URLSearchParams(query)}`,
         config
       );
     },

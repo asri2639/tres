@@ -71,6 +71,7 @@ class APIError extends Error {
 }
 
 function errorResponseHandler(error) {
+  console.log(error)
   // check for errorHandle config
   if (
     error &&
