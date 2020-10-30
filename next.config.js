@@ -5,7 +5,7 @@ const localeSubpaths = {
   be: 'bengali',
   gu: 'gujarati',
   hi: 'hindi',
-  ka: 'kannada',
+  kn: 'kannada',
   ma: 'malayalam',
   mr: 'marathi',
   or: 'oriya',

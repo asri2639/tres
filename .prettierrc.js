@@ -9,6 +9,7 @@ module.exports = {
   jsxBracketSameLine: false,
   arrowParens: 'always',
   proseWrap: 'never',
+  'editor.tabSize': 2,
   htmlWhitespaceSensitivity: 'strict',
   endOfLine: 'lf',
 };
