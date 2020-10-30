@@ -22,9 +22,11 @@ const BottomRelatedBar = ({ data }) => {
     }
 
     useEffect(() => {
-        const contentIdFromUrl = window.location.href.split('/').slice(-1)[0]
-        setContentId(contentIdFromUrl)
-        setVisible(data.slice(startIndex, startIndex + 5))
+        if (data) {
+            const contentIdFromUrl = window.location.href.split('/').slice(-1)[0]
+            setContentId(contentIdFromUrl)
+            setVisible(data.slice(startIndex, startIndex + 5))
+        }
         window.addEventListener("newurl", handler);
 
         return () => window.removeEventListener("newurl", handler);
@@ -45,7 +47,7 @@ const BottomRelatedBar = ({ data }) => {
     }
 
     return (
-        <div className="fixed bottom-0 w-screen h-16 flex shadow-t bg-white z-10" >
+        <div className="bottom-one flex shadow-t bg-white z-10" >
             <div className={`px-1 pt-2 pb-1 border-t ${startIndex <= 0 ? 'cursor-not-allowed' : 'cursor-pointer '}`} onClick={() => { moveLeft() }}>
                 <div className={`${bottom['left-icon']} h-full`}></div>
             </div>
