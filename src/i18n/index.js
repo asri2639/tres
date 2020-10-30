@@ -10,7 +10,7 @@ module.exports = new NextI18Next({
     'be',
     'gu',
     'hi',
-    'ka',
+    'kn',
     'ma',
     'mr',
     'or',
