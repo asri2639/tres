@@ -1,8 +1,13 @@
 const PROXY_URL = '';
+
+const env = process.env.NODE_ENV;
+
 const baseURL =
-  process.env.NODE_ENV === 'production'
-    ? 'http://localhost:3000/api'
-    : PROXY_URL + 'http://localhost:3000/api';
+  env === 'production'
+    ? 'https://prod.api.etvbharat.com//api'
+    : env === 'development'
+    ? PROXY_URL + 'http://localhost:3000/api'
+    : 'https://staging.api.etvbharat.com/api';
 
 const Constants = Object.freeze({
   baseURL: baseURL,
@@ -38,7 +43,7 @@ export const localeSubpaths = {
   be: 'bengali',
   gu: 'gujarati',
   hi: 'hindi',
-  ka: 'kannada',
+  kn: 'kannada',
   ma: 'malayalam',
   mr: 'marathi',
   or: 'oriya',
