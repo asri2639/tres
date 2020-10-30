@@ -1,15 +1,18 @@
 import NavLink from "@components/common/NavLink";
 import API from "@services/api/API";
 import APIEnum from "@services/api/APIEnum";
+import { thumbnailExtractor } from "@utils/Helpers";
+import { I18nContext } from "next-i18next";
+import { useContext } from "react";
 import useSWR from "swr";
 
 const country = 'IN';
 const auth_token = 'xBUKcKnXfngfrqGoF93y';
 const access_token = 'TjeNsXehJqhh2DGJzBY9';
-const selected_language = 'en';
 
 export default function DesktopSubMenu({ category }) {
     const api = API(APIEnum.CatalogList);
+    const { i18n: { language, options } } = useContext(I18nContext)
 
     let response = null;
     const catalogFetcher = (...args) => {
@@ -21,7 +24,7 @@ export default function DesktopSubMenu({ category }) {
                 auth_token: auth_token,
                 access_token: access_token,
                 response: 'r2',
-                item_languages: selected_language,
+                item_languages: language,
             }
         }).then(res => {
             return res.data.data
@@ -42,6 +45,8 @@ export default function DesktopSubMenu({ category }) {
             response && response.data && response.data.catalog_list_items ? (
                 response.data.catalog_list_items.slice(0, 3).map(item => {
                     const splitUrl = item.web_url ? item.web_url.split('/') : [];
+                    const thumbnail = thumbnailExtractor(item.thumbnails, '3_2', 'b2s')
+
                     return (
                         !splitUrl.length ? <div></div>
                             :
@@ -54,7 +59,7 @@ export default function DesktopSubMenu({ category }) {
                                 passHref>
                                 <div className="">
                                     {item.thumbnails ?
-                                        <img className="w-full rounded-md" src={item.thumbnails.web_3_2.url} alt={item.thumbnails.web_3_2.alt_tags} />
+                                        <img className="w-full rounded-md" src={thumbnail.url} alt={thumbnail.alt_tags} />
                                         :
                                         <img className="w-full rounded-md" src="/assets/images/placeholder.png" alt="placeholder image" />
                                     }
