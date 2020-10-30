@@ -6,7 +6,7 @@ export default function Footer({ data }) {
 
     return (
         <MediaContextProvider>
-            <Media at="xs"> <MobileFooter /></Media>
+            <Media at="xs"> <MobileFooter data={data} /></Media>
             <Media greaterThan="xs"><DesktopFooter data={data} /></Media>
         </MediaContextProvider>
     )
