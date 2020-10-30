@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from "react"
 import useSWR from "swr";
 import { I18nContext } from "next-i18next";
+import { Media, MediaContextProvider } from "media";
 
 import API from "@services/api/API";
 import APIEnum from "@services/api/APIEnum";
+import { stateCodeConverter } from "@utils/Helpers";
 
 import Article from "@components/article/Article"
 import BottomRelatedBar from "@components/article/BottomRelatedBar";
+import Breadcrumbs from "@components/article/Breadcrumbs";
 
 const country = 'IN';
 const auth_token = 'xBUKcKnXfngfrqGoF93y';
@@ -24,18 +27,23 @@ const ArticleList = ({ articleData }) => {
 
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
+    if (methodName === 'getArticleDetails' && window.innerWidth < 769) {
+      //  return null;
+    }
     return api[apiEnum][methodName]({
       query: {
-        region: country,
+        // region: country,
         auth_token: auth_token,
         access_token: access_token,
-        response: 'r1',
+        response: methodName === 'getArticleDetails' ? 'r2' : 'r1',
         item_languages: language,
         page: 0,
         page_size: 10,
-        content_id: contentId
+        content_id: contentId,
+        gallery_ad: true,
+        scroll_no: 0,
         // portal_state: english,
-        // state: english,
+        state: stateCodeConverter(location.pathname.split('/')[2]),
       }
     }).then(res => {
       return res.data.data
@@ -64,7 +72,7 @@ const ArticleList = ({ articleData }) => {
       let article = articles.find(article => article.data.content_id === articleData.contentId);
       if (article) {
         article.rhs = adData.catalog_list_items.slice(1);
-        article = {...article}
+        article = { ...article }
         setArticles(articles)
       }
     }
@@ -85,20 +93,26 @@ const ArticleList = ({ articleData }) => {
       ".article-list > .article:last-child"
     )
     if (lastArticleLoaded) {
-      if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+      let offsetHeight = document.body.offsetHeight;
+      if (window.innerWidth < 769) {
+        offsetHeight -= 350;
+      }
+      if ((window.innerHeight + window.pageYOffset) >= offsetHeight) {
+        console.log(lastArticleLoaded.getAttribute('data-content-id'))
+
         const curIndex = related.findIndex(v => v.content_id === lastArticleLoaded.getAttribute('data-content-id'))
         if (curIndex > -1 && curIndex < 9 && !loading) {
           startLoading();
           await api.CatalogList.getArticleDetails({
             query: {
-              region: country,
+              // region: country,
               auth_token,
               access_token,
               response: 'r2',
               item_languages: language,
               content_id: related[curIndex + 1].content_id, //variable
-              page_size: 10,
-              portal_state: 'na', //national
+              page_size: window.innerWidth < 769 ? 1 : 10,
+              portal_state: stateCodeConverter(location.pathname.split('/')[2])
             },
           }).then(res => {
             const newArticle = res.data.data.catalog_list_items[0].catalog_list_items[0];
@@ -118,7 +132,7 @@ const ArticleList = ({ articleData }) => {
               }
             } while (matchedScript);
             console.log(scripts); */
-            const newList = [...articles, { html: html, data: newArticle, rhs }]
+            const newList = [...articles, { html: html, data: newArticle, rhs, contentId: newArticle.content_id }]
             setArticles(newList)
             stopLoading()
           });
@@ -126,21 +140,44 @@ const ArticleList = ({ articleData }) => {
       }
     }
   }
+
+  const scrollToArticle = (article) => {
+    const articleEl = document.querySelector(`.article[data-content-id=${article.content_id}]`)
+    if (articleEl) {
+      // articleEl.scrollIntoView({ behavior: "smooth", inline: "nearest" });
+
+      const y = articleEl.getBoundingClientRect().top + window.scrollY - 28;
+      window.scroll({
+        top: y,
+        behavior: 'smooth'
+      });
+
+    }
+  }
+
   return (
     <>
-      <div className="article-count fixed right-0 text-white top-0 z-50 p-3 text-2xl font-bold">{articles.length}</div>
-      <ul className="article-list flex flex-col lg:container lg:mx-auto">
+      {/* <div className="article-count fixed right-0 text-white top-0 z-50 p-3 text-2xl font-bold">{articles.length}</div> */}
+      <MediaContextProvider>
+        <Media greaterThan="xs" className="w-full">  <Breadcrumbs /></Media>
+      </MediaContextProvider>
+
+
+      <ul className="article-list flex flex-col lg:container lg:mx-auto pt-4">
         {articles.length > 0 &&
           articles.map((article, i) => (
-            <Article key={article.data.content_id}  {...article} />
+            <Article key={article.contentId}  {...article} nextArticle={i < 9 ? related[i + 1] : null} scrollToNextArticle={() => scrollToArticle(related[i + 1])} />
           )
           )}
         {loading && <h1 className="w-full text-red-700 text-2xl z-10">Loading ...</h1>}
       </ul>
 
 
-      {related ?
-        <BottomRelatedBar data={related} /> : null}
+      {related ? (
+        <MediaContextProvider>
+          <Media greaterThan="xs" className="fixed bottom-0 w-screen h-16 "> <BottomRelatedBar data={related} /></Media>
+        </MediaContextProvider>
+      ) : null}
 
     </>
   )
