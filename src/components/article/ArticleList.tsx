@@ -72,11 +72,10 @@ const ArticleList = ({ articleData }) => {
       let article = articles.find(article => article.data.content_id === articleData.contentId);
       if (article) {
         article.rhs = adData.catalog_list_items.slice(1);
-        article = { ...article }
-        setArticles(articles)
+        setArticles(articles => [...articles])
       }
     }
-  }, [articleData, articles, data, adData])
+  }, [articleData, data, adData])
 
 
   // Listen to scroll positions for loading more data on scroll
@@ -166,7 +165,7 @@ const ArticleList = ({ articleData }) => {
       <ul className="article-list flex flex-col lg:container lg:mx-auto pt-4">
         {articles.length > 0 &&
           articles.map((article, i) => (
-            <Article key={article.contentId}  {...article} nextArticle={i < 9 ? related[i + 1] : null} scrollToNextArticle={() => scrollToArticle(related[i + 1])} />
+            <Article key={article.contentId}  {...article} rhs={article.rhs} nextArticle={i < 9 ? related[i + 1] : null} scrollToNextArticle={() => scrollToArticle(related[i + 1])} />
           )
           )}
         {loading && <h1 className="w-full text-red-700 text-2xl z-10">Loading ...</h1>}
