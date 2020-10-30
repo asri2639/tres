@@ -1,72 +1,82 @@
 import Header from '@components/header/Header';
 import Footer from '@components/footer/Footer';
 
-import API from "@api/API";
-import APIEnum from "@api/APIEnum";
-import { useEffect, useState } from "react";
-
+import API from '@api/API';
+import APIEnum from '@api/APIEnum';
+import { useContext, useEffect, useState } from 'react';
+import { I18nContext } from 'next-i18next';
 
 const country = 'IN';
 const auth_token = 'xBUKcKnXfngfrqGoF93y';
 const access_token = 'TjeNsXehJqhh2DGJzBY9';
-const selected_language = 'en';
 
 const Layout = ({ children }) => {
-    const api = API(APIEnum.Catalog, APIEnum.CatalogList);
-    const [data, setData] = useState({ footer: [], header: {} });
-    useEffect(() => {
-        const populateData = async () => {
-            const result = await api.Catalog.getFooterDetails({
-                query: {
-                    region: country,
-                    auth_token: auth_token,
-                    access_token: access_token,
-                    response: 'r2',
-                    item_languages: selected_language,
-                }
-            });
-            const requiredData = result.data.data.params_hash2.footer;
+  const api = API(APIEnum.Catalog, APIEnum.CatalogList);
+  const [data, setData] = useState({ footer: [], header: {} });
+  const {
+    i18n: { language, options },
+  } = useContext(I18nContext);
 
-            let languageData = {};
-            requiredData.forEach(state => {
-                state.item_languages.forEach(language => {
-                    languageData[language] = languageData[language] || [];
-                    state.state && languageData[language].push(state);
-                })
+  useEffect(() => {
+    const populateData = async () => {
+      const result = await api.Catalog.getFooterDetails({
+        query: {
+          region: country,
+          auth_token: auth_token,
+          access_token: access_token,
+          response: 'r2',
+          item_languages: language,
+        },
+      });
+      const requiredData = result.data.data.params_hash2.footer;
 
-            });
-            languageData = Object.keys(languageData).sort().reduce((a, c) => (a[c] = languageData[c], a), {})
+      let languageData = {};
+      requiredData.forEach((state) => {
+        state.item_languages.forEach((language) => {
+          languageData[language] = languageData[language] || [];
+          state.state && languageData[language].push(state);
+        });
+      });
+      languageData = Object.keys(languageData)
+        .sort()
+        .reduce((a, c) => ((a[c] = languageData[c]), a), {});
 
-            setData({
-                header: {
-                    ...data.header, languages: languageData,
-                },
-                footer: requiredData
-            });
+      setData({
+        header: {
+          ...data.header,
+          languages: languageData,
+        },
+        footer: requiredData,
+      });
 
-            const headerResp = await api.CatalogList.getMenuDetails({
-                query: {
-                    region: country,
-                    auth_token: auth_token,
-                    access_token: access_token,
-                    response: 'r2',
-                    item_languages: selected_language,
-                }
-            });
+      const headerResp = await api.CatalogList.getMenuDetails({
+        query: {
+          region: country,
+          auth_token: auth_token,
+          access_token: access_token,
+          response: 'r2',
+          item_languages: language,
+        },
+      });
 
-            setData({
-                header: { languages: languageData, menu: headerResp.data.data.catalog_list_items }, footer: requiredData
-            })
+      setData({
+        header: {
+          languages: languageData,
+          menu: headerResp.data.data.catalog_list_items,
+        },
+        footer: requiredData,
+      });
+    };
+    populateData();
+  }, [language]);
 
-        }
-        populateData();
-    }, []);
-
-    return (<>
-        <Header data={data.header} />
-        <section className="content">{children}</section>
-        <Footer data={data.footer} />
-    </>)
-}
+  return (
+    <>
+      <Header data={data.header} />
+      <section className="content">{children}</section>
+      <Footer data={data.footer} />
+    </>
+  );
+};
 
 export default Layout;

@@ -7,11 +7,8 @@ import { Router, withTranslation } from '@i18n'
 const Index = () => {
   const router = useRouter()
   React.useEffect(() => {
-    let init = getInitialLocale();
-    if (init === 'english') {
-      init += '/national';
-    }
-    // Router.replace('/[language]/[state]', `/${init}`)
+  
+   // router.replace('/[state]', `/national`)
   })
   return (
     <Head>
