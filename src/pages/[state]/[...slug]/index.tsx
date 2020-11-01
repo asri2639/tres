@@ -6,10 +6,13 @@ import ArticleList from '@components/article/ArticleList';
 import Head from 'next/head';
 import { NextPage } from 'next';
 import { withTranslation } from '@i18n';
-import { stateCodeConverter, thumbnailExtractor } from '@utils/Helpers';
-import { WithTranslation } from 'next-i18next';
+import { getFilename, loadJS, stateCodeConverter, thumbnailExtractor } from '@utils/Helpers';
 import { IncomingMessage } from 'http';
 import { languageMap } from '@utils/Constants';
+import Video from '@components/video/Video';
+import GalleryList from '@components/gallery/GalleryList';
+import { useRouter } from 'next/router';
+import VideoList from '@components/video/VideoList';
 
 interface Propss {
   data?: any;
@@ -17,13 +20,16 @@ interface Propss {
 }
 
 const slug: NextPage<Propss> = ({ data, pageType }) => {
+  const router = useRouter();
+  const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
   const getComponent = () => {
     switch (pageType) {
-      case 'news':
+      case 'article':
         const tags = new Set();
         let datum: any = {};
-        const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
-        const html = data ? data.html_tag.replace(scriptTagExtractionRegex, '') : '';
+        const html = data
+          ? data.html_tag.replace(scriptTagExtractionRegex, '')
+          : '';
         const scripts = [];
 
         let matchedScript = null;
@@ -41,77 +47,193 @@ const slug: NextPage<Propss> = ({ data, pageType }) => {
             let m = regex.exec(v);
             if (m) {
               tags.add(m[1]);
-              // loadjscssfile(m[1], 'js');
+              loadJS(m[1]);
             }
           });
-          datum.html = html;
-          datum.data = data;
-
-          datum.contentType = data.content_type;
-          datum.contentId = data.content_id;
         }
-        return <ArticleList articleData={{ articles: [datum], contentId: datum.contentId }} />
-      case 'video':
-        return <div>Video</div>
-      case 'gallery':
-        return <div>Gallery</div>
-    }
+        datum.html = html;
+        datum.data = data;
 
-  }
-  return (
-    <>
-      <Head>
-        <title>{data.title}</title>
-      </Head>
-      <NextSeo
-        title={data.title}
-        description={data.short_description || data.description}
-        additionalMetaTags={[
-          {
-            property: 'keywords',
-            content: data.keywords ? data.keywords.join(', ') : '',
-          },
-        ]}
-        openGraph={{
-          site_name: 'ETV Bharat News',
-          url: `https://www.etvbharat.com/${data.web_url}`,
-          type: data.content_type,
-          title: data.title,
-          description: data.short_description || data.description,
-          images: data.pageType === 'gallery' ? [{
-            url: data.thumbnails.banner.url,
-            width: 768,
-            height: 512,
-            alt: data.thumbnails.banner.alt_tags,
-          }
-          ]
-            :
-            (() => {
-              const thumbnail = thumbnailExtractor(data.thumbnails, '3_2', 'b2s')
-              return [
+        datum.contentType = data.content_type;
+        datum.contentId = data.content_id;
+
+        return (
+          <>
+            <Head>
+              <title>{data.title}</title>
+            </Head>
+            <NextSeo
+              title={data.title}
+              description={data.short_description || data.description}
+              additionalMetaTags={[
                 {
-                  url: thumbnail.url,
-                  width: 768,
-                  height: 512,
-                  alt: thumbnail.alt_tags,
+                  property: 'keywords',
+                  content: data.keywords ? data.keywords.join(', ') : '',
                 },
+              ]}
+              openGraph={{
+                site_name: 'ETV Bharat News',
+                url: `https://www.etvbharat.com/${data.web_url}`,
+                type: data.content_type,
+                title: data.title,
+                description: data.short_description || data.description,
+                images: (() => {
+                  const thumbnail = thumbnailExtractor(
+                    data.thumbnails,
+                    '3_2',
+                    'b2s'
+                  );
+                  return [
+                    {
+                      url: thumbnail.url,
+                      width: 768,
+                      height: 512,
+                      alt: thumbnail.alt_tags,
+                    },
+                  ];
+                })(),
+              }}
+              twitter={{
+                handle: '@etvbharat',
+                site: '@etvbharat',
+                cardType: 'summary',
+              }}
+            />
+            <ArticleList
+              articleData={{ articles: [datum], contentId: datum.contentId }}
+            />
+          </>
+        );
+      case 'video':
+        let videoDatum: any = {};
+        videoDatum.data = data;
 
-              ]
-            })()
+        videoDatum.contentType = data.content_type;
+        videoDatum.contentId = data.content_id;
 
-        }}
-        twitter={{
-          handle: '@etvbharat',
-          site: '@etvbharat',
-          cardType: 'summary',
-        }}
-      />
+        if (typeof window !== 'undefined') {
+          loadJS(
+            'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
+          );
+          loadJS(
+            'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
+          );
+          loadJS(
+            'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
+          );
+        }
 
-      {data ? getComponent() : <div>nothing</div>}
-    </>
-  );
+        return (
+          <>
+            <Head>
+              <title>{data.title}</title>
+            </Head>
+            <NextSeo
+              title={data.title}
+              description={data.short_description || data.description}
+              additionalMetaTags={[
+                {
+                  property: 'keywords',
+                  content: data.keywords ? data.keywords.join(', ') : '',
+                },
+              ]}
+              openGraph={{
+                site_name: 'ETV Bharat News',
+                url: `https://www.etvbharat.com/${data.web_url}`,
+                type: data.content_type,
+                title: data.title,
+                description: data.short_description || data.description,
+                images: (() => {
+                  const thumbnail = thumbnailExtractor(
+                    data.thumbnails,
+                    '3_2',
+                    'b2s'
+                  );
+                  return [
+                    {
+                      url: thumbnail.url,
+                      width: 768,
+                      height: 512,
+                      alt: thumbnail.alt_tags,
+                    },
+                  ];
+                })(),
+              }}
+              twitter={{
+                handle: '@etvbharat',
+                site: '@etvbharat',
+                cardType: 'summary',
+              }}
+            />
+            <VideoList
+              videoData={{
+                videos: [videoDatum],
+                contentId: videoDatum.contentId,
+              }}
+            />
+          </>
+        );
+      case 'gallery':
+        const main = data.gallery[0];
+
+        const keywords = data.gallery.map((v) => {
+          return v.description;
+        });
+        return (
+          <>
+            <Head>
+              <title>{main.display_title}</title>
+            </Head>
+            <NextSeo
+              title={main.display_title}
+              description={
+                main.short_description || main.description || main.display_title
+              }
+              additionalMetaTags={[
+                {
+                  property: 'keywords',
+                  content: keywords ? keywords.join(', ') : '',
+                },
+              ]}
+              openGraph={{
+                site_name: 'ETV Bharat News',
+                url: `https://www.etvbharat.com/${router.asPath.slice(1)}`,
+                type: main.content_type,
+                title: main.title,
+                description: main.short_description || main.description,
+                images: [
+                  {
+                    url: main.thumbnails.banner.url,
+                    width: 768,
+                    height: 512,
+                    alt: main.thumbnails.banner.alt_tags,
+                  },
+                ],
+              }}
+              twitter={{
+                handle: '@etvbharat',
+                site: '@etvbharat',
+                cardType: 'summary',
+              }}
+            />
+            <GalleryList
+              galleryData={{
+                galleries: [
+                  {
+                    content_id: data.gallery[0].parent_id,
+                    images: data.gallery,
+                    count: data.items_count,
+                  },
+                ],
+                contentId: data.gallery[0].parent_id,
+              }}
+            />
+          </>
+        );
+    }
+  };
+  return <>{data ? getComponent() : <div>nothing</div>}</>;
 };
-
 
 slug.getInitialProps = async ({ query, req, ...args }) => {
   let i18n = null;
@@ -123,52 +245,98 @@ slug.getInitialProps = async ({ query, req, ...args }) => {
     language = i18n.language;
     state = stateCodeConverter(query.state + '');
     params = {
-      state: query.state
-    }
+      state: query.state,
+    };
   } else if (typeof window !== 'undefined') {
-    const urlSplit = location.pathname.split('/')
+    const urlSplit = location.pathname.split('/');
     language = languageMap[urlSplit[1]];
-    state = stateCodeConverter(urlSplit[2])
+    state = stateCodeConverter(urlSplit[2]);
   }
 
   const id = query.slug.slice(-1)[0];
-  const re = new RegExp(state + "\\d+", 'gi')
+  const re = new RegExp(state + '\\d+', 'gi');
   if (re.test(id)) {
     const api = API(APIEnum.CatalogList);
 
     const country = 'IN';
     const auth_token = 'xBUKcKnXfngfrqGoF93y';
     const access_token = 'TjeNsXehJqhh2DGJzBY9';
-    const response = await api.CatalogList.getArticleDetails({
-      params: params,
-      query: {
-        // region: country,
-        auth_token,
-        access_token,
-        response: 'r2',
-        item_languages: language,
-        content_id: id, //variable
-        gallery_ad: true,
-        page_size: typeof window === 'undefined' ? 1 : 10,
-        portal_state: state, //national
-      },
-    });
 
+    switch (query.slug[0].toLowerCase()) {
+      case 'videos':
+      case 'video':
+        const videoResponse = await api.CatalogList.getVideoDetails({
+          params: params,
+          query: {
+            // region: country,
+            auth_token,
+            access_token,
+            response: 'r2',
+            item_languages: language,
+            content_id: id, //variable
+            gallery_ad: true,
+            page_size: typeof window === 'undefined' ? 1 : 10,
+            portal_state: state, //national
+          },
+        });
 
-    const articleResp = response.data.data.catalog_list_items[0];
-    const article = articleResp.catalog_list_items[0];
+        const videoResp = videoResponse.data.data.catalog_list_items[0];
+        const video = videoResp.catalog_list_items[0];
 
-    const media = article.media_type;
-    const contentType = article.content_type;
+        // Pass data to the page via props
+        return {
+          pageType: 'video',
+          data: video,
+        };
+      case 'gallery':
+        const galleryResponse = await api.CatalogList.getArticleDetails({
+          params: params,
+          query: {
+            // region: country,
+            auth_token,
+            access_token,
+            response: 'r2',
+            item_languages: language,
+            content_id: id, //variable
+            gallery_ad: true,
+            page_size: typeof window === 'undefined' ? 1 : 10,
+            portal_state: state, //national
+          },
+        });
 
-    article.pageType = "video" === contentType ? "video" :
-      ("image" === contentType && "gallery" === media ? "gallery" : "news")
+        const galleryResp = galleryResponse.data.data.catalog_list_items[0];
+        const gallery = galleryResp.catalog_list_items;
 
-    // Pass data to the page via props
-    return {
-      pageType: article.pageType,
-      data: article,
-    };
+        // Pass data to the page via props
+        return {
+          pageType: 'gallery',
+          data: { gallery, items_count: galleryResp.total_items_count },
+        };
+      default:
+        const articleResponse = await api.CatalogList.getArticleDetails({
+          params: params,
+          query: {
+            // region: country,
+            auth_token,
+            access_token,
+            response: 'r2',
+            item_languages: language,
+            content_id: id, //variable
+            gallery_ad: true,
+            page_size: typeof window === 'undefined' ? 1 : 10,
+            portal_state: state, //national
+          },
+        });
+
+        const articleResp = articleResponse.data.data.catalog_list_items[0];
+        const article = articleResp.catalog_list_items[0];
+
+        // Pass data to the page via props
+        return {
+          pageType: 'article',
+          data: article,
+        };
+    }
   }
 
   return {
@@ -176,6 +344,5 @@ slug.getInitialProps = async ({ query, req, ...args }) => {
     data: {},
   };
 };
-
 
 export default slug;

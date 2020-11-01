@@ -71,7 +71,7 @@ class APIError extends Error {
 }
 
 function errorResponseHandler(error) {
-  console.log(error)
+  console.log(error);
   // check for errorHandle config
   if (
     error &&
@@ -86,7 +86,8 @@ function errorResponseHandler(error) {
     const handled = apiStatusHandler(error);
     if (!handled) {
       const message = error.response.data ? error.response.data.error_code : '';
-      throw new APIError(message, error.response.data);
+      return Promise.reject(new APIError(message, error.response.data));
+      // throw new APIError(message, error.response.data);
     }
     return Promise.reject(new APIError(error)); // here it was Promise.resolve
   } else {
@@ -107,6 +108,13 @@ export default function API(...controllers): any {
       'Content-Type': 'application/json',
     },
     cancelToken: source.token,
+  });
+
+  inst.interceptors.request.use((config) => {
+    if (process.env.NEXT_PUBLIC_APP_ENV !== 'development' && config.config && config.config.suv) {
+      config.baseURL = 'https://prod.suv.etvbharat.com';
+    }
+    return config;
   });
 
   inst.interceptors.response.use((response) => {

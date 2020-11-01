@@ -257,7 +257,7 @@ export default function MobileFooter({ data }) {
         ) : null}
 
         <div
-          className={`${footer['action-menu']} w-full fixed bottom-0 pt-2 bg-white text-black`}
+          className={`${footer['action-menu']} w-full fixed bottom-0  z-20 pt-2 bg-white text-black`}
           style={{ boxShadow: '0px -3px 8px 0px rgb(128 128 128 / 53%)' }}
         >
           <div className="flex justify-around align-center">

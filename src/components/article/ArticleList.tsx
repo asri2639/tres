@@ -174,7 +174,7 @@ const ArticleList = ({ articleData }) => {
 
       {related ? (
         <MediaContextProvider>
-          <Media greaterThan="xs" className="fixed bottom-0 w-screen h-16 "> <BottomRelatedBar data={related} /></Media>
+          <Media greaterThan="xs" className="fixed bottom-0 z-20 w-screen h-16 "> <BottomRelatedBar data={related} /></Media>
         </MediaContextProvider>
       ) : null}
 

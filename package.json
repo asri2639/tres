@@ -8,10 +8,10 @@
   },
   "description": "ETV Bharat | NEWS UI",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development PORT=3000 node server.js",
+    "dev": "cross-env NEXT_PUBLIC_APP_ENV=development PORT=3000 node server.js",
     "build": "next build",
-    "staging": "cross-env NODE_ENV=staging PORT=3000 node server.js",
-    "start": "cross-env NODE_ENV=production PORT=3000 node server.js",
+    "staging": "cross-env NEXT_PUBLIC_APP_ENV=staging PORT=3000 node server.js",
+    "start": "cross-env NEXT_PUBLIC_APP_ENV=production PORT=3000 node server.js",
     "local": "next dev"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-intersection-observer": "^8.29.1",
+    "react-lazy-load-image-component": "^1.5.0",
     "react-share": "^4.3.1",
     "swr": "^0.3.5"
   },

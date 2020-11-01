@@ -1,12 +1,10 @@
-const PROXY_URL = '';
-
-const env = process.env.NODE_ENV;
+const env = process.env.NEXT_PUBLIC_APP_ENV;
 
 const baseURL =
   env === 'production'
-    ? 'https://prod.api.etvbharat.com//api'
+    ? 'https://prod.api.etvbharat.com/api'
     : env === 'development'
-    ? PROXY_URL + 'http://localhost:3000/api'
+    ? 'http://localhost:3000/api'
     : 'https://staging.api.etvbharat.com/api';
 
 const Constants = Object.freeze({

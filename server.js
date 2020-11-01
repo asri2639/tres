@@ -3,16 +3,31 @@ const express = require('express');
 const next = require('next');
 
 const devProxy = {
+  '/api/v2': {
+    target: 'https://prod.suv.etvbharat.com/',
+    pathRewrite: { '^/api/v2': '/v2' },
+    changeOrigin: true,
+    router: {
+      // when request.headers.host == 'dev.localhost:3000',
+      // override target 'http://www.example.org' to 'http://localhost:8000'
+      'http://localhost:3000': 'https://www.etvbharat.com',
+    },
+  },
   '/api': {
     target: 'https://prod.api.etvbharat.com/',
     pathRewrite: { '^/api': '/' },
     changeOrigin: true,
+    router: {
+      // when request.headers.host == 'dev.localhost:3000',
+      // override target 'http://www.example.org' to 'http://localhost:8000'
+      'http://localhost:3000': 'https://www.etvbharat.com',
+    },
   },
 };
 
 const port = parseInt(process.env.PORT, 10) || 3000;
-const env = process.env.NODE_ENV;
-const dev = env !== 'production' && env !== 'staging'
+const env = process.env.NEXT_PUBLIC_APP_ENV;
+const dev = env !== 'production' && env !== 'staging';
 const app = next({
   dir: '.', // base directory where everything is, could move to src later
   dev,
@@ -33,7 +48,6 @@ app
         server.use(context, createProxyMiddleware(devProxy[context]));
       });
     }
-
 
     // Default catch-all handler to allow Next.js to handle all other routes
     server.all('*', (req, res) => handle(req, res));
