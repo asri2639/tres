@@ -62,8 +62,6 @@ const Video = ({
       }
       //  router.push(data.web_url, undefined, { shallow: true })
     }
-
-    console.log(iframeSource);
   }, [inView, contentId, rhs, iframeSource]);
 
   const setRefs = useCallback(
@@ -117,7 +115,7 @@ const Video = ({
         <div
           className={`${className || ''} lg:container lg:mx-auto px-3 md:px-0 `}
         >
-          <div className="flex flex-col md:flex-col-reverse md:mb-4">
+          <div className="flex flex-col md:flex-col-reverse md:mb-1">
             <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
               <h1
                 ref={setRefs}

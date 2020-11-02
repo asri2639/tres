@@ -116,8 +116,6 @@ const VideoList = ({ videoData }) => {
         s +
         '&constituency=INDIA';
 
-    // (f.isLivevod = a), (f.embedUrl = y);
-    console.log(y);
     return y;
   };
 
@@ -206,7 +204,6 @@ const VideoList = ({ videoData }) => {
     );
     if (video && adData) {
       video.rhs = adData.catalog_list_items.slice(2)[0].catalog_list_items;
-      console.log(video.rhs);
       setVideos((videos) => [...videos]);
     }
 
