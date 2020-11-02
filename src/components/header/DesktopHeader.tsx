@@ -192,7 +192,9 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
         </Modal>
       ) : null}
 
-      {sidebar ? <DesktopSidebar onClose={() => toggleSidebar(false)} /> : null}
+      {sidebar ? (
+        <DesktopSidebar data={data} onClose={() => toggleSidebar(false)} />
+      ) : null}
 
       <div
         className={`${className} divide-y md:block hidden bg-hbg px-2 font-english border-b`}
@@ -288,7 +290,19 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
                       className=" flex flex-col items-center relative"
                       onMouseEnter={() => setInitialCategory(item)}
                     >
-                      <div>{item.ml_title[0].text.toUpperCase()}</div>
+                      <NavLink
+                        href={{
+                          pathname: '/[state]/[...slug]',
+                          query: {
+                            state: item.url.split('/')[2],
+                            slug: item.url.split('/').slice(3).join('/'),
+                          },
+                        }}
+                        as={item.url}
+                        passHref
+                      >
+                        {item.ml_title[0].text.toUpperCase()}
+                      </NavLink>
                       {item.total_items_count > 0 ? (
                         <div
                           className={`${header['arrow-up']} absolute transform translate-y-5`}

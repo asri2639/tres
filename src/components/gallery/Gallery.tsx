@@ -32,7 +32,6 @@ const Gallery = ({
   useEffect(() => {
     if (inView) {
       const main = data[0];
-      console.log(data);
       const contentIdFromUrl = window.location.href.split('/').slice(-1)[0];
       if (contentIdFromUrl === contentId) {
         return;
@@ -41,7 +40,6 @@ const Gallery = ({
           const elBoundary = ref.current.getBoundingClientRect();
           const windowHeight = window.innerHeight;
           if (elBoundary.top > 0 && elBoundary.top < windowHeight) {
-            console.log(webUrl);
             document.title = main.title;
             window.history.pushState(
               { id: main.title },

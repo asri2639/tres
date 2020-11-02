@@ -74,7 +74,10 @@ const Layout = ({ children }) => {
     <>
       <Header data={data.header} />
       <section className="content">{children}</section>
-      <Footer data={data.footer} />
+      <Footer
+        data={data.footer}
+        menu={data.header ? data.header['menu'] : null}
+      />
     </>
   );
 };

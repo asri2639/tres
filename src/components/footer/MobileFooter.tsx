@@ -1,4 +1,5 @@
 import NavLink from '@components/common/NavLink';
+import DesktopSidebar from '@components/header/DesktopSidebar';
 import Modal from '@components/modal/Modal';
 import Constants from '@utils/Constants';
 import { I18nContext } from 'next-i18next';
@@ -6,7 +7,7 @@ import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 import footer from './Footer.module.scss';
 
-export default function MobileFooter({ data }) {
+export default function MobileFooter({ data, menu }) {
   const isiOS = false;
   const router = useRouter();
   const {
@@ -16,6 +17,7 @@ export default function MobileFooter({ data }) {
   const [searchBox, toggleSearchBox] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [openStateModal, setOpenStateModal] = useState([]);
+  const [sidebar, toggleSidebar] = useState(false);
 
   const languageNStateSelect = (language, states) => {
     if (language === 'english') {
@@ -126,6 +128,13 @@ export default function MobileFooter({ data }) {
           </>
         </Modal>
       ) : null}
+
+      {sidebar ? (
+        <DesktopSidebar
+          data={{ menu: menu }}
+          onClose={() => toggleSidebar(false)}
+        />
+      ) : null}
       <div className="mobile-footer w-full block md:hidden bg-mbg text-white absolute bottom-0">
         <div className="eb-navbar mb-12 pb-1">
           <button
@@ -231,7 +240,10 @@ export default function MobileFooter({ data }) {
         </div>
 
         {searchBox ? (
-          <div className="fixed text-black w-full h-10 z-50" style={{bottom: '47px'}}>
+          <div
+            className="fixed text-black w-full h-10 z-50"
+            style={{ bottom: '47px' }}
+          >
             <input
               placeholder="Search stories"
               value={searchInput}
@@ -328,7 +340,12 @@ export default function MobileFooter({ data }) {
                   alt="ETV"
                   src="/assets/images/hamburger-grey.png"
                 />
-                <p className="whitespace-no-wrap">MORE</p>
+                <p
+                  className="whitespace-no-wrap"
+                  onClick={() => toggleSidebar(true)}
+                >
+                  MORE
+                </p>
               </div>
             </div>
           </div>

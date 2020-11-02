@@ -44,98 +44,110 @@
 .sidebar-icon {
   width: 32px;
   height: 32px;
-  .top-news {
+  display: inline-block;
+  &.video {
     background: url('/assets/images/etv_sprite.png') no-repeat -60px -37px;
   }
-  .top-news {
+  &.state {
     background: url('/assets/images/etv_sprite.png') no-repeat -105px -37px;
   }
-  .top-news {
+  &.champion,
+  &.sports {
     background: url('/assets/images/etv_sprite.png') no-repeat -152px -37px;
   }
-  .top-news {
+  &.latest {
     background: url('/assets/images/etv_sprite.png') no-repeat -198px -37px;
   }
-  .top-news {
+  &.top-news {
     background: url('/assets/images/etv_sprite.png') no-repeat -244x -37px;
   }
-  .top-news {
+  &.my-choice {
     background: url('/assets/images/etv_sprite.png') no-repeat -289px -37px;
   }
-  .top-news {
+  &.party {
     background: url('/assets/images/etv_sprite.png') no-repeat -336px -37px;
   }
-  .top-news {
+  &.international {
     background: url('/assets/images/etv_sprite.png') no-repeat -382px -37px;
   }
-  .top-news {
+  &.feed {
     background: url('/assets/images/etv_sprite.png') no-repeat -428px -37px;
   }
-  .top-news {
+  &.yoga {
     background: url('/assets/images/etv_sprite.png') no-repeat -474px -37px;
   }
-  .top-news {
+  &.settings {
     background: url('/assets/images/etv_sprite.png') no-repeat -520px -37px;
   }
-  .top-news {
+  &.radio {
     background: url('/assets/images/etv_sprite.png') no-repeat -566px -37px;
   }
-  .top-news {
+  &.bell,
+  &.notification {
     background: url('/assets/images/etv_sprite.png') no-repeat -612px -37px;
   }
-  .top-news {
+  &.scorpion {
     background: url('/assets/images/etv_sprite.png') no-repeat -658px -37px;
   }
-  .top-news {
+  &.food {
     background: url('/assets/images/etv_sprite.png') no-repeat -704px -37px;
   }
-  .top-news {
+  &.health,
+  &.love,
+  &.heart {
     background: url('/assets/images/etv_sprite.png') no-repeat -749px -37px;
   }
-
-  .top-news {
+  &.e-news {
     background: url('/assets/images/etv_sprite.png') no-repeat -795px -37px;
   }
-  .top-news {
+  &.cricket {
     background: url('/assets/images/etv_sprite.png') no-repeat -841px -37px;
   }
-  .top-news {
+  &.list-news,
+  &.national {
     background: url('/assets/images/etv_sprite.png') no-repeat -887px -37px;
   }
-  .top-news {
+  &.assembly,
+  &.nation,
+  &.emblem {
     background: url('/assets/images/etv_sprite.png') no-repeat -932px -37px;
   }
 
-  .top-news {
+  &.gallery {
     background: url('/assets/images/etv_sprite.png') no-repeat -968px -37px;
   }
-  .top-news {
+  &.sitara,
+  &.film-and-television {
     background: url('/assets/images/etv_sprite.png') no-repeat -1014px -37px;
   }
-  .top-news {
+  &.two-face {
     background: url('/assets/images/etv_sprite.png') no-repeat -1059px -37px;
   }
-  .top-news {
+  &.shares,
+  &.market,
+  &.stocks {
     background: url('/assets/images/etv_sprite.png') no-repeat -1106px -37px;
   }
-  .top-news {
+  &.crime {
     background: url('/assets/images/etv_sprite.png') no-repeat -1152px -37px;
   }
-  .top-news {
+  &.city {
     background: url('/assets/images/etv_sprite.png') no-repeat -1198px -37px;
   }
-  .top-news {
+  &.live {
     background: url('/assets/images/etv_sprite.png') no-repeat -1243px -37px;
   }
-  .top-news {
+  &.business {
     background: url('/assets/images/etv_sprite.png') no-repeat -1285px -37px;
   }
-  .top-news {
+  &.etv,
+  &.bharat {
     background: url('/assets/images/etv_sprite.png') no-repeat -1328px -37px;
     width: 27px;
     height: 27px;
   }
-  .top-news {
+  &.loud-speaker,
+  &.viral {
     background: url('/assets/images/etv_sprite.png') no-repeat -1371px -37px;
     width: 27px;
     height: 27px;
