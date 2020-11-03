@@ -2,10 +2,10 @@ const env = process.env.NEXT_PUBLIC_APP_ENV;
 
 const baseURL =
   env === 'production'
-    ? 'https://prod.api.etvbharat.com/api'
+    ? 'https://prod.api.etvbharat.com'
     : env === 'development'
     ? 'http://localhost:3000/api'
-    : 'https://staging.api.etvbharat.com/api';
+    : 'https://staging.api.etvbharat.com';
 
 const accessToken =
   env === 'production'

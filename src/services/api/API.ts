@@ -118,7 +118,6 @@ export default function API(...controllers): any {
     ) {
       config.baseURL = 'https://prod.suv.etvbharat.com';
     } else {
-      console.log(config);
       config.url = `${config.url}&auth_token=${Constants.authToken}&access_token=${Constants.accessToken}`;
     }
     return config;
