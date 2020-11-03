@@ -51,7 +51,6 @@ app
 
     // Default catch-all handler to allow Next.js to handle all other routes
     server.all('*', (req, res) => {
-      console.log(req.url)
       return handle(req, res);
     });
 

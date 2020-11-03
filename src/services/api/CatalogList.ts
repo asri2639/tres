@@ -45,6 +45,7 @@ export default function CatalogList(inst) {
       );
     },
     getMobileMenuDetails({ params, query, ...config }: APIRequest) {
+      console.log(process.env.NEXT_PUBLIC_APP_ENV);
       if (process.env.NEXT_PUBLIC_APP_ENV === 'staging') {
         return inst.get(
           `${controller}/left-menu-msite${getProperParam(
