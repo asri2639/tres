@@ -45,12 +45,21 @@ export default function CatalogList(inst) {
       );
     },
     getMobileMenuDetails({ params, query, ...config }: APIRequest) {
-      return inst.get(
-        `${controller}/msite-new-left-menu${getProperParam(
-          params
-        )}.gzip?${new URLSearchParams(query)}`,
-        config
-      );
+      if (process.env.NEXT_PUBLIC_APP_ENV === 'staging') {
+        return inst.get(
+          `${controller}/left-menu-msite${getProperParam(
+            params
+          )}.gzip?${new URLSearchParams(query)}`,
+          config
+        );
+      } else {
+        return inst.get(
+          `${controller}/msite-new-left-menu${getProperParam(
+            params
+          )}.gzip?${new URLSearchParams(query)}`,
+          config
+        );
+      }
     },
     getSubMenuDetails({ params, query, ...config }: APIRequest) {
       return inst.get(
