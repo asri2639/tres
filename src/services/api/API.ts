@@ -111,8 +111,15 @@ export default function API(...controllers): any {
   });
 
   inst.interceptors.request.use((config) => {
-    if (process.env.NEXT_PUBLIC_APP_ENV !== 'development' && config.config && config.config.suv) {
+    if (
+      process.env.NEXT_PUBLIC_APP_ENV !== 'development' &&
+      config.config &&
+      config.config.suv
+    ) {
       config.baseURL = 'https://prod.suv.etvbharat.com';
+    } else {
+      console.log(config);
+      config.url = `${config.url}&auth_token=${Constants.authToken}&access_token=${Constants.accessToken}`;
     }
     return config;
   });

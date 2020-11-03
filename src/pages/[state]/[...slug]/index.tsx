@@ -260,19 +260,12 @@ slug.getInitialProps = async ({ query, req, ...args }) => {
   if (re.test(id)) {
     const api = API(APIEnum.CatalogList);
 
-    const country = 'IN';
-    const auth_token = 'xBUKcKnXfngfrqGoF93y';
-    const access_token = 'TjeNsXehJqhh2DGJzBY9';
-
     switch (query.slug[0].toLowerCase()) {
       case 'videos':
       case 'video':
         const videoResponse = await api.CatalogList.getVideoDetails({
           params: params,
           query: {
-            // region: country,
-            auth_token,
-            access_token,
             response: 'r2',
             item_languages: language,
             content_id: id, //variable
@@ -294,9 +287,6 @@ slug.getInitialProps = async ({ query, req, ...args }) => {
         const galleryResponse = await api.CatalogList.getArticleDetails({
           params: params,
           query: {
-            // region: country,
-            auth_token,
-            access_token,
             response: 'r2',
             item_languages: language,
             content_id: id, //variable
@@ -318,9 +308,6 @@ slug.getInitialProps = async ({ query, req, ...args }) => {
         const articleResponse = await api.CatalogList.getArticleDetails({
           params: params,
           query: {
-            // region: country,
-            auth_token,
-            access_token,
             response: 'r2',
             item_languages: language,
             content_id: id, //variable

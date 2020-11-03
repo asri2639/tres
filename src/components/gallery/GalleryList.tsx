@@ -12,10 +12,6 @@ import Breadcrumbs from '@components/article/Breadcrumbs';
 import Gallery from '@components/gallery/Gallery';
 import { useRouter } from 'next/router';
 
-const country = 'IN';
-const auth_token = 'xBUKcKnXfngfrqGoF93y';
-const access_token = 'TjeNsXehJqhh2DGJzBY9';
-
 const GalleryList = ({ galleryData }) => {
   const router = useRouter();
   const api = API(APIEnum.CatalogList);
@@ -36,9 +32,6 @@ const GalleryList = ({ galleryData }) => {
     }
     return api[apiEnum][methodName]({
       query: {
-        // region: country,
-        auth_token: auth_token,
-        access_token: access_token,
         response: methodName === 'getArticleDetails' ? 'r2' : 'r1',
         item_languages: language,
         page: 0,
@@ -119,9 +112,6 @@ const GalleryList = ({ galleryData }) => {
           startLoading();
           await api.CatalogList.getArticleDetails({
             query: {
-              // region: country,
-              auth_token,
-              access_token,
               response: 'r2',
               item_languages: language,
               content_id: related[curIndex + 1].content_id, //variable
@@ -199,7 +189,10 @@ const GalleryList = ({ galleryData }) => {
 
       {related ? (
         <MediaContextProvider>
-          <Media greaterThan="xs" className="fixed bottom-0  z-20 w-screen h-16 ">
+          <Media
+            greaterThan="xs"
+            className="fixed bottom-0  z-20 w-screen h-16 "
+          >
             {' '}
             <BottomRelatedBar data={related} />
           </Media>

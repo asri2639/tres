@@ -11,8 +11,6 @@ import Modal from '@components/modal/Modal';
 import DesktopSubMenu from '@components/header/DesktopSubMenu';
 
 const country = 'IN';
-const auth_token = 'xBUKcKnXfngfrqGoF93y';
-const access_token = 'TjeNsXehJqhh2DGJzBY9';
 
 export default function MobileHeader({ data, className }) {
   const router = useRouter();
@@ -57,8 +55,6 @@ export default function MobileHeader({ data, className }) {
     return api[apiEnum][methodName]({
       query: {
         region: country,
-        auth_token: auth_token,
-        access_token: access_token,
         response: 'r2',
         item_languages: language,
       },

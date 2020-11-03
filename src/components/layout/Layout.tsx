@@ -7,8 +7,6 @@ import { useContext, useEffect, useState } from 'react';
 import { I18nContext } from 'next-i18next';
 
 const country = 'IN';
-const auth_token = 'xBUKcKnXfngfrqGoF93y';
-const access_token = 'TjeNsXehJqhh2DGJzBY9';
 
 const Layout = ({ children }) => {
   const api = API(APIEnum.Catalog, APIEnum.CatalogList);
@@ -22,8 +20,6 @@ const Layout = ({ children }) => {
       const result = await api.Catalog.getFooterDetails({
         query: {
           region: country,
-          auth_token: auth_token,
-          access_token: access_token,
           response: 'r2',
           item_languages: language,
         },
@@ -52,8 +48,6 @@ const Layout = ({ children }) => {
       const headerResp = await api.CatalogList.getMenuDetails({
         query: {
           region: country,
-          auth_token: auth_token,
-          access_token: access_token,
           response: 'r2',
           item_languages: language,
         },

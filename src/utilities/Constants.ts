@@ -7,8 +7,19 @@ const baseURL =
     ? 'http://localhost:3000/api'
     : 'https://staging.api.etvbharat.com/api';
 
+const accessToken =
+  env === 'production'
+    ? 'TjeNsXehJqhh2DGJzBY9'
+    : env === 'development'
+    ? 'TjeNsXehJqhh2DGJzBY9'
+    : 'fwrYv4w5Tz8QKYWQ17u2';
+
+const authToken = 'xBUKcKnXfngfrqGoF93y';
+
 const Constants = Object.freeze({
   baseURL: baseURL,
+  authToken: authToken,
+  accessToken: accessToken,
   socialURLs: {
     facebook: 'https://www.facebook.com/ETVBharatEnglish',
     twitter: 'https://twitter.com/eenadu_english',
