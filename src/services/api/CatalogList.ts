@@ -1,6 +1,9 @@
 import { APIRequest } from '@interfaces/API';
 import { stateCodeConverter } from '@utils/Helpers';
+import getConfig from 'next/config';
 
+const { publicRuntimeConfig } = getConfig();
+const env = publicRuntimeConfig.APP_ENV;
 const controller = '/catalog_lists';
 
 const getProperParam = (params) => {
@@ -45,8 +48,8 @@ export default function CatalogList(inst) {
       );
     },
     getMobileMenuDetails({ params, query, ...config }: APIRequest) {
-      console.log(process.env.NEXT_PUBLIC_APP_ENV);
-      if (process.env.NEXT_PUBLIC_APP_ENV === 'staging') {
+      console.log(publicRuntimeConfig.APP_ENV);
+      if (publicRuntimeConfig.APP_ENV === 'staging') {
         return inst.get(
           `${controller}/left-menu-msite${getProperParam(
             params

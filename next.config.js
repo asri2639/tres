@@ -20,6 +20,7 @@ module.exports = {
   rewrites: async () => nextI18NextRewrites(localeSubpaths),
   publicRuntimeConfig: {
     localeSubpaths,
+    APP_ENV: process.env.NEXT_PUBLIC_APP_ENV, // Pass through env variables
   },
 
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Constants from '@utils/Constants';
 // import toast from '@utils/ToastHelper';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 const CancelToken = axios.CancelToken;
 const defaultControllers = [];
@@ -112,7 +114,7 @@ export default function API(...controllers): any {
 
   inst.interceptors.request.use((config) => {
     if (
-      process.env.NEXT_PUBLIC_APP_ENV !== 'development' &&
+      publicRuntimeConfig.APP_ENV !== 'development' &&
       config.config &&
       config.config.suv
     ) {

@@ -1,5 +1,9 @@
-const env = process.env.NEXT_PUBLIC_APP_ENV;
+import getConfig from 'next/config';
 
+const { publicRuntimeConfig } = getConfig();
+const env = publicRuntimeConfig.APP_ENV;
+
+console.log(env);
 const baseURL =
   env === 'production'
     ? 'https://prod.api.etvbharat.com'

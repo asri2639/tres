@@ -68,8 +68,6 @@ export default function Article({ contentId, data, html, className, rhs, nextArt
 
 
   /* const isInView = (inView, entry) => {
-    console.log(contentId)
-    console.log(entry)
     if (inView) {
 
       const urlParts = data.web_url.split('/');

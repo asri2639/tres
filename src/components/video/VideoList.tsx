@@ -11,9 +11,11 @@ import BottomRelatedBar from '@components/article/BottomRelatedBar';
 import Breadcrumbs from '@components/article/Breadcrumbs';
 import Video from '@components/video/Video';
 import { useRouter } from 'next/router';
-
+import getConfig from 'next/config';
 
 const VideoList = ({ videoData }) => {
+  const { publicRuntimeConfig } = getConfig();
+
   const router = useRouter();
   const api = API(APIEnum.CatalogList, APIEnum.Video);
   const {
@@ -29,7 +31,7 @@ const VideoList = ({ videoData }) => {
   const constructPlaybackUrl = (data, smartData) => {
     let urlSplit = data.web_url.split('/');
     let href =
-      process.env.NEXT_PUBLIC_APP_ENV !== 'development'
+      publicRuntimeConfig.APP_ENV !== 'development'
         ? `${window.location.origin}/${data.web_url}`
         : `https://www.etvbharat.com/${data.web_url}`;
 

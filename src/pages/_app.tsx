@@ -1,14 +1,14 @@
 import Layout from '@components/layout/Layout';
-import type { AppProps, NextWebVitalsMetric } from 'next/app'
-import '@styles/tailwind.css'
-import '@styles/globals.scss'
-import '@styles/_fonts.scss'
+import type { AppProps, NextWebVitalsMetric } from 'next/app';
+import '@styles/tailwind.css';
+import '@styles/globals.scss';
+import '@styles/_fonts.scss';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { i18n, appWithTranslation } from '@i18n'
+import { i18n, appWithTranslation } from '@i18n';
 import { languageMap } from '@utils/Constants';
 import Head from 'next/head';
-
+import getConfig from 'next/config';
 
 // export function reportWebVitals(metric: NextWebVitalsMetric) {
 //   console.log(metric)
@@ -18,27 +18,36 @@ let currentLanguage = 'english';
 
 function App({ Component, pageProps, data }) {
   const router = useRouter();
+  const { publicRuntimeConfig } = getConfig();
 
   useEffect(() => {
     const handleRouteChange = (url) => {
-      if (url.split('/')[1] !== currentLanguage) {
-        currentLanguage = url.split('/')[1];
+      const urlSplit = url.split('/');
+      if (urlSplit[1] !== currentLanguage) {
+        currentLanguage = urlSplit[1];
         document.documentElement.lang = languageMap[currentLanguage];
         i18n.changeLanguage(document.documentElement.lang);
       }
-      console.log('App is changing to: ', url)
+      var match = urlSplit.slice(-1)[0].match(/\w{2}[0-9]+$/);
+      if (!(match && match[0])) {
+        const newUrl = `${
+          publicRuntimeConfig.APP_ENV === 'staging'
+            ? 'https://staging.etvbharat.com'
+            : 'https://www.etvbharat.com'
+        }${url}`;
+        window.location.replace(newUrl);
+      }
+      console.log('App is changing to: ', url);
+    };
 
-    }
-
-    router.events.on('routeChangeComplete', handleRouteChange)
+    router.events.on('routeChangeComplete', handleRouteChange);
 
     // If the component is unmounted, unsubscribe
     // from the event with the `off` method:
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [])
-
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, []);
 
   return (
     <>
@@ -49,8 +58,11 @@ function App({ Component, pageProps, data }) {
         <meta name="bingbots" content="all" />
         <meta name="robots" content="all" />
       </Head>
-      <Layout><Component {...pageProps} /></Layout>
-    </>)
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </>
+  );
 }
 
 App.getInitialProps = async ({ Component, ctx }) => {
@@ -62,4 +74,4 @@ App.getInitialProps = async ({ Component, ctx }) => {
   return { pageProps, data: '' };
 };
 
-export default appWithTranslation(App)
+export default appWithTranslation(App);
