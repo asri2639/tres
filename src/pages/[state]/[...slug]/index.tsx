@@ -41,7 +41,6 @@ const slug: NextPage<Propss> = ({ data, pageType }) => {
             scripts.push(matchedScript[0]);
           }
         } while (matchedScript);
-        // console.log(scripts);
 
         if (typeof window !== 'undefined') {
           scripts.forEach((v) => {
