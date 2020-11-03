@@ -118,7 +118,11 @@ export default function API(...controllers): any {
     ) {
       config.baseURL = 'https://prod.suv.etvbharat.com';
     } else {
-      config.url = `${config.url}&auth_token=${Constants.authToken}&access_token=${Constants.accessToken}`;
+      if (config.url.indexOf('msite') >= 0) {
+        config.url = `${config.url}&auth_token=${Constants.mAuthToken}&access_token=${Constants.mAccessToken}`;
+      } else {
+        config.url = `${config.url}&auth_token=${Constants.authToken}&access_token=${Constants.accessToken}`;
+      }
     }
     return config;
   });

@@ -14,12 +14,22 @@ const accessToken =
     ? 'TjeNsXehJqhh2DGJzBY9'
     : 'fwrYv4w5Tz8QKYWQ17u2';
 
+const mAccessToken =
+  env === 'production'
+    ? 'woB1UukKSzZ5aduEUxwt'
+    : env === 'development'
+    ? 'woB1UukKSzZ5aduEUxwt'
+    : 'oN5eiUpVazqaAYXzaPNY';
+
+const mAuthToken = 'kmAJAH4RTtqHjgoauC4o';
 const authToken = 'xBUKcKnXfngfrqGoF93y';
 
 const Constants = Object.freeze({
   baseURL: baseURL,
   authToken: authToken,
   accessToken: accessToken,
+  mAccessToken: mAccessToken,
+  mAuthToken: mAuthToken,
   socialURLs: {
     facebook: 'https://www.facebook.com/ETVBharatEnglish',
     twitter: 'https://twitter.com/eenadu_english',
