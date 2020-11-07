@@ -85,6 +85,8 @@ export default function MobileHeader({ data, className }) {
           onClose={() => {
             setOpenStateModal([]);
           }}
+          width={null}
+          height={null}
         >
           <>
             <div className="p-4 rounded-md"  style={{ background: '#f0f0f0' }}>

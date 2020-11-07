@@ -86,6 +86,8 @@ export default function MobileFooter({ data, menu }) {
           onClose={() => {
             setOpenStateModal([]);
           }}
+          width={null}
+          height={null}
         >
           <>
             <div

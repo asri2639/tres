@@ -88,6 +88,8 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
           open={!!openStateModal}
           isMobile={false}
           onClose={() => setOpenStateModal([])}
+          width={null}
+          height={null}
         >
           <div className="px-6 py-4 flex justify-around items-center h-24">
             <div className="text-md font-medium">{t('state')}</div>
