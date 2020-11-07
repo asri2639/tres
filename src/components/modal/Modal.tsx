@@ -3,13 +3,25 @@ import { useState } from 'react';
 import { withTranslation } from '@i18n';
 import { WithTranslation } from 'next-i18next';
 
-const Modal = ({ open, title, onClose, children, isMobile, t }: IModal) => {
+const Modal = ({
+  open,
+  title,
+  onClose,
+  children,
+  isMobile,
+  t,
+  width,
+  height,
+}: IModal) => {
   return (
     <>
       {open && (
         <ClientOnlyPortal selector="#modal">
           <div className="backdrop flex justify-center items-center">
-            <div className="modal">
+            <div
+              className="modal"
+              style={{ width: width || 'auto', height: height || 'auto' }}
+            >
               {!isMobile ? (
                 <div className="header text-xl flex justify-between bg-gray-300 p-4 items-center">
                   <div className="text-gray-600 font-semibold">
@@ -65,7 +77,9 @@ interface IModal extends WithTranslation {
   title: string;
   onClose: any;
   children: any;
-  isMobile:Boolean;
+  isMobile: Boolean;
+  width: any;
+  height: any;
 }
 
 export default withTranslation('common')(Modal);

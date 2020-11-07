@@ -1,7 +1,8 @@
 import axios from 'axios';
-import Constants from '@utils/Constants';
+import Constants, { accessToken } from '@utils/Constants';
 // import toast from '@utils/ToastHelper';
 import getConfig from 'next/config';
+import { APIRequest } from '@interfaces/API';
 const { publicRuntimeConfig } = getConfig();
 
 const CancelToken = axios.CancelToken;
@@ -120,10 +121,12 @@ export default function API(...controllers): any {
     ) {
       config.baseURL = 'https://prod.suv.etvbharat.com';
     } else {
-      if (config.url.indexOf('msite') >= 0) {
-        config.url = `${config.url}&auth_token=${Constants.mAuthToken}&access_token=${Constants.mAccessToken}`;
-      } else {
-        config.url = `${config.url}&auth_token=${Constants.authToken}&access_token=${Constants.accessToken}`;
+      if (!config.url.startsWith('/access_token')) {
+        if (config.url.indexOf('msite') >= 0) {
+          config.url = `${config.url}&auth_token=${Constants.mAuthToken}&access_token=${accessToken.mobile}`;
+        } else {
+          config.url = `${config.url}&auth_token=${Constants.authToken}&access_token=${accessToken.web}`;
+        }
       }
     }
     return config;
@@ -160,6 +163,15 @@ export default function API(...controllers): any {
       source.cancel();
       inst = null;
     },
+    getAccessToken({ params, query, ...config }: APIRequest) {
+      return inst.get(`/access_token?auth_token=${params.auth_token}`, config);
+    },
     ...requiredServices,
   };
 }
+
+// export const getTokenDetails = async () => {
+//   if(typeof window === 'undefined') {
+//     fetch('https://staging.api.etvbharat.com/access_token?auth_token=kmAJAH4RTtqHjgoauC4o')
+//   }
+// }

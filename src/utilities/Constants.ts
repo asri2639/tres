@@ -10,19 +10,19 @@ const baseURL =
     ? 'http://localhost:3000/api'
     : 'https://staging.api.etvbharat.com';
 
-const accessToken =
-  env === 'production'
-    ? 'TjeNsXehJqhh2DGJzBY9'
-    : env === 'development'
-    ? 'TjeNsXehJqhh2DGJzBY9'
-    : 'fwrYv4w5Tz8QKYWQ17u2';
+// const accessToken =
+//   env === 'production'
+//     ? 'TjeNsXehJqhh2DGJzBY9'
+//     : env === 'development'
+//     ? 'TjeNsXehJqhh2DGJzBY9'
+//     : 'fwrYv4w5Tz8QKYWQ17u2';
 
-const mAccessToken =
-  env === 'production'
-    ? 'woB1UukKSzZ5aduEUxwt'
-    : env === 'development'
-    ? 'woB1UukKSzZ5aduEUxwt'
-    : 'oN5eiUpVazqaAYXzaPNY';
+// const mAccessToken =
+//   env === 'production'
+//     ? 'woB1UukKSzZ5aduEUxwt'
+//     : env === 'development'
+//     ? 'woB1UukKSzZ5aduEUxwt'
+//     : 'oN5eiUpVazqaAYXzaPNY';
 
 const mAuthToken = 'kmAJAH4RTtqHjgoauC4o';
 const authToken = 'xBUKcKnXfngfrqGoF93y';
@@ -30,8 +30,6 @@ const authToken = 'xBUKcKnXfngfrqGoF93y';
 const Constants = Object.freeze({
   baseURL: baseURL,
   authToken: authToken,
-  accessToken: accessToken,
-  mAccessToken: mAccessToken,
   mAuthToken: mAuthToken,
   socialURLs: {
     facebook: 'https://www.facebook.com/ETVBharatEnglish',
@@ -43,6 +41,11 @@ const Constants = Object.freeze({
     ios: 'https://itunes.apple.com/us/app/yourapp/id1453416186',
   },
 });
+
+export const accessToken = {
+  web: '',
+  mobile: '',
+};
 
 export const languageMap = {
   assamese: 'as',

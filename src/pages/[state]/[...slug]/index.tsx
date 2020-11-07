@@ -12,6 +12,7 @@ import { languageMap } from '@utils/Constants';
 import GalleryList from '@components/gallery/GalleryList';
 import { useRouter } from 'next/router';
 import VideoList from '@components/video/VideoList';
+import getConfig from 'next/config';
 
 interface Propss {
   data?: any;
@@ -236,11 +237,13 @@ const slug: NextPage<Propss> = ({ data, pageType }) => {
   return <>{data ? getComponent() : <div>nothing</div>}</>;
 };
 
-slug.getInitialProps = async ({ query, req, ...args }) => {
+slug.getInitialProps = async ({ query, req, res, ...args }) => {
   let i18n = null;
   let language = 'en';
   let state = 'na';
   let params = null;
+  const { publicRuntimeConfig } = getConfig();
+
   if (req && req['i18n']) {
     i18n = req['i18n'];
     language = i18n.language;
@@ -324,6 +327,20 @@ slug.getInitialProps = async ({ query, req, ...args }) => {
           pageType: 'article',
           data: article,
         };
+    }
+  } else if (typeof window === 'undefined') {
+    const id = query.slug.slice(-1)[0];
+    var match = id.match(/\w{2,6}[0-9]+$/);
+    if (!(match && match[0])) {
+      res.writeHead(302, {
+        // or 301
+        Location: `${
+          publicRuntimeConfig.APP_ENV === 'staging'
+            ? 'https://staging.etvbharat.com'
+            : 'https://www.etvbharat.com'
+        }${req.url}`,
+      });
+      res.end();
     }
   }
 

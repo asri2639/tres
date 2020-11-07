@@ -3,12 +3,13 @@ import type { AppProps, NextWebVitalsMetric } from 'next/app';
 import '@styles/tailwind.css';
 import '@styles/globals.scss';
 import '@styles/_fonts.scss';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { i18n, appWithTranslation } from '@i18n';
-import { languageMap } from '@utils/Constants';
+import Constants, { accessToken, languageMap } from '@utils/Constants';
 import Head from 'next/head';
 import getConfig from 'next/config';
+import API from '@services/api/API';
 
 // export function reportWebVitals(metric: NextWebVitalsMetric) {
 //   console.log(metric)
@@ -16,7 +17,7 @@ import getConfig from 'next/config';
 
 let currentLanguage = 'english';
 
-function App({ Component, pageProps, data }) {
+function App({ Component, pageProps, data, accessToken }) {
   const router = useRouter();
   const { publicRuntimeConfig } = getConfig();
 
@@ -58,20 +59,43 @@ function App({ Component, pageProps, data }) {
         <meta name="bingbots" content="all" />
         <meta name="robots" content="all" />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {accessToken.web.length && accessToken.mobile.length ? (
+        <Layout accessToken={accessToken}>
+          <Component {...pageProps} />
+        </Layout>
+      ) : null}
     </>
   );
 }
 
 App.getInitialProps = async ({ Component, ctx }) => {
   let pageProps = {};
+
+  const api = API();
+
+  if (accessToken.web.length === 0) {
+    const result = await api.getAccessToken({
+      params: {
+        auth_token: Constants.authToken,
+      },
+    });
+    accessToken.web = result.data.data.access_token;
+  }
+
+  if (accessToken.mobile.length === 0) {
+    const result = await api.getAccessToken({
+      params: {
+        auth_token: Constants.mAuthToken,
+      },
+    });
+    accessToken.mobile = result.data.data.access_token;
+  }
+
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
   }
 
-  return { pageProps, data: '' };
+  return { pageProps, data: '', accessToken };
 };
 
 export default appWithTranslation(App);

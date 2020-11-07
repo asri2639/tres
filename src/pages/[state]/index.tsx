@@ -6,11 +6,11 @@ const state = ({ t }) => {
   return <div></div>;
 };
 
-state.getServerSideProps = async ({ req, res }) => {
+state.getInitialProps = async ({ req, res }) => {
   const { publicRuntimeConfig } = getConfig();
 
   if (res) {
-    res.writeHead(301, {
+    res.writeHead(302, {
       // or 301
       Location: `${
         publicRuntimeConfig.APP_ENV === 'staging'

@@ -64,13 +64,22 @@ export default function DesktopSidebar({ data, onClose }) {
               <div key={item.list_id} className="w-full">
                 <div className="flex items-center flex-wrap justify-between h-12 pl-8 pr-6 hover:bg-gray-300">
                   <NavLink
-                    href={{
-                      pathname: '/[state]/[...slug]',
-                      query: {
-                        state: item.url.split('/')[2],
-                        slug: item.url.split('/').slice(3).join('/'),
-                      },
-                    }}
+                    href={
+                      item.url.split('/').length > 3
+                        ? {
+                            pathname: '/[state]/[...slug]',
+                            query: {
+                              state: item.url.split('/')[2],
+                              slug: item.url.split('/').slice(3).join('/'),
+                            },
+                          }
+                        : {
+                            pathname: '/[state]',
+                            query: {
+                              state: item.url.split('/')[2],
+                            },
+                          }
+                    }
                     as={item.url}
                     passHref
                   >

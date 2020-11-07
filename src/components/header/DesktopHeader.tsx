@@ -291,13 +291,22 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
                       onMouseEnter={() => setInitialCategory(item)}
                     >
                       <NavLink
-                        href={{
-                          pathname: '/[state]/[...slug]',
-                          query: {
-                            state: item.url.split('/')[2],
-                            slug: item.url.split('/').slice(3).join('/'),
-                          },
-                        }}
+                        href={
+                          item.url.split('/').length > 3
+                            ? {
+                                pathname: '/[state]/[...slug]',
+                                query: {
+                                  state: item.url.split('/')[2],
+                                  slug: item.url.split('/').slice(3).join('/'),
+                                },
+                              }
+                            : {
+                                pathname: '/[state]',
+                                query: {
+                                  state: item.url.split('/')[2],
+                                },
+                              }
+                        }
                         as={item.url}
                         passHref
                       >
@@ -389,8 +398,14 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
             ) : null}
           </div>
 
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center w-full">
             {/* <iframe className="mx-auto" width={755} height={110} src={`https://www.etvbharat.com/banner-near-logo/${router.query.state}/business/728x90-1.htm`}/> */}
+            <iframe
+              className="mx-auto"
+              width={755}
+              height={110}
+              src="https://www.etvbharat.com/banner-near-logo/english/national/home/728x90-1.html"
+            />
           </div>
         </div>
       </div>

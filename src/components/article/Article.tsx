@@ -6,6 +6,7 @@ import AdContainer from "@components/article/AdContainer";
 import { thumbnailExtractor } from "@utils/Helpers";
 import { Media, MediaContextProvider } from "@media";
 import SocialMedia from "@components/article/SocialMedia";
+import Thumbnail from "@components/common/Thumbnail";
 
 
 export default function Article({ contentId, data, html, className, rhs, nextArticle, scrollToNextArticle }) {
@@ -110,7 +111,7 @@ export default function Article({ contentId, data, html, className, rhs, nextArt
     <div data-content-id={contentId} className="article relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10">
 
       <MediaContextProvider >
-        <Media greaterThan="xs" className="lg-social hidden absolute md:flex flex-col justify-around pt-2 h-48 " >
+        <Media greaterThan="xs" className="lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 " >
           <SocialMedia data={data} />
         </Media>
       </MediaContextProvider>
@@ -120,7 +121,7 @@ export default function Article({ contentId, data, html, className, rhs, nextArt
         <div className={`${className || ''} lg:container lg:mx-auto px-3 md:px-0 `}>
           <div className="flex flex-col md:flex-col-reverse md:mb-8">
             <div className="-mx-3 md:mx-0">
-              <img className="md:rounded-lg" src={thumbnail.url} alt={thumbnail.alt_tags} />
+            <Thumbnail thumbnail={thumbnail} className={'md:rounded-lg'} />
             </div>
             <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
               <h1 ref={setRefs} className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold">{data.title}</h1>

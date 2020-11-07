@@ -5,15 +5,17 @@ import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import { useContext, useEffect, useState } from 'react';
 import { I18nContext } from 'next-i18next';
+import { accessToken as token } from '@utils/Constants';
 
 const country = 'IN';
 
-const Layout = ({ children }) => {
+const Layout = ({ children , accessToken}) => {
   const api = API(APIEnum.Catalog, APIEnum.CatalogList);
   const [data, setData] = useState({ footer: [], header: {} });
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
+
 
   useEffect(() => {
     const populateData = async () => {
@@ -61,8 +63,12 @@ const Layout = ({ children }) => {
         footer: requiredData,
       });
     };
-    populateData();
-  }, [language]);
+    if(accessToken.mobile.length) {
+      token.web = accessToken.web;
+      token.mobile = accessToken.mobile;
+      populateData();
+    }
+  }, [language, accessToken]);
 
   return (
     <>

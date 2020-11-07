@@ -105,7 +105,7 @@ const Video = ({
       <MediaContextProvider>
         <Media
           greaterThan="xs"
-          className="lg-social hidden absolute md:flex flex-col justify-around pt-2 h-48 "
+          className="lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 "
         >
           <SocialMedia data={data} />
         </Media>
