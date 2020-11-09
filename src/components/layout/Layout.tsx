@@ -64,6 +64,7 @@ const Layout = ({ children , accessToken}) => {
       });
     };
     if(accessToken.mobile.length) {
+      console.log(token)
       token.web = accessToken.web;
       token.mobile = accessToken.mobile;
       populateData();
