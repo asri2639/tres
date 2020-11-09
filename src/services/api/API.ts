@@ -73,8 +73,26 @@ class APIError extends Error {
   }
 }
 
-function errorResponseHandler(error) {
-  // console.log(error);
+async function errorResponseHandler(error) {
+  if (
+    error.response.status === 422 &&
+    error.response.data.error.message.indexOf('access_token') >= 0
+  ) {
+    const api = API();
+    const result1 = await api.getAccessToken({
+      params: {
+        auth_token: Constants.authToken,
+      },
+    });
+    accessToken.web = result1.data.data.access_token;
+
+    const result = await api.getAccessToken({
+      params: {
+        auth_token: Constants.mAuthToken,
+      },
+    });
+    accessToken.mobile = result.data.data.access_token;
+  }
   // check for errorHandle config
   if (
     error &&
@@ -132,10 +150,10 @@ export default function API(...controllers): any {
     return config;
   });
 
-  inst.interceptors.response.use((response) => {
+  inst.interceptors.response.use(async (response) => {
     // Do something with response data
     if (response.error != null) {
-      errorResponseHandler(response);
+      await errorResponseHandler(response);
       return Promise.reject(response);
     }
     return response;
