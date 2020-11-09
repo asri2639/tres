@@ -1,7 +1,8 @@
 import { APIRequest } from '@interfaces/API';
 import { stateCodeConverter } from '@utils/Helpers';
+const env = process.env.NEXT_PUBLIC_APP_ENV;
 
-const controller = '/';
+const controller = env === 'staging' ? '/api/' : '/';
 
 export default function Video(inst) {
   return {
