@@ -15,7 +15,7 @@ import VideoList from '@components/video/VideoList';
 import getConfig from 'next/config';
 
 interface Propss {
-  data?: any;
+  data: any;
   pageType: String;
 }
 
@@ -234,7 +234,7 @@ const slug: NextPage<Propss> = ({ data, pageType }) => {
         );
     }
   };
-  return <>{data ? getComponent() : <div>nothing</div>}</>;
+return <>{data ? getComponent() :<div>Nothing {data+''}</div>}</>;
 };
 
 slug.getInitialProps = async ({ query, req, res, ...args }) => {
@@ -279,7 +279,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
         const videoResp = videoResponse.data.data.catalog_list_items[0];
         const video = videoResp.catalog_list_items[0];
-
         // Pass data to the page via props
         return {
           pageType: 'video',

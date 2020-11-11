@@ -75,6 +75,7 @@ class APIError extends Error {
 
 async function errorResponseHandler(error) {
   if (
+    error.response &&
     error.response.status === 422 &&
     error.response.data.error.message.indexOf('access_token') >= 0
   ) {
@@ -107,7 +108,8 @@ async function errorResponseHandler(error) {
     const handled = apiStatusHandler(error);
     if (!handled) {
       const message = error.response.data ? error.response.data.error_code : '';
-      return Promise.reject(new APIError(message, error.response.data));
+      // return Promise.reject(new APIError(message, error.response.data));
+      return Promise.reject(error);
       // throw new APIError(message, error.response.data);
     }
     return Promise.reject(new APIError(error)); // here it was Promise.resolve

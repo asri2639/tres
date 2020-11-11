@@ -159,9 +159,7 @@ const VideoList = ({ videoData }) => {
     [
       videoData.videos[0].data.play_url.url,
       createHash(
-        'ywVXaTzycwZ8agEs3ujx' +
-          videoData.videos[0].data.play_url.url +
-          '?service_id=10&play_url=yes&video_duration=yes&protocol=hls&us='
+        'ywVXaTzycwZ8agEs3ujx' + videoData.videos[0].data.play_url.url
       ),
     ],
     smartUrlFetcher,
@@ -253,9 +251,7 @@ const VideoList = ({ videoData }) => {
               params: {
                 play_url: newVideo.play_url.url,
                 hash: createHash(
-                  'ywVXaTzycwZ8agEs3ujx' +
-                    newVideo.play_url.url +
-                    '?service_id=10&play_url=yes&video_duration=yes&protocol=hls&us='
+                  'ywVXaTzycwZ8agEs3ujx' + newVideo.play_url.url
                 ),
               },
             }).then(async (res1) => {
