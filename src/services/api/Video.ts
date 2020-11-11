@@ -1,6 +1,8 @@
 import { APIRequest } from '@interfaces/API';
-import { stateCodeConverter } from '@utils/Helpers';
+import getConfig from 'next/config';
 
+const { publicRuntimeConfig } = getConfig();
+const env = publicRuntimeConfig.APP_ENV;
 const controller = '/';
 
 export default function Video(inst) {
@@ -12,7 +14,9 @@ export default function Video(inst) {
           url.pathname.split('/').slice(-1)[0]
         }?service_id=10&play_url=yes&video_duration=yes&protocol=hls&us=${
           params.hash
-        }&auth_token=xBUKcKnXfngfrqGoF93y`,
+        }&auth_token=xBUKcKnXfngfrqGoF93y${
+          env === 'staging' ? '&env=staging' : ''
+        }`,
         config
       );
     },
