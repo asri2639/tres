@@ -153,13 +153,11 @@ const VideoList = ({ videoData }) => {
         payload: null,
       })
       .then((response) => {
-        console.log(response);
         return response.json();
       })
       .then((resp) => {
-        console.log(resp.data);
-
-        return resp.data;
+        console.log(resp);
+        return resp;
       });
   };
 
