@@ -19,7 +19,8 @@ export default function Video(inst) {
         }&auth_token=xBUKcKnXfngfrqGoF93y`,
         {
           method: 'GET', // *GET, POST, PUT, DELETE, etc.
-          mode: 'no-cors', // no-cors, *cors, same-origin
+          // mode: 'no-cors', // no-cors, *cors, same-origin
+          mode: 'cors',
           cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
           headers: {
             'Content-Type': 'application/json',
