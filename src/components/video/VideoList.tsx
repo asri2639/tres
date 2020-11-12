@@ -152,8 +152,13 @@ const VideoList = ({ videoData }) => {
         query: null,
         payload: null,
       })
-      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
       .then((resp) => {
+        console.log(resp.data);
+
         return resp.data;
       });
   };
@@ -263,6 +268,7 @@ const VideoList = ({ videoData }) => {
               })
               .then((response) => response.json())
               .then(async (res1) => {
+                console.log(res1);
                 const iframeSource = constructPlaybackUrl(newVideo, res1.data);
 
                 const newList = [
