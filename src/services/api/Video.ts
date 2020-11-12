@@ -12,14 +12,12 @@ export default function Video(inst) {
       return fetch(
         `https://prod.suv.etvbharat.com/v2/smart_urls/${
           url.pathname.split('/').slice(-1)[0]
-        }?service_id=10&play_url=yes${
-          env === 'staging' ? '&env=staging' : ''
-        }&video_duration=yes&protocol=hls&us=${
+        }?service_id=10&play_url=yes&video_duration=yes&protocol=hls&us=${
           params.hash
         }&auth_token=xBUKcKnXfngfrqGoF93y`,
         {
           method: 'GET', // *GET, POST, PUT, DELETE, etc.
-          mode: 'no-cors', // no-cors, *cors, same-origin
+          // mode: 'no-cors', // no-cors, *cors, same-origin
           cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
           headers: {
             'Content-Type': 'application/json',
