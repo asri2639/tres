@@ -12,12 +12,13 @@ import Breadcrumbs from '@components/article/Breadcrumbs';
 import Video from '@components/video/Video';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
+import VideoAPI from '@services/api/Video';
 
 const VideoList = ({ videoData }) => {
   const { publicRuntimeConfig } = getConfig();
 
   const router = useRouter();
-  const api = API(APIEnum.CatalogList, APIEnum.Video);
+  const api = API(APIEnum.CatalogList);
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
@@ -142,17 +143,19 @@ const VideoList = ({ videoData }) => {
 
   const smartUrlFetcher = (...args) => {
     const [play_url, hash] = args;
-    return api.Video.getSmartUrls({
-      params: {
-        play_url: play_url,
-        hash,
-      },
-      config: {
-        suv: true,
-      },
-    }).then((resp) => {
-      return resp.data;
-    });
+    return VideoAPI(null)
+      .getSmartUrls({
+        params: {
+          play_url: play_url,
+          hash,
+        },
+        query: null,
+        payload: null,
+      })
+      .then((response) => response.json())
+      .then((resp) => {
+        return resp.data;
+      });
   };
 
   const { data: smartUrls, error: smartUrlError } = useSWR(

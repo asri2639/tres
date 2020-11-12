@@ -11,10 +11,9 @@ const devProxy = {
       // when request.headers.host == 'dev.localhost:3000',
       // override target 'http://www.example.org' to 'http://localhost:8000'
       'http://localhost:3000': 'https://www.etvbharat.com',
-      'https://react.staging.etvbharat.com': 'https://www.etvbharat.com',
     },
   },
- /*  '/api': {
+  '/api': {
     target: 'https://prod.api.etvbharat.com/',
     pathRewrite: { '^/api': '/' },
     changeOrigin: true,
@@ -23,13 +22,12 @@ const devProxy = {
       // override target 'http://www.example.org' to 'http://localhost:8000'
       'http://localhost:3000': 'https://www.etvbharat.com',
     },
-  }, */
+  },
 };
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const env = process.env.NEXT_PUBLIC_APP_ENV;
-const dev = env !== 'production' // && env !== 'staging';
-console.log('is dev', dev)
+const dev = env !== 'production' && env !== 'staging';
 const app = next({
   dir: '.', // base directory where everything is, could move to src later
   dev,
