@@ -250,29 +250,34 @@ const VideoList = ({ videoData }) => {
             const rhs = res.data.data.catalog_list_items.slice(2)[0]
               .catalog_list_items;
 
-            await api.Video.getSmartUrls({
-              params: {
-                play_url: newVideo.play_url.url,
-                hash: createHash(
-                  'ywVXaTzycwZ8agEs3ujx' + newVideo.play_url.url
-                ),
-              },
-            }).then(async (res1) => {
-              const iframeSource = constructPlaybackUrl(newVideo, res1.data);
-
-              const newList = [
-                ...videos,
-                {
-                  data: newVideo,
-                  rhs,
-                  contentId: newVideo.content_id,
-                  iframeSource,
+            await VideoAPI(null)
+              .getSmartUrls({
+                params: {
+                  play_url: newVideo.play_url.url,
+                  hash: createHash(
+                    'ywVXaTzycwZ8agEs3ujx' + newVideo.play_url.url
+                  ),
                 },
-              ];
+                query: null,
+                payload: null,
+              })
+              .then((response) => response.json())
+              .then(async (res1) => {
+                const iframeSource = constructPlaybackUrl(newVideo, res1.data);
 
-              setVideos(newList);
-              stopLoading();
-            });
+                const newList = [
+                  ...videos,
+                  {
+                    data: newVideo,
+                    rhs,
+                    contentId: newVideo.content_id,
+                    iframeSource,
+                  },
+                ];
+
+                setVideos(newList);
+                stopLoading();
+              });
           });
         }
       }
