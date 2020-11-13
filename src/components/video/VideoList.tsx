@@ -12,13 +12,12 @@ import Breadcrumbs from '@components/article/Breadcrumbs';
 import Video from '@components/video/Video';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
-import VideoAPI from '@services/api/Video';
 
 const VideoList = ({ videoData }) => {
   const { publicRuntimeConfig } = getConfig();
 
   const router = useRouter();
-  const api = API(APIEnum.CatalogList);
+  const api = API(APIEnum.CatalogList, APIEnum.Video);
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
@@ -143,22 +142,17 @@ const VideoList = ({ videoData }) => {
 
   const smartUrlFetcher = (...args) => {
     const [play_url, hash] = args;
-    return VideoAPI(null)
-      .getSmartUrls({
-        params: {
-          play_url: play_url,
-          hash,
-        },
-        query: null,
-        payload: null,
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((resp) => {
-        console.log(resp);
-        return resp;
-      });
+    return api.Video.getSmartUrls({
+      params: {
+        play_url: play_url,
+        hash,
+      },
+      config: {
+        suv: true,
+      },
+    }).then((resp) => {
+      return resp.data;
+    });
   };
 
   const { data: smartUrls, error: smartUrlError } = useSWR(
@@ -253,35 +247,29 @@ const VideoList = ({ videoData }) => {
             const rhs = res.data.data.catalog_list_items.slice(2)[0]
               .catalog_list_items;
 
-            await VideoAPI(null)
-              .getSmartUrls({
-                params: {
-                  play_url: newVideo.play_url.url,
-                  hash: createHash(
-                    'ywVXaTzycwZ8agEs3ujx' + newVideo.play_url.url
-                  ),
+            await api.Video.getSmartUrls({
+              params: {
+                play_url: newVideo.play_url.url,
+                hash: createHash(
+                  'ywVXaTzycwZ8agEs3ujx' + newVideo.play_url.url
+                ),
+              },
+            }).then(async (res1) => {
+              const iframeSource = constructPlaybackUrl(newVideo, res1.data);
+
+              const newList = [
+                ...videos,
+                {
+                  data: newVideo,
+                  rhs,
+                  contentId: newVideo.content_id,
+                  iframeSource,
                 },
-                query: null,
-                payload: null,
-              })
-              .then((response) => response.json())
-              .then(async (res1) => {
-                console.log(res1);
-                const iframeSource = constructPlaybackUrl(newVideo, res1.data);
+              ];
 
-                const newList = [
-                  ...videos,
-                  {
-                    data: newVideo,
-                    rhs,
-                    contentId: newVideo.content_id,
-                    iframeSource,
-                  },
-                ];
-
-                setVideos(newList);
-                stopLoading();
-              });
+              setVideos(newList);
+              stopLoading();
+            });
           });
         }
       }
