@@ -12,6 +12,7 @@ import Breadcrumbs from '@components/article/Breadcrumbs';
 import Video from '@components/video/Video';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
+import VideoAPI from '@services/api/Video';
 
 const VideoList = ({ videoData }) => {
   const { publicRuntimeConfig } = getConfig();
@@ -142,17 +143,18 @@ const VideoList = ({ videoData }) => {
 
   const smartUrlFetcher = (...args) => {
     const [play_url, hash] = args;
-    return api.Video.getSmartUrls({
-      params: {
-        play_url: play_url,
-        hash,
-      },
-      config: {
-        suv: true,
-      },
-    }).then((resp) => {
-      return resp.data;
-    });
+    return VideoAPI(null)
+      .getSmartUrls({
+        params: {
+          play_url: play_url,
+          hash,
+        },
+        query: null,
+        payload: null,
+      })
+      .then((resp) => {
+        return resp;
+      });
   };
 
   const { data: smartUrls, error: smartUrlError } = useSWR(
@@ -247,29 +249,33 @@ const VideoList = ({ videoData }) => {
             const rhs = res.data.data.catalog_list_items.slice(2)[0]
               .catalog_list_items;
 
-            await api.Video.getSmartUrls({
-              params: {
-                play_url: newVideo.play_url.url,
-                hash: createHash(
-                  'ywVXaTzycwZ8agEs3ujx' + newVideo.play_url.url
-                ),
-              },
-            }).then(async (res1) => {
-              const iframeSource = constructPlaybackUrl(newVideo, res1.data);
-
-              const newList = [
-                ...videos,
-                {
-                  data: newVideo,
-                  rhs,
-                  contentId: newVideo.content_id,
-                  iframeSource,
+            await await VideoAPI(null)
+              .getSmartUrls({
+                params: {
+                  play_url: newVideo.play_url.url,
+                  hash: createHash(
+                    'ywVXaTzycwZ8agEs3ujx' + newVideo.play_url.url
+                  ),
                 },
-              ];
+                query: null,
+                payload: null,
+              })
+              .then(async (res1) => {
+                const iframeSource = constructPlaybackUrl(newVideo, res1);
 
-              setVideos(newList);
-              stopLoading();
-            });
+                const newList = [
+                  ...videos,
+                  {
+                    data: newVideo,
+                    rhs,
+                    contentId: newVideo.content_id,
+                    iframeSource,
+                  },
+                ];
+
+                setVideos(newList);
+                stopLoading();
+              });
           });
         }
       }
