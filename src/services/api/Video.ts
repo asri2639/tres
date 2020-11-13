@@ -9,9 +9,10 @@ const controller = '/';
 export default function Video(inst) {
   return {
     getSmartUrls({ params, query, ...config }: APIRequest) {
+      const url = new URL(params.play_url);
       return inst.get(
         `${controller}v2/smart_urls/${
-          params.play_url.split('/').slice(-1)[0]
+          url.pathname.split('/').slice(-1)[0]
         }?service_id=10&play_url=yes${
           env === 'staging' ? '&env=staging' : ''
         }&video_duration=yes&protocol=hls&us=${
