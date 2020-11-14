@@ -222,7 +222,7 @@ export default {
     }
   },
 
-  
+  /*
   newArticleView: function (e) {
     if (f.newsArticle) {
       var t = 'INDIA',
@@ -550,7 +550,7 @@ export default {
       current_page_url: s,
     });
   },
-  /*  getTabsOfSearch: function(a.query).then(function(e) {
+    getTabsOfSearch: function(a.query).then(function(e) {
     e.data.catalog_list_items && (angular.forEach(e.data.catalog_list_items, function(e) {
       i.tabsGtm.push(e),
       e.total_items_count > 0 && i.tabs.push(e)
