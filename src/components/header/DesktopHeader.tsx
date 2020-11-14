@@ -10,6 +10,7 @@ import DesktopSidebar from '@components/header/DesktopSidebar';
 import Modal from '@components/modal/Modal';
 import DesktopSubMenu from '@components/header/DesktopSubMenu';
 import { withTranslation } from '@i18n';
+import GoogleTagManager from '@utils/GoogleTagManager';
 
 const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
   const router = useRouter();
@@ -29,16 +30,22 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
     const subitem = item.catalog_list_items ? item.catalog_list_items[0] : {};
     setCategory({ ...subitem, title: item.ml_title[0].text });
   };
+
+  const goToLanguageListing = (language, routeParams) => {
+    GoogleTagManager.languageChange(language);
+    setTimeout(() => {
+      router.push(routeParams[0], routeParams[1]);
+    }, 100);
+  };
   const languageNStateSelect = (language, states) => {
     if (language === 'english') {
-      setTimeout(() => {
-        router.push(`/national`, `/${language}/national`);
-      }, 100);
+      goToLanguageListing(language, [`/national`, `/${language}/national`]);
     } else {
       if (states.length === 1) {
-        setTimeout(() => {
-          router.push(`/${states[0].state}`, `/${language}/${states[0].state}`);
-        }, 100);
+        goToLanguageListing(language, [
+          `/${states[0].state}`,
+          `/${language}/${states[0].state}`,
+        ]);
       } else {
         setSelected({ state: '', language: '' });
         setOpenStateModal(states);
@@ -59,6 +66,7 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
   const searchitem = (e) => {
     const goTo = () => {
       toggleSearchBox(false);
+      GoogleTagManager.searchItem(searchInput);
       router.push(
         `/${router.query.state}/search/${searchInput}`,
         `/${options['localeSubpaths'][language]}/${router.query.state}/search/${searchInput}`
@@ -311,6 +319,9 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
                         }
                         as={item.url}
                         passHref
+                        onClick={() => {
+                          GoogleTagManager.menuClick(item, 'headermenu');
+                        }}
                       >
                         {item.ml_title[0].text.toUpperCase()}
                       </NavLink>
@@ -347,7 +358,42 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
                                       })
                                     }
                                   >
-                                    {subitem.ml_title[0].text}
+                                    <NavLink
+                                      className="block"
+                                      href={
+                                        subitem.url.split('/').length > 3
+                                          ? {
+                                              pathname: '/[state]/[...slug]',
+                                              query: {
+                                                state: subitem.url.split(
+                                                  '/'
+                                                )[2],
+                                                slug: subitem.url
+                                                  .split('/')
+                                                  .slice(3)
+                                                  .join('/'),
+                                              },
+                                            }
+                                          : {
+                                              pathname: '/[state]',
+                                              query: {
+                                                state: subitem.url.split(
+                                                  '/'
+                                                )[2],
+                                              },
+                                            }
+                                      }
+                                      as={subitem.url}
+                                      passHref
+                                      onClick={() => {
+                                        GoogleTagManager.subMenuClick(
+                                          subitem,
+                                          ''
+                                        );
+                                      }}
+                                    >
+                                      {subitem.ml_title[0].text}
+                                    </NavLink>
                                   </div>
                                 );
                               })}

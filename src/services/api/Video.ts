@@ -3,7 +3,7 @@ import getConfig from 'next/config';
 
 const { publicRuntimeConfig } = getConfig();
 const env = publicRuntimeConfig.APP_ENV;
-const controller = '/';
+// const controller = '/';
 
 export default function Video(inst) {
   return {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import header from './Header.module.scss';
 import NavLink from '@components/common/NavLink';
+import GoogleTagManager from '@utils/GoogleTagManager';
 
 export default function DesktopSidebar({ data, onClose }) {
   const [open, setOpen] = useState(false);
@@ -82,6 +83,9 @@ export default function DesktopSidebar({ data, onClose }) {
                     }
                     as={item.url}
                     passHref
+                    onClick={() => {
+                      GoogleTagManager.menuClick(item, 'sidemenu');
+                    }}
                   >
                     <div className="flex items-center">
                       <span
@@ -129,6 +133,9 @@ export default function DesktopSidebar({ data, onClose }) {
                           }}
                           as={subitem.url}
                           passHref
+                          onClick={() => {
+                            GoogleTagManager.subMenuClick(subitem, item);
+                          }}
                         >
                           <span> {subitem.ml_title[0].text}</span>
                         </NavLink>

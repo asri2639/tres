@@ -2,6 +2,7 @@ import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
+import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor } from '@utils/Helpers';
 import { I18nContext } from 'next-i18next';
 import { useContext } from 'react';
@@ -69,6 +70,9 @@ export default function DesktopSubMenu({ category }) {
                 }}
                 as={`/${item.web_url}`}
                 passHref
+                onClick={() => {
+                  GoogleTagManager.articleClick(item);
+                }}
               >
                 <div className="">
                   {item.thumbnails ? (

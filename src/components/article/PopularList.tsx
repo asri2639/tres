@@ -1,5 +1,6 @@
 import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
+import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor } from '@utils/Helpers';
 import { useEffect, useState } from 'react';
 import popular from './PopularList.module.scss';
@@ -56,6 +57,9 @@ const PopularList = ({ data }) => {
               }}
               as={`/${v.web_url}`}
               passHref
+              onClick={() => {
+                GoogleTagManager.articleClick(v);
+              }}
             >
               <Thumbnail
                 thumbnail={{ ...thumbnail, alt_tags: v.alt_tags }}

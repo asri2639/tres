@@ -1,5 +1,6 @@
 import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
+import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor } from '@utils/Helpers';
 import { useEffect, useState } from 'react';
 
@@ -74,6 +75,9 @@ const BottomRelatedBar = ({ data }) => {
             }}
             as={`/${rel.web_url}`}
             passHref
+            onClick={() => {
+              GoogleTagManager.articleClick(rel);
+            }}
           >
             <Thumbnail thumbnail={thumbnail} className={'rounded-md w-20'} />
 

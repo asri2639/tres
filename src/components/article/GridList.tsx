@@ -1,5 +1,6 @@
 import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
+import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor } from '@utils/Helpers';
 import grid from './GridList.module.scss';
 
@@ -27,6 +28,9 @@ const GridList = ({ data }) => {
               }}
               as={`/${v.web_url}`}
               passHref
+              onClick={() => {
+                GoogleTagManager.articleClick(v);
+              }}
             >
               <Thumbnail thumbnail={thumbnail} className={'rounded-lg'} />
               <div className="pt-2 leading-tight">{v.display_title}</div>

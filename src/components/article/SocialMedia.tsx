@@ -5,14 +5,15 @@ import {
   LinkedinShareButton,
   TwitterShareButton,
   WhatsappShareButton,
+  RedditShareButton,
   FacebookIcon,
   LinkedinIcon,
   TwitterIcon,
   WhatsappIcon,
-  RedditShareButton,
   RedditIcon,
 } from 'react-share';
 import { thumbnailExtractor } from '@utils/Helpers';
+import GoogleTagManager from '@utils/GoogleTagManager';
 
 const SocialMedia = (data) => {
   const [isOpen, toggleOpen] = useState(false);
@@ -83,30 +84,47 @@ const SocialMedia = (data) => {
           </>
         </Modal>
       ) : null}
-      <FacebookShareButton url={`https://www.etvbharat.com/${data.web_url}`}>
+      <FacebookShareButton
+        url={`https://www.etvbharat.com/${data.web_url}`}
+        beforeOnClick={() => {
+          GoogleTagManager.share(data);
+        }}
+      >
         <FacebookIcon size={32} round={true} />
       </FacebookShareButton>
       <LinkedinShareButton
         title={data.title}
         url={`https://www.etvbharat.com/${data.web_url}`}
+        beforeOnClick={() => {
+          GoogleTagManager.share(data);
+        }}
       >
         <LinkedinIcon size={32} round={true} />
       </LinkedinShareButton>
       <TwitterShareButton
         title={data.title}
         url={`https://www.etvbharat.com/${data.web_url}`}
+        beforeOnClick={() => {
+          GoogleTagManager.share(data);
+        }}
       >
         <TwitterIcon size={32} round={true} />
       </TwitterShareButton>
       <WhatsappShareButton
         title={data.title}
         url={`https://www.etvbharat.com/${data.web_url}`}
+        beforeOnClick={() => {
+          GoogleTagManager.share(data);
+        }}
       >
         <WhatsappIcon size={32} round={true} />
       </WhatsappShareButton>
       <RedditShareButton
         title={data.title}
         url={`https://www.etvbharat.com/${data.web_url}`}
+        beforeOnClick={() => {
+          GoogleTagManager.share(data);
+        }}
       >
         <RedditIcon size={32} round={true} />
       </RedditShareButton>
@@ -115,6 +133,7 @@ const SocialMedia = (data) => {
         className="w-7 mx-auto inline-block cursor-pointer"
         src="/assets/images/comment.png"
         onClick={() => {
+          GoogleTagManager.comment(data);
           toggleOpen(true);
         }}
       ></img>
