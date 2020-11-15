@@ -287,7 +287,7 @@ export default function MobileFooter({ data, menu }) {
               <div className="flex flex-col items-center justify-center whitespace-no-wrap">
                 {!isiOS ? (
                   <NavLink
-                    onClick={() => gtmlAppInstall('Android')}
+                    onClick={() => GoogleTagManager.appInstall('Android')}
                     href={Constants.appURLs.android}
                     passHref
                   >
@@ -300,7 +300,7 @@ export default function MobileFooter({ data, menu }) {
                   </NavLink>
                 ) : (
                   <NavLink
-                    onClick={() => gtmlAppInstall('IOS')}
+                    onClick={() => GoogleTagManager.appInstall('IOS')}
                     href={Constants.appURLs.ios}
                     passHref
                   >
