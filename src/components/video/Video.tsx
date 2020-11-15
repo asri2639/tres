@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useInView, InView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
 import AdContainer from '@components/article/AdContainer';
 import { Media, MediaContextProvider } from '@media';
@@ -67,7 +67,7 @@ const Video = ({
         viewed.push(contentId);
         // updateViewed(viewed);
         // console.log(viewed);
-        GoogleTagManager.newArticleView(data, { videoArticle: true });
+        GoogleTagManager.articleViewScroll(data, { videoArticle: true });
       }
       //  router.push(data.web_url, undefined, { shallow: true })
     }
@@ -122,7 +122,9 @@ const Video = ({
 
       <div className={`${video.container} md:w-8/12  md:h-full`}>
         <div
-          className={`${className || ''} lg:container lg:mx-auto px-3 md:px-0 `}
+          className={`${
+            className || ''
+          } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
         >
           <div className="flex flex-col md:flex-col-reverse md:mb-1">
             <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
@@ -156,14 +158,90 @@ const Video = ({
               </Media>
             </MediaContextProvider>
           </div>
-        </div>
-        {iframeSource ? (
+
           <div className={`${video.player}`}>
-            <iframe src={iframeSource}></iframe>
+            {iframeSource ? (
+              <iframe src={iframeSource}></iframe>
+            ) : (
+              <img
+                className="w-full rounded-md -mt-10"
+                src="/assets/images/placeholder.png"
+                alt="placeholder image"
+              />
+            )}
           </div>
-        ) : null}
-        <div className="px-2 py-4 text-sm lg:text-base text-justify lg:text-left">
-          {data.description}
+
+          <div className="px-2 py-4 text-sm lg:text-base text-justify lg:text-left">
+            {data.description}
+          </div>
+
+         
+          <InView
+            as="div"
+            className="pseudo quarter"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { videoArticle: true },
+                  25
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
+          <InView
+            as="div"
+            className="pseudo half"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { videoArticle: true },
+                  50
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
+
+          <InView
+            as="div"
+            className="pseudo three-quarter"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { videoArticle: true },
+                  75
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
+
+          <InView
+            as="div"
+            className="pseudo full"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { videoArticle: true },
+                  100
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
         </div>
       </div>
 

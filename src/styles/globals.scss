@@ -29,6 +29,31 @@ section.content {
   display: flex;
   flex-direction: column;
 }
+
+.actual-content {
+  min-height: 100vh;
+  position: relative;
+
+  .pseudo {
+    position: absolute;
+    z-index: 1;
+    height: 20px;
+    width: 200px;
+  }
+
+  .quarter {
+    top: 25%;
+  }
+  .half {
+    top: 50%;
+  }
+  .three-quarter {
+    top: 75%;
+  }
+  .full {
+    top: 100%;
+  }
+}
 /* html,
 body,
 body > div {

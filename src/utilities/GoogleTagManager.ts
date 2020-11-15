@@ -221,7 +221,7 @@ export default {
         });
     }
   },
-  newArticleView: function (e, f) {
+  articleViewScroll: function (e, f, scrolled = null) {
     var t = 'INDIA',
       a = 'INDIA',
       n = 'INDIA',
@@ -250,7 +250,8 @@ export default {
         : (s = 'en'),
       (f.detailsUrl = e.web_url
         ? e.web_url.split('/')
-        : location.pathname.split('/')),
+        : location.pathname.split('/'));
+    if (!scrolled) {
       window['dataLayer'].push({
         event: 'view_item',
         item_id: o,
@@ -264,6 +265,22 @@ export default {
         app_language: s,
         current_page_url: window.location.href,
       });
+    } else {
+      window['dataLayer'].push({
+        event: 'article_scroll_count',
+        item_id: o,
+        item_name: r,
+        item_category: f.detailsUrl[2],
+        item_sub_category: f.detailsUrl[3],
+        state: n,
+        city: t,
+        district: a,
+        constituency: i,
+        app_language: s,
+        current_page_url: window.location.href,
+        article_scroll_count: scrolled,
+      });
+    }
   },
 
   appInstall: function (t) {
@@ -281,65 +298,6 @@ export default {
     });
   },
 
-  /* articleScroll: function (e, f) {
-    if (f.galleryArticle || f.videoArticle) {
-      var t = [];
-      $(window).scroll(function (a) {
-        var n =
-            $(window).scrollTop() / ($(document).height() - $(window).height()),
-          i = Math.round(100 * n);
-        if (25 == i || 50 == i || 75 == i || 100 == i) {
-          if (0 == t.includes(i)) {
-            t.push(i);
-            var s = 'INDIA',
-              r = 'INDIA',
-              o = 'INDIA',
-              l = 'INDIA',
-              c = 'en',
-              d = e.title,
-              m = e.content_id;
-            void 0 != e.state && '' != e.state
-              ? void 0 != e.state[0] && '' != e.state[0] && (o = e.state[0])
-              : (o = 'INDIA'),
-              void 0 != e.city && '' != e.city
-                ? void 0 != e.city[0] && '' != e.city[0] && (s = e.city[0])
-                : (s = 'INDIA'),
-              void 0 != e.district && '' != e.district
-                ? void 0 != e.district[0] &&
-                  '' != e.district[0] &&
-                  (r = e.district[0])
-                : (r = 'INDIA'),
-              void 0 != e.constituency && '' != e.constituency
-                ? void 0 != e.constituency[0] &&
-                  '' != e.constituency[0] &&
-                  (l = e.constituency[0])
-                : (l = 'INDIA'),
-              void 0 != e.item_languages && '' != e.item_languages
-                ? void 0 != e.item_languages[0] &&
-                  '' != e.item_languages[0] &&
-                  (c = e.item_languages[0])
-                : (c = 'en'),
-              (f.detailsUrl = window.location.href.split('/'));
-            c = u.getLanguageCode();
-            window['dataLayer'].push({
-              event: 'article_scroll_count',
-              item_id: m,
-              item_name: d,
-              item_category: f.detailsUrl[5],
-              item_sub_category: f.detailsUrl[6],
-              state: o,
-              city: s,
-              district: r,
-              constituency: l,
-              app_language: c,
-              current_page_url: window.location.href,
-              article_scroll_count: i,
-            });
-          }
-        }
-      });
-    }
-  }, */
   /* horoscope: function (e) {
     var a = e.display_title,
       n = t.getLanguageCode(),

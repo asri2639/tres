@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useInView, InView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
 import AdContainer from '@components/article/AdContainer';
 import { Media, MediaContextProvider } from '@media';
@@ -31,7 +31,7 @@ const Gallery = ({
     threshold: 1,
   });
 
-/*   const {ref, inView, entry} = useInView({
+  /*   const {ref, inView, entry} = useInView({
     // delay: 200,
     // triggerOnce: true,
     threshold: 1,
@@ -78,7 +78,7 @@ const Gallery = ({
         viewed.push(contentId);
         // updateViewed(viewed);
         // console.log(viewed);
-        GoogleTagManager.newArticleView(data[0], { galleryArticle: true });
+        GoogleTagManager.articleViewScroll(data[0], { galleryArticle: true });
       }
       //  router.push(data.web_url, undefined, { shallow: true })
     }
@@ -134,7 +134,9 @@ const Gallery = ({
 
       <div className="md:w-8/12">
         <div
-          className={`${className || ''} lg:container lg:mx-auto px-3 md:px-0 `}
+          className={`${
+            className || ''
+          } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
         >
           <div className="flex flex-col md:flex-col-reverse md:mb-4">
             <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
@@ -191,23 +193,92 @@ const Gallery = ({
                 );
               } else {
                 return (
-                  <div key={image.order_no} className="relative">
-                    <LazyLoadImage
-                      className="rounded-lg"
-                      alt={image.description || image.title}
-                      placeholderSrc="/assets/images/placeholder.png"
-                      scrollPosition={scrollPosition}
-                      src={image.thumbnails.l_large.url}
-                    ></LazyLoadImage>
-                    <div className="text-md">{image.title}</div>
-                    <div className={`${gallery.counter}`}>
-                      <span>{image.order_no}</span>/ {count}
+                  <>
+                    <div key={image.order_no} className="relative">
+                      <LazyLoadImage
+                        className="rounded-lg"
+                        alt={image.description || image.title}
+                        placeholderSrc="/assets/images/placeholder.png"
+                        scrollPosition={scrollPosition}
+                        src={image.thumbnails.l_large.url}
+                      ></LazyLoadImage>
+                      <div className={`${gallery.counter}`}>
+                        <span>{image.order_no}</span>/ {count}
+                      </div>
                     </div>
-                  </div>
+                    <div className="text-md">{image.title}</div>
+                  </>
                 );
               }
             })}
           </div>
+
+          <InView
+            as="div"
+            className="pseudo quarter"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { galleryArticle: true },
+                  25
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
+          <InView
+            as="div"
+            className="pseudo half"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { galleryArticle: true },
+                  50
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
+
+          <InView
+            as="div"
+            className="pseudo three-quarter"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { galleryArticle: true },
+                  75
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
+
+          <InView
+            as="div"
+            className="pseudo full"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { galleryArticle: true },
+                  100
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
         </div>
       </div>
 

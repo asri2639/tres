@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useInView, InView } from 'react-intersection-observer';
 // import { InView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
 import AdContainer from '@components/article/AdContainer';
@@ -74,7 +74,7 @@ export default function Article({
         viewed.push(contentId);
         // updateViewed(viewed);
         // console.log(viewed);
-        GoogleTagManager.newArticleView(data, { newArticle: true });
+        GoogleTagManager.articleViewScroll(data, { newsArticle: true });
       }
       //  router.push(data.web_url, undefined, { shallow: true })
     }
@@ -156,7 +156,9 @@ export default function Article({
 
       <div className="md:w-8/12">
         <div
-          className={`${className || ''} actual-content lg:container lg:mx-auto px-3 md:px-0 `}
+          className={`${
+            className || ''
+          } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
         >
           <div className="flex flex-col md:flex-col-reverse md:mb-8">
             <div className="-mx-3 md:mx-0">
@@ -196,6 +198,73 @@ export default function Article({
               __html: html,
             }}
           />
+
+          <InView
+            as="div"
+            className="pseudo quarter"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { newsArticle: true },
+                  25
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
+          <InView
+            as="div"
+            className="pseudo half"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { newsArticle: true },
+                  50
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
+
+          <InView
+            as="div"
+            className="pseudo three-quarter"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { newsArticle: true },
+                  75
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
+
+          <InView
+            as="div"
+            className="pseudo full"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { newsArticle: true },
+                  100
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
         </div>
       </div>
 
