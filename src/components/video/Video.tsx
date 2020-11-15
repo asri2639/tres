@@ -5,6 +5,7 @@ import AdContainer from '@components/article/AdContainer';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
 import video from './Video.module.scss';
+import GoogleTagManager from '@utils/GoogleTagManager';
 
 const Video = ({
   contentId,
@@ -14,6 +15,7 @@ const Video = ({
   nextVideo,
   scrollToNextVideo,
   iframeSource,
+  viewed,
 }) => {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
@@ -59,6 +61,13 @@ const Video = ({
             }, 2000);
           }
         }
+      }
+
+      if (viewed.indexOf(contentId) === -1) {
+        viewed.push(contentId);
+        // updateViewed(viewed);
+        // console.log(viewed);
+        GoogleTagManager.newArticleView(data, { videoArticle: true });
       }
       //  router.push(data.web_url, undefined, { shallow: true })
     }

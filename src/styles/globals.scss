@@ -21,10 +21,13 @@ body {
 }
 
 section.content {
-  display: flex;
-  flex-direction: column;
   // footer height -> padding bottom
   padding-bottom: 400px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
 }
 /* html,
 body,

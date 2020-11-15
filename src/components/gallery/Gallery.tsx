@@ -9,6 +9,7 @@ import {
   trackWindowScroll,
 } from 'react-lazy-load-image-component';
 import gallery from './Gallery.module.scss';
+import GoogleTagManager from '@utils/GoogleTagManager';
 
 const Gallery = ({
   contentId,
@@ -20,6 +21,7 @@ const Gallery = ({
   webUrl,
   scrollPosition,
   count,
+  viewed,
 }) => {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
@@ -29,6 +31,12 @@ const Gallery = ({
     threshold: 1,
   });
 
+/*   const {ref, inView, entry} = useInView({
+    // delay: 200,
+    // triggerOnce: true,
+    threshold: 1,
+  });
+ */
   useEffect(() => {
     if (inView) {
       const main = data[0];
@@ -64,6 +72,13 @@ const Gallery = ({
             }, 2000);
           }
         }
+      }
+
+      if (viewed.indexOf(contentId) === -1) {
+        viewed.push(contentId);
+        // updateViewed(viewed);
+        // console.log(viewed);
+        GoogleTagManager.newArticleView(data[0], { galleryArticle: true });
       }
       //  router.push(data.web_url, undefined, { shallow: true })
     }
@@ -102,6 +117,7 @@ const Gallery = ({
       );
     });
   }
+
   return (
     <div
       data-content-id={contentId}

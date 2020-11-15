@@ -11,7 +11,6 @@ import Article from '@components/article/Article';
 import BottomRelatedBar from '@components/article/BottomRelatedBar';
 import Breadcrumbs from '@components/article/Breadcrumbs';
 
-
 const ArticleList = ({ articleData }) => {
   const api = API(APIEnum.CatalogList);
   const {
@@ -23,6 +22,8 @@ const ArticleList = ({ articleData }) => {
   const [related, setRelated] = useState([]);
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
+
+  const [viewed, setViewed] = useState([]);
 
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
@@ -187,6 +188,10 @@ const ArticleList = ({ articleData }) => {
               rhs={article.rhs}
               nextArticle={i < 9 ? related[i + 1] : null}
               scrollToNextArticle={() => scrollToArticle(related[i + 1])}
+              viewed={viewed}
+              updateViewed={(viewed) => {
+                setViewed(viewed);
+              }}
             />
           ))}
         {loading && (

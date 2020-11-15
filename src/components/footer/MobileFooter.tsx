@@ -2,6 +2,7 @@ import NavLink from '@components/common/NavLink';
 import DesktopSidebar from '@components/header/DesktopSidebar';
 import Modal from '@components/modal/Modal';
 import Constants from '@utils/Constants';
+import GoogleTagManager from '@utils/GoogleTagManager';
 import { I18nContext } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
@@ -40,9 +41,14 @@ export default function MobileFooter({ data, menu }) {
     setOpenStateModal([]);
   };
 
-  const gtmBackToTop = () => {};
-
-  const gtmlAppInstall = (ev) => {};
+  const backToTop = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    GoogleTagManager.backToTop();
+  };
 
   const changeState = () => {
     const states = data
@@ -145,7 +151,9 @@ export default function MobileFooter({ data, menu }) {
               top: '-2.5rem',
               left: 'calc(50% - 5rem)',
             }}
-            onClick={gtmBackToTop}
+            onClick={() => {
+              backToTop();
+            }}
           >
             BACK TO TOP
           </button>
@@ -188,7 +196,7 @@ export default function MobileFooter({ data, menu }) {
               <ul className="flex w-48 mx-auto justify-around my-4">
                 <li>
                   <NavLink
-                    onClick={() => gtmlAppInstall('Android')}
+                    onClick={() => GoogleTagManager.appInstall('Android')}
                     href={Constants.appURLs.android}
                     passHref
                   >
@@ -201,7 +209,7 @@ export default function MobileFooter({ data, menu }) {
                 </li>
                 <li>
                   <NavLink
-                    onClick={() => gtmlAppInstall('IOS')}
+                    onClick={() => GoogleTagManager.appInstall('IOS')}
                     href={Constants.appURLs.ios}
                     passHref
                   >

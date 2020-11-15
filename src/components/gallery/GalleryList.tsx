@@ -24,6 +24,7 @@ const GalleryList = ({ galleryData }) => {
   const [related, setRelated] = useState([]);
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
+  const [viewed, setViewed] = useState([]);
 
   const relatedGalleriesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
@@ -180,6 +181,10 @@ const GalleryList = ({ galleryData }) => {
               webUrl={gallery.web_url}
               nextGallery={i < 9 ? related[i + 1] : null}
               scrollToNextGallery={() => scrollToGallery(related[i + 1])}
+              viewed={viewed}
+              updateViewed={(viewed) => {
+                setViewed(viewed);
+              }}
             />
           ))}
         {loading && (

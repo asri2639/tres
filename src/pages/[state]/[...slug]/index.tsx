@@ -2,17 +2,16 @@ import React, { useContext } from 'react';
 import { NextSeo } from 'next-seo';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
-import ArticleList from '@components/article/ArticleList';
 import Head from 'next/head';
 import { NextPage } from 'next';
-import { withTranslation } from '@i18n';
 import { loadJS, stateCodeConverter, thumbnailExtractor } from '@utils/Helpers';
-import { IncomingMessage } from 'http';
 import { languageMap } from '@utils/Constants';
-import GalleryList from '@components/gallery/GalleryList';
 import { useRouter } from 'next/router';
-import VideoList from '@components/video/VideoList';
 import getConfig from 'next/config';
+
+import ArticleList from '@components/article/ArticleList';
+import VideoList from '@components/video/VideoList';
+import GalleryList from '@components/gallery/GalleryList';
 
 interface Propss {
   data: any;

@@ -28,6 +28,7 @@ const VideoList = ({ videoData }) => {
   const [related, setRelated] = useState([]);
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
+  const [viewed, setViewed] = useState([]);
 
   const constructPlaybackUrl = (data, smartData) => {
     let urlSplit = data.web_url.split('/');
@@ -317,6 +318,10 @@ const VideoList = ({ videoData }) => {
               iframeSource={video.iframeSource}
               nextVideo={i < 9 ? related[i + 1] : null}
               scrollToNextVideo={() => scrollToVideo(related[i + 1])}
+              viewed={viewed}
+              updateViewed={(viewed) => {
+                setViewed(viewed);
+              }}
             />
           ))}
         {loading && (
