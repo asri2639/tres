@@ -15,7 +15,7 @@ import {
 import { thumbnailExtractor } from '@utils/Helpers';
 import GoogleTagManager from '@utils/GoogleTagManager';
 
-const SocialMedia = (data) => {
+const SocialMedia = ({data}) => {
   const [isOpen, toggleOpen] = useState(false);
   const query = {
     amp: 'false',
