@@ -10,6 +10,7 @@ import {
 } from 'react-lazy-load-image-component';
 import gallery from './Gallery.module.scss';
 import GoogleTagManager from '@utils/GoogleTagManager';
+import ComScore from '@utils/ComScore';
 
 const Gallery = ({
   contentId,
@@ -79,6 +80,12 @@ const Gallery = ({
         // updateViewed(viewed);
         // console.log(viewed);
         GoogleTagManager.articleViewScroll(data[0], { galleryArticle: true });
+
+        if (viewed.length === 1) {
+          ComScore.pageView();
+        } else {
+          ComScore.nextPageView();
+        }
       }
       //  router.push(data.web_url, undefined, { shallow: true })
     }

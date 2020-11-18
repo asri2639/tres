@@ -8,6 +8,7 @@ import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
 import Thumbnail from '@components/common/Thumbnail';
 import GoogleTagManager from '@utils/GoogleTagManager';
+import ComScore from '@utils/ComScore';
 
 // initialPosition
 // div height
@@ -72,9 +73,13 @@ export default function Article({
 
       if (viewed.indexOf(contentId) === -1) {
         viewed.push(contentId);
-        // updateViewed(viewed);
-        // console.log(viewed);
         GoogleTagManager.articleViewScroll(data, { newsArticle: true });
+
+        if (viewed.length === 1) {
+          ComScore.pageView();
+        } else {
+          ComScore.nextPageView();
+        }
       }
       //  router.push(data.web_url, undefined, { shallow: true })
     }
@@ -162,7 +167,10 @@ export default function Article({
         >
           <div className="flex flex-col md:flex-col-reverse md:mb-8">
             <div className="-mx-3 md:mx-0">
-              <Thumbnail thumbnail={thumbnail} className={'md:rounded-lg w-full'} />
+              <Thumbnail
+                thumbnail={thumbnail}
+                className={'md:rounded-lg w-full'}
+              />
             </div>
             <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
               <h1

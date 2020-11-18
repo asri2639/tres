@@ -6,6 +6,7 @@ import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
 import video from './Video.module.scss';
 import GoogleTagManager from '@utils/GoogleTagManager';
+import ComScore from '@utils/ComScore';
 
 const Video = ({
   contentId,
@@ -65,9 +66,12 @@ const Video = ({
 
       if (viewed.indexOf(contentId) === -1) {
         viewed.push(contentId);
-        // updateViewed(viewed);
-        // console.log(viewed);
         GoogleTagManager.articleViewScroll(data, { videoArticle: true });
+        if (viewed.length === 1) {
+          ComScore.pageView();
+        } else {
+          ComScore.nextPageView();
+        }
       }
       //  router.push(data.web_url, undefined, { shallow: true })
     }
@@ -175,7 +179,6 @@ const Video = ({
             {data.description}
           </div>
 
-         
           <InView
             as="div"
             className="pseudo quarter"
