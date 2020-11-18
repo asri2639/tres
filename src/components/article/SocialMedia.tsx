@@ -130,7 +130,7 @@ const SocialMedia = ({data}) => {
       </RedditShareButton>
 
       <img
-        className="w-7 mx-auto inline-block cursor-pointer"
+        className="w-6 lg:mx-auto inline-block cursor-pointer"
         src="/assets/images/comment.png"
         onClick={() => {
           GoogleTagManager.comment(data);

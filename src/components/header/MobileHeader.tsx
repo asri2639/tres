@@ -8,7 +8,7 @@ import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import header from './Header.module.scss';
 import Modal from '@components/modal/Modal';
-import DesktopSubMenu from '@components/header/DesktopSubMenu';
+import GoogleTagManager from '@utils/GoogleTagManager';
 
 const country = 'IN';
 
@@ -89,7 +89,7 @@ export default function MobileHeader({ data, className }) {
           height={null}
         >
           <>
-            <div className="p-4 rounded-md"  style={{ background: '#f0f0f0' }}>
+            <div className="p-4 rounded-md" style={{ background: '#f0f0f0' }}>
               <div className="flex justify-between pl-3 pb-4">
                 <div className="text-gray-700 text-md pl-2">Select State</div>
                 <div>
@@ -200,48 +200,32 @@ export default function MobileHeader({ data, className }) {
                     className={`${header['header-menu-item']} text-white cursor-pointer whitespace-no-wrap hover:text-red-700`}
                   >
                     <div className=" flex flex-col items-center relative  text-sm">
-                      <div>{item.ml_title[0].text.toUpperCase()}</div>
-                      {item.total_items_count > 0 ? (
-                        <div
-                          className={`${header['arrow-up']} absolute transform translate-y-5`}
-                        ></div>
-                      ) : null}
-                    </div>
-
-                    {item.total_items_count > 0 ? (
-                      <div
-                        className={`${header.submenu} lg:container absolute left-0 w-full z-10 text-black`}
+                      <NavLink
+                        href={
+                          item.url.split('/').length > 3
+                            ? {
+                                pathname: '/[state]/[...slug]',
+                                query: {
+                                  state: item.url.split('/')[2],
+                                  slug: item.url.split('/').slice(3).join('/'),
+                                },
+                              }
+                            : {
+                                pathname: '/[state]',
+                                query: {
+                                  state: item.url.split('/')[2],
+                                },
+                              }
+                        }
+                        as={item.url}
+                        passHref
+                        onClick={() => {
+                          GoogleTagManager.menuClick(item, 'headermenu');
+                        }}
                       >
-                        <div className="h-3 bg-transparent"></div>
-                        <div
-                          className={`${header['submenu-container']} w-full bg-white shadow-md p-3`}
-                          onMouseLeave={() => setCategory(null)}
-                        >
-                          <div className="flex w-full h-full">
-                            <div
-                              className={`h-full p-3 overflow-y-scroll flex-grow-0 flex-shrink-0 whitespace-pre-wrap ${header['lhs-content']}`}
-                              style={{ flexBasis: '19%' }}
-                            >
-                              {/*   {item.catalog_list_items.map(subitem => {
-                                                    return (
-                                                        <div key={subitem.list_id} className="p-1 font-bold text-lg hover:text-red-700"
-                                                            onMouseEnter={() => setCategory({ ...subitem, title: item.ml_title[0].text })}>
-                                                            {subitem.ml_title[0].text}
-                                                        </div>
-                                                    )
-                                                })} */}
-                            </div>
-                            {category &&
-                            item.ml_title[0].text === category.title ? (
-                              <DesktopSubMenu
-                                key={item.ml_title[0].text}
-                                category={category}
-                              />
-                            ) : null}
-                          </div>
-                        </div>
-                      </div>
-                    ) : null}
+                        <div>{item.ml_title[0].text.toUpperCase()}</div>
+                      </NavLink>
+                    </div>
                   </div>
                 );
               })
