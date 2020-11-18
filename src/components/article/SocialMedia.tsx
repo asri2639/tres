@@ -14,8 +14,11 @@ import {
 } from 'react-share';
 import { thumbnailExtractor } from '@utils/Helpers';
 import GoogleTagManager from '@utils/GoogleTagManager';
+import getConfig from 'next/config';
 
-const SocialMedia = ({data}) => {
+const SocialMedia = ({ data }) => {
+  const { publicRuntimeConfig } = getConfig();
+
   const [isOpen, toggleOpen] = useState(false);
   const query = {
     amp: 'false',
@@ -47,6 +50,10 @@ const SocialMedia = ({data}) => {
   const commentUrl = `https://cdn.vuukle.com/widgets/index.html?${new URLSearchParams(
     query
   )}`;
+  const baseUrl =
+    publicRuntimeConfig.APP_ENV !== 'development'
+      ? `${window.location.origin}`
+      : `https://www.etvbharat.com`;
 
   return (
     <>
@@ -85,7 +92,7 @@ const SocialMedia = ({data}) => {
         </Modal>
       ) : null}
       <FacebookShareButton
-        url={`https://www.etvbharat.com/${data.web_url}`}
+        url={`${baseUrl}/${data.web_url}`}
         beforeOnClick={() => {
           GoogleTagManager.share(data);
         }}
@@ -94,7 +101,7 @@ const SocialMedia = ({data}) => {
       </FacebookShareButton>
       <LinkedinShareButton
         title={data.title}
-        url={`https://www.etvbharat.com/${data.web_url}`}
+        url={`${baseUrl}/${data.web_url}`}
         beforeOnClick={() => {
           GoogleTagManager.share(data);
         }}
@@ -103,7 +110,7 @@ const SocialMedia = ({data}) => {
       </LinkedinShareButton>
       <TwitterShareButton
         title={data.title}
-        url={`https://www.etvbharat.com/${data.web_url}`}
+        url={`${baseUrl}/${data.web_url}`}
         beforeOnClick={() => {
           GoogleTagManager.share(data);
         }}
@@ -112,7 +119,7 @@ const SocialMedia = ({data}) => {
       </TwitterShareButton>
       <WhatsappShareButton
         title={data.title}
-        url={`https://www.etvbharat.com/${data.web_url}`}
+        url={`${baseUrl}/${data.web_url}`}
         beforeOnClick={() => {
           GoogleTagManager.share(data);
         }}
@@ -121,7 +128,7 @@ const SocialMedia = ({data}) => {
       </WhatsappShareButton>
       <RedditShareButton
         title={data.title}
-        url={`https://www.etvbharat.com/${data.web_url}`}
+        url={`${baseUrl}/${data.web_url}`}
         beforeOnClick={() => {
           GoogleTagManager.share(data);
         }}
