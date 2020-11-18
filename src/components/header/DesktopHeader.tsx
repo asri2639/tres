@@ -452,16 +452,12 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
 
             <MediaContextProvider>
               <Media greaterThan="xs">
-                {(mediaClassNames, renderChildren) => {
-                  return (
-                    <iframe
-                      className="mx-auto"
-                      width={755}
-                      height={110}
-                      src="https://www.etvbharat.com/banner-near-logo/english/national/home/728x90-1.html"
-                    />
-                  );
-                }}
+                <iframe
+                  className="mx-auto hidden lg:block"
+                  width={755}
+                  height={110}
+                  src="https://www.etvbharat.com/banner-near-logo/english/national/home/728x90-1.html"
+                />
               </Media>
             </MediaContextProvider>
           </div>
