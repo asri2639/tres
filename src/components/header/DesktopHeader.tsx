@@ -11,6 +11,7 @@ import Modal from '@components/modal/Modal';
 import DesktopSubMenu from '@components/header/DesktopSubMenu';
 import { withTranslation } from '@i18n';
 import GoogleTagManager from '@utils/GoogleTagManager';
+import { Media, MediaContextProvider } from '@media';
 
 const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
   const router = useRouter();
@@ -448,12 +449,21 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
 
           <div className="flex justify-center items-center w-full">
             {/* <iframe className="mx-auto" width={755} height={110} src={`https://www.etvbharat.com/banner-near-logo/${router.query.state}/business/728x90-1.htm`}/> */}
-            <iframe
-              className="mx-auto"
-              width={755}
-              height={110}
-              src="https://www.etvbharat.com/banner-near-logo/english/national/home/728x90-1.html"
-            />
+
+            <MediaContextProvider>
+              <Media greaterThan="xs">
+                {(mediaClassNames, renderChildren) => {
+                  return (
+                    <iframe
+                      className="mx-auto"
+                      width={755}
+                      height={110}
+                      src="https://www.etvbharat.com/banner-near-logo/english/national/home/728x90-1.html"
+                    />
+                  );
+                }}
+              </Media>
+            </MediaContextProvider>
           </div>
         </div>
       </div>
