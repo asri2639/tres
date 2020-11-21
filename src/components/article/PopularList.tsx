@@ -1,11 +1,14 @@
 import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
+import { RTLContext } from '@components/layout/Layout';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor } from '@utils/Helpers';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import popular from './PopularList.module.scss';
 
 const PopularList = ({ data }) => {
+  const isRTL = useContext(RTLContext);
+
   const [currentSelection, setCurrentSelection] = useState(
     data.catalog_list_items[0].list_id
   );
@@ -24,7 +27,7 @@ const PopularList = ({ data }) => {
         {data.ml_title[0].text.toUpperCase()}
       </div>
 
-      <div className="py-4 text-lg flex justify-center items-center space-x-2  border-t border-b font-bold divide-x divide-gray-600">
+      <div className={`py-4 ${isRTL ? 'text-base': 'text-lg'} flex justify-center items-center space-x-2  border-t border-b font-bold divide-x divide-gray-600`}>
         {data.catalog_list_items.map((val) => {
           return (
             <div
@@ -47,7 +50,7 @@ const PopularList = ({ data }) => {
           return (
             <NavLink
               key={v.friendly_id}
-              className="flex cursor-pointer"
+              className={`flex cursor-pointer ${isRTL ? 'md:flex-row-reverse rtl' : ''}`}
               href={{
                 pathname: '/[state]/[...slug]',
                 query: {

@@ -1,16 +1,19 @@
 import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
+import { RTLContext } from '@components/layout/Layout';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor } from '@utils/Helpers';
+import { useContext } from 'react';
 import grid from './GridList.module.scss';
 
 const GridList = ({ data }) => {
+  const isRTL = useContext(RTLContext);
   return (
     <div className="w-full">
       <div className="text-xl font-bold text-gray-600 border-b">
         {data.ml_title[0].text.toUpperCase()}
       </div>
-      <div className={`flex flex-wrap w-full ${grid.list}`}>
+      <div className={`flex flex-wrap w-full ${grid.list} ${isRTL ? 'rtl' : ''}`}>
         {data.catalog_list_items.map((v) => {
           const splitUrl = v.web_url.split('/');
           const thumbnail = thumbnailExtractor(v.thumbnails, '3_2', 's2b');

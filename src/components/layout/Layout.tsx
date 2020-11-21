@@ -1,5 +1,6 @@
 import Header from '@components/header/Header';
 import Footer from '@components/footer/Footer';
+import React from 'react';
 
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
@@ -8,14 +9,14 @@ import { I18nContext } from 'next-i18next';
 import { accessToken as token } from '@utils/Constants';
 
 const country = 'IN';
+export const RTLContext = React.createContext(false);
 
-const Layout = ({ children , accessToken}) => {
+const Layout = ({ children, accessToken }) => {
   const api = API(APIEnum.Catalog, APIEnum.CatalogList);
   const [data, setData] = useState({ footer: [], header: {} });
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
-
 
   useEffect(() => {
     const populateData = async () => {
@@ -63,8 +64,8 @@ const Layout = ({ children , accessToken}) => {
         footer: requiredData,
       });
     };
-    if(accessToken.mobile.length) {
-      console.log(token)
+    if (accessToken.mobile.length) {
+      console.log(token);
       token.web = accessToken.web;
       token.mobile = accessToken.mobile;
       populateData();
@@ -72,14 +73,14 @@ const Layout = ({ children , accessToken}) => {
   }, [language, accessToken]);
 
   return (
-    <>
+    <RTLContext.Provider value={language === 'ur' ? true : false}>
       <Header data={data.header} />
       <section className="content">{children}</section>
       <Footer
         data={data.footer}
         menu={data.header ? data.header['menu'] : null}
       />
-    </>
+    </RTLContext.Provider>
   );
 };
 

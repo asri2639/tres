@@ -233,7 +233,7 @@ const slug: NextPage<Propss> = ({ data, pageType }) => {
         );
     }
   };
-return <>{data ? getComponent() :<div>Nothing {data+''}</div>}</>;
+  return <>{data ? getComponent() : <div>Nothing {data + ''}</div>}</>;
 };
 
 slug.getInitialProps = async ({ query, req, res, ...args }) => {
@@ -249,6 +249,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     state = stateCodeConverter(query.state + '');
     params = {
       state: query.state,
+      language: language,
     };
   } else if (typeof window !== 'undefined') {
     const urlSplit = location.pathname.split('/');
@@ -256,8 +257,11 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     state = stateCodeConverter(urlSplit[2]);
   }
 
+  console.log(state);
+
   const id = query.slug.slice(-1)[0];
-  const re = new RegExp(state + '\\d+', 'gi');
+  const re = new RegExp((state || 'na') + '\\d+', 'gi');
+
   if (re.test(id)) {
     const api = API(APIEnum.CatalogList);
 
@@ -305,6 +309,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           data: { gallery, items_count: galleryResp.total_items_count },
         };
       default:
+        console.log(language);
         const articleResponse = await api.CatalogList.getArticleDetails({
           params: params,
           query: {
@@ -319,7 +324,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
         const articleResp = articleResponse.data.data.catalog_list_items[0];
         const article = articleResp.catalog_list_items[0];
-
+        console.log(article);
         // Pass data to the page via props
         return {
           pageType: 'article',

@@ -126,6 +126,10 @@ const VideoList = ({ videoData }) => {
       //  return null;
     }
     return api[apiEnum][methodName]({
+      params: {
+        state: location.pathname.split('/')[2],
+        language: language,
+      },
       query: {
         response: methodName === 'getVideoDetails' ? 'r2' : 'r1',
         item_languages: language,
@@ -236,6 +240,10 @@ const VideoList = ({ videoData }) => {
         if (curIndex > -1 && curIndex < 9 && !loading) {
           startLoading();
           await api.CatalogList.getVideoDetails({
+            params: {
+              state: location.pathname.split('/')[2],
+              language: language,
+            },
             query: {
               response: 'r2',
               item_languages: language,

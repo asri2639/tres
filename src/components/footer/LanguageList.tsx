@@ -1,7 +1,10 @@
 import NavLink from '@components/common/NavLink';
+import { RTLContext } from '@components/layout/Layout';
 import GoogleTagManager from '@utils/GoogleTagManager';
+import { useContext } from 'react';
 
 export default function LanguageList({ languages }) {
+  const isRTL = useContext(RTLContext);
   const listItems = languages.map((language, index) => {
     return (
       <li
@@ -27,5 +30,13 @@ export default function LanguageList({ languages }) {
       </li>
     );
   });
-  return <ul className="flex flex-wrap justify-center py-1">{listItems}</ul>;
+  return (
+    <ul
+      className={`flex flex-wrap justify-center py-1 ${
+        isRTL ? 'flex-row-reverse rtl' : ''
+      }`}
+    >
+      {listItems}
+    </ul>
+  );
 }

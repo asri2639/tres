@@ -12,12 +12,15 @@ import DesktopSubMenu from '@components/header/DesktopSubMenu';
 import { withTranslation } from '@i18n';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { Media, MediaContextProvider } from '@media';
+import { RTLContext } from '@components/layout/Layout';
 
 const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
   const router = useRouter();
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
+
+  const isRTL = useContext(RTLContext);
 
   const [selected, setSelected] = useState({ state: '', language: '' });
   const [openStateModal, setOpenStateModal] = useState([]);
@@ -211,7 +214,11 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
         className={`${className} divide-y md:block hidden bg-hbg px-2 font-english border-b`}
       >
         <div
-          className={`${header.scroll} lg:container lg:mx-auto flex justify-between items-center py-1 overflow-x-auto`}
+          className={`${
+            header.scroll
+          } lg:container lg:mx-auto flex justify-between items-center py-1 overflow-x-auto ${
+            isRTL ? 'flex-row-reverse rtl' : ''
+          }`}
         >
           <div className="flex space-x-6">
             {data.languages
@@ -418,33 +425,44 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
       </div>
 
       <div className={`${className} md:block hidden border-b`}>
-        <div className="lg:container lg:mx-auto  flex justify-start px-2 py-1 self-center">
-          <NavLink
-            href={{
-              pathname: '/[state]',
-              query: { state: router.query.state },
-            }}
-            as={`/${options['localeSubpaths'][language]}/${router.query.state}`}
-            passHref
+        <div
+          className={`lg:container lg:mx-auto flex justify-between px-2 py-1 self-center ${
+            isRTL ? 'flex-row-reverse rtl' : ''
+          }`}
+        >
+          <div
+            className={`flex items-center ${
+              isRTL ? 'flex-row-reverse rtl' : ''
+            }`}
+            style={{ flex: '1 0 30%' }}
           >
-            <div
-              className={`logo ${options['localeSubpaths'][language]}`}
-            ></div>
-          </NavLink>
-          <div className="flex items-center pl-3">
-            {stateData ? (
-              <div className="text-md">
-                <div className="border-b border-red-700">
-                  {stateData.display_title}
+            <NavLink
+              href={{
+                pathname: '/[state]',
+                query: { state: router.query.state },
+              }}
+              as={`/${options['localeSubpaths'][language]}/${router.query.state}`}
+              passHref
+            >
+              <div
+                className={`logo ${options['localeSubpaths'][language]}`}
+              ></div>
+            </NavLink>
+            <div className="flex items-center pl-3">
+              {stateData ? (
+                <div className="text-md">
+                  <div className="border-b border-red-700">
+                    {stateData.display_title}
+                  </div>
+                  <div>
+                    {stateData.state
+                      .split('-')
+                      .map((v) => v.charAt(0).toUpperCase() + v.slice(1))
+                      .join(' ')}
+                  </div>
                 </div>
-                <div>
-                  {stateData.state
-                    .split('-')
-                    .map((v) => v.charAt(0).toUpperCase() + v.slice(1))
-                    .join(' ')}
-                </div>
-              </div>
-            ) : null}
+              ) : null}
+            </div>
           </div>
 
           <div className="flex justify-center items-center w-full">

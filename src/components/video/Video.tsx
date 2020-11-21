@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
 import AdContainer from '@components/article/AdContainer';
@@ -7,6 +7,7 @@ import SocialMedia from '@components/article/SocialMedia';
 import video from './Video.module.scss';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import ComScore from '@utils/ComScore';
+import { RTLContext } from '@components/layout/Layout';
 
 const Video = ({
   contentId,
@@ -18,6 +19,8 @@ const Video = ({
   iframeSource,
   viewed,
 }) => {
+  const isRTL = useContext(RTLContext);
+
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const [inViewRef, inView, entry] = useInView({
@@ -113,12 +116,16 @@ const Video = ({
   return (
     <div
       data-content-id={contentId}
-      className="article relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10"
+      className={`article relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
+        isRTL ? 'md:flex-row-reverse rtl' : ''
+      }`}
     >
       <MediaContextProvider>
         <Media
           greaterThan="xs"
-          className="lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 "
+          className={`lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 ${
+            isRTL ? 'rtl-social' : ''
+          }`}
         >
           <SocialMedia data={data} />
         </Media>

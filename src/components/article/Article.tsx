@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useContext, useEffect, useRef } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
 // import { InView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
@@ -9,6 +9,7 @@ import SocialMedia from '@components/article/SocialMedia';
 import Thumbnail from '@components/common/Thumbnail';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import ComScore from '@utils/ComScore';
+import { RTLContext } from '@components/layout/Layout';
 
 // initialPosition
 // div height
@@ -26,6 +27,7 @@ export default function Article({
   updateViewed,
 }) {
   const router = useRouter();
+  const isRTL = useContext(RTLContext);
   const ref = useRef<HTMLDivElement>(null);
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
@@ -148,12 +150,14 @@ export default function Article({
   return (
     <div
       data-content-id={contentId}
-      className="article relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10"
+      className={`article relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
+        isRTL ? 'md:flex-row-reverse rtl' : ''
+      }`}
     >
       <MediaContextProvider>
         <Media
           greaterThan="xs"
-          className="lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 "
+          className={`lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 ${isRTL? 'rtl-social':''}`}
         >
           <SocialMedia data={data} />
         </Media>

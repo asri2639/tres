@@ -16,7 +16,6 @@ const ArticleList = ({ articleData }) => {
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
-
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
@@ -179,7 +178,9 @@ const ArticleList = ({ articleData }) => {
         </Media>
       </MediaContextProvider>
 
-      <ul className="article-list flex flex-col lg:container lg:mx-auto pt-4">
+      <ul
+        className={`article-list flex flex-col lg:container lg:mx-auto pt-4 `}
+      >
         {articles.length > 0 &&
           articles.map((article, i) => (
             <Article

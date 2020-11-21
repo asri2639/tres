@@ -10,12 +10,14 @@ import footer from './Footer.module.scss';
 
 import NavLink from '@components/common/NavLink';
 import LanguageList from '@components/footer/LanguageList';
+import { RTLContext } from '@components/layout/Layout';
 
 const DesktopFooter = ({ data, t }: IDesktopFooter) => {
   const router = useRouter();
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
+  const isRTL = useContext(RTLContext);
 
   const openFeedback = () => {};
 
@@ -24,7 +26,11 @@ const DesktopFooter = ({ data, t }: IDesktopFooter) => {
       <div className="desktop-footer absolute bottom-0 w-full divide-y md:block hidden font-english mb-20">
         {/* {t('top_news')} */}
         <div className="border-t">
-          <div className="lg:container lg:mx-auto  flex justify-center py-1 self-center">
+          <div
+            className={`lg:container lg:mx-auto flex justify-center py-1 self-center ${
+              isRTL ? 'flex-row-reverse rtl' : ''
+            }`}
+          >
             <NavLink
               href={{
                 pathname: '/[state]',

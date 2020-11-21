@@ -1,4 +1,5 @@
 import NavLink from '@components/common/NavLink';
+import { RTLContext } from '@components/layout/Layout';
 import { I18nContext } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
@@ -8,6 +9,7 @@ const Breadcrumbs = () => {
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
+  const isRTL = useContext(RTLContext);
 
   const [crumbsMap, setCrumbsMap] = useState([]);
 
@@ -43,11 +45,14 @@ const Breadcrumbs = () => {
         };
       }),
     ]);
-
   }, [router]);
 
   return (
-    <div className="lg:container mx-auto flex text-xs text-gray-600 font-medium pt-1">
+    <div
+      className={`lg:container mx-auto flex text-xs text-gray-600 font-medium pt-1 ${
+        isRTL ? 'flex-row-reverse rtl' : ''
+      }`}
+    >
       {crumbsMap.map((v, i) => {
         return i === crumbsMap.length - 1 ? (
           <div key={i} className="text-red-600">
@@ -60,7 +65,9 @@ const Breadcrumbs = () => {
             as={v.as}
             passHref
           >
-            {v.label} <span className="px-2">/</span>
+            {isRTL ? <span className="px-2">/</span> : null}
+            {v.label}
+            {!isRTL ? <span className="px-2">/</span> : null}
           </NavLink>
         );
       })}

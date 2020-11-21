@@ -10,6 +10,10 @@ const getProperParam = (params) => {
   if (!params && typeof window !== 'undefined') {
     params = { state: location.pathname.split('/')[2] };
   }
+
+  if (params.language === 'ur') {
+    return '-urdu-1';
+  }
   return params && params.state && params.state !== 'national'
     ? '-' + params.state
     : '';

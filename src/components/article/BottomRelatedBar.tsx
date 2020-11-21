@@ -1,11 +1,14 @@
 import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
+import { RTLContext } from '@components/layout/Layout';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor } from '@utils/Helpers';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import bottom from './BottomRelatedBar.module.scss';
 const BottomRelatedBar = ({ data }) => {
+  const isRTL = useContext(RTLContext);
+
   const [startIndex, setStartIndex] = useState(0);
   const [visible, setVisible] = useState([]);
   const [contentId, setContentId] = useState('');
@@ -67,7 +70,7 @@ const BottomRelatedBar = ({ data }) => {
               rel.content_id === contentId
                 ? 'border-t-2 border-red-700'
                 : 'border'
-            }`}
+            } ${isRTL ? 'flex-row-reverse rtl' : ''}`}
             style={{ flexBasis: '20%' }}
             href={{
               pathname: '/[state]/[...slug]',
