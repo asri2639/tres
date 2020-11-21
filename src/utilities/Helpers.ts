@@ -62,7 +62,7 @@ export const stateCodeConverter = (e) => {
     maharashtra: 'mh',
     manipur: 'mn',
     national: 'na',
-  'jammu-and-kashmir':'na'
+    'jammu-and-kashmir': 'na',
   }[e.toLowerCase()];
 };
 
