@@ -135,15 +135,16 @@ const VideoList = ({ videoData }) => {
       params: {
         state: location.pathname.split('/')[2],
         language: language,
-      },
-      query: {
-        response: methodName === 'getVideoDetails' ? 'r2' : 'r1',
         suffix:
           methodName === 'getVideoDetails'
             ? config['params_hash2'].config_params.ssr_details[
                 configStateCodeConverter(location.pathname.split('/')[2])
               ].video_details_link
             : '',
+      },
+      query: {
+        response: methodName === 'getVideoDetails' ? 'r2' : 'r1',
+
         item_languages: language,
         page: 0,
         page_size: 10,
