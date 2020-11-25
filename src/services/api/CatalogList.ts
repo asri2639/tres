@@ -11,9 +11,6 @@ const getProperParam = (params) => {
     params = { state: location.pathname.split('/')[2] };
   }
 
-  if (params.language === 'ur') {
-    return '-urdu-1';
-  }
   return params && params.state && params.state !== 'national'
     ? '-' + params.state
     : '';
@@ -22,18 +19,21 @@ const getProperParam = (params) => {
 export default function CatalogList(inst) {
   return {
     getArticleDetails({ params, query, ...config }: APIRequest) {
+      console.log(config);
       return inst.get(
-        `${controller}/web-news-details${getProperParam(
-          params
-        )}.gzip?${new URLSearchParams(query)}`,
+        `${controller}/${
+          config['isSSR'] ? '' : 'web-'
+        }news-details${getProperParam(params)}.gzip?${new URLSearchParams(
+          query
+        )}`,
         config
       );
     },
     getVideoDetails({ params, query, ...config }: APIRequest) {
       return inst.get(
-        `${controller}/web-video-details${getProperParam(
-          params
-        )}.gzip?${new URLSearchParams(query)}`,
+        `${controller}/${
+          config['isSSR'] ? 'video-details' : params.suffix
+        }${getProperParam(params)}.gzip?${new URLSearchParams(query)}`,
         config
       );
     },
@@ -45,28 +45,11 @@ export default function CatalogList(inst) {
     },
     getMenuDetails({ params, query, ...config }: APIRequest) {
       return inst.get(
-        `${controller}/web-left-menu${getProperParam(
+        `${controller}/${params.suffix}${getProperParam(
           params
         )}.gzip?${new URLSearchParams(query)}`,
         config
       );
-    },
-    getMobileMenuDetails({ params, query, ...config }: APIRequest) {
-      if (publicRuntimeConfig.APP_ENV === 'staging') {
-        return inst.get(
-          `${controller}/left-menu-msite${getProperParam(
-            params
-          )}.gzip?${new URLSearchParams(query)}`,
-          config
-        );
-      } else {
-        return inst.get(
-          `${controller}/msite-new-left-menu${getProperParam(
-            params
-          )}.gzip?${new URLSearchParams(query)}`,
-          config
-        );
-      }
     },
     getSubMenuDetails({ params, query, ...config }: APIRequest) {
       return inst.get(

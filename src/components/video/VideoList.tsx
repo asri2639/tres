@@ -5,7 +5,11 @@ import { Media, MediaContextProvider } from 'media';
 
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
-import { createHash, stateCodeConverter } from '@utils/Helpers';
+import {
+  configStateCodeConverter,
+  createHash,
+  stateCodeConverter,
+} from '@utils/Helpers';
 
 import BottomRelatedBar from '@components/article/BottomRelatedBar';
 import Breadcrumbs from '@components/article/Breadcrumbs';
@@ -13,9 +17,11 @@ import Video from '@components/video/Video';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import VideoAPI from '@services/api/Video';
+import { MenuContext } from '@components/layout/Layout';
 
 const VideoList = ({ videoData }) => {
   const { publicRuntimeConfig } = getConfig();
+  const config = useContext(MenuContext);
 
   const router = useRouter();
   const api = API(APIEnum.CatalogList, APIEnum.Video);
@@ -132,6 +138,12 @@ const VideoList = ({ videoData }) => {
       },
       query: {
         response: methodName === 'getVideoDetails' ? 'r2' : 'r1',
+        suffix:
+          methodName === 'getVideoDetails'
+            ? config['params_hash2'].config_params.ssr_details[
+                configStateCodeConverter(location.pathname.split('/')[2])
+              ].video_details_link
+            : '',
         item_languages: language,
         page: 0,
         page_size: 10,
@@ -241,6 +253,10 @@ const VideoList = ({ videoData }) => {
           startLoading();
           await api.CatalogList.getVideoDetails({
             params: {
+              suffix:
+                config['params_hash2'].config_params.ssr_details[
+                  configStateCodeConverter(location.pathname.split('/')[2])
+                ].video_details_link,
               state: location.pathname.split('/')[2],
               language: language,
             },

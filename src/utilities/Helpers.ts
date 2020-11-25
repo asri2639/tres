@@ -61,8 +61,38 @@ export const stateCodeConverter = (e) => {
     maharastra: 'mh',
     maharashtra: 'mh',
     manipur: 'mn',
+    'west-bengal': 'wb',
     national: 'na',
     'jammu-and-kashmir': 'na',
+  }[e.toLowerCase()];
+};
+
+export const configStateCodeConverter = (e) => {
+  return {
+    'andhra-pradesh': 'ap',
+    assam: 'assam',
+    bihar: 'bh',
+    chhattisgarh: 'ct',
+    delhi: 'dl',
+    national: 'english',
+    gujarat: 'gj',
+    haryana: 'haryana',
+    'himachal-pradesh': 'hp',
+    jharkhand: 'jh',
+    'jammu-and-kashmir': 'jk',
+    karnataka: 'ka',
+    kerala: 'kerala',
+    maharashtra: 'mh',
+    'madhya-pradesh': 'mp',
+    odisha: 'or',
+    punjab: 'pb',
+    rajasthan: 'rj',
+    'tamil-nadu': 'tamil-nadu',
+    telangana: 'ts',
+    'uttar-pradesh': 'up',
+    urdu: 'urdu',
+    uttarakhand: 'uttarakhand',
+    'west-bengal': 'wb',
   }[e.toLowerCase()];
 };
 

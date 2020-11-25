@@ -19,7 +19,6 @@ export default function MobileHeader({ data, className }) {
   } = useContext(I18nContext);
 
   const [openStateModal, setOpenStateModal] = useState([]);
-  const [sidebar, toggleSidebar] = useState(false);
 
   const [category, setCategory] = useState(null);
 
@@ -48,20 +47,6 @@ export default function MobileHeader({ data, className }) {
     setCategory(null);
   };
 
-  const api = API(APIEnum.CatalogList);
-
-  const catalogFetcher = (...args) => {
-    const [apiEnum, methodName] = args;
-    return api[apiEnum][methodName]({
-      query: {
-        region: country,
-        response: 'r2',
-        item_languages: language,
-      },
-    }).then((res) => {
-      return res.data.data;
-    });
-  };
   const stateData =
     data && data.languages
       ? data.languages[options['localeSubpaths'][language]].find(
@@ -69,11 +54,6 @@ export default function MobileHeader({ data, className }) {
         )
       : null;
 
-  const response = useSWR(
-    ['CatalogList', 'getMobileMenuDetails'],
-    catalogFetcher,
-    { dedupingInterval: 15 * 60 * 1000 }
-  );
   // menu: headerResp.data.data.catalog_list_items
   return (
     <>
@@ -192,8 +172,8 @@ export default function MobileHeader({ data, className }) {
         onMouseLeave={containerOut}
       >
         <div className="lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ">
-          {response.data && response.data.catalog_list_items
-            ? response.data.catalog_list_items.map((item) => {
+          {data.menu && data.menu.mobile
+            ? data.menu.mobile.map((item) => {
                 return (
                   <div
                     key={item.list_id + item.ml_title[0].text}

@@ -290,15 +290,20 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
         onMouseLeave={containerOut}
       >
         <div
-          className={`${header.scroll} lg:container lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 `}
+          className={`${
+            header.scroll
+          } lg:container lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ${
+            isRTL ? 'flex-row-reverse rtl' : ''
+          }`}
         >
           <div
-            className={header.hamburger}
+          
+            className={`${header.hamburger} ml-2`}
             onClick={() => toggleSidebar(true)}
           ></div>
 
-          {data.menu
-            ? data.menu.map((item) => {
+          {data.menu && data.menu.desktop
+            ? data.menu.desktop.map((item) => {
                 return (
                   <div
                     key={item.list_id}

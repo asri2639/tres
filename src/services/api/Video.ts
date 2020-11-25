@@ -26,7 +26,6 @@ export default function Video(inst) {
 
         xhr.onload = function () {
           let responseObj = xhr.response;
-          console.log(responseObj)
           resolve(responseObj);
         };
 

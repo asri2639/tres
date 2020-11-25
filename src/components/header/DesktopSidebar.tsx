@@ -11,9 +11,9 @@ export default function DesktopSidebar({ data, onClose }) {
     const timer = setTimeout(() => {
       setOpen(true);
     }, 10);
-    if (data && data.menu) {
+    if (data && data.menu && data.menu.desktop) {
       setItems(
-        data.menu.map((v) => {
+        data.menu.desktop.map((v) => {
           const urlSplit = v.url.startsWith('/')
             ? v.url.split('/').slice(1)
             : v.url.split('/');

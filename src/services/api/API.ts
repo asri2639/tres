@@ -142,7 +142,7 @@ export default function API(...controllers): any {
       config.baseURL = 'https://prod.suv.etvbharat.com';
     } else {
       if (!config.url.startsWith('/access_token')) {
-        if (config.url.indexOf('msite') >= 0) {
+        if (config.url.indexOf('msite') >= 0 || config.isSSR) {
           config.url = `${config.url}&auth_token=${Constants.mAuthToken}&access_token=${accessToken.mobile}`;
         } else {
           config.url = `${config.url}&auth_token=${Constants.authToken}&access_token=${accessToken.web}`;

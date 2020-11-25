@@ -10,6 +10,7 @@ import Constants, { accessToken, languageMap } from '@utils/Constants';
 import Head from 'next/head';
 import getConfig from 'next/config';
 import API from '@services/api/API';
+import APIEnum from '@services/api/APIEnum';
 
 // export function reportWebVitals(metric: NextWebVitalsMetric) {
 //   console.log(metric)
@@ -17,7 +18,7 @@ import API from '@services/api/API';
 
 let currentLanguage = 'english';
 
-function App({ Component, pageProps, data, accessToken }) {
+function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const { publicRuntimeConfig } = getConfig();
 
@@ -60,7 +61,7 @@ function App({ Component, pageProps, data, accessToken }) {
         <meta name="robots" content="all" />
       </Head>
       {accessToken.web.length && accessToken.mobile.length ? (
-        <Layout accessToken={accessToken}>
+        <Layout accessToken={accessToken} appConfig={appConfig}>
           <Component {...pageProps} />
         </Layout>
       ) : null}
@@ -71,7 +72,7 @@ function App({ Component, pageProps, data, accessToken }) {
 App.getInitialProps = async ({ Component, ctx }) => {
   let pageProps = {};
 
-  const api = API();
+  const api = API(APIEnum.Catalog);
 
   if (accessToken.web.length === 0) {
     const result = await api.getAccessToken({
@@ -90,12 +91,27 @@ App.getInitialProps = async ({ Component, ctx }) => {
     });
     accessToken.mobile = result.data.data.access_token;
   }
+  let appConfig = null;
+  if (accessToken.mobile.length) {
+    const result = await api.Catalog.getAppConfig({
+      query: {
+        response: 'r2',
+        item_languages: 'en',
+        current_version: '1.1',
+        region: 'IN',
+        version: 'v2',
+      },
+      isSSR: true,
+    });
+
+    appConfig = result.data.data;
+  }
 
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
   }
 
-  return { pageProps, data: '', accessToken };
+  return { pageProps, data: '', accessToken, appConfig };
 };
 
 export default appWithTranslation(App);
