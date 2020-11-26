@@ -67,16 +67,17 @@ const Video = ({
         }
       }
 
-      if (viewed.indexOf(contentId) === -1) {
-        viewed.push(contentId);
-        GoogleTagManager.articleViewScroll(data, { videoArticle: true });
-        if (viewed.length === 1) {
-          ComScore.pageView();
-        } else {
-          ComScore.nextPageView();
-        }
-      }
       //  router.push(data.web_url, undefined, { shallow: true })
+    }
+
+    if (viewed.indexOf(contentId) === -1) {
+      viewed.push(contentId);
+      GoogleTagManager.articleViewScroll(data, { videoArticle: true });
+      if (viewed.length === 1) {
+        ComScore.pageView();
+      } else {
+        ComScore.nextPageView();
+      }
     }
   }, [inView, contentId, rhs, iframeSource]);
 

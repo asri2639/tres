@@ -42,6 +42,18 @@ const Gallery = ({
   });
  */
   useEffect(() => {
+    if (viewed.indexOf(contentId) === -1) {
+      viewed.push(contentId);
+      // updateViewed(viewed);
+      // console.log(viewed);
+      GoogleTagManager.articleViewScroll(data[0], { galleryArticle: true });
+
+      if (viewed.length === 1) {
+        ComScore.pageView();
+      } else {
+        ComScore.nextPageView();
+      }
+    }
     if (inView) {
       const main = data[0];
       const contentIdFromUrl = window.location.href.split('/').slice(-1)[0];
@@ -78,18 +90,6 @@ const Gallery = ({
         }
       }
 
-      if (viewed.indexOf(contentId) === -1) {
-        viewed.push(contentId);
-        // updateViewed(viewed);
-        // console.log(viewed);
-        GoogleTagManager.articleViewScroll(data[0], { galleryArticle: true });
-
-        if (viewed.length === 1) {
-          ComScore.pageView();
-        } else {
-          ComScore.nextPageView();
-        }
-      }
       //  router.push(data.web_url, undefined, { shallow: true })
     }
   }, [inView, contentId, rhs]);

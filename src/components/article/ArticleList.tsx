@@ -26,9 +26,6 @@ const ArticleList = ({ articleData }) => {
 
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
-    if (methodName === 'getArticleDetails' && window.innerWidth < 769) {
-      //  return null;
-    }
     return api[apiEnum][methodName]({
       query: {
         // region: country,

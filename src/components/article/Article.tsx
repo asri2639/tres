@@ -36,6 +36,16 @@ export default function Article({
   });
 
   useEffect(() => {
+    if (viewed.indexOf(contentId) === -1) {
+      viewed.push(contentId);
+      GoogleTagManager.articleViewScroll(data, { newsArticle: true });
+
+      if (viewed.length === 1) {
+        ComScore.pageView();
+      } else {
+        ComScore.nextPageView();
+      }
+    }
     if (inView) {
       const urlParts = data.web_url.split('/');
       const state = urlParts[1];
@@ -73,16 +83,6 @@ export default function Article({
         }
       }
 
-      if (viewed.indexOf(contentId) === -1) {
-        viewed.push(contentId);
-        GoogleTagManager.articleViewScroll(data, { newsArticle: true });
-
-        if (viewed.length === 1) {
-          ComScore.pageView();
-        } else {
-          ComScore.nextPageView();
-        }
-      }
       //  router.push(data.web_url, undefined, { shallow: true })
     }
   }, [inView, contentId, rhs]);
@@ -157,7 +157,9 @@ export default function Article({
       <MediaContextProvider>
         <Media
           greaterThan="xs"
-          className={`lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 ${isRTL? 'rtl-social':''}`}
+          className={`lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 ${
+            isRTL ? 'rtl-social' : ''
+          }`}
         >
           <SocialMedia data={data} />
         </Media>
