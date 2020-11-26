@@ -31,15 +31,15 @@ export default {
         });
   },
   menuClick: (e, t) => {
-  /*   var a = (t + '|' + e.ml_title[0].text).toLowerCase();
+    var a = (t + '|' + e.ml_title[0].text).toLowerCase();
     window['dataLayer'].push({
       event: 'menu_clicks',
       clicked_menu_item: a,
       current_page_url: window.location.href,
-    }); */
+    });
   },
   subMenuClick: function (e, t) {
- /*    var a = e.url.split('/')[4],
+    var a = e.url.split('/')[4],
       n = window.location.href.split('/')[6];
     if ('' != t && void 0 != t) {
       s = 'sidemenu|' + t.ml_title[0].text + '|' + e.ml_title[0].text;
@@ -58,7 +58,7 @@ export default {
         clicked_menu_item: r,
         current_page_url: window.location.href,
       });
-    } */
+    }
   },
   stateChange: function (e) {
     var t = e.item_languages[0],
@@ -164,7 +164,7 @@ export default {
       });
   },
   searchItem: function (searchTerm) {
-   /*  if ('' != searchTerm.trim()) {
+    if ('' != searchTerm.trim()) {
       var e = window.location.href,
         n = searchTerm;
       window['dataLayer'].push({
@@ -172,7 +172,7 @@ export default {
         search_term: n,
         current_page_url: e,
       });
-    } */
+    }
   },
   articleClick: function (e) {
     if (e && e.web_url) {
