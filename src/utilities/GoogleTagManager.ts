@@ -217,7 +217,8 @@ export default {
           district: r,
           constituency: l,
           app_language: c,
-          destination_page_url: i,
+          current_page_url: window.location.href,
+          destination_page_url: window.location.origin + e.web_url,
         });
     }
   },
