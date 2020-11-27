@@ -48,7 +48,7 @@ export const accessToken = {
 };
 
 export const languageMap = {
-  assamese: 'as',
+  assamese: 'asm',
   bengali: 'be',
   english: 'en',
   gujarati: 'gu',
@@ -64,7 +64,7 @@ export const languageMap = {
 };
 
 export const localeSubpaths = {
-  as: 'assamese',
+  asm: 'assamese',
   be: 'bengali',
   gu: 'gujarati',
   hi: 'hindi',

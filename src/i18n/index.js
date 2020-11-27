@@ -6,7 +6,7 @@ module.exports = new NextI18Next({
   defaultLanguage: 'en',
   defaultNS: 'common',
   otherLanguages: [
-    'as',
+    'asm',
     'be',
     'gu',
     'hi',
