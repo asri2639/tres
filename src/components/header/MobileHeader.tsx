@@ -143,7 +143,7 @@ export default function MobileHeader({ data, className }) {
           </div>
         </div>
 
-        <div className="bg-hbg px-3 font-english border-b">
+        <div className="bg-mhbg px-3 font-english border-b">
           <div className="flex justify-between items-center py-1 overflow-x-auto">
             <div className="flex space-x-6">
               {data.languages
@@ -168,7 +168,7 @@ export default function MobileHeader({ data, className }) {
       </div>
 
       <div
-        className={`${className} bg-hbg px-3 sticky block md:hidden -top-1 z-40`}
+        className={`${className} bg-mhbg px-3 sticky block md:hidden -top-1 z-40`}
         onMouseLeave={containerOut}
       >
         <div className="lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ">
