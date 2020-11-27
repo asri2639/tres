@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { I18nContext, WithTranslation } from 'next-i18next';
 import { useContext } from 'react';
 
@@ -21,6 +21,8 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
   } = useContext(I18nContext);
 
   const isRTL = useContext(RTLContext);
+
+  const [headerAd, setHeaderAd] = useState(null);
 
   const [selected, setSelected] = useState({ state: '', language: '' });
   const [openStateModal, setOpenStateModal] = useState([]);
@@ -91,6 +93,19 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
           (v) => v.state.toLowerCase() === router.query.state
         )
       : null;
+
+  useEffect(() => {
+    setTimeout(() => {
+      setHeaderAd(
+        <iframe
+          className="mx-auto hidden lg:block"
+          width={755}
+          height={110}
+          src="https://www.etvbharat.com/banner-near-logo/english/national/home/728x90-1.html"
+        />
+      );
+    }, 3000);
+  });
 
   return (
     <>
@@ -297,7 +312,6 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
           }`}
         >
           <div
-          
             className={`${header.hamburger} ml-2`}
             onClick={() => toggleSidebar(true)}
           ></div>
@@ -474,14 +488,7 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
             {/* <iframe className="mx-auto" width={755} height={110} src={`https://www.etvbharat.com/banner-near-logo/${router.query.state}/business/728x90-1.htm`}/> */}
 
             <MediaContextProvider>
-              <Media greaterThan="xs">
-                <iframe
-                  className="mx-auto hidden lg:block"
-                  width={755}
-                  height={110}
-                  src="https://www.etvbharat.com/banner-near-logo/english/national/home/728x90-1.html"
-                />
-              </Media>
+              <Media greaterThan="xs">{headerAd}</Media>
             </MediaContextProvider>
           </div>
         </div>

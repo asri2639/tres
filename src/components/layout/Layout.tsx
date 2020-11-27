@@ -101,7 +101,14 @@ const Layout = ({ children, accessToken, appConfig }) => {
       requiredData.forEach((state) => {
         state.item_languages.forEach((language) => {
           languageData[language] = languageData[language] || [];
-          state.state && languageData[language].push(state);
+          if (state.state) {
+            if (state.state === 'tamilnadu') {
+              state.state = 'tamil-nadu';
+            }
+
+            state.state = state.state.toLowerCase();
+            languageData[language].push(state);
+          }
         });
       });
       languageData = Object.keys(languageData)

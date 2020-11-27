@@ -12,6 +12,7 @@ module.exports = {
       colors: {
         mbg: 'var(--color-mb-background)',
         hbg: '#031820',
+        mhbg: '#052e43'
       },
       fontSize: {
         tiny: '0.9375rem',
