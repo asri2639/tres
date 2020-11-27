@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useRef } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
 // import { InView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
@@ -26,7 +26,8 @@ export default function Article({
   viewed,
   updateViewed,
 }) {
-  const router = useRouter();
+  const contentRef = useRef(null);
+  const [height, setHeight] = useState(600);
   const isRTL = useContext(RTLContext);
   const ref = useRef<HTMLDivElement>(null);
   const [inViewRef, inView, entry] = useInView({
@@ -48,7 +49,6 @@ export default function Article({
     }
     if (inView) {
       const urlParts = data.web_url.split('/');
-      const state = urlParts[1];
       const contentIdFromUrl = window.location.href.split('/').slice(-1)[0];
       if (contentIdFromUrl === contentId) {
         return;
@@ -85,7 +85,11 @@ export default function Article({
 
       //  router.push(data.web_url, undefined, { shallow: true })
     }
-  }, [inView, contentId, rhs]);
+
+    if (contentRef.current) {
+      setHeight(contentRef.current.offsetHeight);
+    }
+  }, [inView, contentId, rhs, contentRef]);
 
   const setRefs = useCallback(
     (node) => {
@@ -170,6 +174,7 @@ export default function Article({
           className={`${
             className || ''
           } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
+          ref={contentRef}
         >
           <div className="flex flex-col md:flex-col-reverse md:mb-8">
             <div className="-mx-3 md:mx-0">
@@ -301,8 +306,11 @@ export default function Article({
             </div>
           </div>
         </Media>
-        <Media greaterThan="xs" className="md:block md:w-4/12">
-          <div className="w-full flex flex-col items-center space-y-6 pt-4 pb-4">
+        <Media greaterThan="xs" className={`md:block md:w-4/12`}>
+          <div
+            className="w-full items-center space-y-6 pt-4 pb-4 no-scroll-bar"
+            style={{ height: height + 'px' }}
+          >
             {!rhs ? 'Loading...' : <AdContainer data={filteredRHS} />}
           </div>
         </Media>
