@@ -254,6 +254,20 @@ export default {
         : location.pathname.split('/'));
     if (!scrolled) {
       window['dataLayer'].push({
+        event: 'pageview',
+        item_id: o,
+        item_name: r,
+        item_category: f.detailsUrl[2],
+        item_sub_category: f.length <= 5 ? 'INDIA' : f.detailsUrl[3],
+        state: n,
+        city: t,
+        district: a,
+        constituency: i,
+        app_language: s,
+        current_page_url: window.location.href,
+      });
+
+      window['dataLayer'].push({
         event: 'view_item',
         item_id: o,
         item_name: r,

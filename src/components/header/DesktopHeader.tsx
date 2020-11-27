@@ -469,17 +469,21 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
             </NavLink>
             <div className="flex items-center pl-3">
               {stateData ? (
-                <div className="text-md">
-                  <div className="border-b border-red-700">
-                    {stateData.display_title}
+                language !== 'en' ? (
+                  <div className="text-md">
+                    <div className="border-b border-red-700">
+                      {stateData.display_title}
+                    </div>
+                    <div>
+                      {stateData.state
+                        .split('-')
+                        .map((v) => v.charAt(0).toUpperCase() + v.slice(1))
+                        .join(' ')}
+                    </div>
                   </div>
-                  <div>
-                    {stateData.state
-                      .split('-')
-                      .map((v) => v.charAt(0).toUpperCase() + v.slice(1))
-                      .join(' ')}
-                  </div>
-                </div>
+                ) : (
+                  <div>{'English'}</div>
+                )
               ) : null}
             </div>
           </div>
