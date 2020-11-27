@@ -64,6 +64,7 @@ export const stateCodeConverter = (e) => {
     'west-bengal': 'wb',
     national: 'na',
     'jammu-and-kashmir': 'na',
+    'tamil-nadu': 'tamil-nadu',
   }[e.toLowerCase()];
 };
 
