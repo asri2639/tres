@@ -208,4 +208,26 @@ button:focus {
   transition: 0.3s;
   overflow: auto;
   padding: 0 70px;
+  &.mobile {
+    padding: 0 8px;
+  }
+}
+
+.no-scroll-bar {
+  overflow: scroll;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+}
+
+.sidebar {
+  will-change: min-height;
+}
+
+.sidebar__inner {
+  transform: translate(0, 0); /* For browsers don't support translate3d. */
+  transform: translate3d(0, 0, 0);
+  will-change: position, transform;
 }

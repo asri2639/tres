@@ -10,6 +10,7 @@ import Thumbnail from '@components/common/Thumbnail';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import ComScore from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
+import MobileNextArticle from '@components/article/MobileNextArticle';
 
 // initialPosition
 // div height
@@ -86,9 +87,16 @@ export default function Article({
       //  router.push(data.web_url, undefined, { shallow: true })
     }
 
-    if (contentRef.current) {
+    /*   if (contentRef.current) {
       setHeight(contentRef.current.offsetHeight);
-    }
+    } */
+
+    /*     var sidebar = new StickySidebar('.sidebar', {
+      containerSelector: '#main-content',
+      innerWrapperSelector: '.sidebar__inner',
+      topSpacing: 20,
+      bottomSpacing: 20,
+    }); */
   }, [inView, contentId, rhs, contentRef]);
 
   const setRefs = useCallback(
@@ -152,169 +160,166 @@ export default function Article({
   }
   const thumbnail = thumbnailExtractor(data.thumbnails, '3_2', 'b2s');
   return (
-    <div
-      data-content-id={contentId}
-      className={`article relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
-        isRTL ? 'md:flex-row-reverse rtl' : ''
-      }`}
-    >
-      <MediaContextProvider>
-        <Media
-          greaterThan="xs"
-          className={`lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 ${
-            isRTL ? 'rtl-social' : ''
-          }`}
-        >
-          <SocialMedia data={data} />
-        </Media>
-      </MediaContextProvider>
+    <>
+      <div
+        data-content-id={contentId}
+        className={`article relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
+          isRTL ? 'md:flex-row-reverse rtl' : ''
+        }`}
+      >
+        <MediaContextProvider>
+          <Media
+            greaterThan="xs"
+            className={`lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 ${
+              isRTL ? 'rtl-social' : ''
+            }`}
+          >
+            <SocialMedia data={data} />
+          </Media>
+        </MediaContextProvider>
 
-      <div className="md:w-8/12">
-        <div
-          className={`${
-            className || ''
-          } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
-          ref={contentRef}
-        >
-          <div className="flex flex-col md:flex-col-reverse md:mb-8">
-            <div className="-mx-3 md:mx-0">
-              <Thumbnail
-                thumbnail={thumbnail}
-                className={'md:rounded-lg w-full'}
-              />
-            </div>
-            <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
-              <h1
-                ref={setRefs}
-                className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
-              >
-                {data.title}
-              </h1>
-              <div className="text-sm text-gray-600 md:text-black">
-                {data.publish_date_uts
-                  ? `Published on: ${dateFormatter(data.publish_date_uts)}`
-                  : ''}
-                <span className="hidden md:inline-block">
-                  {data.publish_date_uts && data.update_date_uts ? `  |  ` : ''}
-                </span>
-                <br className="md:hidden" />
-                {data.update_date_uts
-                  ? `Updated on: ${dateFormatter(data.update_date_uts)}`
-                  : ''}
+        <div className="sidebar md:w-8/12">
+          <div
+            className={`${
+              className || ''
+            } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
+            ref={contentRef}
+          >
+            <div className="flex flex-col md:flex-col-reverse md:mb-8">
+              <div className="-mx-3 md:mx-0">
+                <Thumbnail
+                  thumbnail={thumbnail}
+                  className={'md:rounded-lg w-full'}
+                />
               </div>
+              <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
+                <h1
+                  ref={setRefs}
+                  className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
+                >
+                  {data.title}
+                </h1>
+                <div className="text-sm text-gray-600 md:text-black">
+                  {data.publish_date_uts
+                    ? `Published on: ${dateFormatter(data.publish_date_uts)}`
+                    : ''}
+                  <span className="hidden md:inline-block">
+                    {data.publish_date_uts && data.update_date_uts
+                      ? `  |  `
+                      : ''}
+                  </span>
+                  <br className="md:hidden" />
+                  {data.update_date_uts
+                    ? `Updated on: ${dateFormatter(data.update_date_uts)}`
+                    : ''}
+                </div>
+              </div>
+
+              <MediaContextProvider>
+                <Media
+                  at="xs"
+                  className="flex justify-between mx-auto w-56 mb-2"
+                >
+                  <SocialMedia data={data} />
+                </Media>
+              </MediaContextProvider>
             </div>
 
-            <MediaContextProvider>
-              <Media at="xs" className="flex justify-between mx-auto w-56 mb-2">
-                <SocialMedia data={data} />
-              </Media>
-            </MediaContextProvider>
-          </div>
-
-          <div
-            className="text-sm md:text-md"
-            dangerouslySetInnerHTML={{
-              __html: html,
-            }}
-          />
-
-          <InView
-            as="div"
-            className="pseudo quarter"
-            triggerOnce={true}
-            onChange={(inView, entry) => {
-              if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { newsArticle: true },
-                  25
-                );
-              }
-            }}
-          >
-            <span></span>
-          </InView>
-          <InView
-            as="div"
-            className="pseudo half"
-            triggerOnce={true}
-            onChange={(inView, entry) => {
-              if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { newsArticle: true },
-                  50
-                );
-              }
-            }}
-          >
-            <span></span>
-          </InView>
-
-          <InView
-            as="div"
-            className="pseudo three-quarter"
-            triggerOnce={true}
-            onChange={(inView, entry) => {
-              if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { newsArticle: true },
-                  75
-                );
-              }
-            }}
-          >
-            <span></span>
-          </InView>
-
-          <InView
-            as="div"
-            className="pseudo full"
-            triggerOnce={true}
-            onChange={(inView, entry) => {
-              if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { newsArticle: true },
-                  100
-                );
-              }
-            }}
-          >
-            <span></span>
-          </InView>
-        </div>
-      </div>
-
-      <MediaContextProvider>
-        <Media at="xs">
-          <div className="flex flex-col py-4 px-5  bg-mbg text-white cursor-pointer">
-            <div className="flex items-center mb-1">
-              <img
-                alt="ETV"
-                className="w-6"
-                src="/assets/images/nextarticle.png"
-              />
-              <span className="text-lg font-thin pl-2">Next Article</span>
-            </div>
             <div
-              className="text-gray-500 tracking-tighter pl-2"
-              onClick={scrollToNextArticle}
+              className="text-sm md:text-md"
+              dangerouslySetInnerHTML={{
+                __html: html,
+              }}
+            />
+
+            <InView
+              as="div"
+              className="pseudo quarter"
+              triggerOnce={true}
+              onChange={(inView, entry) => {
+                if (inView) {
+                  GoogleTagManager.articleViewScroll(
+                    data,
+                    { newsArticle: true },
+                    25
+                  );
+                }
+              }}
             >
-              {nextArticle ? nextArticle.ml_title[0].text : ''}
+              <span></span>
+            </InView>
+            <InView
+              as="div"
+              className="pseudo half"
+              triggerOnce={true}
+              onChange={(inView, entry) => {
+                if (inView) {
+                  GoogleTagManager.articleViewScroll(
+                    data,
+                    { newsArticle: true },
+                    50
+                  );
+                }
+              }}
+            >
+              <span></span>
+            </InView>
+
+            <InView
+              as="div"
+              className="pseudo three-quarter"
+              triggerOnce={true}
+              onChange={(inView, entry) => {
+                if (inView) {
+                  GoogleTagManager.articleViewScroll(
+                    data,
+                    { newsArticle: true },
+                    75
+                  );
+                }
+              }}
+            >
+              <span></span>
+            </InView>
+
+            <InView
+              as="div"
+              className="pseudo full"
+              triggerOnce={true}
+              onChange={(inView, entry) => {
+                if (inView) {
+                  GoogleTagManager.articleViewScroll(
+                    data,
+                    { newsArticle: true },
+                    100
+                  );
+                }
+              }}
+            >
+              <span></span>
+            </InView>
+          </div>
+        </div>
+
+        <MediaContextProvider>
+          <Media at="xs">
+            <MobileNextArticle
+              label={'Next Article'}
+              data={data}
+              scrollToNextArticle={scrollToNextArticle}
+              nextArticle={nextArticle}
+            />
+          </Media>
+          <Media greaterThan="xs" className={`content md:block md:w-4/12`}>
+            <div
+              className="w-full items-center space-y-6 pt-4 pb-4 no-scroll-bar"
+              style={{ height: height + 'px' }}
+            >
+              {!rhs ? 'Loading...' : <AdContainer data={filteredRHS} />}
             </div>
-          </div>
-        </Media>
-        <Media greaterThan="xs" className={`md:block md:w-4/12`}>
-          <div
-            className="w-full items-center space-y-6 pt-4 pb-4 no-scroll-bar"
-            style={{ height: height + 'px' }}
-          >
-            {!rhs ? 'Loading...' : <AdContainer data={filteredRHS} />}
-          </div>
-        </Media>
-      </MediaContextProvider>
-    </div>
+          </Media>
+        </MediaContextProvider>
+      </div>
+    </>
   );
 }

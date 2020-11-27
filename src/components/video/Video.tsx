@@ -8,6 +8,7 @@ import video from './Video.module.scss';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import ComScore from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
+import MobileNextArticle from '@components/article/MobileNextArticle';
 
 const Video = ({
   contentId,
@@ -258,24 +259,12 @@ const Video = ({
 
       <MediaContextProvider>
         <Media at="xs">
-          <div className="flex flex-col py-4 px-5  bg-mbg text-white cursor-pointer">
-            <div className="flex items-center mb-1">
-              <img
-                alt="ETV"
-                className="w-6"
-                src="/assets/images/nextarticle.png"
-              />
-              <span className="text-lg font-thin pl-2">Next Video</span>
-            </div>
-            <div
-              className="text-gray-500 tracking-tighter pl-2"
-              onClick={scrollToNextVideo}
-            >
-              {nextVideo && nextVideo.ml_title
-                ? nextVideo.ml_title[0].text
-                : ''}
-            </div>
-          </div>
+          <MobileNextArticle
+            label={'Next Video'}
+            data={data}
+            scrollToNextArticle={scrollToNextVideo}
+            nextArticle={nextVideo}
+          />
         </Media>
         <Media greaterThan="xs" className="md:block md:w-4/12">
           <div className="w-full flex flex-col items-center space-y-6 pt-4 pb-4">

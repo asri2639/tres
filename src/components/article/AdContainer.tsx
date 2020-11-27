@@ -16,7 +16,7 @@ const AdContainer = ({ data }) => {
             });
           return (
             <iframe
-              className="mx-auto"
+              className="mx-auto ad-iframe"
               key={val.list_id}
               width={width + 50}
               height={height + 50}
