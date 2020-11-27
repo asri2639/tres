@@ -26,7 +26,10 @@ function debounce(fn, ms) {
 
 const Layout = ({ children, accessToken, appConfig }) => {
   const api = API(APIEnum.Catalog, APIEnum.CatalogList);
-  const [data, setData] = useState({ footer: [], header: {} });
+  const [data, setData] = useState({
+    footer: [],
+    header: { menu: { desktop: [], mobile: [] }, languages: null },
+  });
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
@@ -152,6 +155,9 @@ const Layout = ({ children, accessToken, appConfig }) => {
       token.web = accessToken.web;
       token.mobile = accessToken.mobile;
       populateData();
+    }
+    if (typeof window !== 'undefined') {
+      window['menu'] = data.header;
     }
   }, [language, accessToken]);
 

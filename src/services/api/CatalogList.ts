@@ -19,7 +19,6 @@ const getProperParam = (params) => {
 export default function CatalogList(inst) {
   return {
     getArticleDetails({ params, query, ...config }: APIRequest) {
-      console.log(config);
       return inst.get(
         `${controller}/${
           config['isSSR'] ? '' : 'web-'
