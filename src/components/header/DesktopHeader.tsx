@@ -105,7 +105,7 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
         />
       );
     }, 3000);
-  });
+  }, []);
 
   return (
     <>

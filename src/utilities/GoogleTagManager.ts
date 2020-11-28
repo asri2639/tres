@@ -281,20 +281,23 @@ export default {
         current_page_url: window.location.href,
       });
     } else {
-      window['dataLayer'].push({
-        event: 'article_scroll_count',
-        item_id: o,
-        item_name: r,
-        item_category: f.detailsUrl[2],
-        item_sub_category: f.detailsUrl.length <= 5 ? 'INDIA' : f.detailsUrl[3],
-        state: n,
-        city: t,
-        district: a,
-        constituency: i,
-        app_language: s,
-        current_page_url: window.location.href,
-        article_scroll_count: scrolled,
-      });
+      if (window.innerHeight > 768) {
+        window['dataLayer'].push({
+          event: 'article_scroll_count',
+          item_id: o,
+          item_name: r,
+          item_category: f.detailsUrl[2],
+          item_sub_category:
+            f.detailsUrl.length <= 5 ? 'INDIA' : f.detailsUrl[3],
+          state: n,
+          city: t,
+          district: a,
+          constituency: i,
+          app_language: s,
+          current_page_url: window.location.href,
+          article_scroll_count: scrolled,
+        });
+      }
     }
   },
 

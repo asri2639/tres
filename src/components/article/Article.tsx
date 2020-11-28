@@ -311,10 +311,7 @@ export default function Article({
             />
           </Media>
           <Media greaterThan="xs" className={`content md:block md:w-4/12`}>
-            <div
-              className="w-full items-center space-y-6 pt-4 pb-4 no-scroll-bar"
-              style={{ height: height + 'px' }}
-            >
+            <div className="w-full items-center space-y-6 pt-4 pb-4">
               {!rhs ? 'Loading...' : <AdContainer data={filteredRHS} />}
             </div>
           </Media>

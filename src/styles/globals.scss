@@ -38,9 +38,17 @@ section.content {
   flex-direction: column;
 }
 
+.lg-social {
+  position: sticky;
+  top: 50px;
+  bottom: 200px;
+}
+
 .actual-content {
   min-height: 100vh;
-  position: relative;
+  position: sticky;
+  top: 50px;
+  bottom: 10px;
 
   .pseudo {
     position: absolute;
@@ -214,7 +222,7 @@ button:focus {
 }
 
 .no-scroll-bar {
-  overflow: scroll;
+  overflow-y: scroll;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
