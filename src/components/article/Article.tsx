@@ -36,6 +36,8 @@ export default function Article({
     threshold: 1,
   });
 
+  const [ad, setAd] = useState(null);
+
   useEffect(() => {
     if (viewed.indexOf(contentId) === -1) {
       viewed.push(contentId);
@@ -79,8 +81,8 @@ export default function Article({
       const divStyle = isDesktop
         ? `width: 728px; height: 90px;`
         : `width: 300px; height: 250px;`;
-        const slotArr = isDesktop ? '[728, 90]' : '[300, 250]';
-        let adHTML = null;
+      const slotArr = isDesktop ? '[728, 90]' : '[300, 250]';
+      let adHTML = null;
       let id, ad_id;
 
       if (isDesktop) {
@@ -102,19 +104,18 @@ export default function Article({
       }
 
       if (id) {
-        adHTML = `<div id='${id}' style='${divStyle}'>
-        <script>
-          googletag.cmd.push(function() {
-            googletag.pubads().collapseEmptyDivs();
-            googletag.defineSlot('${ad_id}', ${slotArr}, '${id}').addService(googletag.pubads()); 
-            googletag.enableServices(); 
-          }); 
-          googletag.cmd.push(function() { 
-            googletag.display('${id}'); });
-        </script>
-      </div>`;
+        adHTML = `<div id='${id}' style='${divStyle}'></div>`;
         const el = document.querySelector(`[data-content-id="${contentId}"]`);
         el.getElementsByClassName('EtvadsSection')[0].innerHTML = adHTML;
+        setAd(` <script>
+        googletag.cmd.push(function() {
+          googletag.pubads().collapseEmptyDivs();
+          googletag.defineSlot('${ad_id}', ${slotArr}, '${id}').addService(googletag.pubads()); 
+          googletag.enableServices(); 
+        }); 
+        googletag.cmd.push(function() { 
+          googletag.display('${id}'); });
+      </script>`);
       }
     }
   }, [inView, contentId, rhs, contentRef]);
@@ -226,6 +227,13 @@ export default function Article({
                 __html: html,
               }}
             />
+            {ad ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: ad,
+                }}
+              />
+            ) : null}
 
             <InView
               as="div"
