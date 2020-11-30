@@ -102,10 +102,10 @@ export default function Article({
       }
 
       if (id) {
-        adHTML = `<div id='${id}' style='${divStyle}'>
-      
-      </div>`;
-        const el = document.querySelector(`[data-content-id="${contentId}"] .EtvadsSection`);
+        adHTML = `<div id='${id}' style='${divStyle}'></div>`;
+        const el = document.querySelector(
+          `[data-content-id="${contentId}"] .EtvadsSection`
+        );
 
         var s = document.createElement('script');
         s.type = 'text/javascript';
@@ -119,8 +119,6 @@ export default function Article({
           googletag.cmd.push(function() { 
             googletag.display('${id}'); 
           });
-          googletag.cmd.push(function() { googletag.pubads().refresh(); });
-          console.log( window.googletag && googletag.apiReady )
       }`;
         s.appendChild(document.createTextNode(code));
         // document.body.appendChild(s);
