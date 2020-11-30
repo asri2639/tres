@@ -20,9 +20,14 @@ export default function Catalog(inst) {
     },
     getAppConfig({ params, query, ...config }: APIRequest) {
       return inst.get(
-        `${controller}/message/items/app-config-params.gzip?${new URLSearchParams(query)}`,
+        `${controller}/message/items/app-config-params.gzip?${new URLSearchParams(
+          query
+        )}`,
         config
       );
+    },
+    getPageAds({ params, query, ...config }: APIRequest) {
+      return inst.get(`/page_ads?${new URLSearchParams(query)}`, config);
     },
   };
 }

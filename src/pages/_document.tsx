@@ -40,6 +40,15 @@ export default class ETVDocument extends Document {
               })();`,
             }}
           ></script>
+          <script
+            async
+            src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: ` window.googletag=window.googletag||{cmd:[]};`,
+            }}
+          ></script>
         </Head>
         <body>
           <noscript>

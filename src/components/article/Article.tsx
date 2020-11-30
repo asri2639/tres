@@ -87,16 +87,7 @@ export default function Article({
       //  router.push(data.web_url, undefined, { shallow: true })
     }
 
-    /*   if (contentRef.current) {
-      setHeight(contentRef.current.offsetHeight);
-    } */
-
-    /*     var sidebar = new StickySidebar('.sidebar', {
-      containerSelector: '#main-content',
-      innerWrapperSelector: '.sidebar__inner',
-      topSpacing: 20,
-      bottomSpacing: 20,
-    }); */
+    // console.log(html);
   }, [inView, contentId, rhs, contentRef]);
 
   const setRefs = useCallback(
@@ -108,32 +99,6 @@ export default function Article({
     },
     [inViewRef]
   );
-
-  /* const isInView = (inView, entry) => {
-    if (inView) {
-
-      const urlParts = data.web_url.split('/');
-      const state = urlParts[1]
-      const contentIdFromUrl = window.location.href.split('/').slice(-1)[0]
-
-      const boundaries =
-
-      if (contentIdFromUrl === contentId) {
-        return;
-      } else {
-
-         router.push({
-           pathname: '/[state]/[...slug]',
-           query: {
-             state,
-             slug: urlParts.slice(2)
-           },
-         },
-           '/' + data.web_url, { shallow: true })
-       }
-
-      }
-    } */
 
   const dateFormatter = (uts) => {
     const date = new Date(uts * 1000);
@@ -158,6 +123,7 @@ export default function Article({
       );
     });
   }
+
   const thumbnail = thumbnailExtractor(data.thumbnails, '3_2', 'b2s');
   return (
     <>

@@ -13,12 +13,15 @@ import { withTranslation } from '@i18n';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { Media, MediaContextProvider } from '@media';
 import { RTLContext } from '@components/layout/Layout';
+import API from '@services/api/API';
+import APIEnum from '@services/api/APIEnum';
 
 const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
   const router = useRouter();
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
+  const api = API(APIEnum.Catalog);
 
   const isRTL = useContext(RTLContext);
 
@@ -95,16 +98,39 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
       : null;
 
   useEffect(() => {
-    setTimeout(() => {
-      setHeaderAd(
-        <iframe
-          className="mx-auto hidden lg:block"
-          width={755}
-          height={110}
-          src="https://www.etvbharat.com/banner-near-logo/english/national/home/728x90-1.html"
-        />
-      );
-    }, 3000);
+    const getHeaderAd = () => {
+      api.Catalog.getPageAds({
+        query: {
+          app: 'web',
+          item_languages: language,
+          response: 'r2',
+          language: location.pathname.split('/')[1],
+          state: location.pathname.split('/')[2],
+          url: location.pathname.split('/').slice(0, -2).join('/'),
+        },
+      }).then((resp) => {
+        setHeaderAd(
+          <iframe
+            className="mx-auto hidden lg:block"
+            width={755}
+            height={110}
+            src={new URL(resp.data.data.ad_list[0].ad_Url).pathname}
+          />
+        );
+      });
+    };
+    getHeaderAd();
+    const handleRouteChange = (url) => {
+      getHeaderAd();
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method:
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
   }, []);
 
   return (
