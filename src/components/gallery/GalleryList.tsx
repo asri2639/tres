@@ -80,6 +80,7 @@ const GalleryList = ({ galleryData }) => {
       if (article) {
         article.rhs = adData.catalog_list_items.slice(1);
         article.web_url = router.asPath.slice(1);
+        article.desktop = adData.catalog_list_items[0].catalog_list_items[0];
 
         setGalleries((galleries) => [...galleries]);
       }
@@ -177,6 +178,7 @@ const GalleryList = ({ galleryData }) => {
               contentId={gallery.content_id}
               data={gallery.images}
               rhs={gallery.rhs}
+              desktop={gallery.desktop}
               count={gallery.count}
               webUrl={gallery.web_url}
               nextGallery={i < 9 ? related[i + 1] : null}

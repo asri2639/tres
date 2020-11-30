@@ -133,23 +133,19 @@ export default function API(...controllers): any {
     cancelToken: source.token,
   });
 
-  inst.interceptors.request.use((config) => {
-    if (
-      publicRuntimeConfig.APP_ENV !== 'development' &&
-      config.config &&
-      config.config.suv
-    ) {
-      config.baseURL = 'https://prod.suv.etvbharat.com';
+  inst.interceptors.request.use((request) => {
+    if (publicRuntimeConfig.APP_ENV !== 'development' && request.suv) {
+      request.baseURL = 'https://prod.suv.etvbharat.com';
     } else {
-      if (!config.url.startsWith('/access_token')) {
-        if (config.url.indexOf('msite') >= 0 || config.isSSR) {
-          config.url = `${config.url}&auth_token=${Constants.mAuthToken}&access_token=${accessToken.mobile}`;
+      if (!request.url.startsWith('/access_token')) {
+        if (request.url.indexOf('msite') >= 0 || request.isSSR) {
+          request.url = `${request.url}&auth_token=${Constants.mAuthToken}&access_token=${accessToken.mobile}`;
         } else {
-          config.url = `${config.url}&auth_token=${Constants.authToken}&access_token=${accessToken.web}`;
+          request.url = `${request.url}&auth_token=${Constants.authToken}&access_token=${accessToken.web}`;
         }
       }
     }
-    return config;
+    return request;
   });
 
   inst.interceptors.response.use(async (response) => {

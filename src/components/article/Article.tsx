@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
 // import { InView } from 'react-intersection-observer';
-import { useRouter } from 'next/router';
 import AdContainer from '@components/article/AdContainer';
 import { thumbnailExtractor } from '@utils/Helpers';
 import { Media, MediaContextProvider } from '@media';
@@ -22,13 +21,13 @@ export default function Article({
   html,
   className,
   rhs,
+  desktop,
   nextArticle,
   scrollToNextArticle,
   viewed,
   updateViewed,
 }) {
   const contentRef = useRef(null);
-  const [height, setHeight] = useState(600);
   const isRTL = useContext(RTLContext);
   const ref = useRef<HTMLDivElement>(null);
   const [inViewRef, inView, entry] = useInView({
@@ -70,24 +69,54 @@ export default function Article({
             });
 
             window.dispatchEvent(event);
-            setTimeout(() => {
-              /*   router.push({
-                  pathname: '/[state]/[...slug]',
-                  query: {
-                    state,
-                    slug: urlParts.slice(2)
-                  },
-                },
-                  '/' + data.web_url, { shallow: true }) */
-            }, 2000);
           }
         }
       }
-
-      //  router.push(data.web_url, undefined, { shallow: true })
     }
 
-    // console.log(html);
+    if (typeof window !== 'undefined') {
+      const isDesktop = window.innerWidth >= 768;
+      const divStyle = isDesktop
+        ? `width: 728px; height: 90px;`
+        : `width: 300px; height: 250px;`;
+      const slotArr = isDesktop ? [728, 90] : [300, 250];
+      let adHTML = null;
+      let id, ad_id;
+
+      if (isDesktop) {
+        if (rhs && data.ad_conf) {
+          id =
+            desktop && desktop.ad_conf
+              ? desktop.ad_conf[0].gpt_id
+              : data.ad_conf[0].gpt_id;
+          ad_id =
+            desktop && desktop.ad_conf
+              ? desktop.ad_conf[0].ad_unit_id
+              : data.ad_conf[0].ad_unit_id;
+        }
+      } else {
+        if (data.ad_conf) {
+          id = data.ad_conf[0].gpt_id;
+          ad_id = data.ad_conf[0].ad_unit_id;
+        }
+      }
+
+      if (id) {
+        adHTML = `<div id='${id}' style='${divStyle}'>
+        <script>
+          googletag.cmd.push(function() {
+            googletag.pubads().collapseEmptyDivs();
+            googletag.defineSlot('${ad_id}', ${slotArr}, '${id}').addService(googletag.pubads()); 
+            googletag.enableServices(); 
+          }); 
+          googletag.cmd.push(function() { 
+            googletag.display('${id}'); });
+        </script>
+      </div>`;
+        const el = document.querySelector(`[data-content-id="${contentId}"]`);
+        el.getElementsByClassName('EtvadsSection')[0].innerHTML = adHTML;
+      }
+    }
   }, [inView, contentId, rhs, contentRef]);
 
   const setRefs = useCallback(

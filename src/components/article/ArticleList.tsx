@@ -76,6 +76,7 @@ const ArticleList = ({ articleData }) => {
       );
       if (article) {
         article.rhs = adData.catalog_list_items.slice(1);
+        article.desktop = adData.catalog_list_items[0].catalog_list_items[0];
         setArticles((articles) => [...articles]);
       }
     }
@@ -184,6 +185,7 @@ const ArticleList = ({ articleData }) => {
               key={article.contentId}
               {...article}
               rhs={article.rhs}
+              desktop={article.desktop}
               nextArticle={i < 9 ? related[i + 1] : null}
               scrollToNextArticle={() => scrollToArticle(related[i + 1])}
               viewed={viewed}

@@ -276,7 +276,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             page_size: typeof window === 'undefined' ? 1 : 10,
             portal_state: state, //national
           },
-          isSSR: true,
+          isSSR: typeof window === 'undefined',
         });
 
         const videoResp = videoResponse.data.data.catalog_list_items[0];
@@ -290,14 +290,17 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         const galleryResponse = await api.CatalogList.getArticleDetails({
           params: params,
           query: {
-            response: 'r2',
             item_languages: language,
+            region: 'IN',
+            response: 'r2',
             content_id: id, //variable
             gallery_ad: true,
+            page: 0,
             page_size: typeof window === 'undefined' ? 1 : 10,
             portal_state: state, //national
+            scroll_no: 0,
           },
-          isSSR: true,
+          isSSR: typeof window === 'undefined',
         });
 
         const galleryResp = galleryResponse.data.data.catalog_list_items[0];
@@ -312,18 +315,21 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         const articleResponse = await api.CatalogList.getArticleDetails({
           params: params,
           query: {
-            response: 'r2',
             item_languages: language,
+            region: 'IN',
+            response: 'r2',
             content_id: id, //variable
             gallery_ad: true,
+            page: 0,
             page_size: typeof window === 'undefined' ? 1 : 10,
             portal_state: state, //national
+            scroll_no: 0,
           },
-          isSSR: true,
+          isSSR: typeof window === 'undefined',
         });
-
         const articleResp = articleResponse.data.data.catalog_list_items[0];
         const article = articleResp.catalog_list_items[0];
+
         // Pass data to the page via props
         return {
           pageType: 'article',
