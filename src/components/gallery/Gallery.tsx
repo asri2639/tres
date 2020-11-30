@@ -98,7 +98,7 @@ const Gallery = ({
       const divStyle = isDesktop
         ? `width: 728px; height: 90px;`
         : `width: 300px; height: 250px;`;
-      const slotArr = isDesktop ? [728, 90] : [300, 250];
+      const slotArr = isDesktop ? '[728, 90]' : '[300, 250]';
       let adHTML = null;
       let id, ad_id;
 
