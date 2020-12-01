@@ -65,6 +65,7 @@ const slug: NextPage<Propss> = ({ data, pageType }) => {
           <>
             <Head>
               <title>{data.title}</title>
+              <link rel="canonical" href={data.dynamic_url}></link>
             </Head>
             <NextSeo
               title={data.title}
@@ -131,6 +132,7 @@ const slug: NextPage<Propss> = ({ data, pageType }) => {
           <>
             <Head>
               <title>{data.title}</title>
+              <link rel="canonical" href={data.dynamic_url}></link>
             </Head>
             <NextSeo
               title={data.title}
@@ -187,6 +189,7 @@ const slug: NextPage<Propss> = ({ data, pageType }) => {
           <>
             <Head>
               <title>{main.display_title}</title>
+              <link rel="canonical" href={data.dynamic_url}></link>
             </Head>
             <NextSeo
               title={main.display_title}
