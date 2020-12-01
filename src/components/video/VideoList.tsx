@@ -22,6 +22,7 @@ import { MenuContext } from '@components/layout/Layout';
 const VideoList = ({ videoData }) => {
   const { publicRuntimeConfig } = getConfig();
   const config = useContext(MenuContext);
+  console.log(config);
 
   const router = useRouter();
   const api = API(APIEnum.CatalogList, APIEnum.Video);
