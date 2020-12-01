@@ -21,7 +21,8 @@ export default function Video(inst) {
         const url = new URL(params.play_url);
 
         const apiUrl =
-          `https://prod.suv.etvbharat.com/v2/smart_urls/` + env === 'staging'
+          `https://prod.suv.etvbharat.com/v2/smart_urls/` +
+          (env === 'staging'
             ? `${
                 url.pathname.split('/').slice(-1)[0]
               }?service_id=10&play_url=yes${
@@ -31,7 +32,7 @@ export default function Video(inst) {
               }`
             : `${params.play_url.split('smart_urls')[1].slice(1)}${
                 params.hash
-              }&auth_token=xBUKcKnXfngfrqGoF93y`;
+              }&auth_token=xBUKcKnXfngfrqGoF93y`);
         let xhr = new XMLHttpRequest();
         xhr.open('GET', apiUrl);
         xhr.responseType = 'json';
