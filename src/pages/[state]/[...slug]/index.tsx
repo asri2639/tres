@@ -273,6 +273,9 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     switch (query.slug[0].toLowerCase()) {
       case 'videos':
       case 'video':
+        if (typeof window !== 'undefined') {
+          window['applicationConfig'] = applicationConfig;
+        }
         const videoResponse = await api.CatalogList.getVideoDetails({
           params: {
             ...params,
