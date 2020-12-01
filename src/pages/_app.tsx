@@ -6,7 +6,7 @@ import '@styles/_fonts.scss';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { i18n, appWithTranslation } from '@i18n';
-import Constants, { accessToken, languageMap } from '@utils/Constants';
+import Constants, { accessToken, languageMap, applicationConfig } from '@utils/Constants';
 import Head from 'next/head';
 import getConfig from 'next/config';
 import API from '@services/api/API';
@@ -92,7 +92,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
     accessToken.mobile = result.data.data.access_token;
   }
   let appConfig = null;
-  if (accessToken.mobile.length) {
+  if (accessToken.mobile.length && !applicationConfig.value) {
     const result = await api.Catalog.getAppConfig({
       query: {
         response: 'r2',
@@ -105,6 +105,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
     });
 
     appConfig = result.data.data;
+    applicationConfig.value = appConfig;
   }
 
   if (Component.getInitialProps) {
