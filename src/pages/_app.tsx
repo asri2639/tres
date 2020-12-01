@@ -6,7 +6,11 @@ import '@styles/_fonts.scss';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { i18n, appWithTranslation } from '@i18n';
-import Constants, { accessToken, languageMap, applicationConfig } from '@utils/Constants';
+import Constants, {
+  accessToken,
+  languageMap,
+  applicationConfig,
+} from '@utils/Constants';
 import Head from 'next/head';
 import getConfig from 'next/config';
 import API from '@services/api/API';
@@ -70,6 +74,18 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 }
 
 App.getInitialProps = async ({ Component, ctx }) => {
+  const { publicRuntimeConfig } = getConfig();
+
+  if (
+    ctx.req.protocol === 'http' &&
+    publicRuntimeConfig.APP_ENV !== 'development'
+  ) {
+    ctx.res.writeHead(302, {
+      Location: 'https://' + ctx.req.headers.host + ctx.req.url,
+    });
+    ctx.res.end();
+  }
+
   let pageProps = {};
 
   const api = API(APIEnum.Catalog);
@@ -112,7 +128,12 @@ App.getInitialProps = async ({ Component, ctx }) => {
     pageProps = await Component.getInitialProps(ctx);
   }
 
-  return { pageProps, data: '', accessToken, appConfig };
+  return {
+    pageProps,
+    data: '',
+    accessToken,
+    appConfig: applicationConfig.value,
+  };
 };
 
 export default appWithTranslation(App);

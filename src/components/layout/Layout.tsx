@@ -104,6 +104,12 @@ const Layout = ({ children, accessToken, appConfig }) => {
           if (state.state) {
             if (state.state === 'tamilnadu') {
               state.state = 'tamil-nadu';
+            } else if(state.state === 'orissa') {
+              state.state = 'odisha';
+            } else if(state.state === 'maharastra') {
+              state.state = 'maharashtra'
+            } else if(state.state === 'tripura') {
+              
             }
 
             state.state = state.state.toLowerCase();
