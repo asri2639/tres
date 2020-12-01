@@ -4,7 +4,12 @@ import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import Head from 'next/head';
 import { NextPage } from 'next';
-import { loadJS, stateCodeConverter, thumbnailExtractor } from '@utils/Helpers';
+import {
+  configStateCodeConverter,
+  loadJS,
+  stateCodeConverter,
+  thumbnailExtractor,
+} from '@utils/Helpers';
 import { languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
@@ -12,13 +17,12 @@ import getConfig from 'next/config';
 import ArticleList from '@components/article/ArticleList';
 import VideoList from '@components/video/VideoList';
 import GalleryList from '@components/gallery/GalleryList';
+import { MenuContext } from '@components/layout/Layout';
 
 interface Propss {
   data: any;
   pageType: String;
 }
-
-export const config = { amp: 'hybrid' };
 
 const slug: NextPage<Propss> = ({ data, pageType }) => {
   const router = useRouter();
@@ -242,6 +246,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   let state = 'na';
   let params = null;
   const { publicRuntimeConfig } = getConfig();
+  const config = useContext(MenuContext);
 
   if (req && req['i18n']) {
     i18n = req['i18n'];
@@ -250,11 +255,23 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     params = {
       state: query.state,
       language: language,
+      suffix:
+        config['params_hash2'].config_params.ssr_details[
+          configStateCodeConverter(query.state)
+        ].video_details_link,
     };
   } else if (typeof window !== 'undefined') {
     const urlSplit = location.pathname.split('/');
     language = languageMap[urlSplit[1]];
     state = stateCodeConverter(urlSplit[2]);
+    params = {
+      state: query.state,
+      language: language,
+      suffix:
+        config['params_hash2'].config_params.ssr_details[
+          configStateCodeConverter(query.state)
+        ].video_details_link,
+    };
   }
 
   const id = query.slug.slice(-1)[0];
