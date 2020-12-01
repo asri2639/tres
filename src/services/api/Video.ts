@@ -19,7 +19,7 @@ export default function Video(inst) {
             env === 'staging' ? '&env=staging' : ''
           }&video_duration=yes&protocol=hls&us=${
             params.hash
-          }&auth_token=xBUKcKnXfngfrqGoF93y`
+          }&auth_token=${params.auth || 'xBUKcKnXfngfrqGoF93y'}`
         );
         xhr.responseType = 'json';
         xhr.send();

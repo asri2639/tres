@@ -21,8 +21,6 @@ const Video = ({
   viewed,
 }) => {
   const isRTL = useContext(RTLContext);
-
-  const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
@@ -220,7 +218,6 @@ const Video = ({
           >
             <span></span>
           </InView>
-
           <InView
             as="div"
             className="pseudo three-quarter"
@@ -237,7 +234,6 @@ const Video = ({
           >
             <span></span>
           </InView>
-
           <InView
             as="div"
             className="pseudo full"

@@ -146,7 +146,6 @@ const VideoList = ({ videoData }) => {
       },
       query: {
         response: methodName === 'getVideoDetails' ? 'r2' : 'r1',
-
         item_languages: language,
         page: 0,
         page_size: 10,
@@ -168,6 +167,7 @@ const VideoList = ({ videoData }) => {
         params: {
           play_url: play_url,
           hash,
+          auth: 'kmAJAH4RTtqHjgoauC4o'
         },
         query: null,
         payload: null,
