@@ -51,7 +51,7 @@ app
 
     // Default catch-all handler to allow Next.js to handle all other routes
     server.all('*', (req, res) => {
-      console.log(req.protocol);
+      console.log(req.url);
 
       if (req.protocol === 'http' && env !== 'development') {
         res.writeHead(302, {

@@ -74,8 +74,6 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 }
 
 App.getInitialProps = async ({ Component, ctx }) => {
-  const { publicRuntimeConfig } = getConfig();
-
   let pageProps = {};
 
   const api = API(APIEnum.Catalog);
