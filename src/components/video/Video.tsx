@@ -9,6 +9,7 @@ import GoogleTagManager from '@utils/GoogleTagManager';
 import ComScore from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
 import MobileNextArticle from '@components/article/MobileNextArticle';
+import Sticky from 'wil-react-sticky';
 
 const Video = ({
   contentId,
@@ -132,125 +133,134 @@ const Video = ({
       </MediaContextProvider>
 
       <div className={`${video.container} md:w-8/12  md:h-full`}>
-        <div
-          className={`${
-            className || ''
-          } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
+        <Sticky
+          containerSelectorFocus={`.article[data-content-id="${contentId}"]`}
+          stickyEnableRange={[768, Infinity]}
+          offsetTop={60}
         >
-          <div className="flex flex-col md:flex-col-reverse md:mb-1">
-            <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
-              <h1
-                ref={setRefs}
-                className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
-              >
-                {data.title}
-              </h1>
-              {data.publish_date_uts ? (
-                <div className="text-sm text-gray-600 md:text-black">
-                  {data.publish_date_uts
-                    ? `Published on: ${dateFormatter(data.publish_date_uts)}`
-                    : ''}
-                  <span className="hidden md:inline-block">
-                    {data.publish_date_uts && data.update_date_uts
-                      ? `  |  `
+          <div
+            className={`${
+              className || ''
+            } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
+          >
+            <div className="flex flex-col md:flex-col-reverse md:mb-1">
+              <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
+                <h1
+                  ref={setRefs}
+                  className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
+                >
+                  {data.title}
+                </h1>
+                {data.publish_date_uts ? (
+                  <div className="text-sm text-gray-600 md:text-black">
+                    {data.publish_date_uts
+                      ? `Published on: ${dateFormatter(data.publish_date_uts)}`
                       : ''}
-                  </span>
-                  <br className="md:hidden" />
-                  {data.update_date_uts
-                    ? `Updated on: ${dateFormatter(data.update_date_uts)}`
-                    : ''}
-                </div>
-              ) : null}
+                    <span className="hidden md:inline-block">
+                      {data.publish_date_uts && data.update_date_uts
+                        ? `  |  `
+                        : ''}
+                    </span>
+                    <br className="md:hidden" />
+                    {data.update_date_uts
+                      ? `Updated on: ${dateFormatter(data.update_date_uts)}`
+                      : ''}
+                  </div>
+                ) : null}
+              </div>
+
+              <MediaContextProvider>
+                <Media
+                  at="xs"
+                  className="flex justify-between mx-auto w-56 mb-2"
+                >
+                  <SocialMedia data={data} />
+                </Media>
+              </MediaContextProvider>
             </div>
 
-            <MediaContextProvider>
-              <Media at="xs" className="flex justify-between mx-auto w-56 mb-2">
-                <SocialMedia data={data} />
-              </Media>
-            </MediaContextProvider>
-          </div>
+            <div className={`${video.player}`}>
+              {iframeSource ? (
+                <iframe src={iframeSource}></iframe>
+              ) : (
+                <img
+                  className="w-full rounded-md -mt-10"
+                  src="/assets/images/placeholder.png"
+                  alt="placeholder image"
+                />
+              )}
+            </div>
 
-          <div className={`${video.player}`}>
-            {iframeSource ? (
-              <iframe src={iframeSource}></iframe>
-            ) : (
-              <img
-                className="w-full rounded-md -mt-10"
-                src="/assets/images/placeholder.png"
-                alt="placeholder image"
-              />
-            )}
-          </div>
+            <div className="px-2 py-4 text-sm lg:text-base text-justify lg:text-left">
+              {data.description}
+            </div>
 
-          <div className="px-2 py-4 text-sm lg:text-base text-justify lg:text-left">
-            {data.description}
+            <InView
+              as="div"
+              className="pseudo quarter"
+              triggerOnce={true}
+              onChange={(inView, entry) => {
+                if (inView) {
+                  GoogleTagManager.articleViewScroll(
+                    data,
+                    { videoArticle: true },
+                    25
+                  );
+                }
+              }}
+            >
+              <span></span>
+            </InView>
+            <InView
+              as="div"
+              className="pseudo half"
+              triggerOnce={true}
+              onChange={(inView, entry) => {
+                if (inView) {
+                  GoogleTagManager.articleViewScroll(
+                    data,
+                    { videoArticle: true },
+                    50
+                  );
+                }
+              }}
+            >
+              <span></span>
+            </InView>
+            <InView
+              as="div"
+              className="pseudo three-quarter"
+              triggerOnce={true}
+              onChange={(inView, entry) => {
+                if (inView) {
+                  GoogleTagManager.articleViewScroll(
+                    data,
+                    { videoArticle: true },
+                    75
+                  );
+                }
+              }}
+            >
+              <span></span>
+            </InView>
+            <InView
+              as="div"
+              className="pseudo full"
+              triggerOnce={true}
+              onChange={(inView, entry) => {
+                if (inView) {
+                  GoogleTagManager.articleViewScroll(
+                    data,
+                    { videoArticle: true },
+                    100
+                  );
+                }
+              }}
+            >
+              <span></span>
+            </InView>
           </div>
-
-          <InView
-            as="div"
-            className="pseudo quarter"
-            triggerOnce={true}
-            onChange={(inView, entry) => {
-              if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { videoArticle: true },
-                  25
-                );
-              }
-            }}
-          >
-            <span></span>
-          </InView>
-          <InView
-            as="div"
-            className="pseudo half"
-            triggerOnce={true}
-            onChange={(inView, entry) => {
-              if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { videoArticle: true },
-                  50
-                );
-              }
-            }}
-          >
-            <span></span>
-          </InView>
-          <InView
-            as="div"
-            className="pseudo three-quarter"
-            triggerOnce={true}
-            onChange={(inView, entry) => {
-              if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { videoArticle: true },
-                  75
-                );
-              }
-            }}
-          >
-            <span></span>
-          </InView>
-          <InView
-            as="div"
-            className="pseudo full"
-            triggerOnce={true}
-            onChange={(inView, entry) => {
-              if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { videoArticle: true },
-                  100
-                );
-              }
-            }}
-          >
-            <span></span>
-          </InView>
-        </div>
+        </Sticky>
       </div>
 
       <MediaContextProvider>

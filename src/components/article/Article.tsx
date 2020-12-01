@@ -185,7 +185,7 @@ export default function Article({
           </Media>
         </MediaContextProvider>
 
-        <div className="sidebar md:w-8/12 h-full bg-white">
+        <div className="md:w-8/12 h-full bg-white">
           <Sticky
             containerSelectorFocus={`.article[data-content-id="${contentId}"]`}
             stickyEnableRange={[768, Infinity]}
@@ -308,11 +308,6 @@ export default function Article({
                 triggerOnce={true}
                 onChange={(inView, entry) => {
                   if (inView) {
-                    /*    const el = contentRef.current;
-                  const viewportOffset = el.getBoundingClientRect();
-                  const top = viewportOffset.top;
-                  el.style.cssText = `position:fixed;top:${top-40}px;width:${viewportOffset.width}px;`;
- */
                     GoogleTagManager.articleViewScroll(
                       data,
                       { newsArticle: true },
