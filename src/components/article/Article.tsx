@@ -125,7 +125,7 @@ export default function Article({
           // document.body.appendChild(s);
           console.log(el);
           el.innerHTML = adHTML;
-          document.getElementById(id).appendChild(s);
+          el.querySelector('#' + id).appendChild(s);
         }
       }
     }
