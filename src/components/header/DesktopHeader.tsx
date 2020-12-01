@@ -108,16 +108,20 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
           state: location.pathname.split('/')[2],
           url: location.pathname.split('/').slice(0, -2).join('/'),
         },
-      }).then((resp) => {
-        setHeaderAd(
-          <iframe
-            className="mx-auto hidden lg:block"
-            width={755}
-            height={110}
-            src={new URL(resp.data.data.ad_list[0].ad_Url).pathname}
-          />
-        );
-      });
+      })
+        .then((resp) => {
+          setHeaderAd(
+            <iframe
+              className="mx-auto hidden lg:block"
+              width={755}
+              height={110}
+              src={new URL(resp.data.data.ad_list[0].ad_Url).pathname}
+            />
+          );
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     };
     getHeaderAd();
     const handleRouteChange = (url) => {

@@ -248,7 +248,9 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   let state = 'na';
   let params = null;
   const { publicRuntimeConfig } = getConfig();
-
+  if (typeof window !== 'undefined') {
+    window['applicationConfig'] = applicationConfig;
+  }
   if (req && req['i18n']) {
     i18n = req['i18n'];
     language = i18n.language;
@@ -280,18 +282,20 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       case 'videos':
       case 'video':
         if (typeof window !== 'undefined') {
+          
           window['applicationConfig'] = applicationConfig;
+        }
+        let suffix = null;
+        if (applicationConfig.value) {
+          suffix =
+            applicationConfig.value['params_hash2'].config_params.ssr_details[
+              configStateCodeConverter(location.pathname.split('/')[2])
+            ].video_details_link;
         }
         const videoResponse = await api.CatalogList.getVideoDetails({
           params: {
             ...params,
-            suffix:
-              applicationConfig.value && typeof window !== 'undefined'
-                ? applicationConfig.value['params_hash2'].config_params
-                    .ssr_details[
-                    configStateCodeConverter(location.pathname.split('/')[2])
-                  ].video_details_link
-                : null,
+            suffix: suffix,
           },
           query: {
             response: 'r2',
@@ -301,7 +305,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             page_size: typeof window === 'undefined' ? 1 : 10,
             portal_state: state, //national
           },
-          isSSR: typeof window === 'undefined',
+          // isSSR: typeof window === 'undefined',
         });
 
         const videoResp = videoResponse.data.data.catalog_list_items[0];
