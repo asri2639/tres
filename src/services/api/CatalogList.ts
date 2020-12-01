@@ -32,7 +32,7 @@ export default function CatalogList(inst) {
       return inst.get(
         `${controller}/${
           config['isSSR'] ? 'video-details' : params.suffix
-        }${getProperParam(params)}.gzip?${new URLSearchParams(query)}`,
+        }.gzip?${new URLSearchParams(query)}`,
         config
       );
     },

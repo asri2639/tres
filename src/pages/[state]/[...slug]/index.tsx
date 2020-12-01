@@ -21,9 +21,10 @@ import GalleryList from '@components/gallery/GalleryList';
 interface Propss {
   data: any;
   pageType: String;
+  appConfig?: any;
 }
 
-const slug: NextPage<Propss> = ({ data, pageType }) => {
+const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
   const router = useRouter();
 
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
@@ -176,6 +177,7 @@ const slug: NextPage<Propss> = ({ data, pageType }) => {
                 videos: [videoDatum],
                 contentId: videoDatum.contentId,
               }}
+              appConfig={appConfig}
             />
           </>
         );
@@ -281,17 +283,18 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     switch (query.slug[0].toLowerCase()) {
       case 'videos':
       case 'video':
+      case 'live-streaming':
         if (typeof window !== 'undefined') {
-          
           window['applicationConfig'] = applicationConfig;
         }
         let suffix = null;
         if (applicationConfig.value) {
           suffix =
             applicationConfig.value['params_hash2'].config_params.ssr_details[
-              configStateCodeConverter(location.pathname.split('/')[2])
+              configStateCodeConverter(query.state)
             ].video_details_link;
         }
+
         const videoResponse = await api.CatalogList.getVideoDetails({
           params: {
             ...params,
@@ -307,13 +310,13 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           },
           // isSSR: typeof window === 'undefined',
         });
-
         const videoResp = videoResponse.data.data.catalog_list_items[0];
         const video = videoResp.catalog_list_items[0];
         // Pass data to the page via props
         return {
           pageType: 'video',
           data: video,
+          appConfig: applicationConfig.value,
         };
       case 'gallery':
         const galleryResponse = await api.CatalogList.getArticleDetails({

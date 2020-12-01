@@ -20,10 +20,9 @@ import VideoAPI from '@services/api/Video';
 import { MenuContext } from '@components/layout/Layout';
 import { applicationConfig } from '@utils/Constants';
 
-const VideoList = ({ videoData }) => {
+const VideoList = ({ videoData, appConfig }) => {
   const { publicRuntimeConfig } = getConfig();
   const config = useContext(MenuContext);
-  console.log(config);
 
   const router = useRouter();
   const api = API(APIEnum.CatalogList, APIEnum.Video);
@@ -133,16 +132,20 @@ const VideoList = ({ videoData }) => {
     if (methodName === 'getVideoDetails' && window.innerWidth < 769) {
       //  return null;
     }
+    let suffix = null;
+    if (appConfig) {
+      suffix =
+        appConfig['params_hash2'].config_params.ssr_details[
+          configStateCodeConverter(location.pathname.split('/')[2])
+        ].video_details_link;
+    }
+
+    console.log(applicationConfig);
     return api[apiEnum][methodName]({
       params: {
         state: location.pathname.split('/')[2],
         language: language,
-        suffix:
-          methodName === 'getVideoDetails' && applicationConfig.value
-            ? applicationConfig.value['params_hash2'].config_params.ssr_details[
-                configStateCodeConverter(location.pathname.split('/')[2])
-              ].video_details_link
-            : '',
+        suffix: suffix,
       },
       query: {
         response: methodName === 'getVideoDetails' ? 'r2' : 'r1',
@@ -167,7 +170,7 @@ const VideoList = ({ videoData }) => {
         params: {
           play_url: play_url,
           hash,
-          auth: 'kmAJAH4RTtqHjgoauC4o'
+          auth: 'kmAJAH4RTtqHjgoauC4o',
         },
         query: null,
         payload: null,

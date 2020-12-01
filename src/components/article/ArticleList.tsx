@@ -105,7 +105,7 @@ const ArticleList = ({ articleData }) => {
           (v) =>
             v.content_id === lastArticleLoaded.getAttribute('data-content-id')
         );
-        if (curIndex > -1 && curIndex < 9 && !loading) {
+        if (curIndex > -1 && curIndex < 9 && !loading && related[curIndex + 1]) {
           startLoading();
           await api.CatalogList.getArticleDetails({
             query: {

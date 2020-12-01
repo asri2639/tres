@@ -142,7 +142,6 @@ const Gallery = ({
         }`;
           s.appendChild(document.createTextNode(code));
           // document.body.appendChild(s);
-          console.log(el);
           el.innerHTML = adHTML;
           el.querySelector('#' + id).appendChild(s);
         }
