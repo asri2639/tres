@@ -126,24 +126,26 @@ const Gallery = ({
           `[data-content-id="${contentId}"] .EtvadsSection`
         );
 
-        var s = document.createElement('script');
-        s.type = 'text/javascript';
-        var code = `
-        if(window.googletag && googletag.apiReady ) {
-          googletag.cmd.push(function() {
-            googletag.pubads().collapseEmptyDivs();
-            googletag.defineSlot('${ad_id}', ${slotArr}, '${id}').addService(googletag.pubads()); 
-            googletag.enableServices(); 
-          }); 
-          googletag.cmd.push(function() { 
-            googletag.display('${id}'); 
-          });
-      }`;
-        s.appendChild(document.createTextNode(code));
-        // document.body.appendChild(s);
-
-        el.innerHTML = adHTML;
-        document.getElementById(id).appendChild(s);
+        if (el && el.querySelector('#adsContainer')) {
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          var code = `
+          if(window.googletag && googletag.apiReady) {
+            googletag.cmd.push(function() {
+              googletag.pubads().collapseEmptyDivs();
+              googletag.defineSlot('${ad_id}', ${slotArr}, '${id}').addService(googletag.pubads()); 
+              googletag.enableServices(); 
+            }); 
+            googletag.cmd.push(function() { 
+              googletag.display('${id}'); 
+            });
+        }`;
+          s.appendChild(document.createTextNode(code));
+          // document.body.appendChild(s);
+          console.log(el);
+          el.innerHTML = adHTML;
+          el.querySelector('#' + id).appendChild(s);
+        }
       }
     }
   }, [inView, contentId, rhs]);

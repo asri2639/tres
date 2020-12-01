@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
 // import { InView } from 'react-intersection-observer';
 import AdContainer from '@components/article/AdContainer';
@@ -111,7 +111,7 @@ export default function Article({
           var s = document.createElement('script');
           s.type = 'text/javascript';
           var code = `
-          if(window.googletag && googletag.apiReady ) {
+          if(window.googletag && googletag.apiReady) {
             googletag.cmd.push(function() {
               googletag.pubads().collapseEmptyDivs();
               googletag.defineSlot('${ad_id}', ${slotArr}, '${id}').addService(googletag.pubads()); 
