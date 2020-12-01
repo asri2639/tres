@@ -10,6 +10,7 @@ import GoogleTagManager from '@utils/GoogleTagManager';
 import ComScore from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
 import MobileNextArticle from '@components/article/MobileNextArticle';
+import Sticky from 'wil-react-sticky';
 
 // initialPosition
 // div height
@@ -184,127 +185,146 @@ export default function Article({
           </Media>
         </MediaContextProvider>
 
-        <div className="md:w-8/12">
-          <div
-            className={`${
-              className || ''
-            } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
-            ref={contentRef}
+        <div className="sidebar md:w-8/12 h-full bg-white">
+          <Sticky
+            containerSelectorFocus={`.article[data-content-id="${contentId}"]`}
+            stickyEnableRange={[768, Infinity]}
+            offsetTop={60}
           >
-            <div className="flex flex-col md:flex-col-reverse md:mb-8">
-              <div className="-mx-3 md:mx-0">
-                <Thumbnail
-                  thumbnail={thumbnail}
-                  className={'md:rounded-lg w-full'}
-                />
-              </div>
-              <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
-                <h1
-                  ref={setRefs}
-                  className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
-                >
-                  {data.title}
-                </h1>
-                <div className="text-sm text-gray-600 md:text-black">
-                  {data.publish_date_uts
-                    ? `Published on: ${dateFormatter(data.publish_date_uts)}`
-                    : ''}
-                  <span className="hidden md:inline-block">
-                    {data.publish_date_uts && data.update_date_uts
-                      ? `  |  `
-                      : ''}
-                  </span>
-                  <br className="md:hidden" />
-                  {data.update_date_uts
-                    ? `Updated on: ${dateFormatter(data.update_date_uts)}`
-                    : ''}
-                </div>
-              </div>
-
-              <MediaContextProvider>
-                <Media
-                  at="xs"
-                  className="flex justify-between mx-auto w-56 mb-2"
-                >
-                  <SocialMedia data={data} />
-                </Media>
-              </MediaContextProvider>
-            </div>
-
             <div
-              className="text-sm md:text-md"
-              dangerouslySetInnerHTML={{
-                __html: html,
-              }}
-            />
+              className={`${
+                className || ''
+              } actual-content lg:container lg:mx-auto px-3 md:px-0 bg-white `}
+              ref={contentRef}
+            >
+              <div className="flex flex-col md:flex-col-reverse md:mb-8">
+                <div className="-mx-3 md:mx-0">
+                  <Thumbnail
+                    thumbnail={thumbnail}
+                    className={'md:rounded-lg w-full'}
+                  />
+                </div>
+                <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
+                  <h1
+                    ref={setRefs}
+                    className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
+                  >
+                    {data.title}
+                  </h1>
+                  <div className="text-sm text-gray-600 md:text-black">
+                    {data.publish_date_uts
+                      ? `Published on: ${dateFormatter(data.publish_date_uts)}`
+                      : ''}
+                    <span className="hidden md:inline-block">
+                      {data.publish_date_uts && data.update_date_uts
+                        ? `  |  `
+                        : ''}
+                    </span>
+                    <br className="md:hidden" />
+                    {data.update_date_uts
+                      ? `Updated on: ${dateFormatter(data.update_date_uts)}`
+                      : ''}
+                  </div>
+                </div>
 
-            <InView
-              as="div"
-              className="pseudo quarter"
-              triggerOnce={true}
-              onChange={(inView, entry) => {
-                if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { newsArticle: true },
-                    25
-                  );
-                }
-              }}
-            >
-              <span></span>
-            </InView>
-            <InView
-              as="div"
-              className="pseudo half"
-              triggerOnce={true}
-              onChange={(inView, entry) => {
-                if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { newsArticle: true },
-                    50
-                  );
-                }
-              }}
-            >
-              <span></span>
-            </InView>
+                <MediaContextProvider>
+                  <Media
+                    at="xs"
+                    className="flex justify-between mx-auto w-56 mb-2"
+                  >
+                    <SocialMedia data={data} />
+                  </Media>
+                </MediaContextProvider>
+              </div>
 
-            <InView
-              as="div"
-              className="pseudo three-quarter"
-              triggerOnce={true}
-              onChange={(inView, entry) => {
-                if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { newsArticle: true },
-                    75
-                  );
-                }
-              }}
-            >
-              <span></span>
-            </InView>
+              <div
+                className="text-sm md:text-md"
+                dangerouslySetInnerHTML={{
+                  __html: html,
+                }}
+              />
 
-            <InView
-              as="div"
-              className="pseudo full"
-              triggerOnce={true}
-              onChange={(inView, entry) => {
-                if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { newsArticle: true },
-                    100
-                  );
-                }
-              }}
-            >
-              <span></span>
-            </InView>
-          </div>
+              <InView
+                as="div"
+                className="pseudo quarter"
+                triggerOnce={true}
+                onChange={async (inView, entry) => {
+                  if (inView) {
+                    /*  const StickySidebar = await import('sticky-sidebar').then(mod => mod.default);
+                  console.log(StickySidebar)
+                  var stickySidebar = new StickySidebar('.sidebar', {
+                 
+                    containerSelector: '.article',
+                    innerWrapperSelector: '.actual-content',
+                  });
+                  console.log(stickySidebar) */
+                    GoogleTagManager.articleViewScroll(
+                      data,
+                      { newsArticle: true },
+                      25
+                    );
+                  }
+                }}
+              >
+                <span></span>
+              </InView>
+              <InView
+                as="div"
+                className="pseudo half"
+                triggerOnce={true}
+                onChange={(inView, entry) => {
+                  if (inView) {
+                    GoogleTagManager.articleViewScroll(
+                      data,
+                      { newsArticle: true },
+                      50
+                    );
+                  }
+                }}
+              >
+                <span></span>
+              </InView>
+
+              <InView
+                as="div"
+                className="pseudo three-quarter"
+                triggerOnce={true}
+                onChange={(inView, entry) => {
+                  if (inView) {
+                    GoogleTagManager.articleViewScroll(
+                      data,
+                      { newsArticle: true },
+                      75
+                    );
+                  }
+                }}
+              >
+                <span></span>
+              </InView>
+
+              <InView
+                as="div"
+                className="pseudo full"
+                triggerOnce={true}
+                onChange={(inView, entry) => {
+                  if (inView) {
+                    /*    const el = contentRef.current;
+                  const viewportOffset = el.getBoundingClientRect();
+                  const top = viewportOffset.top;
+                  el.style.cssText = `position:fixed;top:${top-40}px;width:${viewportOffset.width}px;`;
+ */
+                    GoogleTagManager.articleViewScroll(
+                      data,
+                      { newsArticle: true },
+                      100
+                    );
+                  }
+                }}
+              >
+                <span></span>
+              </InView>
+            </div>
+          </Sticky>
         </div>
 
         <MediaContextProvider>

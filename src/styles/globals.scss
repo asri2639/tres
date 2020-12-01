@@ -47,9 +47,9 @@ section.content {
 
 .actual-content {
   min-height: 100vh;
-  position: sticky;
-  top: 50px;
-  bottom: 10px;
+   position: relative;
+   margin-bottom: 100px;
+ /* bottom: 10px; */
   .pseudo {
     position: absolute;
     z-index: 1;
