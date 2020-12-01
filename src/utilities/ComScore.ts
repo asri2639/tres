@@ -12,7 +12,8 @@ export default {
     };
     request.open(
       'GET',
-      'https://www.etvbharat.com/comscore-pageview-candidate.json?' +
+      location.origin +
+        '/comscore-pageview-candidate.json?' +
         new Date().getTime(),
       true
     );
