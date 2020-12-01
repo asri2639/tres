@@ -18,6 +18,7 @@ import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import VideoAPI from '@services/api/Video';
 import { MenuContext } from '@components/layout/Layout';
+import { applicationConfig } from '@utils/Constants';
 
 const VideoList = ({ videoData }) => {
   const { publicRuntimeConfig } = getConfig();
@@ -137,8 +138,8 @@ const VideoList = ({ videoData }) => {
         state: location.pathname.split('/')[2],
         language: language,
         suffix:
-          methodName === 'getVideoDetails'
-            ? config['params_hash2'].config_params.ssr_details[
+          methodName === 'getVideoDetails' && applicationConfig.value
+            ? applicationConfig.value['params_hash2'].config_params.ssr_details[
                 configStateCodeConverter(location.pathname.split('/')[2])
               ].video_details_link
             : '',
@@ -256,7 +257,8 @@ const VideoList = ({ videoData }) => {
           await api.CatalogList.getVideoDetails({
             params: {
               suffix:
-                config['params_hash2'].config_params.ssr_details[
+                applicationConfig.value['params_hash2'].config_params
+                  .ssr_details[
                   configStateCodeConverter(location.pathname.split('/')[2])
                 ].video_details_link,
               state: location.pathname.split('/')[2],
