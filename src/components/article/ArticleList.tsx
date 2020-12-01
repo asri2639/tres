@@ -114,6 +114,7 @@ const ArticleList = ({ articleData }) => {
               content_id: related[curIndex + 1].content_id, //variable
               page_size: window.innerWidth < 769 ? 1 : 10,
               portal_state: stateCodeConverter(location.pathname.split('/')[2]),
+              scroll_no: 0,
             },
           }).then((res) => {
             const newArticle =
