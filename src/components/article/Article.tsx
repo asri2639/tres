@@ -184,7 +184,7 @@ export default function Article({
           </Media>
         </MediaContextProvider>
 
-        <div className="sidebar md:w-8/12">
+        <div className="md:w-8/12">
           <div
             className={`${
               className || ''
@@ -316,7 +316,7 @@ export default function Article({
               nextArticle={nextArticle}
             />
           </Media>
-          <Media greaterThan="xs" className={`content md:block md:w-4/12`}>
+          <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
             <div className="w-full items-center space-y-6 pt-4 pb-4">
               {!rhs ? 'Loading...' : <AdContainer data={filteredRHS} />}
             </div>

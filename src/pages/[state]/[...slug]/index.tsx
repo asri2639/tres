@@ -307,6 +307,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             gallery_ad: true,
             page_size: typeof window === 'undefined' ? 1 : 10,
             portal_state: state, //national
+            version:'v2'
           },
           // isSSR: typeof window === 'undefined',
         });

@@ -140,7 +140,6 @@ const VideoList = ({ videoData, appConfig }) => {
         ].video_details_link;
     }
 
-    console.log(applicationConfig);
     return api[apiEnum][methodName]({
       params: {
         state: location.pathname.split('/')[2],
@@ -165,19 +164,34 @@ const VideoList = ({ videoData, appConfig }) => {
 
   const smartUrlFetcher = (...args) => {
     const [play_url, hash] = args;
-    return VideoAPI(null)
-      .getSmartUrls({
+    if (publicRuntimeConfig.APP_ENV !== 'development') {
+      return VideoAPI(null)
+        .getSmartUrls({
+          params: {
+            play_url: play_url,
+            hash,
+          },
+          query: null,
+          payload: null,
+        })
+        .then((resp) => {
+          return resp;
+        });
+    } else {
+      const api = API(APIEnum.Video);
+
+      return api.Video.getSmartUrls({
         params: {
           play_url: play_url,
           hash,
           auth: 'kmAJAH4RTtqHjgoauC4o',
         },
-        query: null,
-        payload: null,
-      })
-      .then((resp) => {
-        return resp;
+
+        suv: true,
+      }).then((resp) => {
+        return resp.data;
       });
+    }
   };
 
   const { data: smartUrls, error: smartUrlError } = useSWR(
@@ -281,19 +295,47 @@ const VideoList = ({ videoData, appConfig }) => {
             const rhs = res.data.data.catalog_list_items.slice(2)[0]
               .catalog_list_items;
 
-            await await VideoAPI(null)
-              .getSmartUrls({
+            if (publicRuntimeConfig.APP_ENV !== 'development') {
+              await VideoAPI(null)
+                .getSmartUrls({
+                  params: {
+                    play_url: newVideo.play_url.url,
+                    hash: createHash(
+                      'ywVXaTzycwZ8agEs3ujx' + newVideo.play_url.url
+                    ),
+                  },
+                  query: null,
+                  payload: null,
+                })
+                .then(async (res1) => {
+                  const iframeSource = constructPlaybackUrl(newVideo, res1);
+
+                  const newList = [
+                    ...videos,
+                    {
+                      data: newVideo,
+                      rhs,
+                      contentId: newVideo.content_id,
+                      iframeSource,
+                    },
+                  ];
+
+                  setVideos(newList);
+                  stopLoading();
+                });
+            } else {
+              const api = API(APIEnum.Video);
+
+              return api.Video.getSmartUrls({
                 params: {
                   play_url: newVideo.play_url.url,
                   hash: createHash(
                     'ywVXaTzycwZ8agEs3ujx' + newVideo.play_url.url
                   ),
                 },
-                query: null,
-                payload: null,
-              })
-              .then(async (res1) => {
-                const iframeSource = constructPlaybackUrl(newVideo, res1);
+                suv: true,
+              }).then(async (res1) => {
+                const iframeSource = constructPlaybackUrl(newVideo, res1.data);
 
                 const newList = [
                   ...videos,
@@ -308,6 +350,7 @@ const VideoList = ({ videoData, appConfig }) => {
                 setVideos(newList);
                 stopLoading();
               });
+            }
           });
         }
       }

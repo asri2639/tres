@@ -43,13 +43,13 @@ section.content {
   top: 50px;
   bottom: 200px;
 }
+.ad-content {}
 
 .actual-content {
   min-height: 100vh;
   position: sticky;
   top: 50px;
   bottom: 10px;
-
   .pseudo {
     position: absolute;
     z-index: 1;
