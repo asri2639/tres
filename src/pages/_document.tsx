@@ -12,6 +12,13 @@ export default class ETVDocument extends Document {
           />
           <script
             dangerouslySetInnerHTML={{
+              __html: ` if (location.protocol === 'http') {
+                window.location.href = window.location.href.replace('http:', 'https:');
+              }`,
+            }}
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
               __html: `window.dataLayer = window.dataLayer || [];
                 (function(w,d,s,l,i){
                     w[l]=w[l]||[];
