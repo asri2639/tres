@@ -51,18 +51,6 @@ app
 
     // Default catch-all handler to allow Next.js to handle all other routes
     server.all('*', (req, res) => {
-      console.log(req.protocol, req.headers.host.endsWith('.etvbharat.com'));
-      if (
-        req.protocol === 'http' &&
-        env !== 'development' &&
-        req.headers.host.endsWith('.etvbharat.com')
-      ) {
-        res.writeHead(302, {
-          Location: 'https://' + req.headers.host + req.url,
-        });
-        res.end();
-      }
-
       return handle(req, res);
     });
 

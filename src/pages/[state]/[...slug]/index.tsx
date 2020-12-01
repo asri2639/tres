@@ -372,6 +372,17 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       });
       res.end();
     }
+
+    if (
+      req['protocol'] === 'http' &&
+      publicRuntimeConfig.APP_ENV !== 'development' &&
+      req.headers.host.endsWith('.etvbharat.com')
+    ) {
+      res.writeHead(302, {
+        Location: 'https://' + req.headers.host + req.url,
+      });
+      res.end();
+    }
   }
 
   return {
