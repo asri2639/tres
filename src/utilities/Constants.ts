@@ -47,6 +47,10 @@ export const accessToken = {
   mobile: '',
 };
 
+export const applicationConfig = {
+  value: null
+};
+
 export const languageMap = {
   assamese: 'asm',
   bengali: 'be',

@@ -10,7 +10,7 @@ import {
   stateCodeConverter,
   thumbnailExtractor,
 } from '@utils/Helpers';
-import { languageMap } from '@utils/Constants';
+import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 
@@ -274,7 +274,16 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       case 'videos':
       case 'video':
         const videoResponse = await api.CatalogList.getVideoDetails({
-          params: params,
+          params: {
+            ...params,
+            suffix:
+              applicationConfig.value && typeof window !== 'undefined'
+                ? applicationConfig.value['params_hash2'].config_params
+                    .ssr_details[
+                    configStateCodeConverter(location.pathname.split('/')[2])
+                  ].video_details_link
+                : null,
+          },
           query: {
             response: 'r2',
             item_languages: language,
