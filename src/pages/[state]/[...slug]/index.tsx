@@ -258,6 +258,9 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       language: language,
     };
   } else if (typeof window !== 'undefined') {
+    if (location.protocol === 'http') {
+      window.location.href = window.location.href.replace('http:', 'https:');
+    }
     const urlSplit = location.pathname.split('/');
     language = languageMap[urlSplit[1]];
     state = stateCodeConverter(urlSplit[2]);
@@ -372,7 +375,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       });
       res.end();
     }
-
     if (
       req['protocol'] === 'http' &&
       publicRuntimeConfig.APP_ENV !== 'development' &&
