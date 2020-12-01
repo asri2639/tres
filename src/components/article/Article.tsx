@@ -107,7 +107,7 @@ export default function Article({
           `[data-content-id="${contentId}"] .EtvadsSection`
         );
 
-        if (el.querySelector('#adsContainer')) {
+        if (el && el.querySelector('#adsContainer')) {
           var s = document.createElement('script');
           s.type = 'text/javascript';
           var code = `
