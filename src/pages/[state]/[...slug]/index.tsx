@@ -17,7 +17,6 @@ import getConfig from 'next/config';
 import ArticleList from '@components/article/ArticleList';
 import VideoList from '@components/video/VideoList';
 import GalleryList from '@components/gallery/GalleryList';
-import { MenuContext } from '@components/layout/Layout';
 
 interface Propss {
   data: any;
@@ -246,7 +245,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   let state = 'na';
   let params = null;
   const { publicRuntimeConfig } = getConfig();
-  const config = useContext(MenuContext);
 
   if (req && req['i18n']) {
     i18n = req['i18n'];
@@ -255,10 +253,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     params = {
       state: query.state,
       language: language,
-      suffix:
-        config['params_hash2'].config_params.ssr_details[
-          configStateCodeConverter(query.state)
-        ].video_details_link,
     };
   } else if (typeof window !== 'undefined') {
     const urlSplit = location.pathname.split('/');
@@ -267,10 +261,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     params = {
       state: query.state,
       language: language,
-      suffix:
-        config['params_hash2'].config_params.ssr_details[
-          configStateCodeConverter(query.state)
-        ].video_details_link,
     };
   }
 
