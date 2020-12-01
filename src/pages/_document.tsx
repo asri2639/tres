@@ -12,7 +12,7 @@ export default class ETVDocument extends Document {
           />
           <script
             dangerouslySetInnerHTML={{
-              __html: ` if (location.protocol === 'http:') {
+              __html: ` if (location.protocol === 'http:' && location.hostname !== 'localhost') {
                 window.location.href = window.location.href.replace('http:', 'https:');
               }`,
             }}
