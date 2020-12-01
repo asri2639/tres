@@ -76,16 +76,6 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 App.getInitialProps = async ({ Component, ctx }) => {
   const { publicRuntimeConfig } = getConfig();
 
-  if (
-    ctx.req.protocol === 'http' &&
-    publicRuntimeConfig.APP_ENV !== 'development'
-  ) {
-    ctx.res.writeHead(302, {
-      Location: 'https://' + ctx.req.headers.host + ctx.req.url,
-    });
-    ctx.res.end();
-  }
-
   let pageProps = {};
 
   const api = API(APIEnum.Catalog);
