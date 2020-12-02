@@ -250,14 +250,6 @@ export default function Article({
                 triggerOnce={true}
                 onChange={async (inView, entry) => {
                   if (inView) {
-                    /*  const StickySidebar = await import('sticky-sidebar').then(mod => mod.default);
-                  console.log(StickySidebar)
-                  var stickySidebar = new StickySidebar('.sidebar', {
-                 
-                    containerSelector: '.article',
-                    innerWrapperSelector: '.actual-content',
-                  });
-                  console.log(stickySidebar) */
                     GoogleTagManager.articleViewScroll(
                       data,
                       { newsArticle: true },

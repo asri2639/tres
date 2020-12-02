@@ -1,5 +1,4 @@
 import { APIRequest } from '@interfaces/API';
-import { stateCodeConverter } from '@utils/Helpers';
 import getConfig from 'next/config';
 
 const { publicRuntimeConfig } = getConfig();
@@ -11,7 +10,7 @@ const getProperParam = (params) => {
     params = { state: location.pathname.split('/')[2] };
   }
 
-  return params && params.state && params.state !== 'national'
+  return params && params.state && params.state !== 'national' && params.state !== 'odisha'
     ? '-' + params.state
     : '';
 };

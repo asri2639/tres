@@ -27,6 +27,8 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
   const { publicRuntimeConfig } = getConfig();
 
   useEffect(() => {
+    document.documentElement.lang = languageMap[router.asPath.split('/')[1]];
+
     const handleRouteChange = (url) => {
       const urlSplit = url.split('/');
       if (urlSplit[1] !== currentLanguage) {
