@@ -262,6 +262,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       language: language,
     };
   } else if (typeof window !== 'undefined') {
+    document.documentElement.lang = languageMap[language];
     if (location.protocol === 'http') {
       window.location.href = window.location.href.replace('http:', 'https:');
     }
@@ -276,7 +277,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
   const id = query.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
-
   if (re.test(id)) {
     const api = API(APIEnum.CatalogList);
 
@@ -360,7 +360,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           },
           isSSR: typeof window === 'undefined',
         });
-       
         const articleResp = articleResponse.data.data.catalog_list_items[0];
         const article = articleResp.catalog_list_items[0];
 
