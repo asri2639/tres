@@ -275,7 +275,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   }
 
   const id = query.slug.slice(-1)[0];
-  const re = new RegExp((state || 'na') + '\\d+', 'gi');
+  const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
   if (re.test(id)) {
     const api = API(APIEnum.CatalogList);
@@ -307,7 +307,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             gallery_ad: true,
             page_size: typeof window === 'undefined' ? 1 : 10,
             portal_state: state, //national
-            version:'v2'
+            version: 'v2',
           },
           // isSSR: typeof window === 'undefined',
         });
@@ -360,6 +360,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           },
           isSSR: typeof window === 'undefined',
         });
+       
         const articleResp = articleResponse.data.data.catalog_list_items[0];
         const article = articleResp.catalog_list_items[0];
 
