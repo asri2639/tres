@@ -2,13 +2,16 @@ import { thumbnailExtractor } from '@utils/Helpers';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import Modal from '@components/modal/Modal';
 import { useState } from 'react';
+import { withTranslation } from '@i18n';
+import { WithTranslation } from 'next-i18next';
 
 const MobileNextArticle = ({
   label,
   data,
+  t,
   nextArticle,
   scrollToNextArticle,
-}) => {
+}: IMobileNextArticle) => {
   const query = {
     amp: 'false',
     apiKey: '99a287d2-81b1-4013-8705-0805df9481e0',
@@ -84,13 +87,13 @@ const MobileNextArticle = ({
             toggleOpen(true);
           }}
         >
-          Add Comment
+          {t('add_comment')}
         </div>
       </div>
       <div className="flex flex-col py-4 px-5  bg-mbg text-white cursor-pointer">
         <div className="flex items-center mb-1">
           <img alt="ETV" className="w-6" src="/assets/images/nextarticle.png" />
-          <span className="text-lg font-thin pl-2">{label}</span>
+          <span className="text-lg font-thin pl-2">{t(label)}</span>
         </div>
         <div
           className="text-gray-500 tracking-tighter pl-2"
@@ -103,4 +106,11 @@ const MobileNextArticle = ({
   );
 };
 
-export default MobileNextArticle;
+interface IMobileNextArticle extends WithTranslation {
+  label: string;
+  data: any;
+  nextArticle: any;
+  scrollToNextArticle: any;
+}
+
+export default withTranslation('common')(MobileNextArticle);

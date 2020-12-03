@@ -8,7 +8,10 @@ import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 import footer from './Footer.module.scss';
 
-export default function MobileFooter({ data, menu }) {
+import { withTranslation } from '@i18n';
+import { WithTranslation } from 'next-i18next';
+
+const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
   const isiOS = false;
   const router = useRouter();
   const {
@@ -155,7 +158,7 @@ export default function MobileFooter({ data, menu }) {
               backToTop();
             }}
           >
-            BACK TO TOP
+            {t('back_to_top')}
           </button>
           <div className="bottom-section mx-8">
             <div className="text-center img-block">
@@ -363,4 +366,11 @@ export default function MobileFooter({ data, menu }) {
       </div>
     </>
   );
+};
+
+interface IMobileFooter extends WithTranslation {
+  data: any;
+  menu: any;
 }
+
+export default withTranslation('common')(MobileFooter);
