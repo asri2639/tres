@@ -43,13 +43,14 @@ section.content {
   top: 50px;
   bottom: 200px;
 }
-.ad-content {}
+.ad-content {
+}
 
 .actual-content {
   min-height: 100vh;
-   position: relative;
-   margin-bottom: 100px;
- /* bottom: 10px; */
+  position: relative;
+
+  /* bottom: 10px; */
   .pseudo {
     position: absolute;
     z-index: 1;
@@ -68,6 +69,12 @@ section.content {
   }
   .full {
     top: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .actual-content {
+    margin-bottom: 80px;
   }
 }
 /* html,
