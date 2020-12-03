@@ -315,3 +315,35 @@ export const createHash = function (r) {
   var N = H(a) + H(d) + H(f) + H(c);
   return N.toLowerCase();
 };
+
+export const dateFormatter = (uts) => {
+  const current = new Date().getTime();
+  const date = new Date(uts * 1000);
+  const previous = date.getTime();
+  var msPerMinute = 60 * 1000;
+  var msPerHour = msPerMinute * 60;
+  var msPerDay = msPerHour * 24;
+  var msPerMonth = msPerDay * 30;
+  var msPerYear = msPerDay * 365;
+
+  var elapsed = current - previous;
+
+  if (elapsed < msPerMinute) {
+    return Math.round(elapsed / 1000) + ' seconds ago';
+  } else if (elapsed < msPerHour) {
+    return Math.round(elapsed / msPerMinute) + ' minutes ago';
+  } else if (elapsed < msPerDay) {
+    return Math.round(elapsed / msPerHour) + ' hours ago';
+  } else if (elapsed < msPerMonth) {
+    return (
+      date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour12: true,
+        hour: 'numeric',
+        minute: 'numeric',
+      }) + ' IST'
+    );
+  }
+};

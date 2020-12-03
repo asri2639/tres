@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useRef } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
 // import { InView } from 'react-intersection-observer';
 import AdContainer from '@components/article/AdContainer';
-import { thumbnailExtractor } from '@utils/Helpers';
+import { dateFormatter, thumbnailExtractor } from '@utils/Helpers';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
 import Thumbnail from '@components/common/Thumbnail';
@@ -141,19 +141,6 @@ export default function Article({
     [inViewRef]
   );
 
-  const dateFormatter = (uts) => {
-    const date = new Date(uts * 1000);
-    return (
-      date.toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-        hour12: true,
-        hour: 'numeric',
-        minute: 'numeric',
-      }) + ' IST'
-    );
-  };
   let filteredRHS = [];
   if (rhs) {
     filteredRHS = rhs.filter((v) => {
@@ -317,7 +304,7 @@ export default function Article({
         <MediaContextProvider>
           <Media at="xs">
             <MobileNextArticle
-              label={'Next Article'}
+              label={'next_article'}
               data={data}
               scrollToNextArticle={scrollToNextArticle}
               nextArticle={nextArticle}

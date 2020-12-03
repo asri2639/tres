@@ -14,6 +14,7 @@ import ComScore from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
 import MobileNextArticle from '@components/article/MobileNextArticle';
 import Sticky from 'wil-react-sticky';
+import { dateFormatter } from '@utils/Helpers';
 
 const Gallery = ({
   contentId,
@@ -160,19 +161,6 @@ const Gallery = ({
     [inViewRef]
   );
 
-  const dateFormatter = (uts) => {
-    const date = new Date(uts * 1000);
-    return (
-      date.toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-        hour12: true,
-        hour: 'numeric',
-        minute: 'numeric',
-      }) + ' IST'
-    );
-  };
   let filteredRHS = [];
   if (rhs) {
     filteredRHS = rhs.filter((v) => {
@@ -366,7 +354,7 @@ const Gallery = ({
       <MediaContextProvider>
         <Media at="xs">
           <MobileNextArticle
-            label={'Next Gallery'}
+            label={'next_gallery'}
             scrollToNextArticle={scrollToNextGallery}
             nextArticle={nextGallery}
             data={data}
