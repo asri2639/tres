@@ -12,7 +12,7 @@ const getProperParam = (params) => {
 
   return params &&
     params.state &&
-    ['mational', 'kerala', 'odisha'].indexOf(params.state) === -1
+    ['national', 'kerala', 'odisha'].indexOf(params.state) === -1
     ? '-' + params.state
     : '';
 };
