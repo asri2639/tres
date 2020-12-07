@@ -65,6 +65,8 @@ export const stateCodeConverter = (e) => {
     national: 'na',
     'jammu-and-kashmir': 'na',
     'tamil-nadu': 'tamil-nadu',
+    kerala: 'kerala',
+    uttarakhand: 'uttarakhand',
   }[e.toLowerCase()];
 };
 

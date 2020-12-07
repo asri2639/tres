@@ -262,6 +262,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       language: language,
     };
   } else if (typeof window !== 'undefined') {
+    
     document.documentElement.lang = languageMap[language];
     if (location.protocol === 'http') {
       window.location.href = window.location.href.replace('http:', 'https:');
@@ -362,6 +363,17 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         });
         const articleResp = articleResponse.data.data.catalog_list_items[0];
         const article = articleResp.catalog_list_items[0];
+        /*  console.log({
+          item_languages: language,
+          region: 'IN',
+          response: 'r2',
+          content_id: id, //variable
+          gallery_ad: true,
+          page: 0,
+          page_size: typeof window === 'undefined' ? 1 : 10,
+          portal_state: state, //national
+          scroll_no: 0,
+        }); */
 
         // Pass data to the page via props
         return {

@@ -11,7 +11,7 @@ module.exports = new NextI18Next({
     'gu',
     'hi',
     'kn',
-    'ma',
+    'ml',
     'mr',
     'or',
     'pan',

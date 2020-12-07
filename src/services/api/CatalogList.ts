@@ -10,7 +10,9 @@ const getProperParam = (params) => {
     params = { state: location.pathname.split('/')[2] };
   }
 
-  return params && params.state && params.state !== 'national' && params.state !== 'odisha'
+  return params &&
+    params.state &&
+    ['mational', 'kerala', 'odisha'].indexOf(params.state) === -1
     ? '-' + params.state
     : '';
 };
