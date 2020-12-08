@@ -53,7 +53,7 @@ export const applicationConfig = {
 
 export const languageMap = {
   assamese: 'asm',
-  bengali: 'be',
+  bengali: 'bn',
   english: 'en',
   gujarati: 'gu',
   hindi: 'hi',
@@ -69,7 +69,7 @@ export const languageMap = {
 
 export const localeSubpaths = {
   asm: 'assamese',
-  be: 'bengali',
+  bn: 'bengali',
   gu: 'gujarati',
   hi: 'hindi',
   kn: 'kannada',

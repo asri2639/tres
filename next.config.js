@@ -2,7 +2,7 @@ const path = require('path');
 const { nextI18NextRewrites } = require('next-i18next/rewrites');
 const localeSubpaths = {
   asm: 'assamese',
-  be: 'bengali',
+  bn: 'bengali',
   gu: 'gujarati',
   hi: 'hindi',
   kn: 'kannada',
