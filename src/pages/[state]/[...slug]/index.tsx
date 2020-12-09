@@ -87,7 +87,8 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
                   const thumbnail = thumbnailExtractor(
                     data.thumbnails,
                     '3_2',
-                    'b2s'
+                    'b2s',
+                    data.media_type
                   );
                   return [
                     {
@@ -154,7 +155,8 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
                   const thumbnail = thumbnailExtractor(
                     data.thumbnails,
                     '3_2',
-                    'b2s'
+                    'b2s',
+                    data.media_type
                   );
                   return [
                     {

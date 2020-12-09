@@ -18,7 +18,7 @@ const MobileNextArticle = ({
     host: 'etvbharat.com',
     articleId: data.content_id,
     globalLang: 'en',
-    img: thumbnailExtractor(data.thumbnails, '3_2', 's2b'),
+    img: thumbnailExtractor(data.thumbnails, '3_2', 's2b', data.media_type),
     title: data.title,
     url: location.origin + data.web_url,
     darkMode: 'false',

@@ -48,7 +48,7 @@ const BottomRelatedBar = ({ data }) => {
   };
 
   return (
-    <div className="bottom-one flex shadow-t bg-white z-10">
+    <div className="bottom-one flex shadow-t bg-white z-10 h-full">
       <div
         className={`px-1 pt-2 pb-1 border-t ${
           startIndex <= 0 ? 'cursor-not-allowed' : 'cursor-pointer '
@@ -61,7 +61,7 @@ const BottomRelatedBar = ({ data }) => {
       </div>
       {visible.map((rel, ind) => {
         const splitUrl = rel.web_url.split('/');
-        const thumbnail = thumbnailExtractor(rel.thumbnails, '3_2', 's2b');
+        const thumbnail = thumbnailExtractor(rel.thumbnails, '3_2', 's2b', null);
 
         return (
           <NavLink
@@ -82,7 +82,11 @@ const BottomRelatedBar = ({ data }) => {
               GoogleTagManager.articleClick(rel);
             }}
           >
-            <Thumbnail thumbnail={thumbnail} className={'rounded-md w-20'} />
+            <Thumbnail
+              thumbnail={thumbnail}
+              className={'rounded-md w-20'}
+              type={''}
+            />
 
             <div className=" px-1 text-xs text-gray-700 leading-tight">
               {rel.display_title}

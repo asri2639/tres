@@ -111,8 +111,13 @@ const Layout = ({ children, accessToken, appConfig }) => {
             } else if (state.state === 'tripura') {
             }
 
-            state.state = state.state.toLowerCase();
-            languageData[language].push(state);
+            console.log(state.state, state.display_title)
+            if (
+              state.state !== 'tripura' &&
+              state.display_title !== 'بھارت ETV'
+            ) {
+              languageData[language].push(state);
+            }
           }
         });
       });

@@ -152,7 +152,12 @@ export default function Article({
     });
   }
 
-  const thumbnail = thumbnailExtractor(data.thumbnails, '3_2', 'b2s');
+  const thumbnail = thumbnailExtractor(
+    data.thumbnails,
+    '3_2',
+    'b2s',
+    data.media_type
+  );
   return (
     <>
       <div
@@ -189,6 +194,7 @@ export default function Article({
                   <Thumbnail
                     thumbnail={thumbnail}
                     className={'md:rounded-lg w-full'}
+                    type={data.media_type}
                   />
                 </div>
                 <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
@@ -198,7 +204,7 @@ export default function Article({
                   >
                     {data.title}
                   </h1>
-                  <div className="text-sm text-gray-600 md:text-black">
+                  <div className="text-sm text-gray-600 md:text-black always-english" >
                     {data.publish_date_uts
                       ? `Published on: ${dateFormatter(data.publish_date_uts)}`
                       : ''}

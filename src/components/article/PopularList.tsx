@@ -27,7 +27,11 @@ const PopularList = ({ data }) => {
         {data.ml_title[0].text.toUpperCase()}
       </div>
 
-      <div className={`py-4 ${isRTL ? 'text-base': 'text-lg'} flex justify-center items-center space-x-2  border-t border-b font-bold divide-x divide-gray-600`}>
+      <div
+        className={`py-4 ${
+          isRTL ? 'text-base' : 'text-lg'
+        } flex justify-center items-center space-x-2  border-t border-b font-bold divide-x divide-gray-600`}
+      >
         {data.catalog_list_items.map((val) => {
           return (
             <div
@@ -45,12 +49,19 @@ const PopularList = ({ data }) => {
       <div className={`space-y-5 my-3  ${popular.list}`}>
         {selectedList.map((v) => {
           const splitUrl = v.web_url.split('/');
-          const thumbnail = thumbnailExtractor(v.thumbnails, '3_2', 's2b');
+          const thumbnail = thumbnailExtractor(
+            v.thumbnails,
+            '3_2',
+            's2b',
+            v.media_type
+          );
 
           return (
             <NavLink
               key={v.friendly_id}
-              className={`flex cursor-pointer ${isRTL ? 'md:flex-row-reverse rtl' : ''}`}
+              className={`flex cursor-pointer ${
+                isRTL ? 'md:flex-row-reverse rtl' : ''
+              }`}
               href={{
                 pathname: '/[state]/[...slug]',
                 query: {
@@ -67,6 +78,7 @@ const PopularList = ({ data }) => {
               <Thumbnail
                 thumbnail={{ ...thumbnail, alt_tags: v.alt_tags }}
                 className={'rounded-md w-32 max-w-32 min-w-32'}
+                type={v.media_type}
               />
 
               <div className=" px-3 text-sm text-gray-700">

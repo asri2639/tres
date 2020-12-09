@@ -210,7 +210,7 @@ const Gallery = ({
                   {data[0].display_title}
                 </h1>
                 {data[0].publish_date_uts ? (
-                  <div className="text-sm text-gray-600 md:text-black">
+                  <div className="text-sm text-gray-600 md:text-black always-english">
                     {data[0].publish_date_uts
                       ? `Published on: ${dateFormatter(
                           data[0].publish_date_uts

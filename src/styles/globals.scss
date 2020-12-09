@@ -247,10 +247,29 @@ button:focus {
   will-change: position, transform;
 }
 
-.compose_view_image_video img{
+.compose_view_image_video img {
   min-height: 420px !important;
 }
 
 #newsroom-bodyText {
   overflow: hidden;
+}
+
+.always-english {
+  font-family: 'LikhithEnglish';
+}
+
+img.breaking_news {
+  position: relative;
+  &::after {
+    content: '';
+    background: url('/assets/images/etv_sprite.png') no-repeat -941px -1851px;
+    width: 471px;
+    height: 68px;
+  }
+}
+div.breaking_news {
+  background: url('/assets/images/etv_sprite.png') no-repeat -34px -1833px;
+  width: 718px;
+  height: 479px;
 }
