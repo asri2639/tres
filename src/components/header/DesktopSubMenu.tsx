@@ -52,7 +52,7 @@ export default function DesktopSubMenu({ category }) {
       {response && response.data && response.data.catalog_list_items
         ? response.data.catalog_list_items.slice(0, 3).map((item) => {
             const splitUrl = item.web_url ? item.web_url.split('/') : [];
-            const thumbnail = thumbnailExtractor(item.thumbnails, '3_2', 'b2s',item.media_type);
+            const thumbnail = thumbnailExtractor(item.thumbnails, '3_2', 'b2s','');
 
             return !splitUrl.length ? (
               <div></div>
@@ -79,7 +79,7 @@ export default function DesktopSubMenu({ category }) {
                     <Thumbnail
                       thumbnail={thumbnail}
                       className={`w-full rounded-md`}
-                      type={item.media_type}
+                      type={''}
                     />
                   ) : (
                     <img

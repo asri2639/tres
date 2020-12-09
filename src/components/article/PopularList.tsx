@@ -53,7 +53,7 @@ const PopularList = ({ data }) => {
             v.thumbnails,
             '3_2',
             's2b',
-            v.media_type
+            null
           );
 
           return (
@@ -78,7 +78,7 @@ const PopularList = ({ data }) => {
               <Thumbnail
                 thumbnail={{ ...thumbnail, alt_tags: v.alt_tags }}
                 className={'rounded-md w-32 max-w-32 min-w-32'}
-                type={v.media_type}
+                type={''}
               />
 
               <div className=" px-3 text-sm text-gray-700">
