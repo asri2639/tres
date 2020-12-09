@@ -134,10 +134,15 @@ const VideoList = ({ videoData, appConfig }) => {
     }
     let suffix = null;
     if (appConfig) {
+      let convertedState = configStateCodeConverter(
+        location.pathname.split('/')[2]
+      );
+      convertedState =
+        location.pathname.split('/')[1] === 'urdu' ? 'urdu' : convertedState;
+
       suffix =
-        appConfig['params_hash2'].config_params.ssr_details[
-          configStateCodeConverter(location.pathname.split('/')[2])
-        ].video_details_link;
+        appConfig['params_hash2'].config_params.ssr_details[convertedState]
+          .video_details_link;
     }
 
     return api[apiEnum][methodName]({
@@ -271,13 +276,18 @@ const VideoList = ({ videoData, appConfig }) => {
         );
         if (curIndex > -1 && curIndex < 9 && !loading) {
           startLoading();
+          let convertedState = configStateCodeConverter(
+            location.pathname.split('/')[2]
+          );
+          convertedState =
+            location.pathname.split('/')[1] === 'urdu'
+              ? 'urdu'
+              : convertedState;
           await api.CatalogList.getVideoDetails({
             params: {
               suffix:
                 applicationConfig.value['params_hash2'].config_params
-                  .ssr_details[
-                  configStateCodeConverter(location.pathname.split('/')[2])
-                ].video_details_link,
+                  .ssr_details[convertedState].video_details_link,
               state: location.pathname.split('/')[2],
               language: language,
             },

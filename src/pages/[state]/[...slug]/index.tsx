@@ -291,9 +291,17 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         }
         let suffix = null;
         if (applicationConfig.value) {
+          let convertedState = configStateCodeConverter(
+            location.pathname.split('/')[2]
+          );
+          convertedState =
+            location.pathname.split('/')[1] === 'urdu'
+              ? 'urdu'
+              : convertedState;
+
           suffix =
             applicationConfig.value['params_hash2'].config_params.ssr_details[
-              configStateCodeConverter(query.state)
+              convertedState
             ].video_details_link;
         }
 

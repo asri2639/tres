@@ -7,7 +7,12 @@ const controller = '/catalog_lists';
 
 const getProperParam = (params) => {
   if (!params && typeof window !== 'undefined') {
-    params = { state: location.pathname.split('/')[2] };
+    params = {
+      state:
+        location.pathname.split('/')[1] === 'urdu'
+          ? 'urdu'
+          : location.pathname.split('/')[2],
+    };
   }
 
   return params &&

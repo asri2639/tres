@@ -398,7 +398,7 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
                           className={`${header['submenu-container']} w-full bg-white shadow-md p-3`}
                           onMouseLeave={() => setCategory(null)}
                         >
-                          <div className="flex w-full h-full">
+                          <div className={`flex w-full h-full ${isRTL ? 'flex-row-reverse rtl' : ''}`}>
                             <div
                               className={`h-full p-3 overflow-y-scroll flex-grow-0 flex-shrink-0 whitespace-pre-wrap ${header['lhs-content']}`}
                               style={{ flexBasis: '19%' }}

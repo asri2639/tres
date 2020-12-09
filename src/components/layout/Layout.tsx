@@ -50,14 +50,17 @@ const Layout = ({ children, accessToken, appConfig }) => {
       }
 
       if (doCall) {
+        let convertedState = configStateCodeConverter(
+          location.pathname.split('/')[2]
+        );
+        convertedState =
+          location.pathname.split('/')[1] === 'urdu' ? 'urdu' : convertedState;
         const headerResp = await api.CatalogList.getMenuDetails({
           params: {
             suffix:
               appConfig.params_hash2.config_params[
                 isDesktop ? 'web_lists' : 'msite_lists'
-              ][configStateCodeConverter(location.pathname.split('/')[2])][
-                isDesktop ? 'tabs' : 'left-menu'
-              ],
+              ][convertedState][isDesktop ? 'tabs' : 'left-menu'],
           },
           isSSR: !isDesktop,
           query: {
@@ -134,14 +137,19 @@ const Layout = ({ children, accessToken, appConfig }) => {
       };
 
       const isDesktop = window.innerWidth > 768;
+
+      let convertedState = configStateCodeConverter(
+        location.pathname.split('/')[2]
+      );
+      convertedState =
+        location.pathname.split('/')[1] === 'urdu' ? 'urdu' : convertedState;
+      console.log(appConfig.params_hash2.config_params);
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
           suffix:
             appConfig.params_hash2.config_params[
               isDesktop ? 'web_lists' : 'msite_lists'
-            ][configStateCodeConverter(location.pathname.split('/')[2])][
-              isDesktop ? 'tabs' : 'left-menu'
-            ],
+            ][convertedState][isDesktop ? 'tabs' : 'left-menu'],
         },
         query: {
           region: country,
