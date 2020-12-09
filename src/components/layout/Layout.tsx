@@ -110,11 +110,8 @@ const Layout = ({ children, accessToken, appConfig }) => {
               state.state = 'maharashtra';
             } else if (state.state === 'tripura') {
             }
-
-            if (
-              state.state !== 'tripura' &&
-              state.display_title !== 'بھارت ETV'
-            ) {
+            state.display_title = state.display_title.replace(' ETV', '');
+            if (state.state !== 'tripura') {
               languageData[language].push(state);
             }
           }
