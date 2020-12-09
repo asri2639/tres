@@ -5,7 +5,8 @@ export const isEmpty = (obj) => {
 export const thumbnailExtractor = (
   thumbnailObj,
   ratio = '3_2',
-  extractionOrder = 's2b'
+  extractionOrder = 's2b',
+  mediaType
 ) => {
   const thumbnailKeys = [
     'small_3_2',
@@ -25,9 +26,10 @@ export const thumbnailExtractor = (
     ? thumbnailKeys
     : thumbnailKeys.reverse()
   ).filter((v) => v.endsWith(ratio));
-
   if (isEmpty(thumbnailObj)) {
-    return { alt_tags: '', caption: '', url: '/assets/images/placeholder.png' };
+    return !mediaType
+      ? { alt_tags: '', caption: '', url: '/assets/images/placeholder.png' }
+      : { alt_tags: 'Breaking News', url: null };
   }
   for (var i of order) {
     if (thumbnailObj[i]) {
@@ -325,8 +327,6 @@ export const dateFormatter = (uts) => {
   var msPerMinute = 60 * 1000;
   var msPerHour = msPerMinute * 60;
   var msPerDay = msPerHour * 24;
-  var msPerMonth = msPerDay * 30;
-  var msPerYear = msPerDay * 365;
 
   var elapsed = current - previous;
 
@@ -336,7 +336,7 @@ export const dateFormatter = (uts) => {
     return Math.round(elapsed / msPerMinute) + ' minutes ago';
   } else if (elapsed < msPerDay) {
     return Math.round(elapsed / msPerHour) + ' hours ago';
-  } else if (elapsed < msPerMonth) {
+  } else {
     return (
       date.toLocaleDateString('en-GB', {
         day: 'numeric',

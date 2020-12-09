@@ -140,7 +140,7 @@ const Video = ({
                   {data.title}
                 </h1>
                 {data.publish_date_uts ? (
-                  <div className="text-sm text-gray-600 md:text-black">
+                  <div className="text-sm text-gray-600 md:text-black always-english">
                     {data.publish_date_uts
                       ? `Published on: ${dateFormatter(data.publish_date_uts)}`
                       : ''}

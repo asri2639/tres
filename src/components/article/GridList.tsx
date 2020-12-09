@@ -16,7 +16,7 @@ const GridList = ({ data }) => {
       <div className={`flex flex-wrap w-full ${grid.list} ${isRTL ? 'rtl' : ''}`}>
         {data.catalog_list_items.map((v) => {
           const splitUrl = v.web_url.split('/');
-          const thumbnail = thumbnailExtractor(v.thumbnails, '3_2', 's2b');
+          const thumbnail = thumbnailExtractor(v.thumbnails, '3_2', 's2b','');
 
           return (
             <NavLink
@@ -35,7 +35,7 @@ const GridList = ({ data }) => {
                 GoogleTagManager.articleClick(v);
               }}
             >
-              <Thumbnail thumbnail={thumbnail} className={'rounded-lg'} />
+              <Thumbnail thumbnail={thumbnail} className={'rounded-lg'} type={''}/>
               <div className="pt-2 leading-tight">{v.display_title}</div>
             </NavLink>
           );

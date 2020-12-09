@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-const Thumbnail = ({ thumbnail, className }) => {
+const Thumbnail = ({ thumbnail, className, type }) => {
+  console.log(thumbnail);
   const [state, setState] = useState({
     src: thumbnail.url,
     errored: false,
@@ -13,11 +14,13 @@ const Thumbnail = ({ thumbnail, className }) => {
       });
     }
   };
-  return (
+  return type === 'breaking_news' && !state.src ? (
+    <div className={`${className} breaking_news`}></div>
+  ) : (
     <img
       src={state.src}
       onError={onError}
-      className={className}
+      className={`${className} ${type}`}
       alt={thumbnail.alt_tags}
     />
   );
