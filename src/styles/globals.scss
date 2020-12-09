@@ -246,3 +246,11 @@ button:focus {
   transform: translate3d(0, 0, 0);
   will-change: position, transform;
 }
+
+.compose_view_image_video img{
+  min-height: 420px !important;
+}
+
+#newsroom-bodyText {
+  overflow: hidden;
+}
