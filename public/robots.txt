@@ -2,3 +2,12 @@ User-agent: *
 Allow: /*
 
 Disallow: /api/*
+Disallow:/dai
+Disallow:/ads/
+Disallow:/dfpads
+Disallow:/etvbharat_staging
+Disallow:/gallery-ads
+Disallow:/home-page-ad-units
+Disallow:/in-article-ads
+Disallow:/banner-near-logo
+Disallow:/tamara-hospital
