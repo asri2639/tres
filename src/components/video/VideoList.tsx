@@ -253,9 +253,9 @@ const VideoList = ({ videoData, appConfig }) => {
 
   // Listen to scroll positions for loading more data on scroll
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    // window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      // window.removeEventListener('scroll', handleScroll);
     };
   });
 
@@ -283,11 +283,23 @@ const VideoList = ({ videoData, appConfig }) => {
             location.pathname.split('/')[1] === 'urdu'
               ? 'urdu'
               : convertedState;
+
+          let suffix = null;
+
+          if (appConfig) {
+            suffix =
+              appConfig['params_hash2'].config_params.ssr_details[
+                configStateCodeConverter(location.pathname.split('/')[2])
+              ].video_details_link;
+          } else if (applicationConfig.value) {
+            suffix =
+              applicationConfig.value['params_hash2'].config_params.ssr_details[
+                convertedState
+              ].video_details_link;
+          }
           await api.CatalogList.getVideoDetails({
             params: {
-              suffix:
-                applicationConfig.value['params_hash2'].config_params
-                  .ssr_details[convertedState].video_details_link,
+              suffix: suffix,
               state: location.pathname.split('/')[2],
               language: language,
             },
