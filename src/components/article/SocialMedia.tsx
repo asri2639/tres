@@ -28,7 +28,7 @@ const SocialMedia = ({ data }) => {
     globalLang: 'en',
     img: thumbnailExtractor(data.thumbnails, '3_2', 's2b', ''),
     title: data.title,
-    url: location.origin + data.web_url,
+    url: 'https://www.etvbharat.com' + data.web_url,
     darkMode: 'false',
     emotesEnabled: 'true',
     d: 'false',
@@ -50,10 +50,7 @@ const SocialMedia = ({ data }) => {
   const commentUrl = `https://cdn.vuukle.com/widgets/index.html?${new URLSearchParams(
     query
   )}`;
-  const baseUrl =
-    publicRuntimeConfig.APP_ENV !== 'development'
-      ? `${window.location.origin}`
-      : `https://www.etvbharat.com`;
+  const baseUrl = `https://www.etvbharat.com`;
 
   return (
     <>
