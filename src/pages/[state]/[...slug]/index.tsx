@@ -73,7 +73,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
               description={data.short_description || data.description}
               additionalMetaTags={[
                 {
-                  property: 'keywords',
+                  name: 'keywords',
                   content: data.keywords ? data.keywords.join(', ') : '',
                 },
               ]}
@@ -141,7 +141,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
               description={data.short_description || data.description}
               additionalMetaTags={[
                 {
-                  property: 'keywords',
+                  name: 'keywords',
                   content: data.keywords ? data.keywords.join(', ') : '',
                 },
               ]}
@@ -202,7 +202,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
               }
               additionalMetaTags={[
                 {
-                  property: 'keywords',
+                  name: 'keywords',
                   content: keywords ? keywords.join(', ') : '',
                 },
               ]}
