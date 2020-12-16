@@ -143,7 +143,7 @@ const Layout = ({ children, accessToken, appConfig }) => {
       );
       convertedState =
         location.pathname.split('/')[1] === 'urdu' ? 'urdu' : convertedState;
-      console.log(appConfig.params_hash2.config_params);
+      // console.log(appConfig.params_hash2.config_params);
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
           suffix:

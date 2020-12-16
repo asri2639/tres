@@ -23,9 +23,42 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
   } = useContext(I18nContext);
   const api = API(APIEnum.Catalog);
 
+  const twitters = [
+    { state: 'National', link: 'https://twitter.com/ETVBharatEng' },
+    { state: 'goa', link: 'https://twitter.com/ETVBharatEng' },
+    { state: 'punjab', link: 'https://twitter.com/ETVBharatPB' },
+    { state: 'himachal-Pradesh', link: 'https://twitter.com/ETVBharatHP' },
+    { state: 'Urdu', link: 'https://twitter.com/ETVBharatUrdu' },
+    { state: 'telangana', link: 'https://twitter.com/ETVBharat_ts' },
+    { state: 'andhra-pradesh', link: 'https://twitter.com/ETVBharatAP' },
+    { state: 'hindi', link: 'https://twitter.com/ETVBharatHindi' },
+    { state: 'tripura', link: 'https://twitter.com/ETVBharatHindi' },
+    { state: 'Assam', link: 'https://twitter.com/ETVBharatAS' },
+    { state: 'tamil-nadu', link: 'https://twitter.com/ETVBharatTN' },
+    { state: 'maharashtra', link: 'https://twitter.com/ETVBharatMA' },
+    { state: 'west-bengal', link: 'https://twitter.com/ETVBharatWB' },
+    { state: 'karnataka', link: 'https://twitter.com/ETVBharatKA' },
+    { state: 'odisha', link: 'https://twitter.com/ETVBharatOD' },
+    { state: 'gujarat', link: 'https://twitter.com/ETVBharatGJ' },
+    { state: 'rajasthan', link: 'https://twitter.com/ETVBharatRJ' },
+    { state: 'haryana', link: 'https://twitter.com/ETVBharatHR' },
+    { state: 'jharkhand', link: 'https://twitter.com/ETVBharatJH' },
+    { state: 'bihar', link: 'https://twitter.com/ETVBharatBR' },
+    { state: 'madhya-pradesh', link: 'https://twitter.com/ETVBharatMP' },
+    { state: 'kerala', link: 'https://twitter.com/ETVBharatKL' },
+    { state: 'chhattisgarh', link: 'https://twitter.com/ETVBharatCG' },
+    { state: 'delhi', link: 'https://twitter.com/ETVBharatDelhi' },
+    { state: 'uttar-pradesh', link: 'https://twitter.com/ETVBharatUP' },
+    { state: 'uttarakhand', link: 'https://twitter.com/ETVBharatUK' },
+    { state: 'jammu-and-kashmir', link: 'https://twitter.com/ETVBharatJK' },
+  ];
+
   const isRTL = useContext(RTLContext);
 
   const [headerAd, setHeaderAd] = useState(null);
+  const [twitterHandler, setTwitterHandler] = useState(
+    'https://twitter.com/ETVBharatEng'
+  );
 
   const [selected, setSelected] = useState({ state: '', language: '' });
   const [openStateModal, setOpenStateModal] = useState([]);
@@ -98,15 +131,22 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
       : null;
 
   useEffect(() => {
+    console.log(location.pathname);
+    const splitPath = location.pathname.split('/');
+    const state = splitPath[2];
+    const twitter = twitters.find(
+      (v) => v.state.toLowerCase() === state.toLowerCase()
+    );
+    setTwitterHandler(twitter ? twitter.link : twitters[0].link);
     const getHeaderAd = () => {
       api.Catalog.getPageAds({
         query: {
           app: 'web',
           item_languages: language,
           response: 'r2',
-          language: location.pathname.split('/')[1],
-          state: location.pathname.split('/')[2],
-          url: location.pathname.split('/').slice(0, -2).join('/'),
+          language: splitPath[1],
+          state: splitPath[2],
+          url: splitPath.slice(0, -2).join('/'),
         },
       })
         .then((resp) => {
@@ -125,6 +165,8 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
     };
     getHeaderAd();
     const handleRouteChange = (url) => {
+      console.log(url);
+      // setTwitterHandler();
       getHeaderAd();
     };
 
@@ -291,7 +333,7 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
               </a>
             </div>
             <div>
-              <a href="https://twitter.com/eenadu_english">
+              <a href={twitterHandler}>
                 <p className="twitter-icon"></p>
               </a>
             </div>
@@ -398,7 +440,11 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
                           className={`${header['submenu-container']} w-full bg-white shadow-md p-3`}
                           onMouseLeave={() => setCategory(null)}
                         >
-                          <div className={`flex w-full h-full ${isRTL ? 'flex-row-reverse rtl' : ''}`}>
+                          <div
+                            className={`flex w-full h-full ${
+                              isRTL ? 'flex-row-reverse rtl' : ''
+                            }`}
+                          >
                             <div
                               className={`h-full p-3 overflow-y-scroll flex-grow-0 flex-shrink-0 whitespace-pre-wrap ${header['lhs-content']}`}
                               style={{ flexBasis: '19%' }}
