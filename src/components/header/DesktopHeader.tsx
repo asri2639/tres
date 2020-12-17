@@ -131,7 +131,6 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
       : null;
 
   useEffect(() => {
-    console.log(location.pathname);
     const splitPath = location.pathname.split('/');
     const state = splitPath[2];
     const twitter = twitters.find(
@@ -165,7 +164,12 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
     };
     getHeaderAd();
     const handleRouteChange = (url) => {
-      console.log(url);
+      const splitPath = location.pathname.split('/');
+      const state = splitPath[2];
+      const twitter = twitters.find(
+        (v) => v.state.toLowerCase() === state.toLowerCase()
+      );
+      setTwitterHandler(twitter ? twitter.link : twitters[0].link);
       // setTwitterHandler();
       getHeaderAd();
     };
