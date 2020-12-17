@@ -1,7 +1,7 @@
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { I18nContext } from 'next-i18next';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { withTranslation } from '@i18n';
 
 import Constants from '@utils/Constants';
