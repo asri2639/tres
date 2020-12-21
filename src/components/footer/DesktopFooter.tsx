@@ -105,25 +105,41 @@ const DesktopFooter = ({ data, t }: IDesktopFooter) => {
         <div>
           <div className="lg:container lg:mx-auto flex justify-center">
             <ul className={footer['eb-footer-icons']}>
-              <li>
+              <li
+                onClick={() => {
+                  window.location.href = Constants.appURLs.android;
+                }}
+              >
                 <a href={Constants.appURLs.android}>
                   <p className={footer.img2}></p>
                   <p className={footer.img1}></p>
                 </a>
               </li>
-              <li>
+              <li
+                onClick={() => {
+                  window.location.href = Constants.appURLs.ios;
+                }}
+              >
                 <a href={Constants.appURLs.ios}>
                   <p className={footer.img4}></p>
                   <p className={footer.img3}></p>
                 </a>
               </li>
-              <li>
+              <li
+                onClick={() => {
+                  window.location.href = Constants.socialURLs.facebook;
+                }}
+              >
                 <a href={Constants.socialURLs.facebook}>
                   <p className={footer.img6}></p>
                   <p className={footer.img5}></p>
                 </a>
               </li>
-              <li>
+              <li
+                onClick={() => {
+                  window.location.href = twitterHandler;
+                }}
+              >
                 <a href={twitterHandler}>
                   <p className={footer.img8}></p>
                   <p className={footer.img7}></p>
