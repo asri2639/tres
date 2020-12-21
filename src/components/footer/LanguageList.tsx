@@ -6,6 +6,8 @@ import { useContext } from 'react';
 export default function LanguageList({ languages }) {
   const isRTL = useContext(RTLContext);
   const listItems = languages.map((language, index) => {
+    const state =
+      language.state && language.state === 'Assam' ? 'assam' : language.state;
     return (
       <li
         key={language.display_title}
@@ -17,10 +19,10 @@ export default function LanguageList({ languages }) {
             pathname: '/[state]',
             query: {
               language: language.item_languages[0],
-              state: language.state || 'national',
+              state: state || 'national',
             },
           }}
-          as={`/${language.item_languages[0]}/${language.state || 'national'}`}
+          as={`/${language.item_languages[0]}/${state || 'national'}`}
           passHref
           onClick={() => {
             GoogleTagManager.stateChange(language);
