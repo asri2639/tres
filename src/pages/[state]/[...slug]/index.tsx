@@ -26,7 +26,7 @@ interface Propss {
 
 const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
   const router = useRouter();
-
+  let canonicalUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
   const getComponent = () => {
     switch (pageType) {
@@ -62,11 +62,13 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
         datum.contentType = data.content_type;
         datum.contentId = data.content_id;
 
+        canonicalUrl = `https://react.etvbharat.com${new URL(data.dynamic_url).pathname}`;
+
         return (
           <>
             <Head>
               <title>{data.title}</title>
-              <link rel="canonical" href={data.dynamic_url}></link>
+              <link rel="canonical" href={canonicalUrl}></link>
             </Head>
             <NextSeo
               title={data.title}
@@ -129,12 +131,13 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
             'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
           );
         }
+        canonicalUrl = `https://react.etvbharat.com${new URL(data.dynamic_url).pathname}`;
 
         return (
           <>
             <Head>
               <title>{data.title}</title>
-              <link rel="canonical" href={data.dynamic_url}></link>
+              <link rel="canonical" href={canonicalUrl}></link>
             </Head>
             <NextSeo
               title={data.title}
@@ -189,11 +192,13 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
         const keywords = data.gallery.map((v) => {
           return v.description;
         });
+        canonicalUrl = `https://react.etvbharat.com${new URL(data.dynamic_url).pathname}`;
+
         return (
           <>
             <Head>
               <title>{main.display_title}</title>
-              <link rel="canonical" href={data.dynamic_url}></link>
+              <link rel="canonical" href={canonicalUrl}></link>
             </Head>
             <NextSeo
               title={main.display_title}
