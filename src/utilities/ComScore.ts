@@ -5,7 +5,6 @@ export default {
     setTimeout(() => {
       var request = new XMLHttpRequest();
       request.onreadystatechange = function () {
-        console.log(111)
         if (this.readyState == 4 && this.status == 200) {
           if (typeof window !== 'undefined') {
             window['comscoreDisplay'] = JSON.parse(this.response);

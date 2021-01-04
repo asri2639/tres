@@ -54,7 +54,7 @@ const Layout = ({ children, accessToken, appConfig }) => {
           location.pathname.split('/')[2]
         );
         convertedState =
-          location.pathname.split('/')[1] === 'urdu' ? 'urdu' : convertedState;
+          location.pathname.split('/')[1] === 'urdu' && convertedState !== 'jk'  ? 'urdu' : convertedState;
         const headerResp = await api.CatalogList.getMenuDetails({
           params: {
             suffix:
@@ -142,8 +142,8 @@ const Layout = ({ children, accessToken, appConfig }) => {
         location.pathname.split('/')[2]
       );
       convertedState =
-        location.pathname.split('/')[1] === 'urdu' ? 'urdu' : convertedState;
-      // console.log(appConfig.params_hash2.config_params);
+        location.pathname.split('/')[1] === 'urdu' && convertedState !== 'jk' ? 'urdu' : convertedState;
+
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
           suffix:
