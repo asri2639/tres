@@ -14,7 +14,7 @@ const Thumbnail = ({ thumbnail, className, type }) => {
     }
   };
   return type === 'breaking_news' && !state.src ? (
-    <div className={`${className} breaking_news`}></div>
+    <img className="breaking_news" alt="Breaking News" src="/assets/images/breakingplate.jpg" />
   ) : (
     <img
       src={state.src}
