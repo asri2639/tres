@@ -28,6 +28,11 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
   const router = useRouter();
   let canonicalUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+  const convertedState = configStateCodeConverter(router.query.state);
+  const fbContent =
+    appConfig.params_hash2.config_params.fb_pages[convertedState];
+  const fbContentId = fbContent ? fbContent.fb_page_id : null;
+
   const getComponent = () => {
     switch (pageType) {
       case 'article':
@@ -69,6 +74,11 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
+              <meta
+                name="fbPages"
+                property="fb:pages"
+                content={fbContentId}
+              ></meta>
             </Head>
             <NextSeo
               title={data.title}
@@ -138,6 +148,11 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
+              <meta
+                name="fbPages"
+                property="fb:pages"
+                content={fbContentId}
+              ></meta>
             </Head>
             <NextSeo
               title={data.title}
@@ -198,6 +213,11 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
             <Head>
               <title>{main.display_title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
+              <meta
+                name="fbPages"
+                property="fb:pages"
+                content={fbContentId}
+              ></meta>
             </Head>
             <NextSeo
               title={main.display_title}
@@ -352,6 +372,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         return {
           pageType: 'gallery',
           data: { gallery, items_count: galleryResp.total_items_count },
+          appConfig: applicationConfig.value,
         };
       default:
         const articleResponse = await api.CatalogList.getArticleDetails({
@@ -377,6 +398,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         return {
           pageType: 'article',
           data: article,
+          appConfig: applicationConfig.value,
         };
     }
   } else if (typeof window === 'undefined') {
