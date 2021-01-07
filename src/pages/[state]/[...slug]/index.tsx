@@ -29,9 +29,12 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
   let canonicalUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
   const convertedState = configStateCodeConverter(router.query.state);
-  const fbContent =
-    appConfig.params_hash2.config_params.fb_pages[convertedState];
-  const fbContentId = fbContent ? fbContent.fb_page_id : null;
+  let fbContentId = '';
+  if (appConfig.params_hash2) {
+    const fbContent =
+      appConfig.params_hash2.config_params.fb_pages[convertedState];
+    fbContentId = fbContent ? fbContent.fb_page_id : null;
+  }
 
   const getComponent = () => {
     switch (pageType) {
@@ -404,6 +407,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   } else if (typeof window === 'undefined') {
     const id = query.slug.slice(-1)[0];
     var match = id.match(/\w{2,6}[0-9]+$/);
+    console.log(match);
     if (!(match && match[0])) {
       res.writeHead(302, {
         // or 301
@@ -430,6 +434,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   return {
     pageType: 'listing',
     data: {},
+    appConfig: {},
   };
 };
 
