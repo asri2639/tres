@@ -29,4 +29,9 @@ module.exports = {
     // }
     return config;
   },
+
+  generateBuildId: async () => {
+    const date = new Date();
+    return date.toISOString().slice(0,16);
+  },
 };
