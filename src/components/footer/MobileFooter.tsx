@@ -207,7 +207,7 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
       <div className="mobile-footer w-full block md:hidden bg-mbg text-white absolute bottom-0">
         <div className="eb-navbar mb-12 pb-1">
           <button
-            className="text-center absolute bg-red-700 w-40 px-4 py-3 rounded-full"
+            className="btot text-center absolute bg-red-700 w-40 px-4 py-3 rounded-full"
             style={{
               top: '-2.5rem',
               left: 'calc(50% - 5rem)',

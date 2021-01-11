@@ -1,5 +1,5 @@
 import Modal from '@components/modal/Modal';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -15,10 +15,11 @@ import {
 import { thumbnailExtractor } from '@utils/Helpers';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import getConfig from 'next/config';
+import { AMPContext } from '@pages/_app';
 
 const SocialMedia = ({ data }) => {
   const { publicRuntimeConfig } = getConfig();
-
+  const isAMP = useContext(AMPContext);
   const [isOpen, toggleOpen] = useState(false);
   const query = {
     amp: 'false',
@@ -52,6 +53,7 @@ const SocialMedia = ({ data }) => {
   )}`;
   const baseUrl = `https://www.etvbharat.com`;
 
+  console.log(isAMP);
   return (
     <>
       {isOpen ? (
@@ -88,59 +90,90 @@ const SocialMedia = ({ data }) => {
           </>
         </Modal>
       ) : null}
-      <FacebookShareButton
-        url={`${baseUrl}/${data.web_url}`}
-        beforeOnClick={() => {
-          GoogleTagManager.share(data);
-        }}
-      >
-        <FacebookIcon size={32} round={true} />
-      </FacebookShareButton>
-      <LinkedinShareButton
-        title={data.title}
-        url={`${baseUrl}/${data.web_url}`}
-        beforeOnClick={() => {
-          GoogleTagManager.share(data);
-        }}
-      >
-        <LinkedinIcon size={32} round={true} />
-      </LinkedinShareButton>
-      <TwitterShareButton
-        title={data.title}
-        url={`${baseUrl}/${data.web_url}`}
-        beforeOnClick={() => {
-          GoogleTagManager.share(data);
-        }}
-      >
-        <TwitterIcon size={32} round={true} />
-      </TwitterShareButton>
-      <WhatsappShareButton
-        title={data.title}
-        url={`${baseUrl}/${data.web_url}`}
-        beforeOnClick={() => {
-          GoogleTagManager.share(data);
-        }}
-      >
-        <WhatsappIcon size={32} round={true} />
-      </WhatsappShareButton>
-      <RedditShareButton
-        title={data.title}
-        url={`${baseUrl}/${data.web_url}`}
-        beforeOnClick={() => {
-          GoogleTagManager.share(data);
-        }}
-      >
-        <RedditIcon size={32} round={true} />
-      </RedditShareButton>
+      {isAMP ? (
+        <>
+          <amp-social-share
+            type="facebook"
+            width="32"
+            height="32"
+            aria-label="Share on Facebook"
+          ></amp-social-share>
+          <amp-social-share
+            type="linkedin"
+            width="32"
+            height="32"
+            aria-label="Share on LinkedIn"
+          ></amp-social-share>
+          <amp-social-share
+            type="twitter"
+            width="32"
+            height="32"
+            aria-label="Share on Twitter"
+          ></amp-social-share>
+          <amp-social-share
+            type="whatsapp"
+            width="32"
+            height="32"
+            aria-label="Share on WhatsApp"
+          ></amp-social-share>
+        </>
+      ) : (
+        <>
+          <FacebookShareButton
+            url={`${baseUrl}/${data.web_url}`}
+            beforeOnClick={() => {
+              GoogleTagManager.share(data);
+            }}
+          >
+            <FacebookIcon size={32} round={true} />
+          </FacebookShareButton>
+          <LinkedinShareButton
+            title={data.title}
+            url={`${baseUrl}/${data.web_url}`}
+            beforeOnClick={() => {
+              GoogleTagManager.share(data);
+            }}
+          >
+            <LinkedinIcon size={32} round={true} />
+          </LinkedinShareButton>
+          <TwitterShareButton
+            title={data.title}
+            url={`${baseUrl}/${data.web_url}`}
+            beforeOnClick={() => {
+              GoogleTagManager.share(data);
+            }}
+          >
+            <TwitterIcon size={32} round={true} />
+          </TwitterShareButton>
+          <WhatsappShareButton
+            title={data.title}
+            url={`${baseUrl}/${data.web_url}`}
+            beforeOnClick={() => {
+              GoogleTagManager.share(data);
+            }}
+          >
+            <WhatsappIcon size={32} round={true} />
+          </WhatsappShareButton>
+          <RedditShareButton
+            title={data.title}
+            url={`${baseUrl}/${data.web_url}`}
+            beforeOnClick={() => {
+              GoogleTagManager.share(data);
+            }}
+          >
+            <RedditIcon size={32} round={true} />
+          </RedditShareButton>
 
-      <img
-        className="w-6 lg:mx-auto inline-block cursor-pointer"
-        src="/assets/images/comment.png"
-        onClick={() => {
-          GoogleTagManager.comment(data);
-          toggleOpen(true);
-        }}
-      ></img>
+          <img
+            className="w-6 lg:mx-auto inline-block cursor-pointer"
+            src="/assets/images/comment.png"
+            onClick={() => {
+              GoogleTagManager.comment(data);
+              toggleOpen(true);
+            }}
+          ></img>
+        </>
+      )}
     </>
   );
 };

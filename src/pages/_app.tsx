@@ -1,4 +1,5 @@
 import Layout from '@components/layout/Layout';
+import React, { useContext } from 'react';
 import type { AppProps, NextWebVitalsMetric } from 'next/app';
 import '@styles/tailwind.css';
 import '@styles/globals.scss';
@@ -20,6 +21,7 @@ import APIEnum from '@services/api/APIEnum';
 //   console.log(metric)
 // }
 
+export const AMPContext = React.createContext(false);
 let currentLanguage = 'english';
 
 function App({ Component, pageProps, data, accessToken, appConfig }) {
@@ -67,9 +69,11 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="robots" content="all" />
       </Head>
       {accessToken.web.length && accessToken.mobile.length ? (
-        <Layout accessToken={accessToken} appConfig={appConfig}>
-          <Component {...pageProps} />
-        </Layout>
+        <AMPContext.Provider value={router.query.amp === '1' ? true : false}>
+          <Layout accessToken={accessToken} appConfig={appConfig}>
+            <Component {...pageProps} />
+          </Layout>
+        </AMPContext.Provider>
       ) : null}
     </>
   );
