@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NextSeo } from 'next-seo';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
@@ -274,6 +274,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
 };
 
 slug.getInitialProps = async ({ query, req, res, ...args }) => {
+  const isAmp = query.amp === '1';
   let i18n = null;
   let language = 'en';
   let state = 'na';
@@ -350,6 +351,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           pageType: 'video',
           data: video,
           appConfig: applicationConfig.value,
+          isAmp: isAmp,
         };
       case 'gallery':
         const galleryResponse = await api.CatalogList.getArticleDetails({
@@ -376,6 +378,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           pageType: 'gallery',
           data: { gallery, items_count: galleryResp.total_items_count },
           appConfig: applicationConfig.value,
+          isAmp: isAmp,
         };
       default:
         const articleResponse = await api.CatalogList.getArticleDetails({
@@ -402,6 +405,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           pageType: 'article',
           data: article,
           appConfig: applicationConfig.value,
+          isAmp: isAmp,
         };
     }
   } else if (typeof window === 'undefined') {
@@ -435,6 +439,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     pageType: 'listing',
     data: {},
     appConfig: {},
+    isAmp: isAmp,
   };
 };
 
