@@ -10,8 +10,11 @@ import footer from './Footer.module.scss';
 
 import { withTranslation } from '@i18n';
 import { WithTranslation } from 'next-i18next';
+import { AMPContext } from '@pages/_app';
 
 const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
+  const isAMP = useContext(AMPContext);
+
   const isiOS = false;
   const router = useRouter();
   const {
@@ -376,7 +379,20 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
               </div>
             </div>
             <div className="item w-1/4">
-              <div
+              {isAMP ?
+              (<div className="amp-html" data-html={`<div>
+                  <amp-lightbox id="my-bindable-lightbox" [open]="showLightbox" layout="nodisplay" on="lightboxClose:AMP.setState({showLightbox: false})">
+                    <div className="lightbox" role="button" tabIndex="0" on="tap:my-bindable-lightbox.close">
+                      <h1>Hello World!</h1>
+                    </div>
+                  </amp-lightbox>
+                  <button on="tap:AMP.setState({showLightbox: true})">
+                    Open lightbox
+                  </button>
+                </div>`}>
+
+              </div>)
+              :<div
                 className="flex flex-col items-center justify-center"
                 onClick={() => changeState()}
               >
@@ -386,7 +402,7 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   src="/assets/images/etv-grey.png"
                 />
                 <p className="whitespace-no-wrap">CHANGE STATE</p>
-              </div>
+              </div> }
             </div>
             <div className="item w-1/4">
               <div

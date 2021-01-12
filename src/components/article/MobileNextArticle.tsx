@@ -1,9 +1,10 @@
 import { thumbnailExtractor } from '@utils/Helpers';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import Modal from '@components/modal/Modal';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { withTranslation } from '@i18n';
 import { WithTranslation } from 'next-i18next';
+import { AMPContext } from '@pages/_app';
 
 const MobileNextArticle = ({
   label,
@@ -12,6 +13,8 @@ const MobileNextArticle = ({
   nextArticle,
   scrollToNextArticle,
 }: IMobileNextArticle) => {
+  const isAMP = useContext(AMPContext);
+
   const query = {
     amp: 'false',
     apiKey: '99a287d2-81b1-4013-8705-0805df9481e0',
@@ -99,7 +102,19 @@ const MobileNextArticle = ({
           className="text-gray-500 tracking-tighter pl-2"
           onClick={scrollToNextArticle}
         >
-          {nextArticle ? nextArticle.ml_title[0].text : ''}
+          {isAMP ? (
+            nextArticle ? (
+              <a href={`/${nextArticle.web_url}`}>
+                nextArticle.ml_title[0].text
+              </a>
+            ) : (
+              ''
+            )
+          ) : nextArticle ? (
+            nextArticle.ml_title[0].text
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </>
