@@ -69,7 +69,6 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
 
         datum.contentType = data.content_type;
         datum.contentId = data.content_id;
-        console.log(router);
 
         canonicalUrl = `https://react.etvbharat.com${
           new URL(`http:localhost:3000${router.asPath}`).pathname
