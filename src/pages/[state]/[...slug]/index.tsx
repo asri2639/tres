@@ -69,8 +69,11 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
 
         datum.contentType = data.content_type;
         datum.contentId = data.content_id;
+        console.log(router);
 
-        canonicalUrl = `https://react.etvbharat.com${router.asPath}`;
+        canonicalUrl = `https://react.etvbharat.com${
+          new URL(`http:localhost:3000${router.asPath}`).pathname
+        }`;
 
         return (
           <>
@@ -144,7 +147,9 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
             'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
           );
         }
-        canonicalUrl = `https://react.etvbharat.com${router.asPath}`;
+        canonicalUrl = `https://react.etvbharat.com${
+          new URL(`http:localhost:3000${router.asPath}`).pathname
+        }`;
 
         return (
           <>
@@ -209,7 +214,9 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
         const keywords = data.gallery.map((v) => {
           return v.description;
         });
-        canonicalUrl = `https://react.etvbharat.com${router.asPath}`;
+        canonicalUrl = `https://react.etvbharat.com${
+          new URL(`http:localhost:3000${router.asPath}`).pathname
+        }`;
 
         return (
           <>
