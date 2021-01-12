@@ -95,8 +95,6 @@ const SocialMedia = ({ data }) => {
             type="facebook"
             width="32"
             height="32"
-            data-param-href={`${baseUrl}/${data.web_url}`}
-            data-param-app_id=""
             data-param-quote="TITLE"
             aria-label="Share on Facebook"
             style="border-radius:50%;"
@@ -105,7 +103,6 @@ const SocialMedia = ({ data }) => {
             type="linkedin"
             width="32"
             height="32"
-            data-param-url={`${baseUrl}/${data.web_url}`}
             aria-label="Share on LinkedIn"
             style="border-radius:50%;"
           ></amp-social-share>
@@ -113,7 +110,6 @@ const SocialMedia = ({ data }) => {
             type="twitter"
             width="32"
             height="32"
-            data-param-url={`${baseUrl}/${data.web_url}`}
             aria-label="Share on Twitter"
             style="border-radius:50%;"
           ></amp-social-share>
@@ -122,7 +118,6 @@ const SocialMedia = ({ data }) => {
             width="32"
             height="32"
             aria-label="Share on WhatsApp"
-            data-param-text={`TITLE - ${baseUrl}/${data.web_url}`}
             style="border-radius:50%;"
           ></amp-social-share>
         </>
