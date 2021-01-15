@@ -26,43 +26,40 @@ let currentLanguage = 'english';
 
 function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
-  const isAMP = router.asPath.startsWith('/amp/');
   const { publicRuntimeConfig } = getConfig();
 
   useEffect(() => {
-    if (!isAMP) {
-      document.documentElement.lang = languageMap[router.asPath.split('/')[1]];
+    document.documentElement.lang = languageMap[router.asPath.split('/')[1]];
 
-      const handleRouteChange = (url) => {
-        const urlSplit = url.split('/');
-        if (urlSplit[1] !== currentLanguage) {
-          currentLanguage = urlSplit[1];
-          document.documentElement.lang = languageMap[currentLanguage];
-          i18n.changeLanguage(document.documentElement.lang);
-        }
-        var match = urlSplit.slice(-1)[0].match(/\w{2}[0-9]+$/);
-        if (!(match && match[0])) {
-          const newUrl = `${
-            publicRuntimeConfig.APP_ENV === 'staging'
-              ? 'https://staging.etvbharat.com'
-              : 'https://www.etvbharat.com'
-          }${url}`;
-          window.location.replace(newUrl);
-        }
-        console.log('App is changing to: ', url);
-      };
+    const handleRouteChange = (url) => {
+      const urlSplit = url.split('/');
+      if (urlSplit[1] !== currentLanguage) {
+        currentLanguage = urlSplit[1];
+        document.documentElement.lang = languageMap[currentLanguage];
+        i18n.changeLanguage(document.documentElement.lang);
+      }
+      var match = urlSplit.slice(-1)[0].match(/\w{2}[0-9]+$/);
+      if (!(match && match[0])) {
+        const newUrl = `${
+          publicRuntimeConfig.APP_ENV === 'staging'
+            ? 'https://staging.etvbharat.com'
+            : 'https://www.etvbharat.com'
+        }${url}`;
+        window.location.replace(newUrl);
+      }
+      console.log('App is changing to: ', url);
+    };
 
-      router.events.on('routeChangeComplete', handleRouteChange);
+    router.events.on('routeChangeComplete', handleRouteChange);
 
-      // If the component is unmounted, unsubscribe
-      // from the event with the `off` method:
-      return () => {
-        router.events.off('routeChangeComplete', handleRouteChange);
-      };
-    }
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method:
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
   }, []);
 
-  return !isAMP ? (
+  return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -79,8 +76,6 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         </AMPContext.Provider>
       ) : null}
     </>
-  ) : (
-    <></>
   );
 }
 

@@ -26,7 +26,8 @@ interface Propss {
 
 const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
   const router = useRouter();
-  let canonicalUrl = '';
+  let canonicalUrl = '',
+    ampUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
@@ -73,12 +74,16 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
         canonicalUrl = `https://react.etvbharat.com${
           new URL(`http:localhost:3000${router.asPath}`).pathname
         }`;
+        ampUrl = `https://react.etvbharat.com/amp${
+          new URL(`http:localhost:3000${router.asPath}`).pathname
+        }`;
 
         return (
           <>
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
+              <link rel="amphtml" href={ampUrl}></link>
               <meta
                 name="fbPages"
                 property="fb:pages"
@@ -149,12 +154,16 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
         canonicalUrl = `https://react.etvbharat.com${
           new URL(`http:localhost:3000${router.asPath}`).pathname
         }`;
+        ampUrl = `https://react.etvbharat.com/amp${
+          new URL(`http:localhost:3000${router.asPath}`).pathname
+        }`;
 
         return (
           <>
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
+              <link rel="amphtml" href={canonicalUrl}></link>
               <meta
                 name="fbPages"
                 property="fb:pages"
@@ -216,12 +225,16 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
         canonicalUrl = `https://react.etvbharat.com${
           new URL(`http:localhost:3000${router.asPath}`).pathname
         }`;
+        ampUrl = `https://react.etvbharat.com/amp${
+          new URL(`http:localhost:3000${router.asPath}`).pathname
+        }`;
 
         return (
           <>
             <Head>
               <title>{main.display_title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
+              <link rel="amphtml" href={ampUrl}></link>
               <meta
                 name="fbPages"
                 property="fb:pages"
