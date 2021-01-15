@@ -481,7 +481,7 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   src="/assets/images/etv-grey.png"
                 />
                 <p className="whitespace-no-wrap">CHANGE STATE</p>
-              </div>
+              </div> }
             </div>
             <div className="item w-1/4">
               <div
