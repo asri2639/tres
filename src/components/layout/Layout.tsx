@@ -54,7 +54,9 @@ const Layout = ({ children, accessToken, appConfig }) => {
           location.pathname.split('/')[2]
         );
         convertedState =
-          location.pathname.split('/')[1] === 'urdu' && convertedState !== 'jk'  ? 'urdu' : convertedState;
+          location.pathname.split('/')[1] === 'urdu' && convertedState !== 'jk'
+            ? 'urdu'
+            : convertedState;
         const headerResp = await api.CatalogList.getMenuDetails({
           params: {
             suffix:
@@ -142,7 +144,9 @@ const Layout = ({ children, accessToken, appConfig }) => {
         location.pathname.split('/')[2]
       );
       convertedState =
-        location.pathname.split('/')[1] === 'urdu' && convertedState !== 'jk' ? 'urdu' : convertedState;
+        location.pathname.split('/')[1] === 'urdu' && convertedState !== 'jk'
+          ? 'urdu'
+          : convertedState;
 
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
@@ -162,6 +166,23 @@ const Layout = ({ children, accessToken, appConfig }) => {
         menu.desktop = headerResp.data.data.catalog_list_items;
       } else {
         menu.mobile = headerResp.data.data.catalog_list_items;
+      }
+      if (!isDesktop && !menu.desktop.length) {
+        const resp = await api.CatalogList.getMenuDetails({
+          params: {
+            suffix:
+              appConfig.params_hash2.config_params['web_lists'][convertedState][
+                'tabs'
+              ],
+          },
+          query: {
+            region: country,
+            response: 'r2',
+            item_languages: language,
+          },
+          isSSR: true,
+        });
+        menu.desktop = resp.data.data.catalog_list_items;
       }
 
       setData({
