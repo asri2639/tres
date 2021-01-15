@@ -420,6 +420,7 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                             type="button"
                             role="button"
                             tabindex="0"
+                            tabIndex={0}
                             className="font-semibold text-gray-500 hover:text-gray-900 text-md"
                             on="tap:my-lightbox.close"
                           >
@@ -473,6 +474,7 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                 on="tap:my-lightbox"
                 role="button"
                 tabindex="0"
+                tabIndex={0}
                 onClick={() => changeState()}
               >
                 <img
@@ -481,7 +483,7 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   src="/assets/images/etv-grey.png"
                 />
                 <p className="whitespace-no-wrap">CHANGE STATE</p>
-              </div> }
+              </div> 
             </div>
             <div className="item w-1/4">
               <div
@@ -502,7 +504,9 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                 onClick={openSideMenu}
                 on="tap:sidebar1"
                 role="button"
-                tabindex="0"
+                tabindex="0"    
+                tabIndex={0}
+
               >
                 <img
                   className="h-6"
