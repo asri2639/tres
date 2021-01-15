@@ -98,7 +98,6 @@ export default function MobileHeader({ data, className }) {
                       <button
                         type="button"
                         role="button"
-                        tabindex="0"
                         tabIndex={0}
                         className="font-semibold text-gray-500 hover:text-gray-900 text-md"
                         on={`tap:my-lightbox-${language}.close`}
@@ -133,7 +132,6 @@ export default function MobileHeader({ data, className }) {
             </amp-lightbox>
             <div
               role="button"
-              tabindex="0"
               tabIndex={0}
               on={`tap:my-lightbox-${language}`}
               className="flex-1 flex flex-col justify-center items-center cursor-pointer"

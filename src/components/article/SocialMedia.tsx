@@ -92,6 +92,7 @@ const SocialMedia = ({ data }) => {
       {isAMP ? (
         <>
           <amp-social-share
+            class="amp-social-share"
             type="facebook"
             width="32"
             height="32"
@@ -101,6 +102,7 @@ const SocialMedia = ({ data }) => {
             aria-label="Share on Facebook"
           ></amp-social-share>
           <amp-social-share
+            class="amp-social-share"
             type="linkedin"
             width="32"
             height="32"
@@ -108,6 +110,7 @@ const SocialMedia = ({ data }) => {
             aria-label="Share on LinkedIn"
           ></amp-social-share>
           <amp-social-share
+            class="amp-social-share"
             type="twitter"
             width="32"
             height="32"
@@ -115,6 +118,7 @@ const SocialMedia = ({ data }) => {
             aria-label="Share on Twitter"
           ></amp-social-share>
           <amp-social-share
+            class="amp-social-share"
             type="whatsapp"
             width="32"
             height="32"

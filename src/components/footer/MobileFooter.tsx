@@ -419,7 +419,6 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                           <button
                             type="button"
                             role="button"
-                            tabindex="0"
                             tabIndex={0}
                             className="font-semibold text-gray-500 hover:text-gray-900 text-md"
                             on="tap:my-lightbox.close"
@@ -473,7 +472,6 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                 className="flex flex-col items-center justify-center"
                 on="tap:my-lightbox"
                 role="button"
-                tabindex="0"
                 tabIndex={0}
                 onClick={() => changeState()}
               >
@@ -504,7 +502,6 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                 onClick={openSideMenu}
                 on="tap:sidebar1"
                 role="button"
-                tabindex="0"    
                 tabIndex={0}
 
               >
