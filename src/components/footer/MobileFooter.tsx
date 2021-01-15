@@ -11,6 +11,7 @@ import footer from './Footer.module.scss';
 import { withTranslation } from '@i18n';
 import { WithTranslation } from 'next-i18next';
 import { AMPContext } from '@pages/_app';
+import AMPSidebar from '@components/header/AMPSidebar';
 
 const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
   const isAMP = useContext(AMPContext);
@@ -144,10 +145,11 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
-  },[]);
+  }, []);
 
   return (
     <>
+      {isAMP ? <AMPSidebar data={{ menu: menu }} /> : null}
       {openStateModal.length > 0 ? (
         <Modal
           title=""
@@ -354,6 +356,16 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                     onClick={() => GoogleTagManager.appInstall('Android')}
                     href={Constants.appURLs.android}
                     passHref
+                    style={
+                      isAMP
+                        ? {
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexDirection: 'column',
+                          }
+                        : {}
+                    }
                   >
                     <img
                       className="h-6 mx-auto"
@@ -379,21 +391,88 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
               </div>
             </div>
             <div className="item w-1/4">
-              {isAMP ?
-              (<div className="amp-html" data-html={`<div>
-                  <amp-lightbox id="my-bindable-lightbox" [open]="showLightbox" layout="nodisplay" on="lightboxClose:AMP.setState({showLightbox: false})">
-                    <div className="lightbox" role="button" tabIndex="0" on="tap:my-bindable-lightbox.close">
-                      <h1>Hello World!</h1>
-                    </div>
-                  </amp-lightbox>
-                  <button on="tap:AMP.setState({showLightbox: true})">
-                    Open lightbox
-                  </button>
-                </div>`}>
+              {isAMP ? (
+                <amp-lightbox
+                  id="my-lightbox"
+                  layout="nodisplay"
+                  className="lightbox"
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <div
+                      className="p-3 pb-4 rounded-md"
+                      style={{ background: '#f0f0f0' }}
+                    >
+                      <div className="flex justify-between pb-4">
+                        <div
+                          className="text-gray-700 text-md pl-2"
+                          style={{ fontSize: '1rem' }}
+                        >
+                          Change State
+                        </div>
+                        <div>
+                          <button
+                            type="button"
+                            role="button"
+                            tabindex="0"
+                            className="font-semibold text-gray-500 hover:text-gray-900 text-md"
+                            on="tap:my-lightbox.close"
+                          >
+                            &#10005;
+                          </button>
+                        </div>
+                      </div>
 
-              </div>)
-              :<div
+                      <div className="flex flex-wrap w-full px-3 text-sm mx-auto">
+                        {data
+                          .filter(
+                            (v) =>
+                              ['national', 'goa', 'tripura'].indexOf(
+                                v.state
+                              ) === -1 && v.state
+                          )
+                          .map((v) => ({
+                            label: v.state.replace(/-/gi, ' '),
+                            ...v,
+                          }))
+                          .sort((a, b) => {
+                            let textA = a.label.toUpperCase();
+                            let textB = b.label.toUpperCase();
+                            return textA < textB ? -1 : textA > textB ? 1 : 0;
+                          })
+                          .map((v) => {
+                            return (
+                              <a
+                                key={v.state}
+                                href={`https://www.etvbharat.com/${
+                                  v.item_languages[0]
+                                }/${
+                                  v.item_languages[0] === 'english'
+                                    ? 'national'
+                                    : v.state
+                                }`}
+                                className="py-1 capitalize"
+                                style={{ flexBasis: '50%' }}
+                              >
+                                {v.label}
+                              </a>
+                            );
+                          })}
+                      </div>
+                    </div>
+                  </div>
+                </amp-lightbox>
+              ) : null}
+              <div
                 className="flex flex-col items-center justify-center"
+                on="tap:my-lightbox"
+                role="button"
+                tabindex="0"
                 onClick={() => changeState()}
               >
                 <img
@@ -402,7 +481,7 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   src="/assets/images/etv-grey.png"
                 />
                 <p className="whitespace-no-wrap">CHANGE STATE</p>
-              </div> }
+              </div>
             </div>
             <div className="item w-1/4">
               <div
@@ -421,6 +500,9 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
               <div
                 className="flex flex-col items-center justify-center"
                 onClick={openSideMenu}
+                on="tap:sidebar1"
+                role="button"
+                tabindex="0"
               >
                 <img
                   className="h-6"

@@ -83,15 +83,17 @@ const MobileNextArticle = ({
         </Modal>
       ) : null}
       <div className="flex justify-end">
-        <div
-          className="button px-4 py-2 m-3 border-2 border-red-700 text-red-700 rounded-md cursor-pointer focus:text-white focus:bg-red-700"
-          onClick={() => {
-            GoogleTagManager.comment(data);
-            toggleOpen(true);
-          }}
-        >
-          {t('add_comment')}
-        </div>
+        {isAMP ? (
+          <div
+            className="button px-4 py-2 m-3 border-2 border-red-700 text-red-700 rounded-md cursor-pointer focus:text-white focus:bg-red-700"
+            onClick={() => {
+              GoogleTagManager.comment(data);
+              toggleOpen(true);
+            }}
+          >
+            {t('add_comment')}
+          </div>
+        ) : null}
       </div>
       <div className="flex flex-col py-4 px-5  bg-mbg text-white cursor-pointer">
         <div className="flex items-center mb-1">
@@ -105,7 +107,7 @@ const MobileNextArticle = ({
           {isAMP ? (
             nextArticle ? (
               <a href={`/${nextArticle.web_url}`}>
-                nextArticle.ml_title[0].text
+                {nextArticle.ml_title[0].text}
               </a>
             ) : (
               ''

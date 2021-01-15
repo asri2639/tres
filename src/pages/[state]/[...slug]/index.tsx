@@ -417,7 +417,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   } else if (typeof window === 'undefined') {
     const id = query.slug.slice(-1)[0];
     var match = id.match(/\w{2,6}[0-9]+$/);
-    console.log(match);
     if (!(match && match[0])) {
       res.writeHead(302, {
         // or 301

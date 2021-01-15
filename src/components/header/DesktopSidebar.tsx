@@ -117,6 +117,7 @@ export default function DesktopSidebar({ data, onClose }) {
                     ) : null}
                   </div>
                 </div>
+
                 {item.expanded ? (
                   <div className="pb-1">
                     {item.catalog_list_items.map((subitem) => {

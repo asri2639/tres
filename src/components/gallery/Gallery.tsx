@@ -15,6 +15,7 @@ import { RTLContext } from '@components/layout/Layout';
 import MobileNextArticle from '@components/article/MobileNextArticle';
 import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
+import { AMPContext } from '@pages/_app';
 
 const Gallery = ({
   contentId,
@@ -29,6 +30,7 @@ const Gallery = ({
   count,
   viewed,
 }) => {
+  const isAMP = useContext(AMPContext);
   const router = useRouter();
   const isRTL = useContext(RTLContext);
 
@@ -263,13 +265,21 @@ const Gallery = ({
                   return (
                     <>
                       <div key={image.order_no} className="relative">
-                        <LazyLoadImage
-                          className="rounded-lg"
-                          alt={image.description || image.title}
-                          placeholderSrc="/assets/images/placeholder.png"
-                          scrollPosition={scrollPosition}
-                          src={image.thumbnails.l_large.url}
-                        ></LazyLoadImage>
+                        {isAMP ? (
+                          <img
+                            className="rounded-lg"
+                            alt={image.description || image.title}
+                            src={image.thumbnails.l_large.url}
+                          />
+                        ) : (
+                          <LazyLoadImage
+                            className="rounded-lg"
+                            alt={image.description || image.title}
+                            placeholderSrc="/assets/images/placeholder.png"
+                            scrollPosition={scrollPosition}
+                            src={image.thumbnails.l_large.url}
+                          ></LazyLoadImage>
+                        )}
                         <div className={`${gallery.counter}`}>
                           <span>{image.order_no}</span>/ {count}
                         </div>

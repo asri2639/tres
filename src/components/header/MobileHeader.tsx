@@ -9,10 +9,12 @@ import APIEnum from '@services/api/APIEnum';
 import header from './Header.module.scss';
 import Modal from '@components/modal/Modal';
 import GoogleTagManager from '@utils/GoogleTagManager';
+import { AMPContext } from '@pages/_app';
 
 const country = 'IN';
 
 export default function MobileHeader({ data, className }) {
+  const isAMP = useContext(AMPContext);
   const router = useRouter();
   const {
     i18n: { language, options },
@@ -34,6 +36,113 @@ export default function MobileHeader({ data, className }) {
         }, 100);
       } else {
         setOpenStateModal(states);
+      }
+    }
+  };
+
+  const getAMPHTML = (language, states) => {
+    if (language === 'english') {
+      return (
+        <a
+          key={language}
+          href={`https://m.etvbharat.com/${language}/national`}
+          className="flex-1 flex flex-col justify-center items-center cursor-pointer"
+        >
+          <div className={`language-icon ${language}`}></div>
+          <div className="text-white text-xs">
+            {language.charAt(0).toUpperCase() + language.slice(1)}
+          </div>
+        </a>
+      );
+    } else {
+      if (states.length === 1) {
+        return (
+          <a
+            key={language}
+            href={`https://m.etvbharat.com/${language}/national`}
+            className="flex-1 flex flex-col justify-center items-center cursor-pointer"
+          >
+            <div className={`language-icon ${language}`}></div>
+            <div className="text-white text-xs">
+              {language.charAt(0).toUpperCase() + language.slice(1)}
+            </div>
+          </a>
+        );
+      } else {
+        return (
+          <div key={language}>
+            <amp-lightbox
+              id={`my-lightbox-${language}`}
+              className="lightbox"
+              layout="nodisplay"
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <div
+                  className="p-3 pb-4 rounded-md"
+                  style={{ background: '#f0f0f0' }}
+                >
+                  <div className="flex justify-between pb-4">
+                    <div
+                      className="text-gray-700 text-md pl-2"
+                      style={{ fontSize: '1rem' }}
+                    >
+                      Select State
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        role="button"
+                        tabindex="0"
+                        className="font-semibold text-gray-500 hover:text-gray-900 text-md"
+                        on={`tap:my-lightbox-${language}.close`}
+                      >
+                        &#10005;
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap w-full px-3 text-sm mx-auto">
+                    {states.map((v) => {
+                      return (
+                        <a
+                          key={v.state}
+                          href={`https://www.etvbharat.com/${
+                            v.item_languages[0]
+                          }/${
+                            v.item_languages[0] === 'english'
+                              ? 'national'
+                              : v.state
+                          }`}
+                          className="py-1 capitalize"
+                          style={{ flexBasis: '50%' }}
+                        >
+                          {v.display_title}
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </amp-lightbox>
+            <div
+              role="button"
+              tabindex="0"
+              on={`tap:my-lightbox-${language}`}
+              className="flex-1 flex flex-col justify-center items-center cursor-pointer"
+            >
+              <div className={`language-icon ${language}`}></div>
+              <div className="text-white text-xs">
+                {language.charAt(0).toUpperCase() + language.slice(1)}
+              </div>
+            </div>
+          </div>
+        );
       }
     }
   };
@@ -148,7 +257,9 @@ export default function MobileHeader({ data, className }) {
             <div className="flex space-x-6">
               {data.languages
                 ? Object.entries(data.languages).map(([language, states]) => {
-                    return (
+                    return isAMP ? (
+                      getAMPHTML(language, states)
+                    ) : (
                       <div
                         key={language}
                         onClick={() => languageNStateSelect(language, states)}
@@ -168,7 +279,7 @@ export default function MobileHeader({ data, className }) {
       </div>
 
       <div
-        className={`${className} bg-mhbg px-3 sticky block md:hidden -top-1 z-40`}
+        className={`${className} bg-mhbg px-3 sticky block md:hidden -top-1 z-10`}
         onMouseLeave={containerOut}
       >
         <div className="lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ">
