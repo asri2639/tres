@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const express = require('express');
 const next = require('next');
+const fetch = require('node-fetch');
 
 const devProxy = {
   '/api/v2': {
@@ -51,7 +52,27 @@ app
 
     // Default catch-all handler to allow Next.js to handle all other routes
     server.all('*', (req, res) => {
-      return handle(req, res);
+      if (req.url.startsWith('/amp/')) {
+        console.log(req.url);
+        const id = req.url.split('/').slice(-1)[0];
+        console.log(id);
+        fetch(
+          `http://staging.api.etvbharat.com/amp/${id}?auth_token=xNppFXL5h4qhA7XsE4Nx`,
+          { headers: { 'Content-Type': 'application/json' } }
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then(function (rest) {
+            res.set('Content-Type', 'text/html');
+            res.send(rest.data.amp);
+          })
+          .catch((e) => {
+            return handle(req, res);
+          });
+      } else {
+        return handle(req, res);
+      }
     });
 
     server.listen(port, (err) => {
@@ -63,5 +84,5 @@ app
   })
   .catch((err) => {
     console.log('An error occurred, unable to start the server');
-   // console.log(err);
+    // console.log(err);
   });
