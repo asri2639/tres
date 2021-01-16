@@ -296,6 +296,7 @@ button:focus {
   height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .can-expand[aria-expanded='false'] div::after {
@@ -320,4 +321,7 @@ html[amp] #newsroom-bodyText .EtvadsSection {
 }
 .amp-social-share {
   border-radius: 50%;
+  &:focus {
+    outline: none;
+  }
 }

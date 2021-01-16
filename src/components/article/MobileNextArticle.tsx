@@ -83,7 +83,7 @@ const MobileNextArticle = ({
         </Modal>
       ) : null}
       <div className="flex justify-end">
-        {isAMP ? (
+        {!isAMP ? (
           <div
             className="button px-4 py-2 m-3 border-2 border-red-700 text-red-700 rounded-md cursor-pointer focus:text-white focus:bg-red-700"
             onClick={() => {
@@ -95,30 +95,45 @@ const MobileNextArticle = ({
           </div>
         ) : null}
       </div>
-      <div className="flex flex-col py-4 px-5  bg-mbg text-white cursor-pointer">
-        <div className="flex items-center mb-1">
-          <img alt="ETV" className="w-6" src="/assets/images/nextarticle.png" />
-          <span className="text-lg font-thin pl-2">{t(label)}</span>
-        </div>
-        <div
-          className="text-gray-500 tracking-tighter pl-2"
-          onClick={scrollToNextArticle}
+
+      {isAMP && nextArticle ? (
+        <a
+          href={`/${nextArticle.web_url}`}
+          className="flex flex-col py-4 px-5  bg-mbg text-white cursor-pointer"
         >
-          {isAMP ? (
-            nextArticle ? (
-              <a href={`/${nextArticle.web_url}`}>
-                {nextArticle.ml_title[0].text}
-              </a>
-            ) : (
-              ''
-            )
-          ) : nextArticle ? (
-            nextArticle.ml_title[0].text
-          ) : (
-            ''
-          )}
+          <div className="flex items-center mb-1">
+            <img
+              alt="ETV"
+              className="w-6"
+              src="/assets/images/nextarticle.png"
+            />
+            <span className="text-lg font-thin pl-2">{t(label)}</span>
+          </div>
+          <div
+            className="text-gray-500 tracking-tighter pl-2"
+            onClick={scrollToNextArticle}
+          >
+            {nextArticle ? nextArticle.ml_title[0].text : ''}
+          </div>
+        </a>
+      ) : (
+        <div className="flex flex-col py-4 px-5  bg-mbg text-white cursor-pointer">
+          <div className="flex items-center mb-1">
+            <img
+              alt="ETV"
+              className="w-6"
+              src="/assets/images/nextarticle.png"
+            />
+            <span className="text-lg font-thin pl-2">{t(label)}</span>
+          </div>
+          <div
+            className="text-gray-500 tracking-tighter pl-2"
+            onClick={scrollToNextArticle}
+          >
+            {nextArticle ? nextArticle.ml_title[0].text : ''}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

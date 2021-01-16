@@ -26,9 +26,11 @@ export default function AMPSidebar({ data }) {
       <amp-accordion id="myAccordion">
         {items.map((item, index) => {
           return (
-            <section id={item.list_id}>
+            <section id={item.list_id} key={item.list_id}>
               <h2
-                className={`${item.total_items_count > 0 ? 'can-expand' : ''} accordion-header`}
+                className={`${
+                  item.total_items_count > 0 ? 'can-expand' : ''
+                } accordion-header`}
               >
                 <div
                   style={{
@@ -57,10 +59,10 @@ export default function AMPSidebar({ data }) {
 
               {item.total_items_count > 0 ? (
                 <div className="pb-1">
-                  {item.catalog_list_items.map((subitem) => {
+                  {item.catalog_list_items.map((subitem, ind) => {
                     return (
                       <a
-                        key={subitem.list_id}
+                        key={subitem.list_id + ind}
                         className="pl-10 h-8 flex items-center text-sm font-normal hover:bg-gray-300"
                         href={`https://m.etvbharat.com/${
                           subitem.url.split('/')[1]

@@ -109,16 +109,20 @@ const Gallery = ({
       if (isDesktop) {
         if (rhs && data.ad_conf) {
           id =
-            desktop && desktop.ad_conf
+            desktop && desktop.ad_conf && desktop.ad_conf.length > 0
               ? desktop.ad_conf[0].gpt_id
-              : data.ad_conf[0].gpt_id;
+              : data.ad_conf.length
+              ? data.ad_conf[0].gpt_id
+              : null;
           ad_id =
-            desktop && desktop.ad_conf
+            desktop && desktop.ad_conf && desktop.ad_conf.length > 0
               ? desktop.ad_conf[0].ad_unit_id
-              : data.ad_conf[0].ad_unit_id;
+              : data.ad_conf.length
+              ? data.ad_conf[0].gpt_id
+              : null;
         }
       } else {
-        if (data.ad_conf) {
+        if (data.ad_conf && data.ad_conf.length > 0) {
           id = data.ad_conf[0].gpt_id;
           ad_id = data.ad_conf[0].ad_unit_id;
         }
