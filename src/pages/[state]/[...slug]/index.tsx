@@ -22,9 +22,10 @@ interface Propss {
   data: any;
   pageType: String;
   appConfig?: any;
+  id?: String;
 }
 
-const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
+const slug: NextPage<Propss> = ({ data, pageType, appConfig, id }) => {
   const router = useRouter();
   let canonicalUrl = '',
     ampUrl = '';
@@ -36,6 +37,10 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
       appConfig.params_hash2.config_params.fb_pages[convertedState];
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
+
+  // const match = id.match(/(\d+)/);
+  // const ampExists = +match[0].slice(0,4)>=2021;
+  const ampExists = false;
 
   const getComponent = () => {
     switch (pageType) {
@@ -83,7 +88,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              <link rel="amphtml" href={ampUrl}></link>
+              {ampExists ? <link rel="amphtml" href={ampUrl}></link> : null}
               <meta
                 name="fbPages"
                 property="fb:pages"
@@ -163,7 +168,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              <link rel="amphtml" href={canonicalUrl}></link>
+              {ampExists ? <link rel="amphtml" href={ampUrl}></link> : null}
               <meta
                 name="fbPages"
                 property="fb:pages"
@@ -234,7 +239,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig }) => {
             <Head>
               <title>{main.display_title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              <link rel="amphtml" href={ampUrl}></link>
+              {ampExists ? <link rel="amphtml" href={ampUrl}></link> : null}
               <meta
                 name="fbPages"
                 property="fb:pages"
@@ -371,6 +376,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           data: video,
           appConfig: applicationConfig.value,
           isAmp: isAmp,
+          id: id,
         };
       case 'gallery':
         const galleryResponse = await api.CatalogList.getArticleDetails({
@@ -398,6 +404,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           data: { gallery, items_count: galleryResp.total_items_count },
           appConfig: applicationConfig.value,
           isAmp: isAmp,
+          id: id,
         };
       default:
         const articleResponse = await api.CatalogList.getArticleDetails({
@@ -418,13 +425,16 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
         const articleResp = articleResponse.data.data.catalog_list_items[0];
         const article = articleResp.catalog_list_items[0];
-
+        console.log(
+          articleResp.catalog_list_items.length === 0 ? 'Invalid Response' : ''
+        );
         // Pass data to the page via props
         return {
           pageType: 'article',
           data: article,
           appConfig: applicationConfig.value,
           isAmp: isAmp,
+          id: id,
         };
     }
   } else if (typeof window === 'undefined') {
@@ -458,6 +468,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     data: {},
     appConfig: {},
     isAmp: isAmp,
+    id: null,
   };
 };
 
