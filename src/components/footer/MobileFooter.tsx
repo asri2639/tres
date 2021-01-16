@@ -209,7 +209,10 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
           onClose={() => toggleSidebar(false)}
         />
       ) : null}
-      <div className="mobile-footer w-full block md:hidden bg-mbg text-white absolute bottom-0">
+      <div
+        next-page-hide="1"
+        className="mobile-footer w-full block md:hidden bg-mbg text-white absolute bottom-0"
+      >
         <div className="eb-navbar mb-12 pb-1">
           {isAMP ? (
             <a

@@ -29,6 +29,7 @@ const Gallery = ({
   scrollPosition,
   count,
   viewed,
+  related
 }) => {
   const isAMP = useContext(AMPContext);
   const router = useRouter();
@@ -372,6 +373,7 @@ const Gallery = ({
             scrollToNextArticle={scrollToNextGallery}
             nextArticle={nextGallery}
             data={data}
+            related={related}
           />
         </Media>
         <Media greaterThan="xs" className="md:block md:w-4/12">

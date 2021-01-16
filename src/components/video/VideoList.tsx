@@ -415,6 +415,7 @@ const VideoList = ({ videoData, appConfig }) => {
               nextVideo={i < 9 ? related[i + 1] : null}
               scrollToNextVideo={() => scrollToVideo(related[i + 1])}
               viewed={viewed}
+              related={related}
               updateViewed={(viewed) => {
                 setViewed(viewed);
               }}

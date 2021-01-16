@@ -21,6 +21,7 @@ const Video = ({
   scrollToNextVideo,
   iframeSource,
   viewed,
+  related
 }) => {
   const isRTL = useContext(RTLContext);
   const ref = useRef<HTMLDivElement>(null);
@@ -258,6 +259,7 @@ const Video = ({
             data={data}
             scrollToNextArticle={scrollToNextVideo}
             nextArticle={nextVideo}
+            related={related}
           />
         </Media>
         <Media greaterThan="xs" className="md:block md:w-4/12">

@@ -186,6 +186,7 @@ const ArticleList = ({ articleData }) => {
               key={article.contentId}
               {...article}
               rhs={article.rhs}
+              related={related}
               desktop={article.desktop}
               nextArticle={i < 9 ? related[i + 1] : null}
               scrollToNextArticle={() => scrollToArticle(related[i + 1])}

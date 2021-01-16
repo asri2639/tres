@@ -22,7 +22,12 @@ export default function AMPSidebar({ data }) {
   }, [data]);
 
   return (
-    <amp-sidebar id="sidebar1" layout="nodisplay" style={{ width: '300px' }}>
+    <amp-sidebar
+    next-page-hide="1"
+    id="sidebar1"
+      layout="nodisplay"
+      style={{ width: '300px' }}
+    >
       <amp-accordion id="myAccordion">
         {items.map((item, index) => {
           return (

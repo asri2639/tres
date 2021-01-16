@@ -185,6 +185,7 @@ const GalleryList = ({ galleryData }) => {
               nextGallery={i < 9 ? related[i + 1] : null}
               scrollToNextGallery={() => scrollToGallery(related[i + 1])}
               viewed={viewed}
+              related={related}
               updateViewed={(viewed) => {
                 setViewed(viewed);
               }}

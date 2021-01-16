@@ -4,8 +4,6 @@ import { I18nContext } from 'next-i18next';
 import { useContext, useState } from 'react';
 
 import NavLink from '@components/common/NavLink';
-import API from '@services/api/API';
-import APIEnum from '@services/api/APIEnum';
 import header from './Header.module.scss';
 import Modal from '@components/modal/Modal';
 import GoogleTagManager from '@utils/GoogleTagManager';
@@ -217,6 +215,7 @@ export default function MobileHeader({ data, className }) {
       ) : null}
 
       <div
+        next-page-hide="1"
         className={`${className} ${header['mobile-header']} block md:hidden`}
       >
         <div
@@ -280,6 +279,7 @@ export default function MobileHeader({ data, className }) {
 
       <div
         className={`${className} bg-mhbg px-3 sticky block md:hidden -top-1 z-10`}
+        next-page-hide="1"
         onMouseLeave={containerOut}
       >
         <div className="lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ">

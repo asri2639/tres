@@ -12,6 +12,7 @@ const MobileNextArticle = ({
   t,
   nextArticle,
   scrollToNextArticle,
+  related,
 }: IMobileNextArticle) => {
   const isAMP = useContext(AMPContext);
 
@@ -96,6 +97,34 @@ const MobileNextArticle = ({
         ) : null}
       </div>
 
+      {isAMP && related && related.length > 0 && false ? (
+        <amp-next-page>
+          <script
+            type="application/json"
+            dangerouslySetInnerHTML={{
+              __html: `
+          ${JSON.stringify(
+            related.slice(1).map((rel) => {
+              const splitUrl = rel.web_url.split('/');
+              const thumbnail = thumbnailExtractor(
+                rel.thumbnails,
+                '3_2',
+                'b2s',
+                null
+              );
+              return {
+                title: rel.display_title,
+                image: thumbnail.url,
+                url: location.origin + '/amp/' + rel.web_url,
+              };
+            })
+          )}
+          `,
+            }}
+          ></script>
+        </amp-next-page>
+      ) : null}
+
       {isAMP && nextArticle ? (
         <a
           href={`/${nextArticle.web_url}`}
@@ -143,6 +172,7 @@ interface IMobileNextArticle extends WithTranslation {
   data: any;
   nextArticle: any;
   scrollToNextArticle: any;
+  related: any;
 }
 
 export default withTranslation('common')(MobileNextArticle);
