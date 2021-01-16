@@ -91,16 +91,12 @@ const SocialMedia = ({ data }) => {
       ) : null}
       {isAMP ? (
         <>
-          <amp-social-share
-            class="amp-social-share"
-            type="facebook"
-            width="32"
-            height="32"
-            data-param-href={`${baseUrl}/${data.web_url}`}
-            data-param-app_id=""
-            data-param-quote="TITLE"
-            aria-label="Share on Facebook"
-          ></amp-social-share>
+          <a
+            href={`https://www.facebook.com/sharer.php?u=${baseUrl}/${data.web_url}`}
+            target="_blank"
+            className="amp-social-share amp-social-share-facebook"
+            style={{ width: '32px', height: '32px' }}
+          ></a>
           <amp-social-share
             class="amp-social-share"
             type="linkedin"
