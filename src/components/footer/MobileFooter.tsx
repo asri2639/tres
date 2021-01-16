@@ -211,18 +211,31 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
       ) : null}
       <div className="mobile-footer w-full block md:hidden bg-mbg text-white absolute bottom-0">
         <div className="eb-navbar mb-12 pb-1">
-          <button
-            className="btot text-center absolute bg-red-700 w-40 px-4 py-3 rounded-full"
-            style={{
-              top: '-2.5rem',
-              left: 'calc(50% - 5rem)',
-            }}
-            onClick={() => {
-              backToTop();
-            }}
-          >
-            {t('back_to_top')}
-          </button>
+          {isAMP ? (
+            <a
+              href="#"
+              className="btot text-center absolute bg-red-700 w-40 px-4 py-3 rounded-full"
+              style={{
+                top: '-2.5rem',
+                left: 'calc(50% - 5rem)',
+              }}
+            >
+              {t('back_to_top')}
+            </a>
+          ) : (
+            <button
+              className="btot text-center absolute bg-red-700 w-40 px-4 py-3 rounded-full"
+              style={{
+                top: '-2.5rem',
+                left: 'calc(50% - 5rem)',
+              }}
+              onClick={() => {
+                backToTop();
+              }}
+            >
+              {t('back_to_top')}
+            </button>
+          )}
           <div className="bottom-section mx-8">
             <div className="text-center img-block">
               <div className="footer-icon"></div>
@@ -481,7 +494,7 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   src="/assets/images/etv-grey.png"
                 />
                 <p className="whitespace-no-wrap">CHANGE STATE</p>
-              </div> 
+              </div>
             </div>
             <div className="item w-1/4">
               <div
@@ -503,7 +516,6 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                 on="tap:sidebar1"
                 role="button"
                 tabIndex={0}
-
               >
                 <img
                   className="h-6"
