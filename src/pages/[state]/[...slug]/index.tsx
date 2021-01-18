@@ -298,12 +298,14 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id }) => {
 };
 
 slug.getInitialProps = async ({ query, req, res, ...args }) => {
-  const isAmp = query.amp === '1';
   let i18n = null;
   let language = 'en';
   let state = 'na';
   let params = null;
   const { publicRuntimeConfig } = getConfig();
+  const isAmp =
+    query.amp === '1' && publicRuntimeConfig.APP_ENV !== 'production';
+
   if (typeof window !== 'undefined') {
     window['applicationConfig'] = applicationConfig;
   }

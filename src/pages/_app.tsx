@@ -69,7 +69,14 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="robots" content="all" />
       </Head>
       {accessToken.web.length && accessToken.mobile.length ? (
-        <AMPContext.Provider value={router.query.amp === '1' ? true : false}>
+        <AMPContext.Provider
+          value={
+            router.query.amp === '1' &&
+            publicRuntimeConfig.APP_ENV !== 'production'
+              ? true
+              : false
+          }
+        >
           <Layout accessToken={accessToken} appConfig={appConfig}>
             <Component {...pageProps} />
           </Layout>
