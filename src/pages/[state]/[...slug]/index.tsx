@@ -168,7 +168,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists ? <link rel="amphtml" href={ampUrl}></link> : null}
+              {ampExists && false ? <link rel="amphtml" href={ampUrl}></link> : null}
               <meta
                 name="fbPages"
                 property="fb:pages"
