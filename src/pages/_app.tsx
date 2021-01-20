@@ -71,8 +71,8 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
       {accessToken.web.length && accessToken.mobile.length ? (
         <AMPContext.Provider
           value={
-            router.query.amp === '1' &&
-            publicRuntimeConfig.APP_ENV !== 'production'
+            router.query.amp === '1' /* &&
+            publicRuntimeConfig.APP_ENV !== 'production' */
               ? true
               : false
           }

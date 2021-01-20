@@ -304,7 +304,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   let params = null;
   const { publicRuntimeConfig } = getConfig();
   const isAmp =
-    query.amp === '1' && publicRuntimeConfig.APP_ENV !== 'production';
+    query.amp === '1' /* && publicRuntimeConfig.APP_ENV !== 'production' */;
 
   if (typeof window !== 'undefined') {
     window['applicationConfig'] = applicationConfig;
