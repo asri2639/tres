@@ -79,7 +79,7 @@ export default function Article({
       }
     }
 
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && !isAMP) {
       const isDesktop = window.innerWidth >= 768;
       const divStyle = isDesktop
         ? `width: 728px; height: 90px;`
@@ -182,7 +182,7 @@ export default function Article({
       ) : null}
 
       {isAMP ? (
-       /*  <amp-analytics
+        /*  <amp-analytics
           config="https://www.googletagmanager.com/amp.json?id=Tag Manager-XXXXXX;Tag Manager.url=SOURCE_URL"
           data-credentials="include"
         >

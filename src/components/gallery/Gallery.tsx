@@ -98,7 +98,7 @@ const Gallery = ({
       }
     }
 
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && !isAMP) {
       const isDesktop = window.innerWidth >= 768;
       const divStyle = isDesktop
         ? `width: 728px; height: 90px;`
