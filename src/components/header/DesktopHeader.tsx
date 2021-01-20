@@ -15,8 +15,10 @@ import { Media, MediaContextProvider } from '@media';
 import { RTLContext } from '@components/layout/Layout';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
+import { AMPContext } from '@pages/_app';
 
 const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
+  const isAMP = useContext(AMPContext);
   const router = useRouter();
   const {
     i18n: { language, options },
@@ -573,7 +575,7 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
             {/* <iframe className="mx-auto" width={755} height={110} src={`https://www.etvbharat.com/banner-near-logo/${router.query.state}/business/728x90-1.htm`}/> */}
 
             <MediaContextProvider>
-              <Media greaterThan="xs">{headerAd}</Media>
+              {isAMP ? null : <Media greaterThan="xs">{headerAd}</Media>}
             </MediaContextProvider>
           </div>
         </div>
