@@ -9,7 +9,6 @@ import Document, {
 import { useRouter } from 'next/router';
 
 export default class ETVDocument extends Document {
- 
   render() {
     const isAMP = this.props.__NEXT_DATA__.query.amp === '1';
     return (
@@ -68,9 +67,7 @@ export default class ETVDocument extends Document {
                 }}
               ></script>
             </>
-          ) : (<script
-            dangerouslySetInnerHTML={{
-              __html: `window.dataLayer = window.dataLayer || [];`}}></script>)}
+          ) : null}
         </Head>
         <body>
           {!isAMP ? (

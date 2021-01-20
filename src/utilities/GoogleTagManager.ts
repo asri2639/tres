@@ -3,6 +3,7 @@ import { stateCodeConverter } from '@utils/Helpers';
 
 export default {
   languageChange: (e) => {
+    if(!window['dataLayer']) return;
     var t = languageMap[e],
       a = languageMap[location.pathname.split('/')[1]],
       n = window.location.href;
@@ -31,6 +32,8 @@ export default {
         });
   },
   menuClick: (e, t) => {
+    if(!window['dataLayer']) return;
+
     var a = (t + '|' + e.ml_title[0].text).toLowerCase();
     window['dataLayer'].push({
       event: 'menu_clicks',
@@ -39,6 +42,8 @@ export default {
     });
   },
   subMenuClick: function (e, t) {
+    if(!window['dataLayer']) return;
+
     var a = e.url.split('/')[4],
       n = window.location.href.split('/')[6];
     if ('' != t && void 0 != t) {
@@ -61,6 +66,8 @@ export default {
     }
   },
   stateChange: function (e) {
+    if(!window['dataLayer']) return;
+
     var t = e.item_languages[0],
       a = stateCodeConverter(e.state),
       n = window.location.href.split('/')[3],
@@ -78,6 +85,8 @@ export default {
       });
   },
   share: function (e) {
+    if(!window['dataLayer']) return;
+
     var t = 'INDIA',
       a = 'INDIA',
       n = 'INDIA',
@@ -121,6 +130,8 @@ export default {
       });
   },
   comment: function (e) {
+    if(!window['dataLayer']) return;
+   
     var t = 'INDIA',
       a = 'INDIA',
       n = 'INDIA',
@@ -164,6 +175,8 @@ export default {
       });
   },
   searchItem: function (searchTerm) {
+    if(!window['dataLayer']) return;
+    
     if ('' != searchTerm.trim()) {
       var e = window.location.href,
         n = searchTerm;
@@ -175,6 +188,8 @@ export default {
     }
   },
   articleClick: function (e) {
+    if(!window['dataLayer']) return;
+    
     if (e && e.web_url) {
       var t = e.content_id,
         a = e.title,
@@ -223,6 +238,8 @@ export default {
     }
   },
   articleViewScroll: function (e, f, scrolled = null) {
+    if(!window['dataLayer']) return;
+    
     var t = 'INDIA',
       a = 'INDIA',
       n = 'INDIA',
@@ -302,6 +319,8 @@ export default {
   },
 
   appInstall: function (t) {
+    if(!window['dataLayer']) return;
+
     window['dataLayer'].push({
       event: 'app_install',
       current_page_url: window.location.href,
@@ -310,6 +329,8 @@ export default {
   },
 
   backToTop: function () {
+    if(!window['dataLayer']) return;
+
     window['dataLayer'].push({
       event: 'back_to_top',
       destination_page_url: window.location.href,
