@@ -53,11 +53,11 @@ app
     // Default catch-all handler to allow Next.js to handle all other routes
     server.all('*', (req, res) => {
       if (req.url.startsWith('/amp/')) {
-        console.log(req.url);
         const id = req.url.split('/').slice(-1)[0];
-        console.log(id);
         fetch(
-          `http://staging.api.etvbharat.com/amp/${id}?auth_token=xNppFXL5h4qhA7XsE4Nx`,
+          env === 'staging'
+            ? `http://staging.api.etvbharat.com/amp/${id}?auth_token=xNppFXL5h4qhA7XsE4Nx`
+            : `http://prod.api.etvbharat.com/amp/${id}?auth_token=fLd6UcV8zesqNpVRif8N`,
           { headers: { 'Content-Type': 'application/json' } }
         )
           .then((response) => {
