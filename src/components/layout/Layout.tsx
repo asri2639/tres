@@ -7,7 +7,7 @@ import APIEnum from '@api/APIEnum';
 import { useContext, useEffect, useState } from 'react';
 import { I18nContext } from 'next-i18next';
 import { accessToken as token } from '@utils/Constants';
-import { configStateCodeConverter } from '@utils/Helpers';
+import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
 
 const country = 'IN';
 export const RTLContext = React.createContext(false);
@@ -69,6 +69,7 @@ const Layout = ({ children, accessToken, appConfig }) => {
             region: country,
             response: 'r2',
             item_languages: language,
+            portal_state: stateCodeConverter(location.pathname.split('/')[2]),
           },
         });
         if (isDesktop) {
@@ -159,6 +160,7 @@ const Layout = ({ children, accessToken, appConfig }) => {
           region: country,
           response: 'r2',
           item_languages: language,
+          portal_state: stateCodeConverter(location.pathname.split('/')[2]),
         },
         isSSR: !isDesktop,
       });
@@ -179,6 +181,8 @@ const Layout = ({ children, accessToken, appConfig }) => {
             region: country,
             response: 'r2',
             item_languages: language,
+            portal_state: stateCodeConverter(location.pathname.split('/')[2]),
+
           },
           isSSR: true,
         });

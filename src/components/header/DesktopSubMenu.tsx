@@ -3,7 +3,7 @@ import Thumbnail from '@components/common/Thumbnail';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import GoogleTagManager from '@utils/GoogleTagManager';
-import { thumbnailExtractor } from '@utils/Helpers';
+import { stateCodeConverter, thumbnailExtractor } from '@utils/Helpers';
 import { I18nContext } from 'next-i18next';
 import { useContext } from 'react';
 import useSWR from 'swr';
@@ -25,6 +25,7 @@ export default function DesktopSubMenu({ category }) {
         region: country,
         response: 'r2',
         item_languages: language,
+        portal_state: stateCodeConverter(location.pathname.split('/')[2]),
       },
     }).then((res) => {
       return res.data.data;
@@ -52,7 +53,12 @@ export default function DesktopSubMenu({ category }) {
       {response && response.data && response.data.catalog_list_items
         ? response.data.catalog_list_items.slice(0, 3).map((item) => {
             const splitUrl = item.web_url ? item.web_url.split('/') : [];
-            const thumbnail = thumbnailExtractor(item.thumbnails, '3_2', 'b2s','');
+            const thumbnail = thumbnailExtractor(
+              item.thumbnails,
+              '3_2',
+              'b2s',
+              ''
+            );
 
             return !splitUrl.length ? (
               <div></div>
