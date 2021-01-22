@@ -11,6 +11,7 @@ import { RTLContext } from '@components/layout/Layout';
 import MobileNextArticle from '@components/article/MobileNextArticle';
 import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
+import { AMPContext } from '@pages/_app';
 
 const Video = ({
   contentId,
@@ -23,6 +24,8 @@ const Video = ({
   viewed,
   related
 }) => {
+  const isAMP = useContext(AMPContext);
+
   const isRTL = useContext(RTLContext);
   const ref = useRef<HTMLDivElement>(null);
   const [inViewRef, inView, entry] = useInView({
@@ -143,7 +146,7 @@ const Video = ({
                 {data.publish_date_uts ? (
                   <div className="text-sm text-gray-600 md:text-black always-english">
                     {data.publish_date_uts
-                      ? `Published on: ${dateFormatter(data.publish_date_uts)}`
+                      ? `Published on: ${dateFormatter(data.publish_date_uts, isAMP)}`
                       : ''}
                     <span className="hidden md:inline-block">
                       {data.publish_date_uts && data.update_date_uts
@@ -152,7 +155,7 @@ const Video = ({
                     </span>
                     <br className="md:hidden" />
                     {data.update_date_uts
-                      ? `Updated on: ${dateFormatter(data.update_date_uts)}`
+                      ? `Updated on: ${dateFormatter(data.update_date_uts, isAMP)}`
                       : ''}
                   </div>
                 ) : null}

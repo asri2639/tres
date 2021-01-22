@@ -320,9 +320,21 @@ export const createHash = function (r) {
   return N.toLowerCase();
 };
 
-export const dateFormatter = (uts) => {
+export const dateFormatter = (uts, amp = false) => {
   const current = new Date().getTime();
   const date = new Date(uts * 1000);
+  if (amp) {
+    return (
+      date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour12: true,
+        hour: 'numeric',
+        minute: 'numeric',
+      }) + ' IST'
+    );
+  }
   const previous = date.getTime();
   var msPerMinute = 60 * 1000;
   var msPerHour = msPerMinute * 60;

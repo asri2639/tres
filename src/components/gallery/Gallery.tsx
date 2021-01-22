@@ -220,7 +220,7 @@ const Gallery = ({
                   <div className="text-sm text-gray-600 md:text-black always-english">
                     {data[0].publish_date_uts
                       ? `Published on: ${dateFormatter(
-                          data[0].publish_date_uts
+                          data[0].publish_date_uts, isAMP
                         )}`
                       : ''}
                     <span className="hidden md:inline-block">
@@ -230,7 +230,7 @@ const Gallery = ({
                     </span>
                     <br className="md:hidden" />
                     {data[0].update_date_uts
-                      ? `Updated on: ${dateFormatter(data[0].update_date_uts)}`
+                      ? `Updated on: ${dateFormatter(data[0].update_date_uts, isAMP)}`
                       : ''}
                   </div>
                 ) : null}

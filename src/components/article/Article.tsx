@@ -206,7 +206,7 @@ export default function Article({
         <MediaContextProvider>
           <Media
             greaterThan="xs"
-            className={`lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 ${
+            className={`lg-social hidden absolute md:flex flex-col justify-around pt-0 h-56 ${
               isRTL ? 'rtl-social' : ''
             }`}
           >
@@ -243,7 +243,7 @@ export default function Article({
                   </h1>
                   <div className="text-sm text-gray-600 md:text-black always-english">
                     {data.publish_date_uts
-                      ? `Published on: ${dateFormatter(data.publish_date_uts)}`
+                      ? `Published on: ${dateFormatter(data.publish_date_uts, isAMP)}`
                       : ''}
                     <span className="hidden md:inline-block">
                       {data.publish_date_uts && data.update_date_uts
@@ -252,7 +252,7 @@ export default function Article({
                     </span>
                     <br className="md:hidden" />
                     {data.update_date_uts
-                      ? `Updated on: ${dateFormatter(data.update_date_uts)}`
+                      ? `Updated on: ${dateFormatter(data.update_date_uts, isAMP)}`
                       : ''}
                   </div>
                 </div>
