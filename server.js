@@ -65,7 +65,7 @@ app
           })
           .then(function (rest) {
             res.set('Content-Type', 'text/html');
-            res.send(rest.data.amp);
+            res.send(unescape(rest.data.amp));
           })
           .catch((e) => {
             return handle(req, res);
