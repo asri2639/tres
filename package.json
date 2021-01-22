@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^1.4.0",
     "axios": "^0.18.1",
     "express": "^4.17.1",
+    "he": "^1.2.0",
     "js-service-wrapper": "^1.1.4",
     "next": "9.5.3",
     "next-i18next": "^6.0.3",

@@ -2,6 +2,7 @@
 const express = require('express');
 const next = require('next');
 const fetch = require('node-fetch');
+const he = require('he');
 
 const devProxy = {
   '/api/v2': {
@@ -65,7 +66,7 @@ app
           })
           .then(function (rest) {
             res.set('Content-Type', 'text/html');
-            res.send(unescape(rest.data.amp));
+            res.send(he.decode(rest.data.amp));
           })
           .catch((e) => {
             return handle(req, res);
