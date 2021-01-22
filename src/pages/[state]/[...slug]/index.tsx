@@ -40,7 +40,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id }) => {
 
   // const match = id.match(/(\d+)/);
   // const ampExists = +match[0].slice(0,4)>=2021;
-  const ampExists = false;
+  const ampExists = true; // prod enabling amp
 
   const getComponent = () => {
     switch (pageType) {
@@ -83,12 +83,15 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id }) => {
           new URL(`http:localhost:3000${router.asPath}`).pathname
         }`;
 
+        console.log('has videos :', data.has_videos);
         return (
           <>
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists ? <link rel="amphtml" href={ampUrl}></link> : null}
+              {ampExists && !data.has_videos ? (
+                <link rel="amphtml" href={ampUrl}></link>
+              ) : null}
               <meta
                 name="fbPages"
                 property="fb:pages"
@@ -168,7 +171,9 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists && false ? <link rel="amphtml" href={ampUrl}></link> : null}
+              {ampExists && false ? (
+                <link rel="amphtml" href={ampUrl}></link>
+              ) : null}
               <meta
                 name="fbPages"
                 property="fb:pages"
@@ -304,7 +309,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   let params = null;
   const { publicRuntimeConfig } = getConfig();
   const isAmp =
-    query.amp === '1' /* && publicRuntimeConfig.APP_ENV !== 'production' */;
+    query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
 
   if (typeof window !== 'undefined') {
     window['applicationConfig'] = applicationConfig;
