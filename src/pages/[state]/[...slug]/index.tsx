@@ -38,9 +38,9 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id }) => {
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
 
-  // const match = id.match(/(\d+)/);
-  // const ampExists = +match[0].slice(0,8)>=20210122;
-  const ampExists = false; // prod enabling amp
+  const match = id.match(/(\d+)/);
+  const ampExists = +match[0].slice(0,12)>=202101231410;
+  // const ampExists = false; // prod enabling amp
 
   const getComponent = () => {
     switch (pageType) {
