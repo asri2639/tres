@@ -247,7 +247,7 @@ const Gallery = ({
             </div>
 
             <div className="space-y-5 p-3 pt-0">
-              {data.map((image) => {
+              {data.map((image,ind) => {
                 if (
                   image.layout_type &&
                   image.layout_type.indexOf('ad_unit') >= 0 &&
@@ -260,7 +260,7 @@ const Gallery = ({
                   return (
                     <iframe
                       className="mx-auto"
-                      key={image.ad_unit_id}
+                      key={image.ad_unit_id +' '+ind}
                       width={width + 50}
                       height={height + 50}
                       src={image.ad_url}
@@ -269,7 +269,7 @@ const Gallery = ({
                 } else {
                   return (
                     <>
-                      <div key={image.order_no} className="relative">
+                      <div key={image.order_no + ' '+ ind} className="relative">
                         {isAMP ? (
                           <img
                             className="rounded-lg"

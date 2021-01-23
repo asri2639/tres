@@ -53,6 +53,10 @@ const SocialMedia = ({ data }) => {
   )}`;
   const baseUrl = `https://www.etvbharat.com`;
 
+  const url = data.web_url
+    ? data.web_url
+    : new URL(location.href).pathname.slice(1);
+
   return (
     <>
       {isOpen ? (
@@ -125,7 +129,7 @@ const SocialMedia = ({ data }) => {
       ) : (
         <>
           <FacebookShareButton
-            url={`${baseUrl}/${data.web_url}`}
+            url={`${baseUrl}/${url}`}
             beforeOnClick={() => {
               GoogleTagManager.share(data);
             }}
@@ -134,7 +138,7 @@ const SocialMedia = ({ data }) => {
           </FacebookShareButton>
           <LinkedinShareButton
             title={data.title}
-            url={`${baseUrl}/${data.web_url}`}
+            url={`${baseUrl}/${url}`}
             beforeOnClick={() => {
               GoogleTagManager.share(data);
             }}
@@ -143,7 +147,7 @@ const SocialMedia = ({ data }) => {
           </LinkedinShareButton>
           <TwitterShareButton
             title={data.title}
-            url={`${baseUrl}/${data.web_url}`}
+            url={`${baseUrl}/${url}`}
             beforeOnClick={() => {
               GoogleTagManager.share(data);
             }}
@@ -152,7 +156,7 @@ const SocialMedia = ({ data }) => {
           </TwitterShareButton>
           <WhatsappShareButton
             title={data.title}
-            url={`${baseUrl}/${data.web_url}`}
+            url={`${baseUrl}/${url}`}
             beforeOnClick={() => {
               GoogleTagManager.share(data);
             }}
@@ -161,7 +165,7 @@ const SocialMedia = ({ data }) => {
           </WhatsappShareButton>
           <RedditShareButton
             title={data.title}
-            url={`${baseUrl}/${data.web_url}`}
+            url={`${baseUrl}/${url}`}
             beforeOnClick={() => {
               GoogleTagManager.share(data);
             }}
