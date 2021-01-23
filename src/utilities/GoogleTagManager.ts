@@ -3,7 +3,7 @@ import { stateCodeConverter } from '@utils/Helpers';
 
 export default {
   languageChange: (e) => {
-    if(!window['dataLayer']) return;
+    if (!window['dataLayer']) return;
     var t = languageMap[e],
       a = languageMap[location.pathname.split('/')[1]],
       n = window.location.href;
@@ -32,7 +32,7 @@ export default {
         });
   },
   menuClick: (e, t) => {
-    if(!window['dataLayer']) return;
+    if (!window['dataLayer']) return;
 
     var a = (t + '|' + e.ml_title[0].text).toLowerCase();
     window['dataLayer'].push({
@@ -42,7 +42,7 @@ export default {
     });
   },
   subMenuClick: function (e, t) {
-    if(!window['dataLayer']) return;
+    if (!window['dataLayer']) return;
 
     var a = e.url.split('/')[4],
       n = window.location.href.split('/')[6];
@@ -66,7 +66,7 @@ export default {
     }
   },
   stateChange: function (e) {
-    if(!window['dataLayer']) return;
+    if (!window['dataLayer']) return;
 
     var t = e.item_languages[0],
       a = stateCodeConverter(e.state),
@@ -85,7 +85,7 @@ export default {
       });
   },
   share: function (e) {
-    if(!window['dataLayer']) return;
+    if (!window['dataLayer']) return;
 
     var t = 'INDIA',
       a = 'INDIA',
@@ -94,7 +94,13 @@ export default {
       s = 'en',
       r = e.title,
       o = e.content_id,
-      f = { detailsUrl: '' };
+      f = { detailsUrl: [] };
+
+    if (!e.web_url) {
+      f.detailsUrl = new URL(window.location.href).pathname.split('/').slice(1);;
+    } else {
+      f.detailsUrl = e.web_url.split('/');
+    }
     void 0 != e.city && '' != e.city
       ? void 0 != e.city[0] && '' != e.city[0] && (t = e.city[0])
       : (t = 'INDIA'),
@@ -114,7 +120,6 @@ export default {
           '' != e.item_languages[0] &&
           (s = e.item_languages[0])
         : (s = 'en'),
-      (f.detailsUrl = e.web_url.split('/')),
       window['dataLayer'].push({
         event: 'article_share',
         item_id: o,
@@ -130,8 +135,8 @@ export default {
       });
   },
   comment: function (e) {
-    if(!window['dataLayer']) return;
-   
+    if (!window['dataLayer']) return;
+
     var t = 'INDIA',
       a = 'INDIA',
       n = 'INDIA',
@@ -139,7 +144,12 @@ export default {
       s = 'en',
       r = e.title,
       o = e.content_id,
-      f = { detailsUrl: '' };
+      f = { detailsUrl: [] };
+    if (!e.web_url) {
+      f.detailsUrl = new URL(window.location.href).pathname.split('/').slice(1);
+    } else {
+      f.detailsUrl = e.web_url.split('/');
+    }
     void 0 != e.city && '' != e.city
       ? void 0 != e.city[0] && '' != e.city[0] && (t = e.city[0])
       : (t = 'INDIA'),
@@ -159,7 +169,6 @@ export default {
           '' != e.item_languages[0] &&
           (s = e.item_languages[0])
         : (s = 'en'),
-      (f.detailsUrl = e.web_url.split('/')),
       window['dataLayer'].push({
         event: 'add_comment',
         item_id: o,
@@ -175,8 +184,8 @@ export default {
       });
   },
   searchItem: function (searchTerm) {
-    if(!window['dataLayer']) return;
-    
+    if (!window['dataLayer']) return;
+
     if ('' != searchTerm.trim()) {
       var e = window.location.href,
         n = searchTerm;
@@ -188,8 +197,8 @@ export default {
     }
   },
   articleClick: function (e) {
-    if(!window['dataLayer']) return;
-    
+    if (!window['dataLayer']) return;
+
     if (e && e.web_url) {
       var t = e.content_id,
         a = e.title,
@@ -200,6 +209,7 @@ export default {
         o = 'INDIA',
         l = 'INDIA',
         c = 'en';
+
       void 0 != e.city && '' != e.city
         ? void 0 != e.city[0] && '' != e.city[0] && (s = e.city[0])
         : (s = 'INDIA'),
@@ -238,8 +248,8 @@ export default {
     }
   },
   articleViewScroll: function (e, f, scrolled = null) {
-    if(!window['dataLayer']) return;
-    
+    if (!window['dataLayer']) return;
+
     var t = 'INDIA',
       a = 'INDIA',
       n = 'INDIA',
@@ -319,7 +329,7 @@ export default {
   },
 
   appInstall: function (t) {
-    if(!window['dataLayer']) return;
+    if (!window['dataLayer']) return;
 
     window['dataLayer'].push({
       event: 'app_install',
@@ -329,7 +339,7 @@ export default {
   },
 
   backToTop: function () {
-    if(!window['dataLayer']) return;
+    if (!window['dataLayer']) return;
 
     window['dataLayer'].push({
       event: 'back_to_top',
