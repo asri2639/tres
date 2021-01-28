@@ -16,6 +16,7 @@ import { RTLContext } from '@components/layout/Layout';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import { AMPContext } from '@pages/_app';
+import { getSocialLinks } from '@utils/Helpers';
 
 const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
   const isAMP = useContext(AMPContext);
@@ -25,42 +26,13 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
   } = useContext(I18nContext);
   const api = API(APIEnum.Catalog);
 
-  const twitters = [
-    { state: 'National', link: 'https://twitter.com/ETVBharatEng' },
-    { state: 'goa', link: 'https://twitter.com/ETVBharatEng' },
-    { state: 'punjab', link: 'https://twitter.com/ETVBharatPB' },
-    { state: 'himachal-Pradesh', link: 'https://twitter.com/ETVBharatHP' },
-    { state: 'Urdu', link: 'https://twitter.com/ETVBharatUrdu' },
-    { state: 'telangana', link: 'https://twitter.com/ETVBharat_ts' },
-    { state: 'andhra-pradesh', link: 'https://twitter.com/ETVBharatAP' },
-    { state: 'hindi', link: 'https://twitter.com/ETVBharatHindi' },
-    { state: 'tripura', link: 'https://twitter.com/ETVBharatHindi' },
-    { state: 'Assam', link: 'https://twitter.com/ETVBharatAS' },
-    { state: 'tamil-nadu', link: 'https://twitter.com/ETVBharatTN' },
-    { state: 'maharashtra', link: 'https://twitter.com/ETVBharatMA' },
-    { state: 'west-bengal', link: 'https://twitter.com/ETVBharatWB' },
-    { state: 'karnataka', link: 'https://twitter.com/ETVBharatKA' },
-    { state: 'odisha', link: 'https://twitter.com/ETVBharatOD' },
-    { state: 'gujarat', link: 'https://twitter.com/ETVBharatGJ' },
-    { state: 'rajasthan', link: 'https://twitter.com/ETVBharatRJ' },
-    { state: 'haryana', link: 'https://twitter.com/ETVBharatHR' },
-    { state: 'jharkhand', link: 'https://twitter.com/ETVBharatJH' },
-    { state: 'bihar', link: 'https://twitter.com/ETVBharatBR' },
-    { state: 'madhya-pradesh', link: 'https://twitter.com/ETVBharatMP' },
-    { state: 'kerala', link: 'https://twitter.com/ETVBharatKL' },
-    { state: 'chhattisgarh', link: 'https://twitter.com/ETVBharatCG' },
-    { state: 'delhi', link: 'https://twitter.com/ETVBharatDelhi' },
-    { state: 'uttar-pradesh', link: 'https://twitter.com/ETVBharatUP' },
-    { state: 'uttarakhand', link: 'https://twitter.com/ETVBharatUK' },
-    { state: 'jammu-and-kashmir', link: 'https://twitter.com/ETVBharatJK' },
-  ];
-
   const isRTL = useContext(RTLContext);
 
   const [headerAd, setHeaderAd] = useState(null);
-  const [twitterHandler, setTwitterHandler] = useState(
-    'https://twitter.com/ETVBharatEng'
-  );
+  const [socialHandlers, setSocialHandlers] = useState({
+    twitter: 'https://twitter.com/ETVBharatEng',
+    fb: 'https://www.facebook.com/ETVBharatEnglish',
+  });
 
   const [selected, setSelected] = useState({ state: '', language: '' });
   const [openStateModal, setOpenStateModal] = useState([]);
@@ -136,10 +108,9 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
   useEffect(() => {
     const splitPath = location.pathname.split('/');
     const state = splitPath[2];
-    const twitter = twitters.find(
-      (v) => v.state.toLowerCase() === state.toLowerCase()
-    );
-    setTwitterHandler(twitter ? twitter.link : twitters[0].link);
+    const socialLinks = getSocialLinks(state);
+    setSocialHandlers(socialLinks);
+
     const getHeaderAd = () => {
       api.Catalog.getPageAds({
         query: {
@@ -169,10 +140,8 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
     const handleRouteChange = (url) => {
       const splitPath = location.pathname.split('/');
       const state = splitPath[2];
-      const twitter = twitters.find(
-        (v) => v.state.toLowerCase() === state.toLowerCase()
-      );
-      setTwitterHandler(twitter ? twitter.link : twitters[0].link);
+      const socialLinks = getSocialLinks(state);
+      setSocialHandlers(socialLinks);
       // setTwitterHandler();
       getHeaderAd();
     };
@@ -335,12 +304,12 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
 
           <div className="flex flex-row items-center space-x-3">
             <div>
-              <a href="https://www.facebook.com/ETVBharatEnglish">
+              <a href={socialHandlers.fb}>
                 <p className="fb-icon"></p>
               </a>
             </div>
             <div>
-              <a href={twitterHandler}>
+              <a href={socialHandlers.twitter}>
                 <p className="twitter-icon"></p>
               </a>
             </div>

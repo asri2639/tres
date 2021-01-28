@@ -22,20 +22,23 @@ export const thumbnailExtractor = (
     'high_2_1',
     'high_1_1',
   ];
-  const order = (extractionOrder === 's2b'
-    ? thumbnailKeys
-    : thumbnailKeys.reverse()
-  ).filter((v) => v.endsWith(ratio));
-  if (isEmpty(thumbnailObj)) {
-    return !mediaType
-      ? { alt_tags: '', caption: '', url: '/assets/images/placeholder.png' }
-      : { alt_tags: 'Breaking News', url: null };
-  }
-  for (var i of order) {
-    if (thumbnailObj[i]) {
-      return thumbnailObj[i];
+  if (!thumbnailObj) {
+    const order = (extractionOrder === 's2b'
+      ? thumbnailKeys
+      : thumbnailKeys.reverse()
+    ).filter((v) => v.endsWith(ratio));
+    if (isEmpty(thumbnailObj)) {
+      return !mediaType
+        ? { alt_tags: '', caption: '', url: '/assets/images/placeholder.png' }
+        : { alt_tags: 'Breaking News', url: null };
+    }
+    for (var i of order) {
+      if (thumbnailObj[i]) {
+        return thumbnailObj[i];
+      }
     }
   }
+
   return { alt_tags: '', caption: '', url: '/assets/images/placeholder.png' };
 };
 
@@ -360,4 +363,148 @@ export const dateFormatter = (uts, amp = false) => {
       }) + ' IST'
     );
   }
+};
+const stateSocialLinks = [
+  {
+    state: 'National',
+    twitter: 'https://twitter.com/ETVBharatEng',
+    fb: 'https://www.facebook.com/ETVBharatEnglish',
+  },
+  {
+    state: 'goa',
+    twitter: 'https://twitter.com/ETVBharatEng',
+    fb: 'https://www.facebook.com/ETV-Bharat-Goa-176846926538180',
+  },
+  {
+    state: 'punjab',
+    twitter: 'https://twitter.com/ETVBharatPB',
+    fb: 'https://www.facebook.com/ETVbharatPunjab',
+  },
+  {
+    state: 'himachal-Pradesh',
+    twitter: 'https://twitter.com/ETVBharatHP',
+    fb: 'https://www.facebook.com/ETVBharatHimachalPradesh',
+  },
+  {
+    state: 'Urdu',
+    twitter: 'https://twitter.com/ETVBharatUrdu',
+    fb: 'https://www.facebook.com/ETVBharatUrdu',
+  },
+  {
+    state: 'telangana',
+    twitter: 'https://twitter.com/ETVBharat_ts',
+    fb: 'https://www.facebook.com/ETVBharatTelangana',
+  },
+  {
+    state: 'andhra-pradesh',
+    twitter: 'https://twitter.com/ETVBharatAP',
+    fb: 'https://www.facebook.com/ETVBharatAndhraPradesh',
+  },
+  {
+    state: 'hindi',
+    twitter: 'https://twitter.com/ETVBharatHindi',
+    fb: 'https://www.facebook.com/Etv-Bharat-Tripura-1155623571198468',
+  },
+  {
+    state: 'tripura',
+    twitter: 'https://twitter.com/ETVBharatHindi',
+    fb: 'https://www.facebook.com/Etv-Bharat-Tripura-1155623571198468',
+  },
+  {
+    state: 'Assam',
+    twitter: 'https://twitter.com/ETVBharatAS',
+    fb: 'https://www.facebook.com/ETVBharatAssam',
+  },
+  {
+    state: 'tamil-nadu',
+    twitter: 'https://twitter.com/ETVBharatTN',
+    fb: 'https://www.facebook.com/ETVBharatTamilnadu',
+  },
+  {
+    state: 'maharashtra',
+    twitter: 'https://twitter.com/ETVBharatMA',
+    fb: 'https://www.facebook.com/ETVBharatMaharashtra',
+  },
+  {
+    state: 'west-bengal',
+    twitter: 'https://twitter.com/ETVBharatWB',
+    fb: 'https://www.facebook.com/ETVBharatWestBengal',
+  },
+  {
+    state: 'karnataka',
+    twitter: 'https://twitter.com/ETVBharatKA',
+    fb: 'https://www.facebook.com/ETVBharatKarnataka',
+  },
+  {
+    state: 'odisha',
+    twitter: 'https://twitter.com/ETVBharatOD',
+    fb: 'https://www.facebook.com/ETVBharatOdisha',
+  },
+  {
+    state: 'gujarat',
+    twitter: 'https://twitter.com/ETVBharatGJ',
+    fb: 'https://www.facebook.com/ETVBharatGujarat',
+  },
+  {
+    state: 'rajasthan',
+    twitter: 'https://twitter.com/ETVBharatRJ',
+    fb: 'https://www.facebook.com/ETVBharatRajasthan',
+  },
+  {
+    state: 'haryana',
+    twitter: 'https://twitter.com/ETVBharatHR',
+    fb: 'https://www.facebook.com/ETVBharatHaryana',
+  },
+  {
+    state: 'jharkhand',
+    twitter: 'https://twitter.com/ETVBharatJH',
+    fb: 'https://www.facebook.com/ETVBharatJharkhand',
+  },
+  {
+    state: 'bihar',
+    twitter: 'https://twitter.com/ETVBharatBR',
+    fb: 'https://www.facebook.com/ETVBharatBihar',
+  },
+  {
+    state: 'madhya-pradesh',
+    twitter: 'https://twitter.com/ETVBharatMP',
+    fb: 'https://www.facebook.com/ETVBharatMadhyaPradesh',
+  },
+  {
+    state: 'kerala',
+    twitter: 'https://twitter.com/ETVBharatKL',
+    fb: 'https://www.facebook.com/ETVBharatKerala',
+  },
+  {
+    state: 'chhattisgarh',
+    twitter: 'https://twitter.com/ETVBharatCG',
+    fb: 'https://www.facebook.com/ETVBharatChattisgarh',
+  },
+  {
+    state: 'delhi',
+    twitter: 'https://twitter.com/ETVBharatDelhi',
+    fb: 'https://www.facebook.com/ETVBharatDelhi',
+  },
+  {
+    state: 'uttar-pradesh',
+    twitter: 'https://twitter.com/ETVBharatUP',
+    fb: 'https://www.facebook.com/ETVBharatUttarPradesh',
+  },
+  {
+    state: 'uttarakhand',
+    twitter: 'https://twitter.com/ETVBharatUK',
+    fb: 'https://www.facebook.com/ETVBharatUttarakhand',
+  },
+  {
+    state: 'jammu-and-kashmir',
+    twitter: 'https://twitter.com/ETVBharatJK',
+    fb: 'https://www.facebook.com/ETVBharatJammuandKashmir',
+  },
+];
+
+export const getSocialLinks = (state) => {
+  const links = stateSocialLinks.find(
+    (v) => v.state.toLowerCase() === state.toLowerCase()
+  );
+  return links ? links : stateSocialLinks[0];
 };

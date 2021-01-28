@@ -12,6 +12,7 @@ import { withTranslation } from '@i18n';
 import { WithTranslation } from 'next-i18next';
 import { AMPContext } from '@pages/_app';
 import AMPSidebar from '@components/header/AMPSidebar';
+import { getSocialLinks } from '@utils/Helpers';
 
 const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
   const isAMP = useContext(AMPContext);
@@ -22,38 +23,10 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
     i18n: { language, options },
   } = useContext(I18nContext);
 
-  const twitters = [
-    { state: 'National', link: 'https://twitter.com/ETVBharatEng' },
-    { state: 'goa', link: 'https://twitter.com/ETVBharatEng' },
-    { state: 'punjab', link: 'https://twitter.com/ETVBharatPB' },
-    { state: 'himachal-Pradesh', link: 'https://twitter.com/ETVBharatHP' },
-    { state: 'Urdu', link: 'https://twitter.com/ETVBharatUrdu' },
-    { state: 'telangana', link: 'https://twitter.com/ETVBharat_ts' },
-    { state: 'andhra-pradesh', link: 'https://twitter.com/ETVBharatAP' },
-    { state: 'hindi', link: 'https://twitter.com/ETVBharatHindi' },
-    { state: 'tripura', link: 'https://twitter.com/ETVBharatHindi' },
-    { state: 'Assam', link: 'https://twitter.com/ETVBharatAS' },
-    { state: 'tamil-nadu', link: 'https://twitter.com/ETVBharatTN' },
-    { state: 'maharashtra', link: 'https://twitter.com/ETVBharatMA' },
-    { state: 'west-bengal', link: 'https://twitter.com/ETVBharatWB' },
-    { state: 'karnataka', link: 'https://twitter.com/ETVBharatKA' },
-    { state: 'odisha', link: 'https://twitter.com/ETVBharatOD' },
-    { state: 'gujarat', link: 'https://twitter.com/ETVBharatGJ' },
-    { state: 'rajasthan', link: 'https://twitter.com/ETVBharatRJ' },
-    { state: 'haryana', link: 'https://twitter.com/ETVBharatHR' },
-    { state: 'jharkhand', link: 'https://twitter.com/ETVBharatJH' },
-    { state: 'bihar', link: 'https://twitter.com/ETVBharatBR' },
-    { state: 'madhya-pradesh', link: 'https://twitter.com/ETVBharatMP' },
-    { state: 'kerala', link: 'https://twitter.com/ETVBharatKL' },
-    { state: 'chhattisgarh', link: 'https://twitter.com/ETVBharatCG' },
-    { state: 'delhi', link: 'https://twitter.com/ETVBharatDelhi' },
-    { state: 'uttar-pradesh', link: 'https://twitter.com/ETVBharatUP' },
-    { state: 'uttarakhand', link: 'https://twitter.com/ETVBharatUK' },
-    { state: 'jammu-and-kashmir', link: 'https://twitter.com/ETVBharatJK' },
-  ];
-  const [twitterHandler, setTwitterHandler] = useState(
-    'https://twitter.com/ETVBharatEng'
-  );
+  const [socialHandlers, setSocialHandlers] = useState({
+    twitter: 'https://twitter.com/ETVBharatEng',
+    fb: 'https://www.facebook.com/ETVBharatEnglish',
+  });
   const [searchBox, toggleSearchBox] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [openStateModal, setOpenStateModal] = useState([]);
@@ -124,18 +97,15 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
   useEffect(() => {
     const splitPath = location.pathname.split('/');
     const state = splitPath[2];
-    const twitter = twitters.find(
-      (v) => v.state.toLowerCase() === state.toLowerCase()
-    );
-    setTwitterHandler(twitter ? twitter.link : twitters[0].link);
+
+    const socialLinks = getSocialLinks(state);
+    setSocialHandlers(socialLinks);
 
     const handleRouteChange = (url) => {
       const splitPath = location.pathname.split('/');
       const state = splitPath[2];
-      const twitter = twitters.find(
-        (v) => v.state.toLowerCase() === state.toLowerCase()
-      );
-      setTwitterHandler(twitter ? twitter.link : twitters[0].link);
+      const socialLinks = getSocialLinks(state);
+      setSocialHandlers(socialLinks);
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);
@@ -304,7 +274,7 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                 </li>
                 <li className="border-r"></li>
                 <li>
-                  <NavLink href={Constants.socialURLs.facebook} passHref>
+                  <NavLink href={socialHandlers.fb} passHref>
                     <img
                       className="h-6"
                       alt="ETV"
@@ -313,7 +283,7 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink href={twitterHandler} passHref>
+                  <NavLink href={socialHandlers.twitter} passHref>
                     <img
                       className="h-6"
                       alt="ETV"

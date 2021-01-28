@@ -31,10 +31,6 @@ const Constants = Object.freeze({
   baseURL: baseURL,
   authToken: authToken,
   mAuthToken: mAuthToken,
-  socialURLs: {
-    facebook: 'https://www.facebook.com/ETVBharatEnglish',
-    twitter: 'https://twitter.com/eenadu_english',
-  },
   appURLs: {
     android:
       'https://play.google.com/store/apps/details?id=com.etvbharat.android',
