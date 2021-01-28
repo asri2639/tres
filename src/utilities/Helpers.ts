@@ -1,7 +1,9 @@
 export const isEmpty = (obj) => {
+  if (!obj) return true;
   for (var i in obj) return false;
   return true;
 };
+
 export const thumbnailExtractor = (
   thumbnailObj,
   ratio = '3_2',
@@ -22,23 +24,23 @@ export const thumbnailExtractor = (
     'high_2_1',
     'high_1_1',
   ];
-  if (!thumbnailObj) {
-    const order = (extractionOrder === 's2b'
-      ? thumbnailKeys
-      : thumbnailKeys.reverse()
-    ).filter((v) => v.endsWith(ratio));
-    if (isEmpty(thumbnailObj)) {
-      return !mediaType
-        ? { alt_tags: '', caption: '', url: '/assets/images/placeholder.png' }
-        : { alt_tags: 'Breaking News', url: null };
-    }
-    for (var i of order) {
-      if (thumbnailObj[i]) {
-        return thumbnailObj[i];
-      }
-    }
+
+  if (isEmpty(thumbnailObj)) {
+    return !mediaType
+      ? { alt_tags: '', caption: '', url: '/assets/images/placeholder.png' }
+      : { alt_tags: 'Breaking News', url: null };
   }
 
+  const order = (extractionOrder === 's2b'
+    ? thumbnailKeys
+    : thumbnailKeys.reverse()
+  ).filter((v) => v.endsWith(ratio));
+  
+  for (var i of order) {
+    if (thumbnailObj[i]) {
+      return thumbnailObj[i];
+    }
+  }
   return { alt_tags: '', caption: '', url: '/assets/images/placeholder.png' };
 };
 
