@@ -16,7 +16,7 @@ const BBCHeader = ({ source }) => {
   return !state.src ? null : (
     <div className="bbc-tag">
       <img
-        src={state.src}
+        src={`/assets/bbc/${state.src}.png`}
         onError={onError}
         alt={state.src}
       />

@@ -42,10 +42,8 @@ export default function Article({
     threshold: 1,
   });
 
-  console.log(data)
-
   const [source, setSource] = useState(null);
-  if (data.source && data.source.indexOf('bbc_')) {
+  if (data.source && data.source.indexOf('bbc_') === 0) {
     setSource(data.source);
   }
 
