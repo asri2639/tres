@@ -32,6 +32,7 @@ export default function Article({
   related,
 }) {
   const isAMP = useContext(AMPContext);
+  const [source, setSource] = useState(null);
 
   const contentRef = useRef(null);
   const isRTL = useContext(RTLContext);
@@ -42,12 +43,11 @@ export default function Article({
     threshold: 1,
   });
 
-  const [source, setSource] = useState(null);
-  if (data.source && data.source.indexOf('bbc_') === 0) {
-    setSource(data.source);
-  }
 
   useEffect(() => {
+    if (data.source && data.source.indexOf('bbc_') === 0) {
+      setSource(data.source);
+    }
     if (viewed.indexOf(contentId) === -1) {
       viewed.push(contentId);
       GoogleTagManager.articleViewScroll(data, { newsArticle: true });

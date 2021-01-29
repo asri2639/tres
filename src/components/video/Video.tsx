@@ -29,9 +29,6 @@ const Video = ({
 
   const isRTL = useContext(RTLContext);
   const [source, setSource] = useState(null);
-  if (data.source && data.source.indexOf('bbc_') === 0) {
-    setSource(data.source);
-  }
   const ref = useRef<HTMLDivElement>(null);
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
@@ -40,6 +37,9 @@ const Video = ({
   });
 
   useEffect(() => {
+    if (data.source && data.source.indexOf('bbc_') === 0) {
+      setSource(data.source);
+    }
     if (inView) {
       const urlParts = data.web_url.split('/');
       const state = urlParts[1];

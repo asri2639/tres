@@ -38,10 +38,6 @@ const Gallery = ({
 
   const [source, setSource] = useState(null);
 
-  if (data.source && data.source.indexOf('bbc_') === 0) {
-    setSource(data.source);
-  }
-
   const ref = useRef<HTMLDivElement>(null);
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
@@ -56,6 +52,9 @@ const Gallery = ({
   });
  */
   useEffect(() => {
+    if (data.source && data.source.indexOf('bbc_') === 0) {
+      setSource(data.source);
+    }
     if (viewed.indexOf(contentId) === -1) {
       viewed.push(contentId);
       // updateViewed(viewed);
