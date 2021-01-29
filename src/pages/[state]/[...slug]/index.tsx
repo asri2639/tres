@@ -23,9 +23,10 @@ interface Propss {
   pageType: String;
   appConfig?: any;
   id?: String;
+  isAmp?: Boolean;
 }
 
-const slug: NextPage<Propss> = ({ data, pageType, appConfig, id }) => {
+const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
   const router = useRouter();
   let canonicalUrl = '',
     ampUrl = '';
@@ -59,7 +60,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id }) => {
         let matchedScript = null;
         do {
           matchedScript = scriptTagExtractionRegex.exec(data.html_tag);
-          if (matchedScript) {
+          if (matchedScript && !isAmp) {
             scripts.push(matchedScript[0]);
           }
         } while (matchedScript);
@@ -152,7 +153,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id }) => {
         videoDatum.contentType = data.content_type;
         videoDatum.contentId = data.content_id;
 
-        if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined' && !isAmp) {
           loadJS(
             'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
           );
