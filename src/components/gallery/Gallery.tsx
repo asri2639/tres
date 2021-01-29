@@ -16,6 +16,7 @@ import MobileNextArticle from '@components/article/MobileNextArticle';
 import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
 import { AMPContext } from '@pages/_app';
+import BBCHeader from '@components/common/BBCHeader';
 
 const Gallery = ({
   contentId,
@@ -29,11 +30,17 @@ const Gallery = ({
   scrollPosition,
   count,
   viewed,
-  related
+  related,
 }) => {
   const isAMP = useContext(AMPContext);
   const router = useRouter();
   const isRTL = useContext(RTLContext);
+
+  const [source, setSource] = useState(null);
+
+  if (data.source && data.source.indexOf('bbc_')) {
+    setSource(data.source);
+  }
 
   const ref = useRef<HTMLDivElement>(null);
   const [inViewRef, inView, entry] = useInView({
@@ -208,6 +215,8 @@ const Gallery = ({
               className || ''
             } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
           >
+            <BBCHeader source={source} />
+
             <div className="flex flex-col md:flex-col-reverse md:mb-4">
               <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
                 <h1
@@ -220,7 +229,8 @@ const Gallery = ({
                   <div className="text-sm text-gray-600 md:text-black always-english">
                     {data[0].publish_date_uts
                       ? `Published on: ${dateFormatter(
-                          data[0].publish_date_uts, isAMP
+                          data[0].publish_date_uts,
+                          isAMP
                         )}`
                       : ''}
                     <span className="hidden md:inline-block">
@@ -230,7 +240,10 @@ const Gallery = ({
                     </span>
                     <br className="md:hidden" />
                     {data[0].update_date_uts
-                      ? `Updated on: ${dateFormatter(data[0].update_date_uts, isAMP)}`
+                      ? `Updated on: ${dateFormatter(
+                          data[0].update_date_uts,
+                          isAMP
+                        )}`
                       : ''}
                   </div>
                 ) : null}
@@ -247,7 +260,7 @@ const Gallery = ({
             </div>
 
             <div className="space-y-5 p-3 pt-0">
-              {data.map((image,ind) => {
+              {data.map((image, ind) => {
                 if (
                   image.layout_type &&
                   image.layout_type.indexOf('ad_unit') >= 0 &&
@@ -260,7 +273,7 @@ const Gallery = ({
                   return (
                     <iframe
                       className="mx-auto"
-                      key={image.ad_unit_id +' '+ind}
+                      key={image.ad_unit_id + ' ' + ind}
                       width={width + 50}
                       height={height + 50}
                       src={image.ad_url}
@@ -269,7 +282,10 @@ const Gallery = ({
                 } else {
                   return (
                     <>
-                      <div key={image.order_no + ' '+ ind} className="relative">
+                      <div
+                        key={image.order_no + ' ' + ind}
+                        className="relative"
+                      >
                         {isAMP ? (
                           <img
                             className="rounded-lg"
@@ -295,6 +311,16 @@ const Gallery = ({
                 }
               })}
             </div>
+
+            {source ? (
+              <MediaContextProvider>
+                <Media greaterThan="xs">
+                  <div className="bbc-tag">
+                    <img src="/assets/bbc/bbc_footer_22px.png" />
+                  </div>
+                </Media>
+              </MediaContextProvider>
+            ) : null}
 
             <InView
               as="div"
@@ -374,6 +400,7 @@ const Gallery = ({
             nextArticle={nextGallery}
             data={data}
             related={related}
+            showBbc={!!source}
           />
         </Media>
         <Media greaterThan="xs" className="md:block md:w-4/12">

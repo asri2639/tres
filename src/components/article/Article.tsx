@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useRef } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
 // import { InView } from 'react-intersection-observer';
 import AdContainer from '@components/article/AdContainer';
@@ -12,6 +12,7 @@ import { RTLContext } from '@components/layout/Layout';
 import MobileNextArticle from '@components/article/MobileNextArticle';
 import Sticky from 'wil-react-sticky';
 import { AMPContext } from '@pages/_app';
+import BBCHeader from '@components/common/BBCHeader';
 
 // initialPosition
 // div height
@@ -40,6 +41,11 @@ export default function Article({
     // triggerOnce: true,
     threshold: 1,
   });
+
+  const [source, setSource] = useState(null);
+  if (data.source && data.source.indexOf('bbc_')) {
+    setSource(data.source);
+  }
 
   useEffect(() => {
     if (viewed.indexOf(contentId) === -1) {
@@ -226,8 +232,10 @@ export default function Article({
               } actual-content lg:container lg:mx-auto px-3 md:px-0 bg-white `}
               ref={contentRef}
             >
+              <BBCHeader source={source} />
+
               <div className="flex flex-col md:flex-col-reverse md:mb-8">
-                <div className="-mx-3 md:mx-0">
+                <div className="-mx-3 md:mx-0 relative">
                   <Thumbnail
                     thumbnail={thumbnail}
                     className={'md:rounded-lg w-full'}
@@ -243,7 +251,10 @@ export default function Article({
                   </h1>
                   <div className="text-sm text-gray-600 md:text-black always-english">
                     {data.publish_date_uts
-                      ? `Published on: ${dateFormatter(data.publish_date_uts, isAMP)}`
+                      ? `Published on: ${dateFormatter(
+                          data.publish_date_uts,
+                          isAMP
+                        )}`
                       : ''}
                     <span className="hidden md:inline-block">
                       {data.publish_date_uts && data.update_date_uts
@@ -252,7 +263,10 @@ export default function Article({
                     </span>
                     <br className="md:hidden" />
                     {data.update_date_uts
-                      ? `Updated on: ${dateFormatter(data.update_date_uts, isAMP)}`
+                      ? `Updated on: ${dateFormatter(
+                          data.update_date_uts,
+                          isAMP
+                        )}`
                       : ''}
                   </div>
                 </div>
@@ -273,6 +287,16 @@ export default function Article({
                   __html: html,
                 }}
               />
+
+              {source ? (
+                <MediaContextProvider>
+                  <Media greaterThan="xs">
+                    <div className="bbc-tag">
+                      <img src="/assets/bbc/bbc_footer_22px.png" />
+                    </div>
+                  </Media>
+                </MediaContextProvider>
+              ) : null}
 
               <InView
                 as="div"
@@ -352,6 +376,7 @@ export default function Article({
               related={related}
               scrollToNextArticle={scrollToNextArticle}
               nextArticle={nextArticle}
+              showBbc={!!source}
             />
           </Media>
           {isAMP ? null : (

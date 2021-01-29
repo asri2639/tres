@@ -80,7 +80,7 @@ export default function DesktopSubMenu({ category }) {
                   GoogleTagManager.articleClick(item);
                 }}
               >
-                <div className="">
+                <div className="relative">
                   {item.thumbnails ? (
                     <Thumbnail
                       thumbnail={thumbnail}

@@ -404,7 +404,7 @@ const VideoList = ({ videoData, appConfig }) => {
         </Media>
       </MediaContextProvider>
 
-      <ul className="article-list flex flex-col lg:container lg:mx-auto pt-4">
+      <ul className="article-list flex flex-col lg:container lg:mx-auto">
         {videos.length > 0 &&
           videos.map((video, i) => (
             <Video

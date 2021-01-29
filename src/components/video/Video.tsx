@@ -12,6 +12,7 @@ import MobileNextArticle from '@components/article/MobileNextArticle';
 import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
 import { AMPContext } from '@pages/_app';
+import BBCHeader from '@components/common/BBCHeader';
 
 const Video = ({
   contentId,
@@ -22,11 +23,15 @@ const Video = ({
   scrollToNextVideo,
   iframeSource,
   viewed,
-  related
+  related,
 }) => {
   const isAMP = useContext(AMPContext);
 
   const isRTL = useContext(RTLContext);
+  const [source, setSource] = useState(null);
+  if (data.source && data.source.indexOf('bbc_')) {
+    setSource(data.source);
+  }
   const ref = useRef<HTMLDivElement>(null);
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
@@ -135,6 +140,7 @@ const Video = ({
               className || ''
             } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
           >
+            <BBCHeader source={source} />
             <div className="flex flex-col md:flex-col-reverse md:mb-1">
               <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
                 <h1
@@ -146,7 +152,10 @@ const Video = ({
                 {data.publish_date_uts ? (
                   <div className="text-sm text-gray-600 md:text-black always-english">
                     {data.publish_date_uts
-                      ? `Published on: ${dateFormatter(data.publish_date_uts, isAMP)}`
+                      ? `Published on: ${dateFormatter(
+                          data.publish_date_uts,
+                          isAMP
+                        )}`
                       : ''}
                     <span className="hidden md:inline-block">
                       {data.publish_date_uts && data.update_date_uts
@@ -155,7 +164,10 @@ const Video = ({
                     </span>
                     <br className="md:hidden" />
                     {data.update_date_uts
-                      ? `Updated on: ${dateFormatter(data.update_date_uts, isAMP)}`
+                      ? `Updated on: ${dateFormatter(
+                          data.update_date_uts,
+                          isAMP
+                        )}`
                       : ''}
                   </div>
                 ) : null}
@@ -186,6 +198,16 @@ const Video = ({
             <div className="px-2 py-4 text-sm lg:text-base text-justify lg:text-left">
               {data.description}
             </div>
+
+            {source ? (
+              <MediaContextProvider>
+                <Media greaterThan="xs">
+                  <div className="bbc-tag">
+                    <img src="/assets/bbc/bbc_footer_22px.png" />
+                  </div>
+                </Media>
+              </MediaContextProvider>
+            ) : null}
 
             <InView
               as="div"
@@ -263,6 +285,7 @@ const Video = ({
             scrollToNextArticle={scrollToNextVideo}
             nextArticle={nextVideo}
             related={related}
+            showBbc={!!source}
           />
         </Media>
         <Media greaterThan="xs" className="md:block md:w-4/12">

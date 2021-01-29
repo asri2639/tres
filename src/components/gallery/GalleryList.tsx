@@ -170,7 +170,7 @@ const GalleryList = ({ galleryData }) => {
         </Media>
       </MediaContextProvider>
 
-      <ul className="article-list flex flex-col lg:container lg:mx-auto pt-4">
+      <ul className="article-list flex flex-col lg:container lg:mx-auto">
         {galleries.length > 0 &&
           galleries.map((gallery, i) => (
             <Gallery

@@ -61,7 +61,7 @@ const PopularList = ({ data }) => {
               key={v.friendly_id}
               className={`flex cursor-pointer ${
                 isRTL ? 'md:flex-row-reverse rtl' : ''
-              }`}
+              } relative`}
               href={{
                 pathname: '/[state]/[...slug]',
                 query: {

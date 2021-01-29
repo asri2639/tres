@@ -178,7 +178,7 @@ const ArticleList = ({ articleData }) => {
       </MediaContextProvider>
 
       <ul
-        className={`article-list flex flex-col lg:container lg:mx-auto pt-4 `}
+        className={`article-list flex flex-col lg:container lg:mx-auto `}
       >
         {articles.length > 0 &&
           articles.map((article, i) => (

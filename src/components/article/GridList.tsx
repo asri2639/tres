@@ -21,7 +21,7 @@ const GridList = ({ data }) => {
           return (
             <NavLink
               key={v.friendly_id}
-              className="w-1/2 cursor-pointer"
+              className="w-1/2 cursor-pointer relative"
               href={{
                 pathname: '/[state]/[...slug]',
                 query: {

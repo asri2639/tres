@@ -13,6 +13,7 @@ const MobileNextArticle = ({
   nextArticle,
   scrollToNextArticle,
   related,
+  showBbc,
 }: IMobileNextArticle) => {
   const isAMP = useContext(AMPContext);
 
@@ -97,6 +98,12 @@ const MobileNextArticle = ({
         ) : null}
       </div>
 
+      {showBbc ? (
+        <div className="bbc-tag bbc-tag-footer">
+          <img src="/assets/bbc/bbc_footer_22px.png" />
+        </div>
+      ) : null}
+
       {isAMP && related && related.length > 0 && false ? (
         <amp-next-page>
           <script
@@ -173,6 +180,7 @@ interface IMobileNextArticle extends WithTranslation {
   nextArticle: any;
   scrollToNextArticle: any;
   related: any;
+  showBbc: boolean;
 }
 
 export default withTranslation('common')(MobileNextArticle);
