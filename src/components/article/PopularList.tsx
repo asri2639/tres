@@ -79,6 +79,7 @@ const PopularList = ({ data }) => {
                 thumbnail={{ ...thumbnail, alt_tags: v.alt_tags }}
                 className={'rounded-md w-32 max-w-32 min-w-32'}
                 type={''}
+                creditSize={'small'}
               />
 
               <div className=" px-3 text-sm text-gray-700">

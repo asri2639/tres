@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Thumbnail = ({ thumbnail, className, type }) => {
+const Thumbnail = ({ thumbnail, className, type, creditSize = '' }) => {
   const [state, setState] = useState({
     src: thumbnail.url,
     errored: false,
@@ -28,7 +28,7 @@ const Thumbnail = ({ thumbnail, className, type }) => {
         alt={thumbnail.alt_tags}
       />
       {thumbnail.credit ? (
-        <div className="image-credit">{thumbnail.credit}</div>
+        <div className={`image-credit ${creditSize}`}>{thumbnail.credit}</div>
       ) : null}
     </>
   );

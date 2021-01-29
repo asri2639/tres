@@ -86,6 +86,7 @@ const BottomRelatedBar = ({ data }) => {
               thumbnail={thumbnail}
               className={'rounded-md w-20'}
               type={''}
+              creditSize={'no-size'}
             />
 
             <div className=" px-1 text-xs text-gray-700 leading-tight">

@@ -35,7 +35,7 @@ const GridList = ({ data }) => {
                 GoogleTagManager.articleClick(v);
               }}
             >
-              <Thumbnail thumbnail={thumbnail} className={'rounded-lg'} type={''}/>
+              <Thumbnail thumbnail={thumbnail} className={'rounded-lg'} type={''} creditSize={'small'} />
               <div className="pt-2 leading-tight">{v.display_title}</div>
             </NavLink>
           );

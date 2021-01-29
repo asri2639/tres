@@ -93,6 +93,21 @@ section.content {
   font-size: 14px;
 }
 
+.image-credit.small {
+  font-size: 8px;
+  padding: 1px 4px;
+}
+
+.image-credit.medium {
+  font-size: 10px;
+  padding: 2px 6px;
+}
+
+.image-credit.no-size {
+  font-size: 6px;
+  padding: 1px 3px;
+}
+
 @media (min-width: 768px) {
   .actual-content {
     margin-bottom: 80px;

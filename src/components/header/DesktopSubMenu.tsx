@@ -86,6 +86,7 @@ export default function DesktopSubMenu({ category }) {
                       thumbnail={thumbnail}
                       className={`w-full rounded-md`}
                       type={''}
+                      creditSize={'medium'}
                     />
                   ) : (
                     <img
