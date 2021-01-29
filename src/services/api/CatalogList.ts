@@ -5,7 +5,7 @@ const { publicRuntimeConfig } = getConfig();
 const env = publicRuntimeConfig.APP_ENV;
 const controller = '/catalog_lists';
 
-const getProperParam = (params) => {
+const getProperParam = (params, options?) => {
   if (!params && typeof window !== 'undefined') {
     params = {
       state:
@@ -17,7 +17,9 @@ const getProperParam = (params) => {
 
   return params &&
     params.state &&
-    ['national', 'kerala', 'odisha'].indexOf(params.state) === -1
+    (options.exclude || ['national', 'kerala', 'odisha']).indexOf(
+      params.state
+    ) === -1
     ? '-' + params.state
     : '';
 };
@@ -28,9 +30,9 @@ export default function CatalogList(inst) {
       return inst.get(
         `${controller}/${
           config['isSSR'] ? '' : 'web-'
-        }news-details${getProperParam(params)}.gzip?${new URLSearchParams(
-          query
-        )}`,
+        }news-details${getProperParam(params, {
+          exclude: !config['isSSR'] ? ['national', 'odisha'] : null,
+        })}.gzip?${new URLSearchParams(query)}`,
         config
       );
     },
