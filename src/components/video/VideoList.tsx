@@ -94,7 +94,9 @@ const VideoList = ({ videoData, appConfig }) => {
       w = smartData.adaptive_urls[0].playback_url,
       g = smartData.adaptive_urls[0].video_duration,
       y =
-        'https://etvbharatimages.akamaized.net/player/etvbharat-staging/embed_etv.html?contenturl=' +
+        (publicRuntimeConfig.APP_ENV === 'staging'
+          ? 'https://etvbharatimages.akamaized.net/player/etvbharat-test/embed_etv.html?contenturl='
+          : 'https://etvbharatimages.akamaized.net/player/etvbharat-staging/embed_etv.html?contenturl=') +
         w +
         (a ? '' : '&video_duration=' + g) +
         '&thumbnailurl=https://etvwinvideo.akamaized.net/etv-bharat/images/placeholder.png&autoplay=' +
@@ -191,7 +193,6 @@ const VideoList = ({ videoData, appConfig }) => {
           hash,
           auth: 'kmAJAH4RTtqHjgoauC4o',
         },
-
         suv: true,
       }).then((resp) => {
         return resp.data;
