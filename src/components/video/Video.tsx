@@ -185,7 +185,19 @@ const Video = ({
 
             <div className={`${video.player}`}>
               {iframeSource ? (
-                <iframe src={iframeSource}></iframe>
+                isAMP ? (
+                  <amp-video-iframe
+                    layout="responsive"
+                    width="16"
+                    height="9"
+                    src={iframeSource}
+                    poster="https://react.etvbharat.com/assets/images/placeholder.png"
+                    data-param-videoid="MY_VIDEO_ID"
+                    data-param-channelid="MY_CHANNEL_ID"
+                  ></amp-video-iframe>
+                ) : (
+                  <iframe src={iframeSource}></iframe>
+                )
               ) : (
                 <img
                   className="w-full rounded-md -mt-10"
@@ -288,11 +300,13 @@ const Video = ({
             showBbc={!!source}
           />
         </Media>
-        <Media greaterThan="xs" className="md:block md:w-4/12">
-          <div className="w-full flex flex-col items-center space-y-6 pt-4 pb-4">
-            {!rhs ? 'Loading...' : <AdContainer data={filteredRHS} />}
-          </div>
-        </Media>
+        {isAMP ? null : (
+          <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
+            <div className="w-full items-center space-y-6 pt-4 pb-4">
+              {!rhs ? 'Loading...' : <AdContainer data={filteredRHS} />}
+            </div>
+          </Media>
+        )}
       </MediaContextProvider>
     </div>
   );
