@@ -3,12 +3,16 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const env = publicRuntimeConfig.APP_ENV;
 
+const prd_test = publicRuntimeConfig.TEST === 'test';
+console.log(prd_test);
+
 const baseURL =
-  env === 'production'
+  env === 'production' && !prd_test
     ? 'https://prod.api.etvbharat.com'
-    : env === 'development'
+    : env === 'development' || prd_test
     ? 'http://localhost:3000/api'
     : 'https://staging.api.etvbharat.com';
+
 
 // const accessToken =
 //   env === 'production'
@@ -44,7 +48,7 @@ export const accessToken = {
 };
 
 export const applicationConfig = {
-  value: null
+  value: null,
 };
 
 export const languageMap = {

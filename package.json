@@ -12,6 +12,8 @@
     "build": "next build",
     "staging": "cross-env NEXT_PUBLIC_APP_ENV=staging PORT=3000 node server.js",
     "start": "cross-env NEXT_PUBLIC_APP_ENV=production PORT=3000 node server.js",
+    "test-build": "next build",
+    "test-start": "cross-env NEXT_PUBLIC_APP_ENV=production NEXT_TEST=test PORT=3000 node server.js",
     "local": "next dev"
   },
   "dependencies": {

@@ -43,6 +43,7 @@ export default function Article({
     threshold: 1,
   });
 
+  console.log(html);
 
   useEffect(() => {
     if (data.source && data.source.indexOf('bbc_') === 0) {

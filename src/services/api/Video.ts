@@ -14,41 +14,76 @@ export default function Video(inst) {
             params.hash
           }&auth_token=xBUKcKnXfngfrqGoF93y`,
           config
-        );
+        ); 
+      } else if(!!publicRuntimeConfig.TEST) {
+        const promise = new Promise(function (resolve, reject) {
+          const url = new URL(params.play_url);
+  
+          const apiUrl =
+            `http://localhost:3000/api/v2/smart_urls/` +
+            (env === 'staging'
+              ? `${
+                  url.pathname.split('/').slice(-1)[0]
+                }?service_id=10&play_url=yes${
+                  env === 'staging' ? '&env=staging' : ''
+                }&video_duration=yes&protocol=hls&us=${params.hash}&auth_token=${
+                  params.auth || 'xBUKcKnXfngfrqGoF93y'
+                }`
+              : `${params.play_url.split('smart_urls')[1].slice(1)}${
+                  params.hash
+                }&auth_token=xBUKcKnXfngfrqGoF93y`);
+          let xhr = new XMLHttpRequest();
+          xhr.open('GET', apiUrl);
+          xhr.responseType = 'json';
+          xhr.send();
+  
+          xhr.onload = function () {
+            let responseObj = xhr.response;
+            resolve(responseObj);
+          };
+  
+          xhr.onerror = function (err) {
+            reject(err);
+          };
+        });
+  
+        return promise;
+      } else {
+        const promise = new Promise(function (resolve, reject) {
+          const url = new URL(params.play_url);
+  
+          const apiUrl =
+            `https://prod.suv.etvbharat.com/v2/smart_urls/` +
+            (env === 'staging'
+              ? `${
+                  url.pathname.split('/').slice(-1)[0]
+                }?service_id=10&play_url=yes${
+                  env === 'staging' ? '&env=staging' : ''
+                }&video_duration=yes&protocol=hls&us=${params.hash}&auth_token=${
+                  params.auth || 'xBUKcKnXfngfrqGoF93y'
+                }`
+              : `${params.play_url.split('smart_urls')[1].slice(1)}${
+                  params.hash
+                }&auth_token=xBUKcKnXfngfrqGoF93y`);
+          let xhr = new XMLHttpRequest();
+          xhr.open('GET', apiUrl);
+          xhr.responseType = 'json';
+          xhr.send();
+  
+          xhr.onload = function () {
+            let responseObj = xhr.response;
+            resolve(responseObj);
+          };
+  
+          xhr.onerror = function (err) {
+            reject(err);
+          };
+        });
+  
+        return promise;
       }
 
-      const promise = new Promise(function (resolve, reject) {
-        const url = new URL(params.play_url);
-
-        const apiUrl =
-          `https://prod.suv.etvbharat.com/v2/smart_urls/` +
-          (env === 'staging'
-            ? `${
-                url.pathname.split('/').slice(-1)[0]
-              }?service_id=10&play_url=yes${
-                env === 'staging' ? '&env=staging' : ''
-              }&video_duration=yes&protocol=hls&us=${params.hash}&auth_token=${
-                params.auth || 'xBUKcKnXfngfrqGoF93y'
-              }`
-            : `${params.play_url.split('smart_urls')[1].slice(1)}${
-                params.hash
-              }&auth_token=xBUKcKnXfngfrqGoF93y`);
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', apiUrl);
-        xhr.responseType = 'json';
-        xhr.send();
-
-        xhr.onload = function () {
-          let responseObj = xhr.response;
-          resolve(responseObj);
-        };
-
-        xhr.onerror = function (err) {
-          reject(err);
-        };
-      });
-
-      return promise;
+    
     },
   };
 }
