@@ -19,8 +19,11 @@ import getConfig from 'next/config';
 import VideoAPI from '@services/api/Video';
 import { MenuContext } from '@components/layout/Layout';
 import { applicationConfig } from '@utils/Constants';
+import { AMPContext } from '@pages/_app';
 
 const VideoList = ({ videoData, appConfig }) => {
+  const isAMP = useContext(AMPContext);
+
   const { publicRuntimeConfig } = getConfig();
   const config = useContext(MenuContext);
 
@@ -93,11 +96,14 @@ const VideoList = ({ videoData, appConfig }) => {
       }[(h = 'national' == l ? o : l)],
       w = smartData.adaptive_urls[0].playback_url,
       g = smartData.adaptive_urls[0].video_duration,
+      origin = isAMP
+        ? '/assets/embed_etv.html?contenturl='
+        : publicRuntimeConfig.APP_ENV === 'staging' ||
+          publicRuntimeConfig.APP_ENV === 'development'
+        ? 'https://etvbharatimages.akamaized.net/player/etvbharat-test/embed_etv.html?contenturl='
+        : 'https://etvbharatimages.akamaized.net/player/etvbharat-staging/embed_etv.html?contenturl=',
       y =
-        (publicRuntimeConfig.APP_ENV === 'staging' ||
-        publicRuntimeConfig.APP_ENV === 'development'
-          ? 'https://etvbharatimages.akamaized.net/player/etvbharat-test/embed_etv.html?contenturl='
-          : 'https://etvbharatimages.akamaized.net/player/etvbharat-staging/embed_etv.html?contenturl=') +
+        origin +
         w +
         (a ? '' : '&video_duration=' + g) +
         '&thumbnailurl=https://etvwinvideo.akamaized.net/etv-bharat/images/placeholder.png&autoplay=' +
