@@ -192,8 +192,6 @@ const Video = ({
                     height="9"
                     src={iframeSource}
                     poster="https://react.etvbharat.com/assets/images/placeholder.png"
-                    data-param-videoid="MY_VIDEO_ID"
-                    data-param-channelid="MY_CHANNEL_ID"
                   ></amp-video-iframe>
                 ) : (
                   <iframe src={iframeSource}></iframe>
