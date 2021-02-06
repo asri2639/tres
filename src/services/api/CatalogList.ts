@@ -31,7 +31,7 @@ export default function CatalogList(inst) {
         `${controller}/${
           config['isSSR'] ? '' : 'web-'
         }news-details${getProperParam(params, {
-          exclude: !config['isSSR'] ? ['national', 'odisha'] : null,
+          exclude: !config['isSSR'] ? ['national'] : null,
         })}.gzip?${new URLSearchParams(query)}`,
         config
       );
