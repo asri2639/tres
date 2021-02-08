@@ -41,6 +41,9 @@ const VideoList = ({ videoData, appConfig }) => {
   const [viewed, setViewed] = useState([]);
 
   const constructPlaybackUrl = (data, smartData) => {
+    if (Object.keys(smartData).length === 0) {
+      return null;
+    }
     let urlSplit = data.web_url.split('/');
     let href =
       publicRuntimeConfig.APP_ENV !== 'development'
