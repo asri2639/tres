@@ -48,55 +48,6 @@ export default function Article({
     threshold: 1,
   });
 
-  if (isAMP) {
-    if (data.has_videos) {
-      const api = API(APIEnum.Video);
-      const videoHtml = stringToHTML(html);
-      let promises = [];
-
-      const videos = videoHtml.querySelectorAll('.videoDiv');
-      for (let i = 0; i < videos.length; i++) {
-        const el = videos[i];
-        const iframe = el.querySelector('iframe.player-Iframe');
-
-        promises.push(
-          api.Video.decodeSmartUrl({
-            params: { url: iframe.src },
-          })
-        );
-      }
-
-      Promise.all(promises).then((results) => {
-        for (let i = 0; i < results.length; i++) {
-          const el = videos[i];
-          const res = results[i];
-          const url = new URL(res);
-          const iframeSource = '/assets/embed_etv.html' + url.search;
-
-          el.innerHTML = `<amp-video-iframe
-          layout="responsive"
-          width="16"
-          height="9"
-          src=${iframeSource}
-          poster="https://react.etvbharat.com/assets/images/placeholder.png"
-          ></amp-video-iframe>`;
-
-          if (i === results.length - 1) {
-            setAmpHtml(videoHtml.innerHTML);
-          }
-        }
-      });
-
-      // videos.forEach((el) => {
-
-      // el.innerHTML = '<span>video</span>';
-      // console.log(el);
-      // });
-    } else {
-      setAmpHtml(html);
-    }
-  }
-
   useEffect(() => {
     if (data.source && data.source.indexOf('bbc_') === 0) {
       setSource(data.source);
@@ -194,6 +145,55 @@ export default function Article({
           el.innerHTML = adHTML;
           el.querySelector('#' + id).appendChild(s);
         }
+      }
+    }
+
+    if (isAMP) {
+      if (data.has_videos) {
+        const api = API(APIEnum.Video);
+        const videoHtml = stringToHTML(html);
+        let promises = [];
+
+        const videos = videoHtml.querySelectorAll('.videoDiv');
+        for (let i = 0; i < videos.length; i++) {
+          const el = videos[i];
+          const iframe = el.querySelector('iframe.player-Iframe');
+
+          promises.push(
+            api.Video.decodeSmartUrl({
+              params: { url: iframe.src },
+            })
+          );
+        }
+
+        Promise.all(promises).then((results) => {
+          for (let i = 0; i < results.length; i++) {
+            const el = videos[i];
+            const res = results[i];
+            const url = new URL(res);
+            const iframeSource = '/assets/embed_etv.html' + url.search;
+
+            el.innerHTML = `<amp-video-iframe
+            layout="responsive"
+            width="16"
+            height="9"
+            src=${iframeSource}
+            poster="https://react.etvbharat.com/assets/images/placeholder.png"
+            ></amp-video-iframe>`;
+
+            if (i === results.length - 1) {
+              setAmpHtml(videoHtml.innerHTML);
+            }
+          }
+        });
+
+        // videos.forEach((el) => {
+
+        // el.innerHTML = '<span>video</span>';
+        // console.log(el);
+        // });
+      } else {
+        setAmpHtml(html);
       }
     }
   }, [inView, contentId, rhs, contentRef]);
