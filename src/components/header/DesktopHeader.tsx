@@ -58,10 +58,7 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
       goToLanguageListing(language, [`/national`, `/${language}/national`]);
     } else {
       if (states.length === 1) {
-        const state =
-          states[0].state && states[0].state === 'Assam'
-            ? 'assam'
-            : states[0].state;
+        const state = states[0].state.toLowerCase();
         goToLanguageListing(language, [`/${state}`, `/${language}/${state}`]);
       } else {
         setSelected({ state: '', language: '' });
