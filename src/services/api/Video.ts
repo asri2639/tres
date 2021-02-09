@@ -124,15 +124,29 @@ export default function Video(inst) {
         return promise;
       } else {
         const promise = new Promise(function (resolve, reject) {
-          const apiUrl = params.url;
           let xhr = new XMLHttpRequest();
-          xhr.open('GET', apiUrl);
-          xhr.responseType = 'json';
+          xhr.open('GET', params.url);
+          // xhr.responseType = 'json';
           xhr.send();
 
-          xhr.onload = function () {
+          /*           xhr.onload = function () {
             let responseObj = xhr.response;
+            console.log(responseObj)
             resolve(responseObj);
+          }; */
+
+          xhr.onreadystatechange = function () {
+            // Call a function when the state changes.
+
+            // Request finished. Do processing here.
+
+            if (
+              this.readyState === XMLHttpRequest.DONE &&
+              this.status === 200
+            ) {
+              // Request finished. Do processing here.
+              resolve(this.responseURL);
+            }
           };
 
           xhr.onerror = function (err) {
