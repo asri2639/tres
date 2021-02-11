@@ -35,7 +35,7 @@ export const thumbnailExtractor = (
     ? thumbnailKeys
     : thumbnailKeys.reverse()
   ).filter((v) => v.endsWith(ratio));
-  
+
   for (var i of order) {
     if (thumbnailObj[i]) {
       return thumbnailObj[i];
@@ -330,7 +330,8 @@ export const dateFormatter = (uts, amp = false) => {
   const date = new Date(uts * 1000);
   if (amp) {
     return (
-      date.toLocaleDateString('en-GB', {
+      date.toLocaleString('en-US', {
+        timeZone: 'Asia/Kolkata',
         day: 'numeric',
         month: 'short',
         year: 'numeric',
@@ -355,8 +356,8 @@ export const dateFormatter = (uts, amp = false) => {
     return Math.round(elapsed / msPerHour) + ' hours ago';
   } else {
     return (
-      date.toLocaleDateString('en-GB', {
-        day: 'numeric',
+      date.toLocaleString('en-US', {
+        timeZone: 'Asia/Kolkata',
         month: 'short',
         year: 'numeric',
         hour12: true,
