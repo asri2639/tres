@@ -42,7 +42,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
   let ampExists = null;
   if (id) {
     const match = id.match(/(\d+)/);
-    ampExists = +match[0].slice(0, 12) >= 202101231410;
+    ampExists = +match[0].slice(0, 12) >= 202102120000;
   }
 
   // const ampExists = false; // prod enabling amp
@@ -94,7 +94,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists && !data.has_videos ? (
+              {ampExists ? (
                 <link rel="amphtml" href={ampUrl}></link>
               ) : null}
               <meta
