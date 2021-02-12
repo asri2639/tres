@@ -176,7 +176,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists && false ? (
+              {ampExists ? (
                 <link rel="amphtml" href={ampUrl}></link>
               ) : null}
               <meta
