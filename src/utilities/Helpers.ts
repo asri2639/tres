@@ -355,9 +355,11 @@ export const dateFormatter = (uts, amp = false) => {
   } else if (elapsed < msPerDay) {
     return Math.round(elapsed / msPerHour) + ' hours ago';
   } else {
+
     return (
       date.toLocaleString('en-US', {
         timeZone: 'Asia/Kolkata',
+        day: 'numeric',
         month: 'short',
         year: 'numeric',
         hour12: true,
