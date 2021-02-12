@@ -94,9 +94,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists ? (
-                <link rel="amphtml" href={ampUrl}></link>
-              ) : null}
+              {ampExists ? <link rel="amphtml" href={ampUrl}></link> : null}
               <meta
                 name="fbPages"
                 property="fb:pages"
@@ -153,6 +151,10 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
         videoDatum.contentType = data.content_type;
         videoDatum.contentId = data.content_id;
 
+        const isLive =
+          data['media_type'] === 'live_stream' ||
+          data['episode_type'] === 'live_stream';
+
         if (typeof window !== 'undefined' && !isAmp) {
           loadJS(
             'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
@@ -176,7 +178,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists ? (
+              {ampExists && !isLive ? (
                 <link rel="amphtml" href={ampUrl}></link>
               ) : null}
               <meta
