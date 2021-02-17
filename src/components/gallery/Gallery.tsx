@@ -265,19 +265,35 @@ const Gallery = ({
                   image.layout_type.indexOf('ad_unit') >= 0 &&
                   image.ad_url.length > 0
                 ) {
-                  const [width, height] =
-                    image.layout_type === 'ad_unit_sqaure_gallery'
-                      ? [300, 250]
-                      : [550, 250];
-                  return (
-                    <iframe
-                      className="mx-auto"
-                      key={image.ad_unit_id + ' ' + ind}
-                      width={width + 50}
-                      height={height + 50}
-                      src={image.ad_url}
-                    />
-                  );
+                  if (isAMP) {
+                    return (
+                      <>
+                        <amp-ad
+                          width="300"
+                          height="250"
+                          type="doubleclick"
+                          data-slot={image.ad_unit_id}
+                        >
+                          <div placeholder="true"></div>
+                          <div fallback></div>
+                        </amp-ad>
+                      </>
+                    );
+                  } else {
+                    const [width, height] =
+                      image.layout_type === 'ad_unit_sqaure_gallery'
+                        ? [300, 250]
+                        : [550, 250];
+                    return (
+                      <iframe
+                        className="mx-auto"
+                        key={image.ad_unit_id + ' ' + ind}
+                        width={width + 50}
+                        height={height + 50}
+                        src={image.ad_url}
+                      />
+                    );
+                  }
                 } else {
                   return (
                     <>

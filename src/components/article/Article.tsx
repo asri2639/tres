@@ -16,6 +16,7 @@ import BBCHeader from '@components/common/BBCHeader';
 import stringToHTML from '@utils/StringToHtml';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
+import e from 'express';
 
 // initialPosition
 // div height
@@ -149,12 +150,29 @@ export default function Article({
     }
 
     if (isAMP) {
+      let id, ad_id;
+      if (data.ad_conf && data.ad_conf.length > 0 && !!data.ad_conf[0]) {
+        id = data.ad_conf[0].gpt_id;
+        ad_id = data.ad_conf[0].ad_unit_id;
+      }
+      const parsedHtml = stringToHTML(html);
+      if (ad_id) {
+        const el = parsedHtml.querySelector(`.EtvadsSection`);
+        if (el) {
+          el.innerHTML = `<amp-ad width=300 height=250
+                  type="doubleclick"
+                  data-slot="${ad_id}">
+                <div placeholder></div>
+                <div fallback></div>
+              </amp-ad>`;
+        }
+      }
+
       if (data.has_videos) {
         const api = API(APIEnum.Video);
-        const videoHtml = stringToHTML(html);
         let promises = [];
 
-        const videos = videoHtml.querySelectorAll('.videoDiv');
+        const videos = parsedHtml.querySelectorAll('.videoDiv');
         for (let i = 0; i < videos.length; i++) {
           const el = videos[i];
           const iframe = el.querySelector('iframe.player-Iframe');
@@ -182,7 +200,7 @@ export default function Article({
             ></amp-video-iframe>`;
 
             if (i === results.length - 1) {
-              setAmpHtml(videoHtml.innerHTML);
+              setAmpHtml(parsedHtml.innerHTML);
             }
           }
         });
@@ -193,7 +211,7 @@ export default function Article({
         // console.log(el);
         // });
       } else {
-        setAmpHtml(html);
+        setAmpHtml(parsedHtml.innerHTML);
       }
     }
   }, [inView, contentId, rhs, contentRef]);

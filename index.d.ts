@@ -7,5 +7,7 @@ declare module 'react' {
     tabindex?: string;
     'next-page-hide'?: string;
     nextPageHide?: Boolean;
+    placeholder?: [Boolean,String];
+    fallback?:Boolean;
   }
 }
