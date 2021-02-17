@@ -95,6 +95,16 @@ export default class ETVDocument extends Document {
                 config="https://www.googletagmanager.com/amp.json?id=GTM-KQ4QPLR"
                 data-credentials="include"
               ></amp-analytics>
+              <amp-analytics type="comscore">
+                <script
+                  type="application/json"
+                  dangerouslySetInnerHTML={{
+                    __html: `${JSON.stringify({
+                      vars: { c2: '20416623' },
+                    })}`,
+                  }}
+                ></script>
+              </amp-analytics>
             </>
           ) : null}
           <Main />

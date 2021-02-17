@@ -227,35 +227,6 @@ export default function Article({
   );
   return (
     <>
-      {isAMP ? (
-        <amp-analytics type="comscore">
-          <script
-            type="application/json"
-            dangerouslySetInnerHTML={{
-              __html: `${JSON.stringify({
-                vars: { c2: '20416623' },
-              })}`,
-            }}
-          ></script>
-        </amp-analytics>
-      ) : null}
-
-      {isAMP ? (
-        /*  <amp-analytics
-          config="https://www.googletagmanager.com/amp.json?id=Tag Manager-XXXXXX;Tag Manager.url=SOURCE_URL"
-          data-credentials="include"
-        >
-          <script
-            type="application/json "
-            dangerouslySetInnerHTML={{
-              __html: `${JSON.stringify({
-                vars: { c2: '20416623' },
-              })}`,
-            }}
-          ></script>
-        </amp-analytics> */
-        <></>
-      ) : null}
       <div
         data-content-id={contentId}
         className={`article relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
