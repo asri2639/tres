@@ -89,6 +89,14 @@ export default class ETVDocument extends Document {
               </noscript>
             </>
           ) : null}
+          {isAMP ? (
+            <>
+              <amp-analytics
+                config="https://www.googletagmanager.com/amp.json?id=GTM-KQ4QPLR"
+                data-credentials="include"
+              ></amp-analytics>
+            </>
+          ) : null}
           <Main />
           {/* Here we will mount our modal portal */}
           <div id="modal" style={{ height: 'auto' }} />
