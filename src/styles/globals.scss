@@ -369,12 +369,9 @@ button:focus {
   outline: none;
 }
 #newsroom-bodyText .EtvadsSection {
-  display: none;
+  // display: none;
 }
 
-html[amp] #newsroom-bodyText .EtvadsSection {
-  display: none;
-}
 .amp-social-share {
   border-radius: 50%;
   &:focus {
