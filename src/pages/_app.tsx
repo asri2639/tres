@@ -16,6 +16,7 @@ import Head from 'next/head';
 import getConfig from 'next/config';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
+import { thumbnailExtractor } from '@utils/Helpers';
 
 // export function reportWebVitals(metric: NextWebVitalsMetric) {
 //   console.log(metric)
@@ -87,10 +88,10 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                 zIndex: -101,
               }}
               dangerouslySetInnerHTML={{
-                __html:
-                  pageProps && pageProps.data && pageProps.data.html_tag
-                    ? pageProps.data.html_tag
-                    : '',
+                __html: `<div class="title">${pageProps.data.title}</div><div class="thumbnail"><img
+                src=${pageProps.data.thumbnails.web_3_2.url}
+                alt=${pageProps.data.thumbnails.web_3_2.alt_tags}
+              /></div>${pageProps.data.html_tag}`,
               }}
             ></div>
             <Component {...pageProps} />
