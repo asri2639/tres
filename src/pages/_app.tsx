@@ -80,7 +80,12 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         >
           <Layout accessToken={accessToken} appConfig={appConfig}>
             <div
-              style={{ visibility: 'hidden', position: 'absolute', zIndex: -101 }}
+              id="etv-pseudo-content"
+              style={{
+                visibility: 'hidden',
+                position: 'absolute',
+                zIndex: -101,
+              }}
               dangerouslySetInnerHTML={{
                 __html:
                   pageProps && pageProps.data && pageProps.data.html_tag
