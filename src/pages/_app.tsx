@@ -71,13 +71,23 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
       {accessToken.web.length && accessToken.mobile.length ? (
         <AMPContext.Provider
           value={
-            router.query.amp === '1' /* &&
+            router.query.amp ===
+            '1' /* &&
             publicRuntimeConfig.APP_ENV !== 'production' */
               ? true
               : false
           }
         >
           <Layout accessToken={accessToken} appConfig={appConfig}>
+            <div
+              style={{ visibility: 'hidden', position: 'absolute', zIndex: -101 }}
+              dangerouslySetInnerHTML={{
+                __html:
+                  pageProps && pageProps.data && pageProps.data.html_tag
+                    ? pageProps.data.html_tag
+                    : '',
+              }}
+            ></div>
             <Component {...pageProps} />
           </Layout>
         </AMPContext.Provider>
