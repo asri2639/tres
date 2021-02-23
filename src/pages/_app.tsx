@@ -88,10 +88,13 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                 zIndex: -101,
               }}
               dangerouslySetInnerHTML={{
-                __html: `<div class="title">${pageProps.data.title}</div><div class="thumbnail"><img
+                __html:
+                  pageProps.data && pageProps.data.thumbnails
+                    ? `<div class="title">${pageProps.data.title}</div><div class="thumbnail"><img
                 src=${pageProps.data.thumbnails.web_3_2.url}
                 alt=${pageProps.data.thumbnails.web_3_2.alt_tags}
-              /></div>${pageProps.data.html_tag}`,
+              /></div>${pageProps.data.html_tag}`
+                    : '',
               }}
             ></div>
             <Component {...pageProps} />
