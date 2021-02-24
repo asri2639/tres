@@ -196,6 +196,32 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
         canonicalUrl = `https://react.etvbharat.com${
           new URL(`http:localhost:3000${router.asPath}`).pathname
         }`;
+
+        if (
+          datum.data.state &&
+          datum.data.state.length > 0 &&
+          datum.data.state.indexOf('na') !== -1
+        ) {
+          const pathname = new URL(`http:localhost:3000${router.asPath}`)
+            .pathname;
+
+          const splitPath = pathname.split('/');
+          let stateName = null;
+          if (datum.data.item_languages.indexOf('hi') !== -1) {
+            stateName = 'delhi';
+          } else if (datum.data.item_languages.indexOf('te') !== -1) {
+            stateName = 'telangana';
+          } else if (datum.data.item_languages.indexOf('ur') !== -1) {
+            stateName = 'national';
+          }
+          if (stateName) {
+            canonicalUrl = `https://react.etvbharat.com${[
+              ...splitPath.slice(0, 2),
+              stateName,
+              ...splitPath.slice(3),
+            ].join('/')}`;
+          }
+        }
         ampUrl = `https://react.etvbharat.com/amp${
           new URL(`http:localhost:3000${router.asPath}`).pathname
         }`;
@@ -269,6 +295,32 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
         canonicalUrl = `https://react.etvbharat.com${
           new URL(`http:localhost:3000${router.asPath}`).pathname
         }`;
+
+        if (
+          datum.data.state &&
+          datum.data.state.length > 0 &&
+          datum.data.state.indexOf('na') !== -1
+        ) {
+          const pathname = new URL(`http:localhost:3000${router.asPath}`)
+            .pathname;
+
+          const splitPath = pathname.split('/');
+          let stateName = null;
+          if (datum.data.item_languages.indexOf('hi') !== -1) {
+            stateName = 'delhi';
+          } else if (datum.data.item_languages.indexOf('te') !== -1) {
+            stateName = 'telangana';
+          } else if (datum.data.item_languages.indexOf('ur') !== -1) {
+            stateName = 'national';
+          }
+          if (stateName) {
+            canonicalUrl = `https://react.etvbharat.com${[
+              ...splitPath.slice(0, 2),
+              stateName,
+              ...splitPath.slice(3),
+            ].join('/')}`;
+          }
+        }
         ampUrl = `https://react.etvbharat.com/amp${
           new URL(`http:localhost:3000${router.asPath}`).pathname
         }`;
