@@ -44,7 +44,7 @@ app
     server = express();
 
     // Set up the proxy.
-    if ((dev && devProxy)  || process.env.NEXT_TEST) {
+    if ((dev && devProxy) || process.env.NEXT_TEST) {
       const { createProxyMiddleware } = require('http-proxy-middleware');
       Object.keys(devProxy).forEach(function (context) {
         server.use(context, createProxyMiddleware(devProxy[context]));

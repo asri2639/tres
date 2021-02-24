@@ -81,7 +81,7 @@ const Gallery = ({
             window.history.pushState(
               { id: main.title },
               main.title,
-              '/' + webUrl
+              '/' + webUrl+ location.search
             );
 
             var event = new CustomEvent<string>('newurl', {

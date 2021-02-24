@@ -77,7 +77,7 @@ export default function Article({
             window.history.pushState(
               { id: data.title },
               data.title,
-              '/' + data.web_url
+              '/' + data.web_url + location.search
             );
 
             var event = new CustomEvent<string>('newurl', {
