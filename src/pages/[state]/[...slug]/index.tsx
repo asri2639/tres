@@ -198,20 +198,20 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
         }`;
 
         if (
-          datum.data.state &&
-          datum.data.state.length > 0 &&
-          datum.data.state.indexOf('na') !== -1
+          videoDatum.data.state &&
+          videoDatum.data.state.length > 0 &&
+          videoDatum.data.state.indexOf('na') !== -1
         ) {
           const pathname = new URL(`http:localhost:3000${router.asPath}`)
             .pathname;
 
           const splitPath = pathname.split('/');
           let stateName = null;
-          if (datum.data.item_languages.indexOf('hi') !== -1) {
+          if (videoDatum.data.item_languages.indexOf('hi') !== -1) {
             stateName = 'delhi';
-          } else if (datum.data.item_languages.indexOf('te') !== -1) {
+          } else if (videoDatum.data.item_languages.indexOf('te') !== -1) {
             stateName = 'telangana';
-          } else if (datum.data.item_languages.indexOf('ur') !== -1) {
+          } else if (videoDatum.data.item_languages.indexOf('ur') !== -1) {
             stateName = 'national';
           }
           if (stateName) {
@@ -297,20 +297,20 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
         }`;
 
         if (
-          datum.data.state &&
-          datum.data.state.length > 0 &&
-          datum.data.state.indexOf('na') !== -1
+          data.state &&
+          data.state.length > 0 &&
+          data.state.indexOf('na') !== -1
         ) {
           const pathname = new URL(`http:localhost:3000${router.asPath}`)
             .pathname;
 
           const splitPath = pathname.split('/');
           let stateName = null;
-          if (datum.data.item_languages.indexOf('hi') !== -1) {
+          if (data.item_languages.indexOf('hi') !== -1) {
             stateName = 'delhi';
-          } else if (datum.data.item_languages.indexOf('te') !== -1) {
+          } else if (data.item_languages.indexOf('te') !== -1) {
             stateName = 'telangana';
-          } else if (datum.data.item_languages.indexOf('ur') !== -1) {
+          } else if (data.item_languages.indexOf('ur') !== -1) {
             stateName = 'national';
           }
           if (stateName) {
@@ -518,7 +518,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
         const articleResp = articleResponse.data.data.catalog_list_items[0];
         const article = articleResp.catalog_list_items[0];
-        console.log(articleResponse.data.data);
 
         console.log(
           articleResp.catalog_list_items.length === 0 ? 'Invalid Response' : ''
