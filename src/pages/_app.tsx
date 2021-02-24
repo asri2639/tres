@@ -80,23 +80,25 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
           }
         >
           <Layout accessToken={accessToken} appConfig={appConfig}>
-            <div
-              id="etv-pseudo-content"
-              style={{
-                visibility: 'hidden',
-                position: 'absolute',
-                zIndex: -101,
-              }}
-              dangerouslySetInnerHTML={{
-                __html:
-                  pageProps.data && pageProps.data.thumbnails
-                    ? `<div class="title">${pageProps.data.title}</div><div class="thumbnail"><img
+            {router.query.amp !== '1' ? (
+              <div
+                id="etv-pseudo-content"
+                style={{
+                  visibility: 'hidden',
+                  position: 'absolute',
+                  zIndex: -101,
+                }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    pageProps.data && pageProps.data.thumbnails
+                      ? `<div class="title">${pageProps.data.title}</div><div class="thumbnail"><img
                 src=${pageProps.data.thumbnails.web_3_2.url}
                 alt=${pageProps.data.thumbnails.web_3_2.alt_tags}
               /></div>${pageProps.data.html_tag}`
-                    : '',
-              }}
-            ></div>
+                      : '',
+                }}
+              ></div>
+            ) : null}
             <Component {...pageProps} />
           </Layout>
         </AMPContext.Provider>
