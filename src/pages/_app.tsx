@@ -28,8 +28,8 @@ let currentLanguage = 'english';
 function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const { publicRuntimeConfig } = getConfig();
-
   useEffect(() => {
+
     document.documentElement.lang = languageMap[router.asPath.split('/')[1]];
 
     const handleRouteChange = (url) => {
@@ -91,9 +91,19 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                 dangerouslySetInnerHTML={{
                   __html:
                     pageProps.data && pageProps.data.thumbnails
-                      ? `<div class="title">${pageProps.data.title}</div><div class="thumbnail"><img
-                src=${pageProps.data.thumbnails.web_3_2.url}
-                alt=${pageProps.data.thumbnails.web_3_2.alt_tags}
+                      ? `<div class="title">${
+                          pageProps.data.title
+                        }</div><div class="thumbnail"><img
+                src=${
+                  pageProps.data.media_type === 'breaking_news'
+                    ? 'https://react.etvbharat.com/assets/images/breakingplate.jpg'
+                    : pageProps.data.thumbnails.web_3_2.url
+                }
+                alt=${
+                  pageProps.data.media_type === 'breaking_news'
+                    ? 'Breaking News'
+                    : pageProps.data.thumbnails.web_3_2.alt_tags
+                }
               /></div>${pageProps.data.html_tag}`
                       : '',
                 }}
