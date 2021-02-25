@@ -160,7 +160,7 @@ const DesktopFooter = ({ data, t }: IDesktopFooter) => {
           </div>
 
           <div className="text-center text-sm text-gray-500">
-            Copyright © 2019 Ushodaya Enterprises Pvt. Ltd., All Rights
+            Copyright © 2021 Ushodaya Enterprises Pvt. Ltd., All Rights
             Reserved.
           </div>
         </div>
