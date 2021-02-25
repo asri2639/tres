@@ -85,6 +85,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                 id="etv-pseudo-content"
                 style={{
                   visibility: 'hidden',
+                  display: 'none',
                   position: 'absolute',
                   zIndex: -101,
                 }}
