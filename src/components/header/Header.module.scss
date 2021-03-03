@@ -169,12 +169,16 @@
 }
 
 .mobile-header {
+  height: 108px;
   > .logo-container {
     max-height: 54px;
     > a {
       max-width: 54px;
     }
   }
+}
+.sub-header {
+  height: 30px;
 }
 .scroll {
   /* Let's get this party started */

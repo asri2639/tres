@@ -278,7 +278,7 @@ export default function MobileHeader({ data, className }) {
       </div>
 
       <div
-        className={`${className} bg-mhbg px-3 sticky block md:hidden -top-1 z-10`}
+        className={`${className} bg-mhbg px-3  ${header['sub-header']} sticky block md:hidden -top-1 z-10`}
         next-page-hide="1"
         onMouseLeave={containerOut}
       >
