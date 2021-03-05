@@ -13,7 +13,7 @@ const Thumbnail = ({ thumbnail, className, type, creditSize = '' }) => {
       });
     }
   };
-  return type === 'breaking_news' && !state.src ? (
+  return (type === 'breaking_news' || type === 'news') && !state.src ? (
     <img
       className="breaking_news"
       alt="Breaking News"

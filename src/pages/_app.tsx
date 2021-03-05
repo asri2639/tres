@@ -96,12 +96,12 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                           pageProps.data.title
                         }</div><div class="thumbnail"><img
                 src=${
-                  pageProps.data.media_type === 'breaking_news'
+                  pageProps.data.media_type === 'breaking_news' ||pageProps.data.media_type === 'news'
                     ? 'https://react.etvbharat.com/assets/images/breakingplate.jpg'
                     : pageProps.data.thumbnails.web_3_2.url
                 }
                 alt=${
-                  pageProps.data.media_type === 'breaking_news'
+                  pageProps.data.media_type === 'breaking_news' || pageProps.data.media_type === 'news'
                     ? 'Breaking News'
                     : pageProps.data.thumbnails.web_3_2.alt_tags
                 }
