@@ -29,15 +29,13 @@ body {
 }
 
 section.content {
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
   // footer height -> padding bottom
   padding-bottom: 400px;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  min-height: 500px;
-}
 
 .newsroom-bodyText .content {
   min-height: auto;
