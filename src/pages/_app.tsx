@@ -80,7 +80,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
           }
         >
           <Layout accessToken={accessToken} appConfig={appConfig}>
-            {router.query.amp !== '1' ? (
+            {router.query.amp !== '1' &&  publicRuntimeConfig.APP_ENV === 'production' ? (
               <div
                 id="etv-pseudo-content"
                 style={{
