@@ -179,6 +179,10 @@
 }
 .sub-header {
   height: 30px;
+  z-index: 1002;  
+}
+.main {
+  z-index: 1002;
 }
 .scroll {
   /* Let's get this party started */

@@ -346,7 +346,7 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
       </div>
 
       <div
-        className={`${className} bg-hbg md:block hidden px-2 sticky top-0 z-40`}
+        className={`${className} ${header.main} bg-hbg md:block hidden px-2 sticky top-0 z-40`}
         onMouseLeave={containerOut}
       >
         <div
