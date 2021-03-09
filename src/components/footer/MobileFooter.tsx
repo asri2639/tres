@@ -254,6 +254,8 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   >
                     <img
                       className="h-6"
+                      width="24"
+                      height="24"
                       alt="ETV"
                       src="/assets/images/android_icon-2x.png"
                     />
@@ -267,6 +269,8 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   >
                     <img
                       className="h-6"
+                      width="24"
+                      height="24"
                       alt="ETV"
                       src="/assets/images/apple_icon-2x.png"
                     />
@@ -277,6 +281,8 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   <NavLink href={socialHandlers.fb} passHref>
                     <img
                       className="h-6"
+                      width="24"
+                      height="24"
                       alt="ETV"
                       src="/assets/images/facebook_icon-2x.png"
                     />
@@ -286,6 +292,8 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   <NavLink href={socialHandlers.twitter} passHref>
                     <img
                       className="h-6"
+                      width="24"
+                      height="24"
                       alt="ETV"
                       src="/assets/images/twitter_icon-2x.png"
                     />
@@ -355,6 +363,8 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   >
                     <img
                       className="h-6 mx-auto"
+                      width="24"
+                      height="24"
                       alt="ETV"
                       src="/assets/images/android-grey.png"
                     />
@@ -368,6 +378,8 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
                   >
                     <img
                       className="h-6 mx-auto"
+                      width="24"
+                      height="24"
                       alt="ETV"
                       src="/assets/images/applegrey.png"
                     />
@@ -463,6 +475,8 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
               >
                 <img
                   className="h-6"
+                  width="24"
+                  height="24"
                   alt="ETV"
                   src="/assets/images/etv-grey.png"
                 />
@@ -476,6 +490,8 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
               >
                 <img
                   className="h-6"
+                  width="24"
+                  height="24"
                   alt="ETV"
                   src="/assets/images/search-grey.png"
                 />
@@ -492,6 +508,8 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
               >
                 <img
                   className="h-6"
+                  width="24"
+                  height="24"
                   alt="ETV"
                   src="/assets/images/hamburger-grey.png"
                 />

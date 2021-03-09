@@ -88,6 +88,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                   display: 'none',
                   position: 'absolute',
                   zIndex: -101,
+                  top: '200vh'
                 }}
                 dangerouslySetInnerHTML={{
                   __html:
