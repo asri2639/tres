@@ -174,6 +174,8 @@ const SocialMedia = ({ data }) => {
           </RedditShareButton>
 
           <img
+             height="24"
+             width="24"
             className="w-6 lg:mx-auto inline-block cursor-pointer"
             src="/assets/images/comment.png"
             onClick={() => {

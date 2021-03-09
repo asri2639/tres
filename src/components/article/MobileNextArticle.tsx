@@ -140,6 +140,8 @@ const MobileNextArticle = ({
           <div className="flex items-center mb-1">
             <img
               alt="ETV"
+              height="24"
+              width="24"
               className="w-6"
               src="/assets/images/nextarticle.png"
             />
@@ -157,6 +159,8 @@ const MobileNextArticle = ({
           <div className="flex items-center mb-1">
             <img
               alt="ETV"
+              height="24"
+              width="24"
               className="w-6"
               src="/assets/images/nextarticle.png"
             />
