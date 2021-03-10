@@ -121,7 +121,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists ? <link rel="amphtml" href={ampUrl}></link> : null}
+              {ampExists && data.is_amp ? <link rel="amphtml" href={ampUrl}></link> : null}
               <meta
                 name="fbPages"
                 property="fb:pages"
@@ -231,7 +231,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists && !isLive ? (
+              {ampExists && !isLive && data.is_amp ? (
                 <link rel="amphtml" href={ampUrl}></link>
               ) : null}
               <meta
@@ -330,7 +330,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
             <Head>
               <title>{main.display_title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists ? <link rel="amphtml" href={ampUrl}></link> : null}
+              {ampExists && data.is_amp ? <link rel="amphtml" href={ampUrl}></link> : null}
               <meta
                 name="fbPages"
                 property="fb:pages"
