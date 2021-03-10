@@ -17,6 +17,7 @@ import getConfig from 'next/config';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import { thumbnailExtractor } from '@utils/Helpers';
+import stringToHTML from '@utils/StringToHtml';
 
 // export function reportWebVitals(metric: NextWebVitalsMetric) {
 //   console.log(metric)
@@ -28,6 +29,8 @@ let currentLanguage = 'english';
 function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const { publicRuntimeConfig } = getConfig();
+  const [html,setHtml] = useState('')
+
   useEffect(() => {
 
     document.documentElement.lang = languageMap[router.asPath.split('/')[1]];
@@ -53,11 +56,20 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 
     router.events.on('routeChangeComplete', handleRouteChange);
 
+    const parsedHtml = stringToHTML(pageProps.data.html_tag);
+      const el = parsedHtml.querySelector(`.EtvadsSection`);
+      if (el) {
+        el.innerHTML = ``;
+    }
+    setHtml(parsedHtml)
+
     // If the component is unmounted, unsubscribe
     // from the event with the `off` method:
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
+
+    
   }, []);
 
   return (
@@ -92,7 +104,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                 }}
                 dangerouslySetInnerHTML={{
                   __html:
-                    pageProps.data && pageProps.data.thumbnails
+                    pageProps.data && pageProps.data.thumbnails && html
                       ? `<div class="title">${
                           pageProps.data.title
                         }</div><div class="thumbnail"><img
