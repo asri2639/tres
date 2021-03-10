@@ -80,7 +80,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
           }
         >
           <Layout accessToken={accessToken} appConfig={appConfig}>
-            {router.query.amp !== '1' &&  publicRuntimeConfig.APP_ENV === 'production' ? (
+            {router.query.amp !== '1' ? (
               <div
                 id="etv-pseudo-content"
                 style={{
@@ -97,14 +97,14 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                           pageProps.data.title
                         }</div><div class="thumbnail"><img
                 src=${
-                  pageProps.data.media_type === 'breaking_news' ||pageProps.data.media_type === 'news'
+                  pageProps.data.media_type === 'breaking_news'
                     ? 'https://react.etvbharat.com/assets/images/breakingplate.jpg'
-                    : pageProps.data.thumbnails.web_3_2.url
+                    : (pageProps.data.thumbnails && pageProps.data.thumbnails.web_3_2 ? pageProps.data.thumbnails.web_3_2.url:'https://react.etvbharat.com/assets/images/breakingplate.jpg')
                 }
                 alt=${
-                  pageProps.data.media_type === 'breaking_news' || pageProps.data.media_type === 'news'
+                  pageProps.data.media_type === 'breaking_news'
                     ? 'Breaking News'
-                    : pageProps.data.thumbnails.web_3_2.alt_tags
+                    :(pageProps.data.thumbnails && pageProps.data.thumbnails.web_3_2 ? pageProps.data.thumbnails.web_3_2.alt_tags:'Breaking News')
                 }
               /></div>${pageProps.data.html_tag}`
                       : '',

@@ -21,7 +21,7 @@ const Thumbnail = ({ thumbnail, className, type, creditSize = '' }) => {
     />
   ) : (
     <>
-     {/*  <img
+      <img
         src={state.src}
         onError={onError}
         className={`${className} ${type}`}
@@ -29,7 +29,7 @@ const Thumbnail = ({ thumbnail, className, type, creditSize = '' }) => {
       />
       {thumbnail.credit ? (
         <div className={`image-credit ${creditSize}`}>{thumbnail.credit}</div>
-      ) : null} */}
+      ) : null}
     </>
   );
 };
