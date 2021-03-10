@@ -127,6 +127,16 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
                 property="fb:pages"
                 content={fbContentId}
               ></meta>
+              <link rel="preload" as="image" href={(() => {
+                  const thumbnail = thumbnailExtractor(
+                    data.thumbnails,
+                    '3_2',
+                    'b2s',
+                    data.media_type
+                  );
+                  return thumbnail.url;
+                })()} />
+
             </Head>
             <NextSeo
               title={data.title}
