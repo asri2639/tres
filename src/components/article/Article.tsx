@@ -278,11 +278,7 @@ export default function Article({
 
               <div className="flex flex-col md:flex-col-reverse md:mb-8">
                 <div className="-mx-3 md:mx-0 relative">
-                  <Thumbnail
-                    thumbnail={thumbnail}
-                    className={'md:rounded-lg w-full'}
-                    type={data.media_type}
-                  />
+                  <div className="" style={{height: '400px', width: '100vw', background: 'lightgrey'}}></div>
                 </div>
                 <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
                   <h1
@@ -322,6 +318,12 @@ export default function Article({
                   </Media>
                 </MediaContextProvider>
               </div>
+
+              <Thumbnail
+                    thumbnail={thumbnail}
+                    className={'md:rounded-lg w-full'}
+                    type={data.media_type}
+                  />
 
               {isAMP && ampHtml ? (
                 <div
