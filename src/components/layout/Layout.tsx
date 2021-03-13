@@ -212,10 +212,10 @@ const Layout = ({ children, accessToken, appConfig }) => {
       <MenuContext.Provider value={appConfig}>
         <Header data={data.header} />
         <section className="content">{children}</section>
-        {children ? <Footer
+        <Footer
           data={data.footer}
           menu={data.header ? data.header['menu'] : null}
-        />: null }
+        />
       </MenuContext.Provider>
     </RTLContext.Provider>
   );
