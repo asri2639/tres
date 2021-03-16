@@ -386,6 +386,10 @@ button:focus {
 
 .search-box {
   z-index: 1010;
-  right: 10px;
+  right: 20px;
   top: 45px;
+}
+.right-side-container {
+  position: absolute;
+  right: 20px;
 }

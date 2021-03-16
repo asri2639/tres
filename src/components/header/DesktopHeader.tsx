@@ -299,7 +299,7 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
               : null}
           </div>
 
-          <div className="flex flex-row items-center space-x-3">
+          <div className="flex flex-row items-center space-x-3 right-side-container">
             <div>
               <a href={socialHandlers.fb}>
                 <p className="fb-icon"></p>
