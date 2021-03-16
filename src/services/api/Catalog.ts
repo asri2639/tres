@@ -19,14 +19,14 @@ export default function Catalog(inst) {
       );
     },
     getAppConfig({ params, query, ...config }: APIRequest) {
-      // return inst.get(
-      //   `${controller}/message/items/app-config-params.gzip?${new URLSearchParams(
-      //     query
-      //   )}`,
-      //   config
-      // );
+      return inst.get(
+        `${controller}/message/items/app-config-params.gzip?${new URLSearchParams(
+          query
+        )}`,
+        config
+      );
 
-      return Promise.resolve({
+   /*    return Promise.resolve({
         data: {
           data: {
             title: 'app config params v2',
@@ -1141,7 +1141,7 @@ export default function Catalog(inst) {
             catalog_id: '58ef1e2399728d08aa000007',
           },
         },
-      });
+      }); */
     },
     getPageAds({ params, query, ...config }: APIRequest) {
       return inst.get(`/page_ads?${new URLSearchParams(query)}`, config);

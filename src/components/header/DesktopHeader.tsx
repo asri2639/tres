@@ -316,7 +316,7 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
                 onClick={() => toggleSearchBox((searchBox) => !searchBox)}
               ></div>
               {searchBox ? (
-                <div className="absolute z-50">
+                <div className="absolute z-50 search-box">
                   <input
                     placeholder="Search stories"
                     value={searchInput}

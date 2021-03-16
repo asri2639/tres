@@ -36,7 +36,6 @@ section.content {
   padding-bottom: 400px;
 }
 
-
 .newsroom-bodyText .content {
   min-height: auto;
 }
@@ -383,4 +382,10 @@ button:focus {
 }
 .mobile-footer {
   bottom: -400px;
+}
+
+.search-box {
+  z-index: 1010;
+  right: 10px;
+  top: 45px;
 }
