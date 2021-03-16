@@ -285,7 +285,8 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
               twitter={{
                 handle: '@etvbharat',
                 site: '@etvbharat',
-                cardType: 'summary',
+                cardType: 'summary_large_image',
+                
               }}
             />
             <VideoList
