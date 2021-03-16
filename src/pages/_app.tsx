@@ -29,7 +29,6 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const { publicRuntimeConfig } = getConfig();
   useEffect(() => {
-
     document.documentElement.lang = languageMap[router.asPath.split('/')[1]];
 
     const handleRouteChange = (url) => {
@@ -88,7 +87,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                   display: 'none',
                   position: 'absolute',
                   zIndex: -101,
-                  top: '200vh'
+                  top: '200vh',
                 }}
                 dangerouslySetInnerHTML={{
                   __html:
@@ -99,15 +98,23 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                 src=${
                   pageProps.data.media_type === 'breaking_news'
                     ? 'https://react.etvbharat.com/assets/images/breakingplate.jpg'
-                    : (pageProps.data.thumbnails && pageProps.data.thumbnails.web_3_2 ? pageProps.data.thumbnails.web_3_2.url:'https://react.etvbharat.com/assets/images/breakingplate.jpg')
+                    : pageProps.data.thumbnails &&
+                      pageProps.data.thumbnails.web_3_2
+                    ? pageProps.data.thumbnails.web_3_2.url
+                    : 'https://react.etvbharat.com/assets/images/breakingplate.jpg'
                 }
                 alt=${
                   pageProps.data.media_type === 'breaking_news'
                     ? 'Breaking News'
-                    :(pageProps.data.thumbnails && pageProps.data.thumbnails.web_3_2 ? pageProps.data.thumbnails.web_3_2.alt_tags:'Breaking News')
+                    : pageProps.data.thumbnails &&
+                      pageProps.data.thumbnails.web_3_2
+                    ? pageProps.data.thumbnails.web_3_2.alt_tags
+                    : 'Breaking News'
                 }
-              /></div>${pageProps.data.html_tag.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
-                ,'')}`
+              /></div>${pageProps.data.html_tag.replace(
+                /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+                ''
+              )}`
                       : '',
                 }}
               ></div>
