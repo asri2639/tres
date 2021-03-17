@@ -173,7 +173,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
               twitter={{
                 handle: '@etvbharat',
                 site: '@etvbharat',
-                cardType: 'summary',
+                cardType: 'summary_large_image',
               }}
             />
             <ArticleList
@@ -286,7 +286,6 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
                 handle: '@etvbharat',
                 site: '@etvbharat',
                 cardType: 'summary_large_image',
-                
               }}
             />
             <VideoList
@@ -377,7 +376,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
               twitter={{
                 handle: '@etvbharat',
                 site: '@etvbharat',
-                cardType: 'summary',
+                cardType: 'summary_large_image',
               }}
             />
             <GalleryList
