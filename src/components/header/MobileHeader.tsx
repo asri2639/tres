@@ -252,7 +252,7 @@ export default function MobileHeader({ data, className }) {
         </div>
 
         <div className="bg-mhbg px-3 font-english border-b">
-          <div className="flex justify-between items-center py-1 overflow-x-auto">
+          <div className="bg-mhbg flex justify-between items-center py-1 overflow-x-auto">
             <div className="flex space-x-6">
               {data.languages
                 ? Object.entries(data.languages).map(([language, states]) => {
@@ -264,7 +264,7 @@ export default function MobileHeader({ data, className }) {
                         onClick={() => languageNStateSelect(language, states)}
                         className="flex-1 flex flex-col justify-center items-center cursor-pointer"
                       >
-                        <div className={`language-icon ${language}`}></div>
+                        {/* <div className={`language-icon ${language}`}></div> */}
                         <div className="text-white text-xs">
                           {language.charAt(0).toUpperCase() + language.slice(1)}
                         </div>
@@ -282,7 +282,7 @@ export default function MobileHeader({ data, className }) {
         next-page-hide="1"
         onMouseLeave={containerOut}
       >
-        <div className="lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ">
+        <div className="bg-mhbg lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ">
           {data.menu && data.menu.mobile
             ? data.menu.mobile.map((item) => {
                 return (
