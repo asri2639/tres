@@ -276,7 +276,7 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
         <div
           className={`${
             header.scroll
-          } lg:container lg:mx-auto flex justify-between items-center py-1 overflow-x-auto ${
+          } lg:container h-13 lg:mx-auto flex justify-between items-center py-1 overflow-x-auto ${
             isRTL ? 'flex-row-reverse rtl' : ''
           }`}
         >
