@@ -82,13 +82,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
             {router.query.amp !== '1' ? (
               <div
                 id="etv-pseudo-content"
-                style={{
-                  visibility: 'hidden',
-                  display: 'none',
-                  position: 'absolute',
-                  zIndex: -101,
-                  top: '200vh',
-                }}
+                style={{}}
                 dangerouslySetInnerHTML={{
                   __html:
                     pageProps.data && pageProps.data.thumbnails
