@@ -38,11 +38,9 @@ export default function Catalog(inst) {
             params_hash: {},
             params_hash2: {
               config_params: {
-              
                 banner_ad: {
                   ad_unit_id: 'ca-app-pub-3940256099942544/2934735716',
                 },
-             
                 web_lists: {
                   english: { tabs: 'web-left-menu' },
                   ka: { tabs: 'web-left-menu-karnataka' },

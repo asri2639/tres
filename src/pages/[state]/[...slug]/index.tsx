@@ -176,9 +176,9 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
                 cardType: 'summary_large_image',
               }}
             />
-            {/* <ArticleList
+            {<ArticleList
               articleData={{ articles: [datum], contentId: datum.contentId }}
-            /> */}
+            />}
           </>
         );
       case 'video':
