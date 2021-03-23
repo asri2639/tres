@@ -79,50 +79,6 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
           }
         >
           <Layout accessToken={accessToken} appConfig={appConfig}>
-            {router.query.amp !== '1' ? (
-              <div
-                id="etv-pseudo-content"
-                style={{
-                  visibility: 'hidden',
-                  display: 'none',
-                  position: 'absolute',
-                  zIndex: -101,
-                  top: '200vh',
-                }}
-                dangerouslySetInnerHTML={{
-                  __html:
-                    pageProps.data && pageProps.data.thumbnails
-                      ? `<div class="   <Thumbnail
-                      thumbnail={thumbnail}
-                      className={'md:rounded-lg w-full'}
-                      type={data.media_type}
-                    />title">${
-                          pageProps.data.title
-                        }</div><div class="thumbnail"><img
-                src=${
-                  pageProps.data.media_type === 'breaking_news'
-                    ? 'https://react.etvbharat.com/assets/images/breakingplate.jpg'
-                    : pageProps.data.thumbnails &&
-                      pageProps.data.thumbnails.web_3_2
-                    ? pageProps.data.thumbnails.web_3_2.url
-                    : 'https://react.etvbharat.com/assets/images/breakingplate.jpg'
-                }
-                alt=${
-                  pageProps.data.media_type === 'breaking_news'
-                    ? 'Breaking News'
-                    : pageProps.data.thumbnails &&
-                      pageProps.data.thumbnails.web_3_2
-                    ? pageProps.data.thumbnails.web_3_2.alt_tags
-                    : 'Breaking News'
-                }
-              /></div>${pageProps.data.html_tag.replace(
-                /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
-                ''
-              )}`
-                      : '',
-                }}
-              ></div>
-            ) : null}
             <Component {...pageProps} />
           </Layout>
         </AMPContext.Provider>
