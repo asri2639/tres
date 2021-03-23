@@ -143,7 +143,8 @@ export default function Article({
         }`;
           s.appendChild(document.createTextNode(code));
           // document.body.appendChild(s);
-          el.innerHTML = adHTML;
+          // el.innerHTML = adHTML;
+          el.innerHTML = '';
           el.querySelector('#' + id).appendChild(s);
         }
       }
@@ -278,11 +279,11 @@ export default function Article({
 
               <div className="flex flex-col md:flex-col-reverse md:mb-8">
                 <div className="-mx-3 md:mx-0 relative">
-               {/*    <Thumbnail
+                  <Thumbnail
                     thumbnail={thumbnail}
                     className={'md:rounded-lg w-full'}
                     type={data.media_type}
-                  /> */}
+                  />
                 </div>
                 <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
                   <h1
