@@ -145,7 +145,7 @@ export default function Article({
           // document.body.appendChild(s);
           // el.innerHTML = adHTML;
           el.innerHTML = '';
-          el.querySelector('#' + id).appendChild(s);
+         // el.querySelector('#' + id).appendChild(s);
         }
       }
     }

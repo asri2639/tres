@@ -264,7 +264,7 @@ export default function MobileHeader({ data, className }) {
                         onClick={() => languageNStateSelect(language, states)}
                         className="flex-1 flex flex-col justify-center items-center cursor-pointer"
                       >
-                        {/* <div className={`language-icon ${language}`}></div> */}
+                        <div className={`language-icon ${language}`}></div>
                         <div className="text-white text-xs">
                           {language.charAt(0).toUpperCase() + language.slice(1)}
                         </div>
