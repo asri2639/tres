@@ -143,9 +143,8 @@ export default function Article({
         }`;
           s.appendChild(document.createTextNode(code));
           // document.body.appendChild(s);
-          // el.innerHTML = adHTML;
-          el.innerHTML = '';
-         // el.querySelector('#' + id).appendChild(s);
+          el.innerHTML = adHTML;
+          el.querySelector('#' + id).appendChild(s);
         }
       }
     }
