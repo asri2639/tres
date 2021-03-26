@@ -1,5 +1,6 @@
 import React from 'react';
-import { NextSeo } from 'next-seo';
+import { NextSeo, ArticleJsonLd } from 'next-seo';
+
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import Head from 'next/head';
@@ -115,19 +116,31 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
           new URL(`http:localhost:3000${router.asPath}`).pathname
         }`;
 
+        let k = data.update_date_string
+          ? data.update_date_string.slice(0, 10)
+          : '';
+        let T = data.publish_date_string
+          ? data.publish_date_string.slice(0, 10)
+          : '';
+
         console.log('has videos :', data.has_videos);
         return (
           <>
             <Head>
               <title>{data.title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists && data.is_amp ? <link rel="amphtml" href={ampUrl}></link> : null}
+              {ampExists && data.is_amp ? (
+                <link rel="amphtml" href={ampUrl}></link>
+              ) : null}
               <meta
                 name="fbPages"
                 property="fb:pages"
                 content={fbContentId}
               ></meta>
-              <link rel="preload" as="image" href={(() => {
+              <link
+                rel="preload"
+                as="image"
+                href={(() => {
                   const thumbnail = thumbnailExtractor(
                     data.thumbnails,
                     '3_2',
@@ -135,8 +148,8 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
                     data.media_type
                   );
                   return thumbnail.url;
-                })()} />
-
+                })()}
+              />
             </Head>
             <NextSeo
               title={data.title}
@@ -176,9 +189,51 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
                 cardType: 'summary_large_image',
               }}
             />
-            {<ArticleList
-              articleData={{ articles: [datum], contentId: datum.contentId }}
-            />}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: `
+            {
+              "@context": "https://schema.org",
+              "@type": "NewsArticle",
+              "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://react.etvbharat.com/${data.web_url}"
+              },
+              "headline": "${data.title.replace(/\"/ig,'\\"')}",
+              "description": "${(data.description || data.short_description).replace(/\"/ig,'\\"')}",
+              "image": {
+                "@type": "ImageObject",
+                "url": "${data.thumbnails.medium_3_2.url}",
+                "width": 708,
+                "height": 474
+              },
+              "author": {
+                "@type": "Organization",
+                "name": "ETV Bharat"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ETV Bharat",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://www.etvbharat.com/src/assets/images/etvlogo/${(
+                    data.web_url.split('/')[0] + ''
+                  ).toLowerCase()}.png",
+                  "width": 82,
+                  "height": 60
+                }
+              },
+              "datePublished": "${T}",
+              "dateModified": "${k || T}"
+            }`,
+              }}
+            ></script>
+            {
+              <ArticleList
+                articleData={{ articles: [datum], contentId: datum.contentId }}
+              />
+            }
           </>
         );
       case 'video':
@@ -340,7 +395,9 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
             <Head>
               <title>{main.display_title}</title>
               <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists && data.is_amp ? <link rel="amphtml" href={ampUrl}></link> : null}
+              {ampExists && data.is_amp ? (
+                <link rel="amphtml" href={ampUrl}></link>
+              ) : null}
               <meta
                 name="fbPages"
                 property="fb:pages"

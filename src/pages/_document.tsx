@@ -66,6 +66,36 @@ export default class ETVDocument extends Document {
                   __html: ` window.googletag=window.googletag||{cmd:[]};`,
                 }}
               ></script>
+
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: `{
+                    "@context": "https://schema.org",
+                    "@type": "NewsMediaOrganization",
+                    "name": "ETV Bharat",
+                    "url": "https://www.etvbharat.com",
+                    "logo": "https://www.etvbharat.com/src/assets/images/etvlogo/english.png",
+                    "sameAs": "https://www.facebook.com/ETVBharatEnglish/"
+                }`,
+                }}
+              ></script>
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: `{
+                              "@context": "https://schema.org/",
+                              "@type": "WebSite",
+                              "name": "ETV Bharat",
+                              "url": "https://www.etvbharat.com",
+                              "potentialAction": {
+                                  "@type": "SearchAction",
+                                  "target": "https://www.etvbharat.com/english/national/search/{search_term_string}search_term_string",
+                                  "query-input": "required name=search_term_string"
+                              }
+                          }`,
+                }}
+              ></script>
             </>
           ) : null}
         </Head>
