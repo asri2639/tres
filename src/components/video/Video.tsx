@@ -19,6 +19,7 @@ const Video = ({
   data,
   className,
   rhs,
+  desktop,
   nextVideo,
   scrollToNextVideo,
   iframeSource,
@@ -87,6 +88,65 @@ const Video = ({
         ComScore.pageView();
       } else {
         ComScore.nextPageView();
+      }
+    }
+
+    if (typeof window !== 'undefined' && !isAMP) {
+      const isDesktop = window.innerWidth >= 768;
+      const divStyle = isDesktop
+        ? `width: 728px; height: 90px;`
+        : `width: 300px; height: 250px;`;
+      const slotArr = isDesktop ? '[728, 90]' : '[300, 250]';
+      let adHTML = null;
+      let id, ad_id;
+
+      if (isDesktop) {
+        if (rhs && data.ad_conf) {
+          id =
+            desktop && desktop.ad_conf && desktop.ad_conf.length > 0
+              ? desktop.ad_conf[0].gpt_id
+              : data.ad_conf.length && !!data.ad_conf[0]
+              ? data.ad_conf[0].gpt_id
+              : null;
+          ad_id =
+            desktop && desktop.ad_conf && desktop.ad_conf.length > 0
+              ? desktop.ad_conf[0].ad_unit_id
+              : data.ad_conf.length && !!data.ad_conf[0]
+              ? data.ad_conf[0].gpt_id
+              : null;
+        }
+      } else {
+        if (data.ad_conf && data.ad_conf.length > 0 && !!data.ad_conf[0]) {
+          id = data.ad_conf[0].gpt_id;
+          ad_id = data.ad_conf[0].ad_unit_id;
+        }
+      }
+
+      if (id) {
+        adHTML = `<div id='${id}' style='${divStyle}'></div>`;
+        const el = document.querySelector(
+          `[data-content-id="${contentId}"] .EtvadsSection`
+        );
+
+        if (el && el.querySelector('#adsContainer')) {
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          var code = `
+          if(window.googletag && googletag.apiReady) {
+            googletag.cmd.push(function() {
+              googletag.pubads().collapseEmptyDivs();
+              googletag.defineSlot('${ad_id}', ${slotArr}, '${id}').addService(googletag.pubads()); 
+              googletag.enableServices(); 
+            }); 
+            googletag.cmd.push(function() { 
+              googletag.display('${id}'); 
+            });
+        }`;
+          s.appendChild(document.createTextNode(code));
+          // document.body.appendChild(s);
+          el.innerHTML = adHTML;
+          el.querySelector('#' + id).appendChild(s);
+        }
       }
     }
   }, [inView, contentId, rhs, iframeSource]);

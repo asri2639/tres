@@ -204,7 +204,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
               "description": "${(data.description || data.short_description).replace(/\"/ig,'\\"')}",
               "image": {
                 "@type": "ImageObject",
-                "url": "${data.thumbnails.medium_3_2.url}",
+                "url": "${data.thumbnails && data.thumbnails.medium_3_2 ? data.thumbnails.medium_3_2.url: ''}",
                 "width": 708,
                 "height": 474
               },

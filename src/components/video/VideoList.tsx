@@ -253,6 +253,7 @@ const VideoList = ({ videoData, appConfig }) => {
     );
     if (video && adData) {
       video.rhs = adData.catalog_list_items.slice(2)[0].catalog_list_items;
+      video.desktop = adData.catalog_list_items[0].catalog_list_items[0];
       setVideos((videos) => [...videos]);
     }
 
