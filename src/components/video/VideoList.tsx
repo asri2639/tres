@@ -251,6 +251,7 @@ const VideoList = ({ videoData, appConfig }) => {
     let video = videos.find(
       (article) => article.data.content_id === videoData.contentId
     );
+    
     if (video && adData) {
       video.rhs = adData.catalog_list_items.slice(2)[0].catalog_list_items;
       video.desktop = adData.catalog_list_items[0].catalog_list_items[0];
@@ -423,6 +424,7 @@ const VideoList = ({ videoData, appConfig }) => {
               key={video.contentId}
               {...video}
               rhs={video.rhs}
+              desktop={video.desktop}
               iframeSource={video.iframeSource}
               nextVideo={i < 9 ? related[i + 1] : null}
               scrollToNextVideo={() => scrollToVideo(related[i + 1])}

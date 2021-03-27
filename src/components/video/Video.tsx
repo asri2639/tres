@@ -99,9 +99,8 @@ const Video = ({
       const slotArr = isDesktop ? '[728, 90]' : '[300, 250]';
       let adHTML = null;
       let id, ad_id;
-
       if (isDesktop) {
-        if (rhs && data.ad_conf) {
+        if (rhs && desktop) {
           id =
             desktop && desktop.ad_conf && desktop.ad_conf.length > 0
               ? desktop.ad_conf[0].gpt_id
@@ -121,7 +120,6 @@ const Video = ({
           ad_id = data.ad_conf[0].ad_unit_id;
         }
       }
-
       if (id) {
         adHTML = `<div id='${id}' style='${divStyle}'></div>`;
         const el = document.querySelector(
@@ -149,7 +147,7 @@ const Video = ({
         }
       }
     }
-  }, [inView, contentId, rhs, iframeSource]);
+  }, [inView, contentId, rhs, desktop, iframeSource]);
 
   const setRefs = useCallback(
     (node) => {
@@ -267,6 +265,10 @@ const Video = ({
 
             <div className="px-2 py-4 text-sm lg:text-base text-justify lg:text-left">
               {data.description}
+            </div>
+
+            <div className="EtvadsSection">
+              <div id="adsContainer"></div>
             </div>
 
             {source ? (
