@@ -121,7 +121,7 @@ const Video = ({
         }
       }
       if (id) {
-        adHTML = `<div id='${id}' style='${divStyle}'></div>`;
+        adHTML = `<div id='${id + contentId}' style='${divStyle}'></div>`;
         const el = document.querySelector(
           `[data-content-id="${contentId}"] .EtvadsSection`
         );
@@ -133,17 +133,19 @@ const Video = ({
           if(window.googletag && googletag.apiReady) {
             googletag.cmd.push(function() {
               googletag.pubads().collapseEmptyDivs();
-              googletag.defineSlot('${ad_id}', ${slotArr}, '${id}').addService(googletag.pubads()); 
+              googletag.defineSlot('${ad_id}', ${slotArr}, '${
+            id + contentId
+          }').addService(googletag.pubads()); 
               googletag.enableServices(); 
             }); 
             googletag.cmd.push(function() { 
-              googletag.display('${id}'); 
+              googletag.display('${id + contentId}'); 
             });
         }`;
           s.appendChild(document.createTextNode(code));
           // document.body.appendChild(s);
           el.innerHTML = adHTML;
-          el.querySelector('#' + id).appendChild(s);
+          el.querySelector('#' + id + contentId).appendChild(s);
         }
       }
     }
