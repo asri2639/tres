@@ -57,7 +57,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
           ? data.html_tag.replace(scriptTagExtractionRegex, '')
           : '';
         const scripts = [];
-/* 
+
         let matchedScript = null;
         do {
           matchedScript = scriptTagExtractionRegex.exec(data.html_tag);
@@ -75,7 +75,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
               loadJS(m[1]);
             }
           });
-        } */
+        }
         datum.html = html;
         datum.data = data;
 
