@@ -25,6 +25,10 @@ import { thumbnailExtractor } from '@utils/Helpers';
 export const AMPContext = React.createContext(false);
 let currentLanguage = 'english';
 
+export function reportWebVitals(metric) {
+  console.log(metric)
+}
+
 function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const { publicRuntimeConfig } = getConfig();
