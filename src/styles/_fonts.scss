@@ -1,7 +1,7 @@
 $font-stack: 'Helvetica, Arial, sans-serif';
 $languages: (
   'asm': 'assamese',
- // 'bn': 'bengali',
+  'bn': 'bengali',
   'en': 'english',
   'gu': 'gujarati',
   'hi': 'hindi',
@@ -33,7 +33,8 @@ $languages: (
         format('truetype');
   }
 
-  html[lang='#{$key}'],  html[lang='#{$key}'] body {
+  html[lang='#{$key}'],
+  html[lang='#{$key}'] body {
     font-family: 'Likhith' + $cap-name, unquote($font-stack);
   }
 }
