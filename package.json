@@ -9,7 +9,7 @@
   "description": "ETV Bharat | NEWS UI",
   "scripts": {
     "dev": "cross-env NEXT_PUBLIC_APP_ENV=development PORT=3000 node server.js",
-    "build": "next build && next export",
+    "build": "next build",
     "staging": "cross-env NEXT_PUBLIC_APP_ENV=staging PORT=3000 node server.js",
     "start": "cross-env NEXT_PUBLIC_APP_ENV=production PORT=3000 node server.js",
     "test-build": "next build",
