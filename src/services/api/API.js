@@ -13,7 +13,7 @@ const requireComponent = require.context(
   '.',
   // Do not look in subdirectories
   false,
-  /[\w]+\.ts$/
+  /[\w]+\.js$/
 );
 
 const apis = {};
@@ -21,8 +21,8 @@ const apis = {};
 requireComponent.keys().forEach((fileName) => {
   // Get the component config
   const componentConfig = requireComponent(fileName);
-  if (fileName.search(/\.\/(?:(index|API|APIEnum))\.ts$/g) === -1) {
-    apis[fileName.match(/\.\/(\w+)\.ts$/)[1]] =
+  if (fileName.search(/\.\/(?:(index|API|APIEnum))\.js$/g) === -1) {
+    apis[fileName.match(/\.\/(\w+)\.js$/)[1]] =
       componentConfig.default || componentConfig;
   }
 });
@@ -63,15 +63,31 @@ export const apiStatusHandler = (error, hideMessage = false) => {
 };
 
 class APIError extends Error {
-  name: string;
-  data: any;
-
-  constructor(message, data?) {
+  constructor(message, data) {
     super(message);
     this.name = 'APIError';
     this.data = data;
   }
 }
+
+export const accessTokenFetcher = (authToken) => {
+  return fetch(
+    `http://localhost:3000/api/access_token?auth_token=${authToken}`,
+    {
+      headers: {
+        accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+        'cache-control': 'max-age=0',
+      },
+      referrerPolicy: 'strict-origin-when-cross-origin',
+      body: null,
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+    }
+  ).then((response) => response.json());
+};
 
 async function errorResponseHandler(error) {
   if (
@@ -79,20 +95,12 @@ async function errorResponseHandler(error) {
     error.response.status === 422 &&
     error.response.data.error.message.indexOf('access_token') >= 0
   ) {
-    const api = API();
-    const result1 = await api.getAccessToken({
-      params: {
-        auth_token: Constants.authToken,
-      },
-    });
-    accessToken.web = result1.data.data.access_token;
+    //   Constants.authToken
+    const result1 = await accessTokenFetcher(Constants.authToken);
+    accessToken.web = result1.data.access_token;
 
-    const result = await api.getAccessToken({
-      params: {
-        auth_token: Constants.mAuthToken,
-      },
-    });
-    accessToken.mobile = result.data.data.access_token;
+    const result = await accessTokenFetcher(Constants.mAuthToken);
+    accessToken.mobile = result.data.access_token;
   }
   // check for errorHandle config
   if (
@@ -118,7 +126,7 @@ async function errorResponseHandler(error) {
   }
 }
 
-export default function API(...controllers): any {
+export default function API(...controllers) {
   let inst = null;
   const requiredServices = {};
   const source = CancelToken.source();
@@ -179,7 +187,7 @@ export default function API(...controllers): any {
       source.cancel();
       inst = null;
     },
-    getAccessToken({ params, query, ...config }: APIRequest) {
+    getAccessToken({ params, query, ...config } = new APIRequest()) {
       return inst.get(`/access_token?auth_token=${params.auth_token}`, config);
     },
     ...requiredServices,

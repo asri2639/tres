@@ -12,7 +12,7 @@ const Modal = ({
   t,
   width,
   height,
-}: IModal) => {
+}) => {
   return (
     <>
       {open && (
@@ -71,15 +71,5 @@ const Modal = ({
     </>
   );
 };
-
-interface IModal extends WithTranslation {
-  open: Boolean;
-  title: string;
-  onClose: any;
-  children: any;
-  isMobile: Boolean;
-  width: any;
-  height: any;
-}
 
 export default withTranslation('common')(Modal);

@@ -32,8 +32,7 @@ for (const alias in aliases) {
     : [
         aliasTo + '/index.js',
         aliasTo + '/index.json',
-        aliasTo + '/index.tsx',
-        aliasTo + '/index.ts',
+        aliasTo + '/index.jsx',
         aliasTo + '/index.scss',
         aliasTo + '/index.css',
       ];

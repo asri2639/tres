@@ -20,13 +20,13 @@ export default class ETVDocument extends Document {
           />
           {!isAMP ? (
             <>
-              <script
+             {/*  <script
                 dangerouslySetInnerHTML={{
-                  __html: ` if (location.protocol === 'http:' && location.hostname !== 'localhost') {
+                  __html: ` if (location.protocol === 'http:' && !location.hostname.contains('localhost')) {
                 window.location.href = window.location.href.replace('http:', 'https:');
               }`,
                 }}
-              ></script>
+              ></script> */}
               <script
                 dangerouslySetInnerHTML={{
                   __html: `window.dataLayer = window.dataLayer || [];
@@ -90,7 +90,7 @@ export default class ETVDocument extends Document {
                               "url": "https://www.etvbharat.com",
                               "potentialAction": {
                                   "@type": "SearchAction",
-                                  "target": "https://www.etvbharat.com/english/national/search/{search_term_string}search_term_string",
+                                  "target": "https://www.etvbharat.com/english/national/search/{search_term_string}",
                                   "query-input": "required name=search_term_string"
                               }
                           }`,

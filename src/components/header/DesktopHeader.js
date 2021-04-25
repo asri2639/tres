@@ -18,7 +18,7 @@ import APIEnum from '@services/api/APIEnum';
 import { AMPContext } from '@pages/_app';
 import { getSocialLinks } from '@utils/Helpers';
 
-const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
+const DesktopHeader = ({ className, data, t }) => {
   const isAMP = useContext(AMPContext);
   const router = useRouter();
   const {
@@ -549,10 +549,5 @@ const DesktopHeader = ({ className, data, t }: IDesktopHeader) => {
     </>
   );
 };
-
-interface IDesktopHeader extends WithTranslation {
-  className: string;
-  data: any;
-}
 
 export default withTranslation('common')(DesktopHeader);

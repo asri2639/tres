@@ -125,7 +125,6 @@ const GalleryList = ({ galleryData }) => {
             const newGallery =
               res.data.data.catalog_list_items[0].catalog_list_items;
             const rhs = res.data.data.catalog_list_items.slice(1);
-
             const newList = [
               ...galleries,
               {
@@ -133,9 +132,7 @@ const GalleryList = ({ galleryData }) => {
                 rhs,
                 content_id: newGallery[0].parent_id,
                 web_url: related[curIndex + 1].web_url,
-                count:
-                  res.data.data.catalog_list_items[0].catalog_list_items
-                    .total_items_count,
+                count: res.data.data.catalog_list_items[0].total_items_count,
               },
             ];
             setGalleries(newList);

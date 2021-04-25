@@ -3,7 +3,6 @@
     "baseUrl": "./src",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
@@ -20,8 +19,7 @@
       "@": [
         "/index.js",
         "/index.json",
-        "/index.tsx",
-        "/index.ts",
+        "/index.jsx",
         "/index.scss",
         "/index.css"
       ],
@@ -29,8 +27,7 @@
       "@pages": [
         "pages/index.js",
         "pages/index.json",
-        "pages/index.tsx",
-        "pages/index.ts",
+        "pages/index.jsx",
         "pages/index.scss",
         "pages/index.css"
       ],
@@ -38,8 +35,7 @@
       "@i18n": [
         "i18n/index.js",
         "i18n/index.json",
-        "i18n/index.tsx",
-        "i18n/index.ts",
+        "i18n/index.jsx",
         "i18n/index.scss",
         "i18n/index.css"
       ],
@@ -48,8 +44,7 @@
       "@api": [
         "services/API/index.js",
         "services/API/index.json",
-        "services/API/index.tsx",
-        "services/API/index.ts",
+        "services/API/index.jsx",
         "services/API/index.scss",
         "services/API/index.css"
       ],
@@ -57,8 +52,7 @@
       "@layouts": [
         "layouts/index.js",
         "layouts/index.json",
-        "layouts/index.tsx",
-        "layouts/index.ts",
+        "layouts/index.jsx",
         "layouts/index.scss",
         "layouts/index.css"
       ],
@@ -66,8 +60,7 @@
       "@components": [
         "components/index.js",
         "components/index.json",
-        "components/index.tsx",
-        "components/index.ts",
+        "components/index.jsx",
         "components/index.scss",
         "components/index.css"
       ],
@@ -75,8 +68,7 @@
       "@modules": [
         "components/index.js",
         "components/index.json",
-        "components/index.tsx",
-        "components/index.ts",
+        "components/index.jsx",
         "components/index.scss",
         "components/index.css"
       ],
@@ -84,8 +76,7 @@
       "@assets": [
         "assets/index.js",
         "assets/index.json",
-        "assets/index.tsx",
-        "assets/index.ts",
+        "assets/index.jsx",
         "assets/index.scss",
         "assets/index.css"
       ],
@@ -93,8 +84,7 @@
       "@utils": [
         "utilities/index.js",
         "utilities/index.json",
-        "utilities/index.tsx",
-        "utilities/index.ts",
+        "utilities/index.jsx",
         "utilities/index.scss",
         "utilities/index.css"
       ],
@@ -102,8 +92,7 @@
       "@interfaces": [
         "interfaces/index.js",
         "interfaces/index.json",
-        "interfaces/index.tsx",
-        "interfaces/index.ts",
+        "interfaces/index.jsx",
         "interfaces/index.scss",
         "interfaces/index.css"
       ],
@@ -111,14 +100,13 @@
       "@media": [
         "media/index.js",
         "media/index.json",
-        "media/index.tsx",
-        "media/index.ts",
+        "media/index.jsx",
         "media/index.scss",
         "media/index.css"
       ],
       "@styles/*": ["styles/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.js", "postcss.config.js", "src/pages/[language]/[state]/[...slug]/index.js", "server.js", "src/pages/[state]/[...slug]/index.tsx"],
+  "include": ["next-env.d.js", "**/*.js", "**/*.jsx", "tailwind.config.js", "postcss.config.js", "src/pages/[language]/[state]/[...slug]/index.js", "server.js", "src/pages/[state]/[...slug]/index.jsx", "src/utilities/UserStorage.js", "src/utilities/ToastHelper.js", "src/utilities/StringToHtml.js", "src/utilities/LocalStorageWorker.js", "src/utilities/Helpers.js", "src/utilities/GoogleTagManager.js", "src/utilities/ComScore.js", "src/utilities/Constants.js", "src/interfaces/API.js", "src/services/api/Video.js", "src/services/api/User.js", "src/services/api/CatalogList.js", "src/services/api/Catalog.js", "src/services/api/APIEnum.js", "src/services/api/API.js", "src/media/index.jsx", "src/i18n/strings.js", "src/i18n/types.js", "src/i18n/getInitialLocale.js", "src/i18n/config.js", "src/pages/[state]/index.jsx", "src/pages/api/hello.js", "src/pages/english/termsOfService.jsx", "src/pages/english/privacyPolicy.jsx", "src/pages/english/contactUs.jsx", "src/pages/english/aboutUs.jsx", "src/pages/_app.jsx", "src/pages/_document.jsx", "src/pages/index.jsx", "src/pages/robots.txt.jsx"],
   "exclude": ["node_modules"]
 }

@@ -16,7 +16,6 @@ import BBCHeader from '@components/common/BBCHeader';
 import stringToHTML from '@utils/StringToHtml';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
-import e from 'express';
 
 // initialPosition
 // div height
@@ -42,12 +41,21 @@ export default function Article({
 
   const contentRef = useRef(null);
   const isRTL = useContext(RTLContext);
-  const ref = useRef<HTMLDivElement>(null);
+
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
     // triggerOnce: true,
     threshold: 1,
   });
+  const ref = useCallback(
+    (node) => {
+      if (node !== null && node) {
+        inViewRef(node);
+        ref.current = node;
+      }
+    },
+    [inViewRef]
+  );
 
   useEffect(() => {
     if (data.source && data.source.indexOf('bbc_') === 0) {
@@ -80,7 +88,7 @@ export default function Article({
               '/' + data.web_url + location.search
             );
 
-            var event = new CustomEvent<string>('newurl', {
+            var event = new CustomEvent('newurl', {
               detail: contentId,
             });
 
@@ -216,16 +224,6 @@ export default function Article({
     }
   }, [inView, contentId, rhs, contentRef]);
 
-  const setRefs = useCallback(
-    (node) => {
-      // Ref's from useRef needs to have the node assigned to `current`
-      ref.current = node;
-      // Callback refs, like the one from `useInView`, is a function that takes the node as an argument
-      inViewRef(node);
-    },
-    [inViewRef]
-  );
-
   let filteredRHS = [];
   if (rhs) {
     filteredRHS = rhs.filter((v) => {
@@ -286,7 +284,7 @@ export default function Article({
                 </div>
                 <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
                   <h1
-                    ref={setRefs}
+                    ref={ref}
                     className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
                   >
                     {data.title}

@@ -1,6 +1,5 @@
 import Layout from '@components/layout/Layout';
 import React, { useContext } from 'react';
-import type { AppProps, NextWebVitalsMetric } from 'next/app';
 import '@styles/tailwind.css';
 import '@styles/globals.scss';
 import '@styles/_fonts.scss';

@@ -29,7 +29,7 @@ Sitemap: https://www.etvbharat.com/latest_news_sitemap.xml
 `;
 
 class Sitemap extends React.Component {
-  public static async getInitialProps({ res }) {
+  static async getInitialProps({ res }) {
     const { publicRuntimeConfig } = getConfig();
 
     res.setHeader('Content-Type', 'text/plain');

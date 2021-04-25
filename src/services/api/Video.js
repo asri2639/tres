@@ -7,7 +7,7 @@ const env = publicRuntimeConfig.APP_ENV;
 
 export default function Video(inst) {
   return {
-    getSmartUrls({ params, query, ...config }: APIRequest) {
+    getSmartUrls({ params, query, config } = new APIRequest()) {
       if (env === 'development') {
         return inst.get(
           `/v2/smart_urls/${params.play_url.split('smart_urls')[1].slice(1)}${
@@ -84,7 +84,7 @@ export default function Video(inst) {
       }
     },
 
-    decodeSmartUrl({ params, query, ...config }: APIRequest) {
+    decodeSmartUrl({ params, query, config } = new APIRequest()) {
       if (env === 'development' || !!publicRuntimeConfig.TEST) {
         const promise = new Promise(function (resolve, reject) {
           const url = new URL(params.url);

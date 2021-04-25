@@ -5,7 +5,7 @@ const { publicRuntimeConfig } = getConfig();
 const env = publicRuntimeConfig.APP_ENV;
 const controller = '/catalog_lists';
 
-const getProperParam = (params, options?) => {
+const getProperParam = (params, options) => {
   if (!params && typeof window !== 'undefined') {
     params = {
       state:
@@ -26,7 +26,8 @@ const getProperParam = (params, options?) => {
 
 export default function CatalogList(inst) {
   return {
-    getArticleDetails({ params, query, ...config }: APIRequest) {
+    getArticleDetails({ params, query, config } = new APIRequest()) {
+      config = config || {};
       return inst.get(
         `${controller}/${
           config['isSSR'] ? '' : 'web-'
@@ -36,7 +37,8 @@ export default function CatalogList(inst) {
         config
       );
     },
-    getVideoDetails({ params, query, ...config }: APIRequest) {
+    getVideoDetails({ params, query, config } = new APIRequest()) {
+      config = config || {};
       return inst.get(
         `${controller}/${
           config['isSSR'] ? 'video-details' : params.suffix
@@ -44,13 +46,13 @@ export default function CatalogList(inst) {
         config
       );
     },
-    getRelatedArticles({ params, query, ...config }: APIRequest) {
+    getRelatedArticles({ params, query, config } = new APIRequest()) {
       return inst.get(
         `/get_related_articles.gzip?${new URLSearchParams(query)}`,
         config
       );
     },
-    getMenuDetails({ params, query, ...config }: APIRequest) {
+    getMenuDetails({ params, query, config } = new APIRequest()) {
       return inst.get(
         `${controller}/${params.suffix}${getProperParam(
           params
@@ -58,7 +60,7 @@ export default function CatalogList(inst) {
         config
       );
     },
-    getSubMenuDetails({ params, query, ...config }: APIRequest) {
+    getSubMenuDetails({ params, query, config } = new APIRequest()) {
       return inst.get(
         `${controller}/${params.key}.gzip?${new URLSearchParams(query)}`,
         config

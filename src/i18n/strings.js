@@ -1,6 +1,5 @@
-import { Strings } from '@i18n/types';
 
-const strings: Strings = {
+const strings = {
   english: {
     about: 'About René Magritte',
     painting: 'The Painting',

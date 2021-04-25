@@ -3,6 +3,19 @@ const express = require('express');
 const next = require('next');
 const fetch = require('node-fetch');
 const he = require('he');
+const path = require('path');
+const fs = require('fs');
+const compression = require('compression');
+
+const shouldCompress = (req, res) => {
+  // don't compress responses asking explicitly not
+  if (req.headers['x-no-compression']) {
+    return false;
+  }
+
+  // use compression filter function
+  return compression.filter(req, res);
+};
 
 const devProxy = {
   '/api/v2': {
@@ -30,6 +43,8 @@ const devProxy = {
 const port = parseInt(process.env.PORT, 10) || 3000;
 const env = process.env.NEXT_PUBLIC_APP_ENV;
 const dev = env !== 'production' && env !== 'staging';
+
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const app = next({
   dir: '.', // base directory where everything is, could move to src later
   dev,
@@ -42,6 +57,8 @@ app
   .prepare()
   .then(() => {
     server = express();
+
+    server.use(compression({ filter: shouldCompress }));
 
     // Set up the proxy.
     if ((dev && devProxy) || process.env.NEXT_TEST) {
@@ -85,5 +102,5 @@ app
   })
   .catch((err) => {
     console.log('An error occurred, unable to start the server');
-    // console.log(err);
+    console.log(err);
   });

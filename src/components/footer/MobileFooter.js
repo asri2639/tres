@@ -14,7 +14,7 @@ import { AMPContext } from '@pages/_app';
 import AMPSidebar from '@components/header/AMPSidebar';
 import { getSocialLinks } from '@utils/Helpers';
 
-const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
+const MobileFooter = ({ data, menu, t }) => {
   const isAMP = useContext(AMPContext);
 
   const isiOS = false;
@@ -537,10 +537,5 @@ const MobileFooter = ({ data, menu, t }: IMobileFooter) => {
     </>
   );
 };
-
-interface IMobileFooter extends WithTranslation {
-  data: any;
-  menu: any;
-}
 
 export default withTranslation('common')(MobileFooter);

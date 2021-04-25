@@ -14,7 +14,7 @@ const MobileNextArticle = ({
   scrollToNextArticle,
   related,
   showBbc,
-}: IMobileNextArticle) => {
+}) => {
   const isAMP = useContext(AMPContext);
 
   const query = {
@@ -177,14 +177,5 @@ const MobileNextArticle = ({
     </>
   );
 };
-
-interface IMobileNextArticle extends WithTranslation {
-  label: string;
-  data: any;
-  nextArticle: any;
-  scrollToNextArticle: any;
-  related: any;
-  showBbc: boolean;
-}
 
 export default withTranslation('common')(MobileNextArticle);

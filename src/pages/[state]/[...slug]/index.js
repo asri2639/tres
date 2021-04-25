@@ -4,7 +4,6 @@ import { NextSeo, ArticleJsonLd } from 'next-seo';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import Head from 'next/head';
-import { NextPage } from 'next';
 import {
   configStateCodeConverter,
   loadJS,
@@ -19,15 +18,7 @@ import ArticleList from '@components/article/ArticleList';
 import VideoList from '@components/video/VideoList';
 import GalleryList from '@components/gallery/GalleryList';
 
-interface Propss {
-  data: any;
-  pageType: String;
-  appConfig?: any;
-  id?: String;
-  isAmp?: Boolean;
-}
-
-const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
+const slug = ({ data, pageType, appConfig, id, isAmp }) => {
   const router = useRouter();
   let canonicalUrl = '',
     ampUrl = '';
@@ -52,7 +43,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
     switch (pageType) {
       case 'article':
         const tags = new Set();
-        let datum: any = {};
+        let datum = {};
         const html = data
           ? data.html_tag.replace(scriptTagExtractionRegex, '')
           : '';
@@ -200,11 +191,17 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
                 "@type": "WebPage",
                 "@id": "https://react.etvbharat.com/${data.web_url}"
               },
-              "headline": "${data.title.replace(/\"/ig,'\\"')}",
-              "description": "${(data.description || data.short_description).replace(/\"/ig,'\\"')}",
+              "headline": "${data.title.replace(/\"/gi, '\\"')}",
+              "description": "${(
+                data.description || data.short_description
+              ).replace(/\"/gi, '\\"')}",
               "image": {
                 "@type": "ImageObject",
-                "url": "${data.thumbnails && data.thumbnails.medium_3_2 ? data.thumbnails.medium_3_2.url: ''}",
+                "url": "${
+                  data.thumbnails && data.thumbnails.medium_3_2
+                    ? data.thumbnails.medium_3_2.url
+                    : ''
+                }",
                 "width": 708,
                 "height": 474
               },
@@ -237,7 +234,7 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
           </>
         );
       case 'video':
-        let videoDatum: any = {};
+        let videoDatum = {};
         videoDatum.data = data;
 
         videoDatum.contentType = data.content_type;
@@ -423,10 +420,14 @@ const slug: NextPage<Propss> = ({ data, pageType, appConfig, id, isAmp }) => {
                 description: main.short_description || main.description,
                 images: [
                   {
-                    url: main.thumbnails.banner.url,
+                    url: main.thumbnails.banner
+                      ? main.thumbnails.banner.url
+                      : main.thumbnails.web_3_2.url,
                     width: 768,
                     height: 512,
-                    alt: main.thumbnails.banner.alt_tags,
+                    alt: main.thumbnails.banner
+                      ? main.thumbnails.banner.alt_tags
+                      : main.thumbnails.web_3_2.alt_tags,
                   },
                 ],
               }}
@@ -478,7 +479,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   } else if (typeof window !== 'undefined') {
     document.documentElement.lang = languageMap[language];
     if (location.protocol === 'http') {
-      window.location.href = window.location.href.replace('http:', 'https:');
+     // window.location.href = window.location.href.replace('http:', 'https:');
     }
     const urlSplit = location.pathname.split('/');
     language = languageMap[urlSplit[1]];
@@ -552,7 +553,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             portal_state: state, //national
             scroll_no: 0,
           },
-          isSSR: typeof window === 'undefined',
+          config: { isSSR: typeof window === 'undefined' },
         });
 
         const galleryResp = galleryResponse.data.data.catalog_list_items[0];
@@ -580,7 +581,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             portal_state: state, //national
             scroll_no: 0,
           },
-          isSSR: typeof window === 'undefined',
+          config: { isSSR: typeof window === 'undefined' },
         });
 
         const articleResp = articleResponse.data.data.catalog_list_items[0];

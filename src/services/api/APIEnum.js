@@ -4,15 +4,15 @@ const requireComponent = require.context(
   // Do not look in subdirectories
   false,
   // Only include "_base-" prefixed .vue files
-  /[\w]+\.ts$/
+  /[\w]+\.js$/
 );
 
 const apis = [];
 // For each matching file name...
 requireComponent.keys().forEach((fileName) => {
   // Get the component config
-  if (fileName.search(/\.\/(?:(index|API|APIEnum))\.ts$/g)) {
-    apis.push(fileName.match(/\.\/(\w+)\.ts$/)[1]);
+  if (fileName.search(/\.\/(?:(index|API|APIEnum))\.js$/g)) {
+    apis.push(fileName.match(/\.\/(\w+)\.js$/)[1]);
   }
 });
 

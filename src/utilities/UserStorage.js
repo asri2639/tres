@@ -1,14 +1,10 @@
-import LocalStorageWorker from '@utils/LocalStorageWorker';
-
 export default class UserStorage {
-  storageWorker: LocalStorageWorker;
-
+  storageWorker;
   // main key that use for store
-  storageKey: string;
+  storageKey;
+  data;
 
-  data: any;
-
-  constructor(storageKey: string) {
+  constructor(storageKey) {
     this.storageWorker = new LocalStorageWorker();
 
     this.storageKey = storageKey;

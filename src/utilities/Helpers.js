@@ -28,7 +28,7 @@ export const thumbnailExtractor = (
   if (isEmpty(thumbnailObj)) {
     return !mediaType
       ? { alt_tags: '', caption: '', url: '/assets/images/placeholder.png' }
-      : { alt_tags: 'Breaking News', url: null };
+      : { alt_tags: 'Breaking News', url: '/assets/images/breakingplate.png' };
   }
 
   const order = (extractionOrder === 's2b'
@@ -355,7 +355,6 @@ export const dateFormatter = (uts, amp = false) => {
   } else if (elapsed < msPerDay) {
     return Math.round(elapsed / msPerHour) + ' hours ago';
   } else {
-
     return (
       date.toLocaleString('en-US', {
         timeZone: 'Asia/Kolkata',

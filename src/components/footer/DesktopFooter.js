@@ -13,7 +13,7 @@ import LanguageList from '@components/footer/LanguageList';
 import { RTLContext } from '@components/layout/Layout';
 import { getSocialLinks } from '@utils/Helpers';
 
-const DesktopFooter = ({ data, t }: IDesktopFooter) => {
+const DesktopFooter = ({ data, t }) => {
   const router = useRouter();
   const {
     i18n: { language, options },
@@ -168,9 +168,5 @@ const DesktopFooter = ({ data, t }: IDesktopFooter) => {
     </footer>
   );
 };
-
-interface IDesktopFooter extends WithTranslation {
-  data: any;
-}
 
 export default withTranslation('common')(DesktopFooter);
