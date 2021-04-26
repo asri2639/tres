@@ -317,7 +317,9 @@ const Gallery = ({
                           <span>{image.order_no}</span>/ {count}
                         </div>
                       </div>
-                      <div className="text-md">{image.title}</div>
+                      <div className="text-md">
+                        {image.description || image.title}
+                      </div>
                     </React.Fragment>
                   );
                 }
