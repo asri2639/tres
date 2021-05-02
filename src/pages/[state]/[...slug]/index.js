@@ -461,6 +461,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   let language = 'en';
   let state = 'na';
   let params = null;
+  let bypass = false;
   const { publicRuntimeConfig } = getConfig();
   const isAmp =
     query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
@@ -479,7 +480,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   } else if (typeof window !== 'undefined') {
     document.documentElement.lang = languageMap[language];
     if (location.protocol === 'http') {
-     // window.location.href = window.location.href.replace('http:', 'https:');
+      // window.location.href = window.location.href.replace('http:', 'https:');
     }
     const urlSplit = location.pathname.split('/');
     language = languageMap[urlSplit[1]];
@@ -490,12 +491,17 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     };
   }
 
+  bypass = req.url.indexOf('live-streaming') >= 0;
   const id = query.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
-  if (re.test(id)) {
+  if (re.test(id) || bypass) {
     const api = API(APIEnum.CatalogList);
+    let type = query.slug[0].toLowerCase();
+    if (bypass) {
+      type = 'live-streaming';
+    }
 
-    switch (query.slug[0].toLowerCase()) {
+    switch (type) {
       case 'videos':
       case 'video':
       case 'live-streaming':
