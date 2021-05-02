@@ -24,14 +24,10 @@ export default function MobileHeader({ data, className }) {
 
   const languageNStateSelect = (language, states) => {
     if (language === 'english') {
-      setTimeout(() => {
-        router.push(`/national`, `/${language}/national`);
-      }, 100);
+      router.push(`/national`, `/${language}/national`);
     } else {
       if (states.length === 1) {
-        setTimeout(() => {
-          router.push(`/${states[0].state}`, `/${language}/${states[0].state}`);
-        }, 100);
+        router.push(`/${states[0].state}`, `/${language}/${states[0].state}`);
       } else {
         setOpenStateModal(states);
       }

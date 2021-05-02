@@ -8,6 +8,9 @@ import { useContext, useEffect, useState } from 'react';
 import { I18nContext } from 'next-i18next';
 import { accessToken as token } from '@utils/Constants';
 import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
+import Loader from 'react-loader-spinner';
+import { usePromiseTracker } from 'react-promise-tracker';
+import { useRouter } from 'next/router';
 
 const country = 'IN';
 export const RTLContext = React.createContext(false);
@@ -25,6 +28,8 @@ function debounce(fn, ms) {
 }
 
 const Layout = ({ children, accessToken, appConfig }) => {
+  const router = useRouter();
+
   const api = API(APIEnum.Catalog, APIEnum.CatalogList);
   const [data, setData] = useState({
     footer: [],
@@ -33,6 +38,9 @@ const Layout = ({ children, accessToken, appConfig }) => {
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
+  const state = router.query.state || 'national';
+
+  const { promiseInProgress } = usePromiseTracker();
 
   React.useEffect(() => {
     const debouncedHandleResize = debounce(async function handleResize() {
@@ -50,26 +58,27 @@ const Layout = ({ children, accessToken, appConfig }) => {
       }
 
       if (doCall) {
-        let convertedState = configStateCodeConverter(
-          location.pathname.split('/')[2]
-        );
+        window.appConfig = appConfig;
+
+        let convertedState = configStateCodeConverter();
         convertedState =
-          location.pathname.split('/')[1] === 'urdu' && convertedState !== 'jk'
+          language === 'urdu' && convertedState !== 'jk'
             ? 'urdu'
             : convertedState;
         const headerResp = await api.CatalogList.getMenuDetails({
           params: {
-            suffix:
-              appConfig.params_hash2.config_params[
-                isDesktop ? 'web_lists' : 'msite_lists'
-              ][convertedState][isDesktop ? 'tabs' : 'left-menu'],
+            suffix: isDesktop
+              ? appConfig.params_hash2.config_params[
+                  isDesktop ? 'web_lists' : 'msite_lists'
+                ][convertedState][isDesktop ? 'tabs' : 'left-menu']
+              : 'msite-new-left-menu',
           },
           isSSR: !isDesktop,
           query: {
             region: country,
             response: 'r2',
             item_languages: language,
-            portal_state: stateCodeConverter(location.pathname.split('/')[2]),
+            portal_state: stateCodeConverter(state),
           },
         });
         if (isDesktop) {
@@ -94,46 +103,50 @@ const Layout = ({ children, accessToken, appConfig }) => {
 
   useEffect(() => {
     const populateData = async () => {
-      const result = await api.Catalog.getFooterDetails({
-        query: {
-          region: country,
-          response: 'r2',
-          item_languages: language,
-        },
-      });
-      const requiredData = result.data.data.params_hash2.footer;
-
-      let languageData = {};
-      requiredData.forEach((state) => {
-        state.item_languages.forEach((language) => {
-          languageData[language] = languageData[language] || [];
-          if (state.state) {
-            if (state.state === 'tamilnadu') {
-              state.state = 'tamil-nadu';
-            } else if (state.state === 'orissa') {
-              state.state = 'odisha';
-            } else if (state.state === 'maharastra') {
-              state.state = 'maharashtra';
-            } else if (state.state === 'tripura') {
-            }
-            state.display_title = state.display_title.replace(' ETV', '');
-            if (state.state !== 'tripura') {
-              languageData[language].push(state);
-            }
-          }
+      if (!data.footer.length) {
+        const result = await api.Catalog.getFooterDetails({
+          query: {
+            region: country,
+            response: 'r2',
+            item_languages: language,
+          },
         });
-      });
-      languageData = Object.keys(languageData)
-        .sort()
-        .reduce((a, c) => ((a[c] = languageData[c]), a), {});
+        const requiredData = result.data.data.params_hash2.footer;
+        let languageData = {};
+        requiredData.forEach((state) => {
+          state.item_languages.forEach((language) => {
+            languageData[language] = languageData[language] || [];
+            if (state.state) {
+              if (state.state === 'tamilnadu') {
+                state.state = 'tamil-nadu';
+              } else if (state.state === 'orissa') {
+                state.state = 'odisha';
+              } else if (state.state === 'maharastra') {
+                state.state = 'maharashtra';
+              } else if (state.state === 'Assam') {
+                state.state = 'assam';
+              } else if (state.state === 'tripura') {
+              }
+              state.display_title = state.display_title.replace(' ETV', '');
+              if (state.state !== 'tripura') {
+                languageData[language].push(state);
+              }
+            }
+          });
+        });
+        languageData = Object.keys(languageData)
+          .sort()
+          .reduce((a, c) => ((a[c] = languageData[c]), a), {});
 
-      setData({
-        header: {
-          ...data.header,
-          languages: languageData,
-        },
-        footer: requiredData,
-      });
+        setData({
+          header: {
+            ...data.header,
+            languages: languageData,
+          },
+          footer: requiredData,
+        });
+      }
+
       const menu = {
         desktop: [],
         mobile: [],
@@ -141,26 +154,25 @@ const Layout = ({ children, accessToken, appConfig }) => {
 
       const isDesktop = window.innerWidth > 768;
 
-      let convertedState = configStateCodeConverter(
-        location.pathname.split('/')[2]
-      );
+      let convertedState = configStateCodeConverter(state);
       convertedState =
-        location.pathname.split('/')[1] === 'urdu' && convertedState !== 'jk'
+        language === 'urdu' && convertedState !== 'jk'
           ? 'urdu'
           : convertedState;
 
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
-          suffix:
-            appConfig.params_hash2.config_params[
-              isDesktop ? 'web_lists' : 'msite_lists'
-            ][convertedState][isDesktop ? 'tabs' : 'left-menu'],
+          suffix: isDesktop
+            ? appConfig.params_hash2.config_params[
+                isDesktop ? 'web_lists' : 'msite_lists'
+              ][convertedState][isDesktop ? 'tabs' : 'left-menu']
+            : 'msite-new-left-menu',
         },
         query: {
           region: country,
           response: 'r2',
           item_languages: language,
-          portal_state: stateCodeConverter(location.pathname.split('/')[2]),
+          portal_state: stateCodeConverter(state),
         },
         isSSR: !isDesktop,
       });
@@ -181,27 +193,28 @@ const Layout = ({ children, accessToken, appConfig }) => {
             region: country,
             response: 'r2',
             item_languages: language,
-            portal_state: stateCodeConverter(location.pathname.split('/')[2]),
-
+            portal_state: stateCodeConverter(state),
           },
           isSSR: true,
         });
         menu.desktop = resp.data.data.catalog_list_items;
       }
 
-      setData({
+      setData((data) => ({
+        ...data,
         header: {
-          languages: languageData,
+          ...data.header,
           menu: menu,
         },
-        footer: requiredData,
-      });
+      }));
     };
+
     if (accessToken.mobile.length) {
       token.web = accessToken.web;
       token.mobile = accessToken.mobile;
       populateData();
     }
+
     if (typeof window !== 'undefined') {
       window['menu'] = data.header;
     }
@@ -211,7 +224,21 @@ const Layout = ({ children, accessToken, appConfig }) => {
     <RTLContext.Provider value={language === 'ur' ? true : false}>
       <MenuContext.Provider value={appConfig}>
         <Header data={data.header} />
-        <section className="content">{children}</section>
+        {promiseInProgress ? (
+          <div
+            style={{
+              width: '100%',
+              height: '100',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Loader type="ThreeDots" color="#2BAD60" height="100" width="100" />
+          </div>
+        ) : (
+          <section className="content">{children}</section>
+        )}
         <Footer
           data={data.footer}
           menu={data.header ? data.header['menu'] : null}

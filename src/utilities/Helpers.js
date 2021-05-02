@@ -415,7 +415,7 @@ const stateSocialLinks = [
     fb: 'https://www.facebook.com/Etv-Bharat-Tripura-1155623571198468',
   },
   {
-    state: 'Assam',
+    state: 'assam',
     twitter: 'https://twitter.com/ETVBharatAS',
     fb: 'https://www.facebook.com/ETVBharatAssam',
   },
@@ -507,8 +507,11 @@ const stateSocialLinks = [
 ];
 
 export const getSocialLinks = (state) => {
-  const links = stateSocialLinks.find(
-    (v) => v.state.toLowerCase() === state.toLowerCase()
-  );
+  let links;
+  if (state) {
+    links = stateSocialLinks.find(
+      (v) => v.state.toLowerCase() === state.toLowerCase()
+    );
+  }
   return links ? links : stateSocialLinks[0];
 };

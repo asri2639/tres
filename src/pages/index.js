@@ -7,7 +7,6 @@ import { Router, withTranslation } from '@i18n'
 const Index = () => {
   const router = useRouter()
   React.useEffect(() => {
-  
    // router.replace('/[state]', `/national`)
   })
   return (

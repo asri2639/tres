@@ -119,7 +119,7 @@ const MobileFooter = ({ data, menu, t }) => {
 
   return (
     <>
-      {menu && menu.desktop ? (
+      {menu && menu.mobile ? (
         <>
           {isAMP ? <AMPSidebar data={{ menu: menu }} /> : null}
           {openStateModal.length > 0 ? (
@@ -180,6 +180,7 @@ const MobileFooter = ({ data, menu, t }) => {
           {sidebar ? (
             <DesktopSidebar
               data={{ menu: menu }}
+              isMobile={true}
               onClose={() => toggleSidebar(false)}
             />
           ) : null}

@@ -1,7 +1,7 @@
 import GridList from '@components/article/GridList';
 import PopularList from '@components/article/PopularList';
 
-const AdContainer = ({ data }) => {
+const AdContainer = ({ data, className }) => {
   return (
     <>
       {data.map((val) => {
@@ -16,7 +16,7 @@ const AdContainer = ({ data }) => {
             });
           return (
             <iframe
-              className="mx-auto ad-iframe"
+              className={`mx-auto ad-iframe ${className}`}
               key={val.list_id}
               width={width + 50}
               height={height + 50}

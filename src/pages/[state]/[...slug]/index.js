@@ -17,15 +17,17 @@ import getConfig from 'next/config';
 import ArticleList from '@components/article/ArticleList';
 import VideoList from '@components/video/VideoList';
 import GalleryList from '@components/gallery/GalleryList';
+import ListContainer from '@components/listing/ListContainer';
+import { trackPromise } from 'react-promise-tracker';
 
-const slug = ({ data, pageType, appConfig, id, isAmp }) => {
+const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
   const router = useRouter();
   let canonicalUrl = '',
     ampUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
-  if (appConfig.params_hash2) {
+  if (appConfig && appConfig.params_hash2) {
     const fbContent =
       appConfig.params_hash2.config_params.fb_pages[convertedState];
     fbContentId = fbContent ? fbContent.fb_page_id : null;
@@ -451,44 +453,41 @@ const slug = ({ data, pageType, appConfig, id, isAmp }) => {
             />
           </>
         );
+
+      case 'listing':
+        return <ListContainer data={data} payload={payload}></ListContainer>;
     }
   };
   return <>{data ? getComponent() : <div>No article data</div>}</>;
 };
 
 slug.getInitialProps = async ({ query, req, res, ...args }) => {
-  let i18n = null;
-  let language = 'en';
-  let state = 'na';
-  let params = null;
-  let bypass = false;
+  let i18n = null,
+    language = 'en',
+    state = 'na',
+    params = null,
+    bypass = false;
+    
   const { publicRuntimeConfig } = getConfig();
   const isAmp =
     query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
+  const url = args.asPath;
+
+  const urlSplit = url.split('/');
+  language = languageMap[urlSplit[1]];
+  state = stateCodeConverter(urlSplit[2]);
+  params = {
+    state: query.state,
+    language: language,
+  };
 
   if (typeof window !== 'undefined') {
-    window['applicationConfig'] = applicationConfig;
-  }
-  if (req && req['i18n']) {
-    i18n = req['i18n'];
-    language = i18n.language;
-    state = stateCodeConverter(query.state + '');
-    params = {
-      state: query.state,
-      language: language,
-    };
-  } else if (typeof window !== 'undefined') {
     document.documentElement.lang = languageMap[language];
+    window['applicationConfig'] = applicationConfig;
+
     if (location.protocol === 'http') {
       // window.location.href = window.location.href.replace('http:', 'https:');
     }
-    const urlSplit = location.pathname.split('/');
-    language = languageMap[urlSplit[1]];
-    state = stateCodeConverter(urlSplit[2]);
-    params = {
-      state: query.state,
-      language: language,
-    };
   }
 
   bypass = req.url.indexOf('live-streaming') >= 0;
@@ -605,8 +604,58 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           id: id,
         };
     }
-  } else if (typeof window === 'undefined') {
-    const id = query.slug.slice(-1)[0];
+  } else {
+    const api = API(APIEnum.Listing, APIEnum.CatalogList);
+    const response = await api.Listing.getListingApiKey({
+      query: {
+        app: 'msite',
+        url: args.asPath,
+      },
+    });
+
+    const result = response.data;
+
+    const requestPayload = {
+      params: {
+        key: result.home_link,
+      },
+      query: {
+        collective_ads_count: 0,
+        page: 0,
+        page_size: 8,
+        version: 'v2',
+        response: 'r2',
+        item_languages: language,
+        portal_state: state,
+      },
+    };
+    const listingResp = await trackPromise(
+      api.CatalogList.getListing(requestPayload)
+    );
+
+    const data = listingResp.data.data;
+
+    /* if (res) {
+      res.writeHead(302, {
+        // or 301
+        Location: `${
+          publicRuntimeConfig.APP_ENV === 'staging'
+            ? 'https://staging.etvbharat.com'
+            : 'https://www.etvbharat.com'
+        }${req.url}`,
+      });
+      res.end();
+    } */
+    return {
+      namespacesRequired: ['common'],
+      pageType: 'listing',
+      data: data,
+      appConfig: applicationConfig.value,
+      payload: requestPayload,
+      id: null,
+    };
+
+    /*  const id = query.slug.slice(-1)[0];
     var match = id.match(/\w{2,6}[0-9]+$/);
     if (!(match && match[0])) {
       res.writeHead(302, {
@@ -628,16 +677,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         Location: 'https://' + req.headers.host + req.url,
       });
       res.end();
-    }
+    } */
   }
-
-  return {
-    pageType: 'listing',
-    data: {},
-    appConfig: {},
-    isAmp: isAmp,
-    id: null,
-  };
 };
 
 export default slug;

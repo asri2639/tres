@@ -48,7 +48,7 @@ const DesktopFooter = ({ data, t }) => {
   }, []);
   return (
     <footer className="eb-footer footer">
-      <div className="desktop-footer absolute bottom-0 w-full divide-y md:block hidden font-english mb-20">
+      <div className="desktop-footer absolute bottom-0 w-full divide-y md:block hidden font-english mb-4">
         {/* {t('top_news')} */}
         <div className="border-t">
           <div

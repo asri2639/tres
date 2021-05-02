@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Thumbnail = ({ thumbnail, className, type, creditSize = '' }) => {
+const Thumbnail = ({ thumbnail, className, type, creditSize = '',children }) => {
   const [state, setState] = useState({
     src: thumbnail.url,
     errored: false,

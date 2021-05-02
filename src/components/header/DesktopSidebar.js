@@ -3,7 +3,7 @@ import header from './Header.module.scss';
 import NavLink from '@components/common/NavLink';
 import GoogleTagManager from '@utils/GoogleTagManager';
 
-export default function DesktopSidebar({ data, onClose }) {
+export default function DesktopSidebar({ data, onClose, isMobile = false }) {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
 
@@ -11,9 +11,10 @@ export default function DesktopSidebar({ data, onClose }) {
     const timer = setTimeout(() => {
       setOpen(true);
     }, 10);
-    if (data && data.menu && data.menu.desktop) {
+    const key = isMobile ? 'mobile' : 'desktop';
+    if (data && data.menu && data.menu[key]) {
       setItems(
-        data.menu.desktop.map((v) => {
+        data.menu[key].map((v) => {
           const urlSplit = v.url.startsWith('/')
             ? v.url.split('/').slice(1)
             : v.url.split('/');
