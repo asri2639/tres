@@ -3,8 +3,7 @@ import React, { useContext } from 'react';
 import '@styles/tailwind.css';
 import '@styles/globals.scss';
 import '@styles/_fonts.scss';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { i18n, appWithTranslation } from '@i18n';
 import Constants, {
   accessToken,
@@ -16,6 +15,7 @@ import getConfig from 'next/config';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import { thumbnailExtractor } from '@utils/Helpers';
+import NProgress from 'nprogress';
 
 // export function reportWebVitals(metric: NextWebVitalsMetric) {
 //   console.log(metric)
@@ -25,42 +25,29 @@ export const AMPContext = React.createContext(false);
 let currentLanguage = 'english';
 
 export function reportWebVitals(metric) {
-  console.log(metric)
+  console.log(metric);
 }
 
-function App({ Component, pageProps, data, accessToken, appConfig }) {
+Router.events.on('routeChangeStart', (url) => {
+  console.log(`Loading: ${url}`);
+  NProgress.start();
+});
+
+Router.events.on('routeChangeComplete', (url) => {
+  NProgress.done();
+  document.documentElement.lang = languageMap[url.split('/')[1]];
+  const urlSplit = url.split('/');
+  if (urlSplit[1] !== currentLanguage) {
+    currentLanguage = urlSplit[1];
+    document.documentElement.lang = languageMap[currentLanguage];
+    i18n.changeLanguage(document.documentElement.lang);
+  }
+});
+Router.events.on('routeChangeError', () => NProgress.done());
+
+function App({ Component, noRender, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const { publicRuntimeConfig } = getConfig();
-  useEffect(() => {
-    document.documentElement.lang = languageMap[router.asPath.split('/')[1]];
-
-    const handleRouteChange = (url) => {
-      const urlSplit = url.split('/');
-      if (urlSplit[1] !== currentLanguage) {
-        currentLanguage = urlSplit[1];
-        document.documentElement.lang = languageMap[currentLanguage];
-        i18n.changeLanguage(document.documentElement.lang);
-      }
-      var match = urlSplit.slice(-1)[0].match(/\w{2}[0-9]+$/);
-      if (!(match && match[0])) {
-        const newUrl = `${
-          publicRuntimeConfig.APP_ENV === 'staging'
-            ? 'https://staging.etvbharat.com'
-            : 'https://www.etvbharat.com'
-        }${url}`;
-        window.location.replace(newUrl);
-      }
-      console.log('App is changing to: ', url);
-    };
-
-    router.events.on('routeChangeComplete', handleRouteChange);
-
-    // If the component is unmounted, unsubscribe
-    // from the event with the `off` method:
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, []);
 
   return (
     <>
@@ -82,7 +69,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
           }
         >
           <Layout accessToken={accessToken} appConfig={appConfig}>
-            <Component {...pageProps} />
+            {noRender ? null : <Component {...pageProps} />}
           </Layout>
         </AMPContext.Provider>
       ) : null}
@@ -93,6 +80,11 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 App.getInitialProps = async ({ Component, ctx }) => {
   let pageProps = {};
 
+  if (ctx.asPath === '/') {
+    process.browser
+      ? Router.push('/national')
+      : ctx.res.writeHead(302, { Location: '/national' }).end();
+  }
   const api = API(APIEnum.Catalog);
 
   if (accessToken.web.length === 0) {
@@ -129,11 +121,20 @@ App.getInitialProps = async ({ Component, ctx }) => {
     applicationConfig.value = appConfig;
   }
 
-  if (Component.getInitialProps) {
+  let url = null;
+  if (process.browser) {
+    url = window.location.pathname;
+  }
+
+  if (
+    Component.getInitialProps &&
+    !(url != null && ctx.asPath !== url && url.split('/').length === 3)
+  ) {
     pageProps = await Component.getInitialProps(ctx);
   }
 
   return {
+    noRender: url != null && ctx.asPath !== url && url.split('/').length === 3,
     pageProps,
     data: '',
     accessToken,

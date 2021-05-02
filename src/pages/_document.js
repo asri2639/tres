@@ -6,7 +6,6 @@ import Document, {
   NextScript,
   DocumentContext,
 } from 'next/document';
-import { useRouter } from 'next/router';
 
 export default class ETVDocument extends Document {
   render() {
