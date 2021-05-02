@@ -41,19 +41,6 @@ export const apiStatusHandler = (error, hideMessage = false) => {
     return;
   }
 
-  /*    if (error.response.status === 403) {
-      message += `"Error" ${error.response.status}: ${
-        error.response.data.error_code
-      }
-      ${error.response.data.message || ''}`;
-
-    } else if (error.response.status === 400) {
-      message += `"Validation Error" ${error.response.status}: ${
-        error.response.data.error_code
-      }
-      ${error.response.data.message || ''}`;
-    }
- */
   if (message) {
     //   toast.error(message);
     return true;
@@ -72,7 +59,9 @@ class APIError extends Error {
 
 export const accessTokenFetcher = (authToken) => {
   return fetch(
-    `http://localhost:3000/api/access_token?auth_token=${authToken}`,
+    `${Constants.baseURL}${
+      Constants.baseURL.indexOf('localhost') != -1 ? '/api' : ''
+    }/access_token?auth_token=${authToken}`,
     {
       headers: {
         accept:
@@ -90,9 +79,11 @@ export const accessTokenFetcher = (authToken) => {
 };
 
 async function errorResponseHandler(error) {
+  console.log(error.response)
   if (
     error.response &&
     error.response.status === 422 &&
+    error.response.data.error &&
     error.response.data.error.message.indexOf('access_token') >= 0
   ) {
     //   Constants.authToken

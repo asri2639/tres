@@ -66,5 +66,11 @@ export default function CatalogList(inst) {
         config
       );
     },
+    getListing({ params, query, config } = new APIRequest()) {
+      return inst.get(
+        `${controller}/${params.key}.gzip?${new URLSearchParams(query)}`,
+        config
+      );
+    },
   };
 }
