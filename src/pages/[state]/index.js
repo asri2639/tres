@@ -1,14 +1,72 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { i18n, Link, withTranslation } from '@i18n';
+import { I18nContext } from 'next-i18next';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
-import { stateCodeConverter } from '@utils/Helpers';
 import ListContainer from '@components/listing/ListContainer';
 import { applicationConfig, languageMap } from '@utils/Constants';
 import { trackPromise } from 'react-promise-tracker';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
+import { NextSeo } from 'next-seo';
 
 const state = ({ data, payload, t }) => {
-  return <ListContainer data={data} payload={payload}></ListContainer>;
+  const router = useRouter();
+  const {
+    i18n: { language },
+  } = useContext(I18nContext);
+  console.log(router);
+  const convertedState = configStateCodeConverter(router.query.state);
+
+  let fbContentId = '';
+  if (applicationConfig && applicationConfig.params_hash2) {
+    const fbContent =
+      applicationConfig.params_hash2.config_params.fb_pages[convertedState];
+    fbContentId = fbContent ? fbContent.fb_page_id : null;
+  }
+
+  return (
+    <>
+      <Head>
+        <title>{data.meta_tag_title}</title>
+        <meta name="fbPages" property="fb:pages" content={fbContentId}></meta>
+      </Head>
+      <NextSeo
+        title={data.meta_tag_title}
+        description={data.meta_tag_description}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: data.meta_tag_keywords
+              ? data.meta_tag_keywords.join(', ')
+              : '',
+          },
+        ]}
+        openGraph={{
+          site_name: 'ETV Bharat News',
+          url: `https://www.etvbharat.com/${router.asPath.slice(1)}`,
+          type: 'article',
+          title: data.meta_tag_title,
+          description: data.meta_tag_description,
+          images: [
+            {
+              url: `https://react.etvbharat.com/assets/logos/${language}.png`,
+              width: 200,
+              height: 200,
+              alt: 'ETV Bharat News',
+            },
+          ],
+        }}
+        twitter={{
+          handle: '@etvbharat',
+          site: '@etvbharat',
+          cardType: 'summary_large_image',
+        }}
+      />
+      <ListContainer data={data} payload={payload}></ListContainer>
+    </>
+  );
 };
 
 state.getInitialProps = async ({ query, req, res, ...args }) => {
@@ -18,7 +76,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const response = await api.Listing.getListingApiKey({
     query: {
       app: 'msite',
-      url: args.asPath,
+      url: url,
     },
   });
 
@@ -52,7 +110,6 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const listingResp = await trackPromise(
     api.CatalogList.getListing(requestPayload)
   );
-
   const data = listingResp.data.data;
   /* if (res) {
     res.writeHead(302, {
