@@ -16,7 +16,6 @@ const state = ({ data, payload, t }) => {
   const {
     i18n: { language },
   } = useContext(I18nContext);
-  console.log(router);
   const convertedState = configStateCodeConverter(router.query.state);
 
   let fbContentId = '';

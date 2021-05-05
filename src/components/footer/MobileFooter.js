@@ -13,6 +13,7 @@ import { WithTranslation } from 'next-i18next';
 import { AMPContext } from '@pages/_app';
 import AMPSidebar from '@components/header/AMPSidebar';
 import { getSocialLinks } from '@utils/Helpers';
+import eventBus from '@utils/EventBus';
 
 const MobileFooter = ({ data, menu, t }) => {
   const isAMP = useContext(AMPContext);
@@ -29,29 +30,7 @@ const MobileFooter = ({ data, menu, t }) => {
   });
   const [searchBox, toggleSearchBox] = useState(false);
   const [searchInput, setSearchInput] = useState('');
-  const [openStateModal, setOpenStateModal] = useState([]);
   const [sidebar, toggleSidebar] = useState(false);
-
-  const languageNStateSelect = (language, states) => {
-    if (language === 'english') {
-      setTimeout(() => {
-        router.push(`/national`, `/${language}/national`);
-      }, 100);
-    } else {
-      if (states.length === 1) {
-        setTimeout(() => {
-          router.push(`/${states[0].state}`, `/${language}/${states[0].state}`);
-        }, 100);
-      } else {
-        setOpenStateModal(states);
-      }
-    }
-  };
-
-  const goToSelected = (selected) => {
-    languageNStateSelect(selected.language, [{ state: selected.state }]);
-    setOpenStateModal([]);
-  };
 
   const backToTop = () => {
     window.scroll({
@@ -60,20 +39,6 @@ const MobileFooter = ({ data, menu, t }) => {
       behavior: 'smooth',
     });
     GoogleTagManager.backToTop();
-  };
-
-  const changeState = () => {
-    const states = data
-      .filter(
-        (v) => ['national', 'goa', 'tripura'].indexOf(v.state) === -1 && v.state
-      )
-      .map((v) => ({ label: v.state.replace(/-/gi, ' '), ...v }))
-      .sort((a, b) => {
-        let textA = a.label.toUpperCase();
-        let textB = b.label.toUpperCase();
-        return textA < textB ? -1 : textA > textB ? 1 : 0;
-      });
-    setOpenStateModal(states);
   };
 
   const searchitem = (e) => {
@@ -122,61 +87,6 @@ const MobileFooter = ({ data, menu, t }) => {
       {menu && menu.mobile ? (
         <>
           {isAMP ? <AMPSidebar data={{ menu: menu }} /> : null}
-          {openStateModal.length > 0 ? (
-            <Modal
-              title=""
-              isMobile={true}
-              open={!!openStateModal}
-              onClose={() => {
-                setOpenStateModal([]);
-              }}
-              width={null}
-              height={null}
-            >
-              <>
-                <div
-                  className="p-3 pb-4 rounded-md"
-                  style={{ background: '#f0f0f0' }}
-                >
-                  <div className="flex justify-between pb-4">
-                    <div className="text-gray-700 text-md pl-2">
-                      Change State
-                    </div>
-                    <div>
-                      <button
-                        type="button"
-                        className="font-semibold text-gray-500 hover:text-gray-900 text-md"
-                        onClick={() => setOpenStateModal([])}
-                      >
-                        &#10005;
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap w-full px-3 text-sm mx-auto">
-                    {openStateModal.map((v) => {
-                      return (
-                        <div
-                          key={v.state}
-                          onClick={() => {
-                            goToSelected({
-                              language: v.item_languages[0],
-                              state: v.state,
-                            });
-                          }}
-                          className="py-1 capitalize"
-                          style={{ flexBasis: '50%' }}
-                        >
-                          {v.label}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </>
-            </Modal>
-          ) : null}
-
           {sidebar ? (
             <DesktopSidebar
               data={{ menu: menu }}
@@ -480,7 +390,11 @@ const MobileFooter = ({ data, menu, t }) => {
                     on="tap:my-lightbox"
                     role="button"
                     tabIndex={0}
-                    onClick={() => changeState()}
+                    onClick={() => {
+                      eventBus.dispatch('state-selector', {
+                        show: true,
+                      });
+                    }}
                   >
                     <img
                       className="h-6"

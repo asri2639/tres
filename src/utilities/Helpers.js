@@ -4,6 +4,21 @@ export const isEmpty = (obj) => {
   return true;
 };
 
+export const linkInfoGenerator = (url) => {
+  if (url.startsWith('/')) {
+    url = url.slice(1);
+  }
+
+  const splitUrl = url.split('/');
+  return {
+    href: {
+      pathname: '/[state]/[...slug]',
+      query: { state: splitUrl[1], slug: splitUrl.slice(2).join('/') },
+    },
+    as: `/${url}`,
+  };
+};
+
 export const thumbnailExtractor = (
   thumbnailObj,
   ratio = '3_2',

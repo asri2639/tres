@@ -2,25 +2,26 @@ import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
 import GoogleTagManager from '@utils/GoogleTagManager';
-import { thumbnailExtractor } from '@utils/Helpers';
+import { thumbnailExtractor, linkInfoGenerator } from '@utils/Helpers';
 import { useContext, useEffect, useState } from 'react';
 
 const SquareCard = ({ data, article, className }) => {
   const isRTL = useContext(RTLContext);
 
-  const splitUrl = article.web_url.split('/');
-  const thumbnail = thumbnailExtractor(article.thumbnails, '3_2', 's2b', null);
-  return (
+  const linkInfo = linkInfoGenerator(article ? article.web_url : data.url);
+
+  const thumbnail = article
+    ? thumbnailExtractor(article.thumbnails, '3_2', 's2b', null)
+    : null;
+
+  return article ? (
     <NavLink
       key={article.friendly_id}
       className={`flex flex-col pb-1 cursor-pointer rounded-md ${
         isRTL ? 'rtl' : ''
       } ${className}`}
-      href={{
-        pathname: '/[state]/[...slug]',
-        query: { state: splitUrl[1], slug: splitUrl.slice(2).join('/') },
-      }}
-      as={`/${article.web_url}`}
+      href={linkInfo.href}
+      as={linkInfo.as}
       passHref
       onClick={() => {
         GoogleTagManager.articleClick(article);
@@ -49,7 +50,21 @@ const SquareCard = ({ data, article, className }) => {
         </div>
       </div>
     </NavLink>
-  );
+  ) : data ? (
+    <NavLink
+      className={`flex flex-col pb-1 cursor-pointer rounded-md ${
+        isRTL ? 'rtl' : ''
+      } ${className}`}
+      href={linkInfo.href}
+      as={linkInfo.as}
+      passHref
+      onClick={() => {
+        GoogleTagManager.articleClick(article);
+      }}
+    >
+      {data.text}
+    </NavLink>
+  ) : null;
 };
 
 export default SquareCard;

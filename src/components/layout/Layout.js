@@ -11,6 +11,8 @@ import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
 import Loader from 'react-loader-spinner';
 import { usePromiseTracker } from 'react-promise-tracker';
 import { useRouter } from 'next/router';
+import eventBus from '@utils/EventBus';
+import StateSelectModal from '@components/common/StateSelectModal'
 
 const country = 'IN';
 export const RTLContext = React.createContext(false);
@@ -39,6 +41,7 @@ const Layout = ({ children, accessToken, appConfig }) => {
     i18n: { language, options },
   } = useContext(I18nContext);
   const state = router.query.state || 'national';
+  const [showStateModal, setShowStateModal] = useState(false);
 
   const { promiseInProgress } = usePromiseTracker();
 
@@ -218,33 +221,56 @@ const Layout = ({ children, accessToken, appConfig }) => {
     if (typeof window !== 'undefined') {
       window['menu'] = data.header;
     }
+
+    eventBus.on('state-selector', (data) => {
+      setShowStateModal(data.show);
+    });
+
+    return () => {
+      eventBus.remove('state-selector');
+    };
   }, [language, accessToken]);
 
   return (
-    <RTLContext.Provider value={language === 'ur' ? true : false}>
-      <MenuContext.Provider value={appConfig}>
-        <Header data={data.header} />
-        {promiseInProgress ? (
-          <div
-            style={{
-              width: '100%',
-              height: '100',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Loader type="ThreeDots" color="#2BAD60" height="100" width="100" />
-          </div>
-        ) : (
-          <section className="content">{children}</section>
-        )}
-        <Footer
-          data={data.footer}
-          menu={data.header ? data.header['menu'] : null}
+    <>
+      {showStateModal ? (
+        <StateSelectModal
+          data={data ? data.footer : {}}
+          onClose={() => {
+            setShowStateModal(false);
+          }}
         />
-      </MenuContext.Provider>
-    </RTLContext.Provider>
+      ) : null}
+      <RTLContext.Provider value={language === 'ur' ? true : false}>
+        <MenuContext.Provider value={appConfig}>
+          <Header data={data.header} />
+          {promiseInProgress ? (
+            <div
+              style={{
+                width: '100%',
+                height: '100',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Loader
+                type="ThreeDots"
+                color="#2BAD60"
+                height="100"
+                width="100"
+              />
+            </div>
+          ) : (
+            <section className="content">{children}</section>
+          )}
+          <Footer
+            data={data.footer}
+            menu={data.header ? data.header['menu'] : null}
+          />
+        </MenuContext.Provider>
+      </RTLContext.Provider>
+    </>
   );
 };
 

@@ -126,15 +126,16 @@ App.getInitialProps = async ({ Component, ctx }) => {
     url = window.location.pathname;
   }
 
+  console.log(Component)
+
   if (
     Component.getInitialProps &&
-    !(url != null && ctx.asPath !== url && url.split('/').length === 3)
+    !(url != null && ctx.asPath !== url && url.split('/').length ===  ctx.asPath.split('/').length)
   ) {
     pageProps = await Component.getInitialProps(ctx);
   }
-
   return {
-    noRender: url != null && ctx.asPath !== url && url.split('/').length === 3,
+    noRender: url != null && ctx.asPath !== url && url.split('/').length === ctx.asPath.split('/').length,
     pageProps,
     data: '',
     accessToken,

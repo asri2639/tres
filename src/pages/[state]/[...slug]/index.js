@@ -489,10 +489,10 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       // window.location.href = window.location.href.replace('http:', 'https:');
     }
   }
-
   bypass = args.asPath.indexOf('live-streaming') >= 0;
   const id = query.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
+
   if (re.test(id) || bypass) {
     const api = API(APIEnum.CatalogList);
     let type = query.slug[0].toLowerCase();

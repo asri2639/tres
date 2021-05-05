@@ -396,3 +396,46 @@ button:focus {
 .h-13 {
   height: 52px;
 }
+
+.wallhead {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 4px 7px 4px 7px;
+
+  .wall-title .title {
+    color: #bc231e;
+    font-size: 8px;
+    font-weight: bold;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 4px 0 4px 0;
+    height: 28px;
+    overflow: hidden;
+  }
+
+  li {
+    flex: 1;
+    flex-basis: 19%;
+    display: block;
+    border: 1px solid #949293;
+    border-radius: 3px;
+    margin: 0.5%;
+    background: #fff;
+    
+
+    .wall-image {
+      width: 19px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 5px;
+    }
+    .wall-icn {
+      width: 16px;
+      position: inherit;
+      top: 4px;
+      left: 60%;
+    }
+  }
+}
