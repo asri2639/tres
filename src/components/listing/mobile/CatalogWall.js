@@ -17,7 +17,7 @@ const CatalogWall = ({ data, article, className }) => {
               as={linkInfo.as}
               passHref
               onClick={() => {
-                GoogleTagManager.articleClick(item);
+                GoogleTagManager.wallMenuClick(item);
               }}
             >
               <div className="wall-image">

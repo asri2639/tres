@@ -10,8 +10,9 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
 import { NextSeo } from 'next-seo';
+import getConfig from 'next/config';
 
-const state = ({ data, payload, t }) => {
+const state = ({ data, payload, pageType, t }) => {
   const router = useRouter();
   const {
     i18n: { language },
@@ -71,6 +72,21 @@ const state = ({ data, payload, t }) => {
 state.getInitialProps = async ({ query, req, res, ...args }) => {
   const api = API(APIEnum.Listing, APIEnum.CatalogList);
   const url = args.asPath;
+  const { publicRuntimeConfig } = getConfig();
+
+  if (url !== '/english/national') {
+    if (res) {
+      res.writeHead(302, {
+        // or 301
+        Location: `${
+          publicRuntimeConfig.APP_ENV === 'staging'
+            ? 'https://staging.etvbharat.com'
+            : 'https://www.etvbharat.com'
+        }${url}`,
+      });
+      res.end();
+    }
+  }
 
   const response = await api.Listing.getListingApiKey({
     query: {

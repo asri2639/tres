@@ -53,12 +53,14 @@ const SeeAll = ({ data, article, className, t }) => {
         {scope.dropdown ? (
           <div className="flex items-center ">
             <div className="pr-2 text-sm">{t(`${scope.text}`)}</div>
-            <div className="flex items-center text-sm border border-gray-600 px-2 py-0 cursor-pointer"
-             onClick={() => {
-              eventBus.dispatch('state-selector', {
-                show: true,
-              });
-            }}>
+            <div
+              className="flex items-center text-sm border border-gray-600 px-2 py-0 cursor-pointer"
+              onClick={() => {
+                eventBus.dispatch('state-selector', {
+                  show: true,
+                });
+              }}
+            >
               <div>{scope.input_text}</div>
               <span className="pl-1 caret text-gray-700 "> &#9660;</span>
             </div>
@@ -81,7 +83,7 @@ const SeeAll = ({ data, article, className, t }) => {
       </div>
 
       <div className="w-full flex flex-wrap">
-        {data.catalog_list_items.map((item, ind) => {
+        {data.catalog_list_items.slice(0, isEven ? 2 : 3).map((item, ind) => {
           return (
             <div className="w-1/2 p-1 " key={item.friendly_id}>
               <SquareCard className="bg-white" article={item} />

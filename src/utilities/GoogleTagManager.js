@@ -97,7 +97,7 @@ export default {
       f = { detailsUrl: [] };
 
     if (!e.web_url) {
-      f.detailsUrl = new URL(window.location.href).pathname.split('/').slice(1);;
+      f.detailsUrl = new URL(window.location.href).pathname.split('/').slice(1);
     } else {
       f.detailsUrl = e.web_url.split('/');
     }
@@ -366,34 +366,266 @@ export default {
       current_page_url: s,
     });
   },
-    getTabsOfSearch: function(a.query).then(function(e) {
-    e.data.catalog_list_items && (angular.forEach(e.data.catalog_list_items, function(e) {
-      i.tabsGtm.push(e),
-      e.total_items_count > 0 && i.tabs.push(e)
-    }),
-    0 === i.tabs.length && (i.noResults = !0)),
-    i.curHome_link = i.tabs[0].home_link,
-    i.currentPage[i.curHome_link] = 1,
-    i.getTabDetails(i.tabs[0].home_link, s, 39),
-    angular.forEach(i.tabs, function(e) {
-      0 != e.total_items_count && (i.totalItems += e.total_items_count,
-      i.isSearchResults = !0)
-    }),
-    angular.forEach(i.tabsGtm, function(e) {
-      var t = e.total_items_count
-        , n = a.query
-        , i = e.title
-        , s = window.location.href;
-      window['dataLayer'].push({
-        event: "view_search_results",
-        number_of_search_results: t,
-        search_term: n,
-        content_type: i,
-        current_page_url: s
-      })
-    }),
-    o && "null" !== o && t.createSearchEntry(a.query, o.session).then(function(e) {
-      console.log("message", e)
-    })
-  }), */
+    */
+
+  wallMenuClick: function (response) {
+    const splitUrl = window.location.pathname.split('/');
+    const wallMenuItem = response.friendly_id,
+      itemCategory = splitUrl[3],
+      currentPageUrl = window.location.href,
+      appLanguage = languageMap[splitUrl[1]],
+      state = (state =
+        response.state != undefined && response.state != ''
+          ? response.state[0]
+          : 'INDIA');
+
+    if (
+      itemCategory == undefined ||
+      itemCategory == '' ||
+      itemCategory == 'v2'
+    ) {
+      itemCategory = 'Headlines';
+    }
+
+    window.dataLayer.push({
+      event: 'click_wallmenu',
+      clicked_wallmenu_item: wallMenuItem,
+      item_category: itemCategory,
+      current_page_url: currentPageUrl,
+      state: state,
+      app_language: appLanguage,
+    });
+  },
+  dropgtm: function (response, itemCategory) {
+    var dropdownName = itemCategory;
+    var dropDownValue = response.friendly_id;
+    var currentPageUrl = window.location.href;
+    var state = StorageFactory.getStateCode();
+    var appLanguage = StorageFactory.getLanguageCode();
+    var itemCategory = window.location.href.split('/')[5];
+
+    if (
+      itemCategory == undefined ||
+      itemCategory == '' ||
+      itemCategory == 'v2'
+    ) {
+      itemCategory = 'Headlines';
+    }
+
+    if (state == undefined || state == '' || state == null) {
+      state = 'INDIA';
+    }
+
+    window.dataLayer.push({
+      event: 'select_dropdown',
+      dropdown_name: dropdownName,
+      selected_dropdown_value: dropDownValue,
+      current_page_url: currentPageUrl,
+      item_category: itemCategory,
+      state: state,
+      app_language: appLanguage,
+    });
+  },
+  carousalItemClick: function (newsItem, type) {
+    const splitUrl = window.location.pathname.split('/');
+    const carousalItem = 'carousal_article',
+      currentPageUrl = newsItem.url,
+      state = stateCodeConverter(splitUrl[2]),
+      appLanguage = languageMap[splitUrl[1]];
+    let itemCategory = 'state_carousal';
+
+    if (newsItem.has_videos) {
+      carousalItem = 'carousal_vod';
+    }
+
+    switch (type) {
+      case 'district':
+        itemCategory = 'district_carousal';
+        break;
+      case 'city':
+        itemCategory = 'city_carousal';
+        break;
+    }
+
+    if (state == undefined || state == '' || state == null) {
+      state = 'INDIA';
+    }
+
+    window.dataLayer.push({
+      event: 'click_carousal',
+      carousal_name: itemCategory,
+      carousal_item_clicked: carousalItem,
+      destination_page_url: currentPageUrl,
+      item_category: itemCategory,
+      state: state,
+      app_language: appLanguage,
+    });
+  },
+  seeAll: function (newsItem, stateLanguageInfo, type) {
+    const splitUrl = window.location.pathname.split('/');
+    const carousalItem = 'carousal_viewall',
+      destinationPageUrl = newsItem.as,
+      state = stateCodeConverter(splitUrl[2]),
+      appLanguage = languageMap[splitUrl[1]];
+    let itemCategory = 'state_carousal';
+
+    switch (type) {
+      case 'district':
+        itemCategory = 'district_carousal';
+        break;
+      case 'city':
+        itemCategory = 'city_carousal';
+        break;
+    }
+
+    if (state == undefined || state == '' || state == null) {
+      state = 'INDIA';
+    }
+
+    window.dataLayer.push({
+      event: 'click_carousal',
+      carousal_name: itemCategory,
+      carousal_item_clicked: carousalItem,
+      destination_page_url: window.location.origin + destinationPageUrl,
+      item_category: itemCategory,
+      state: state,
+      app_language: appLanguage,
+    });
+  },
+
+  gtmButtonCall: function (response) {
+    var itemId = response.title;
+    var itemName = response.title;
+    var detailsUrl = response.url.split('/');
+    var destination_page_url = window.location.origin + response.url;
+    var city = 'INDIA';
+    var district = 'INDIA';
+    var state = 'INDIA';
+    var constituency = 'INDIA';
+    var itemCategory = detailsUrl[3];
+    var itemSubCategory = detailsUrl[4];
+    var appLanguage = StorageFactory.getLanguageCode();
+
+    if (response.dynamic_state != undefined && response.dynamic_state != '') {
+      state = response.dynamic_state;
+    } else {
+      state = 'INDIA';
+    }
+    if (response.dynamic_city != undefined && response.dynamic_city != '') {
+      city = response.dynamic_city;
+    } else {
+      city = 'INDIA';
+    }
+    if (
+      response.dynamic_district != undefined &&
+      response.dynamic_district != ''
+    ) {
+      district = response.dynamic_district;
+    } else {
+      district = 'INDIA';
+    }
+    if (
+      response.dynamic_constituency != undefined &&
+      response.dynamic_constituency != ''
+    ) {
+      constituency = response.dynamic_constituency;
+    } else {
+      constituency = 'INDIA';
+    }
+    if (itemCategory != undefined && itemCategory != '') {
+      itemCategory = itemCategory;
+    } else {
+      itemCategory = 'INDIA';
+    }
+    if (itemSubCategory != undefined && itemSubCategory != '') {
+      itemSubCategory = itemSubCategory;
+    } else {
+      itemSubCategory = 'INDIA';
+    }
+
+    window.dataLayer.push({
+      event: 'more_click',
+      item_id: itemId,
+      item_name: itemName,
+      item_category: itemCategory,
+      item_sub_category: itemSubCategory,
+      state: state,
+      city: city,
+      district: district,
+      constituency: constituency,
+      app_language: appLanguage,
+      destination_page_url: destination_page_url,
+    });
+  },
+  gtmBrief: function (newsItem) {
+    if (newsItem && newsItem.web_url) {
+      var city = 'INDIA';
+      var district = 'INDIA';
+      var state = 'INDIA';
+      var constituency = 'INDIA';
+      var appLanguage = 'en';
+
+      var itemName = newsItem.title;
+      var itemId = newsItem.content_id;
+      var detailsUrl = newsItem.web_url.split('/');
+
+      if (newsItem.city != undefined && newsItem.city != '') {
+        if (newsItem.city[0] != undefined && newsItem.city[0] != '') {
+          city = newsItem.city[0];
+        }
+      } else {
+        city = 'INDIA';
+      }
+      if (newsItem.district != undefined && newsItem.district != '') {
+        if (newsItem.district[0] != undefined && newsItem.district[0] != '') {
+          district = newsItem.district[0];
+        }
+      } else {
+        district = 'INDIA';
+      }
+      if (newsItem.state != undefined && newsItem.state != '') {
+        if (newsItem.state[0] != undefined && newsItem.state[0] != '') {
+          state = newsItem.state[0];
+        }
+      } else {
+        state = 'INDIA';
+      }
+      if (newsItem.constituency != undefined && newsItem.constituency != '') {
+        if (
+          newsItem.constituency[0] != undefined &&
+          newsItem.constituency[0] != ''
+        ) {
+          constituency = newsItem.constituency[0];
+        }
+      } else {
+        constituency = 'INDIA';
+      }
+      if (
+        newsItem.item_languages != undefined &&
+        newsItem.item_languages != ''
+      ) {
+        if (
+          newsItem.item_languages[0] != undefined &&
+          newsItem.item_languages[0] != ''
+        ) {
+          appLanguage = newsItem.item_languages[0];
+        }
+      } else {
+        appLanguage = 'en';
+      }
+      window.dataLayer.push({
+        event: 'brief_article_viewed',
+        item_id: itemId,
+        item_name: itemName,
+        item_category: detailsUrl[2],
+        item_sub_category: detailsUrl[3],
+        state: state,
+        city: city,
+        district: district,
+        constituency: constituency,
+        app_language: appLanguage,
+        current_page_url: window.location.href,
+      });
+    }
+  },
 };

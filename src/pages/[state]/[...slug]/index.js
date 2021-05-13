@@ -467,7 +467,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     state = 'na',
     params = null,
     bypass = false;
-    
+
   const { publicRuntimeConfig } = getConfig();
   const isAmp =
     query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
@@ -511,7 +511,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         if (applicationConfig.value) {
           let convertedState = configStateCodeConverter(query.state);
           convertedState = query.language === 'urdu' ? 'urdu' : convertedState;
-
           suffix =
             applicationConfig.value['params_hash2'].config_params.ssr_details[
               convertedState
@@ -635,7 +634,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
     const data = listingResp.data.data;
 
-    /* if (res) {
+    if (res) {
       res.writeHead(302, {
         // or 301
         Location: `${
@@ -645,16 +644,16 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         }${req.url}`,
       });
       res.end();
-    } */
-    return {
+    }
+    /*  return {
       namespacesRequired: ['common'],
-      pageType: 'listing',
+      pageType: 'listing',  
       data: data,
       appConfig: applicationConfig.value,
       payload: requestPayload,
       id: null,
     };
-
+ */
     /*  const id = query.slug.slice(-1)[0];
     var match = id.match(/\w{2,6}[0-9]+$/);
     if (!(match && match[0])) {

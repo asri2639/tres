@@ -58,6 +58,7 @@ export default function Article({
   );
 
   useEffect(() => {
+    let api = null;
     if (data.source && data.source.indexOf('bbc_') === 0) {
       setSource(data.source);
     }
@@ -177,7 +178,7 @@ export default function Article({
       }
 
       if (data.has_videos) {
-        const api = API(APIEnum.Video);
+        api = API(APIEnum.Video);
         let promises = [];
 
         const videos = parsedHtml.querySelectorAll('.videoDiv');
@@ -222,6 +223,10 @@ export default function Article({
         setAmpHtml(parsedHtml.innerHTML);
       }
     }
+
+    return () => {
+      api && api.shutdown();
+    };
   }, [inView, contentId, rhs, contentRef]);
 
   let filteredRHS = [];

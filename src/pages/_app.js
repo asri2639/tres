@@ -48,7 +48,6 @@ Router.events.on('routeChangeError', () => NProgress.done());
 function App({ Component, noRender, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const { publicRuntimeConfig } = getConfig();
-
   return (
     <>
       <Head>
@@ -68,7 +67,7 @@ function App({ Component, noRender, pageProps, data, accessToken, appConfig }) {
               : false
           }
         >
-          <Layout accessToken={accessToken} appConfig={appConfig}>
+          <Layout accessToken={accessToken} appConfig={appConfig} pageType={pageProps.pageType}>
             {noRender ? null : <Component {...pageProps} />}
           </Layout>
         </AMPContext.Provider>
@@ -126,16 +125,25 @@ App.getInitialProps = async ({ Component, ctx }) => {
     url = window.location.pathname;
   }
 
-  console.log(Component)
+  console.log(Component);
 
   if (
     Component.getInitialProps &&
-    !(url != null && ctx.asPath !== url && url.split('/').length ===  ctx.asPath.split('/').length)
+    !(
+      url != null &&
+      ctx.asPath &&
+      ctx.asPath !== url &&
+      url.split('/').length === ctx.asPath.split('/').length
+    )
   ) {
     pageProps = await Component.getInitialProps(ctx);
   }
   return {
-    noRender: url != null && ctx.asPath !== url && url.split('/').length === ctx.asPath.split('/').length,
+    noRender:
+      url != null &&
+      ctx.asPath &&
+      ctx.asPath !== url &&
+      url.split('/').length === ctx.asPath.split('/').length,
     pageProps,
     data: '',
     accessToken,

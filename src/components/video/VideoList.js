@@ -21,6 +21,141 @@ import { MenuContext } from '@components/layout/Layout';
 import { applicationConfig } from '@utils/Constants';
 import { AMPContext } from '@pages/_app';
 
+export const smartUrlFetcher = (...args) => {
+  const [play_url, hash, envs] = args;
+  if (envs.APP_ENV !== 'development') {
+    return VideoAPI(null)
+      .getSmartUrls({
+        params: {
+          play_url: play_url,
+          hash,
+        },
+        query: null,
+        payload: null,
+      })
+      .then((resp) => {
+        return resp;
+      });
+  } else {
+    const api = API(APIEnum.Video);
+
+    return api.Video.getSmartUrls({
+      params: {
+        play_url: play_url,
+        hash,
+        auth: 'kmAJAH4RTtqHjgoauC4o',
+      },
+      suv: true,
+    }).then((resp) => {
+      return resp.data;
+    });
+  }
+};
+
+export const constructPlaybackUrl = (
+  data,
+  smartData,
+  publicRuntimeConfig,
+  isAMP
+) => {
+  if (Object.keys(smartData).length === 0) {
+    return null;
+  }
+  let urlSplit = data.web_url.split('/');
+  let href =
+    publicRuntimeConfig.APP_ENV !== 'development'
+      ? `${window.location.origin}/${data.web_url}`
+      : `https://www.etvbharat.com/${data.web_url}`;
+
+  var s,
+    r,
+    a = 'live_stream' === data.media_type,
+    o = urlSplit[0], //language
+    l = urlSplit[1], // state
+    c = urlSplit[2], // video
+    d = urlSplit[3], //
+    u = data.display_title,
+    m = window.location.href;
+
+  data.media_type,
+    (s =
+      '' == data.district[0] || void 0 == data.district[0]
+        ? 'INDIA'
+        : data.district[0]),
+    (r =
+      '' == data.city[0] || void 0 == data.district[0]
+        ? 'INDIA'
+        : data.city[0]);
+
+  var h = 'english',
+    p = {
+      'andhra-pradesh': '10',
+      assam: '11',
+      english: '12',
+      urdu: '13',
+      bihar: '14',
+      chhattisgarh: '15',
+      delhi: '16',
+      gujarat: '17',
+      haryana: '18',
+      'himachal-pradesh': '19',
+      'jammu-and-kashmir': '20',
+      jharkhand: '21',
+      karnataka: '22',
+      kerala: '23',
+      'madhya-pradesh': '24',
+      maharashtra: '25',
+      odisha: '26',
+      punjab: '27',
+      rajasthan: '28',
+      'tamil-nadu': '29',
+      telangana: '30',
+      'uttar-pradesh': '31',
+      uttarakhand: '32',
+      'west-bengal': '33',
+    }[(h = 'national' == l ? o : l)],
+    w = smartData.adaptive_urls[0].playback_url,
+    g = smartData.adaptive_urls[0].video_duration,
+    origin = isAMP
+      ? '/assets/embed_etv.html?contenturl='
+      : publicRuntimeConfig.APP_ENV === 'staging' ||
+        publicRuntimeConfig.APP_ENV === 'development'
+      ? 'https://etvbharatimages.akamaized.net/player/etvbharat-test/embed_etv.html?contenturl='
+      : 'https://etvbharatimages.akamaized.net/player/etvbharat-staging/embed_etv.html?contenturl=',
+    y =
+      origin +
+      w +
+      (a ? '' : '&video_duration=' + g) +
+      '&thumbnailurl=https://react.etvbharat.com/assets/images/newstime.png&autoplay=' +
+      (a ? 'true' : 'false') +
+      '&mute=' +
+      (a ? 'true' : 'false') +
+      '&content_id=' +
+      data.content_id +
+      (a ? '&content_type=livestream' : '&content_type=vods') +
+      '&comscorec3=' +
+      p +
+      '&ga_tracking=true&language=' +
+      o +
+      '&stateName=' +
+      l +
+      '&category=' +
+      c +
+      '&subcategory=' +
+      d +
+      '&videossection=true&videocity=' +
+      r +
+      '&videotitle=' +
+      u +
+      '&currentpageurl=' +
+      href +
+      '&videodistrict=' +
+      s +
+      '&constituency=INDIA';
+
+  return y;
+};
+
 const VideoList = ({ videoData, appConfig }) => {
   const isAMP = useContext(AMPContext);
 
@@ -39,105 +174,6 @@ const VideoList = ({ videoData, appConfig }) => {
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
   const [viewed, setViewed] = useState([]);
-
-  const constructPlaybackUrl = (data, smartData) => {
-    if (Object.keys(smartData).length === 0) {
-      return null;
-    }
-    let urlSplit = data.web_url.split('/');
-    let href =
-      publicRuntimeConfig.APP_ENV !== 'development'
-        ? `${window.location.origin}/${data.web_url}`
-        : `https://www.etvbharat.com/${data.web_url}`;
-
-    var s,
-      r,
-      a = 'live_stream' === data.media_type,
-      o = urlSplit[0], //language
-      l = urlSplit[1], // state
-      c = urlSplit[2], // video
-      d = urlSplit[3], //
-      u = data.display_title,
-      m = window.location.href;
-
-    data.media_type,
-      (s =
-        '' == data.district[0] || void 0 == data.district[0]
-          ? 'INDIA'
-          : data.district[0]),
-      (r =
-        '' == data.city[0] || void 0 == data.district[0]
-          ? 'INDIA'
-          : data.city[0]);
-
-    var h = 'english',
-      p = {
-        'andhra-pradesh': '10',
-        assam: '11',
-        english: '12',
-        urdu: '13',
-        bihar: '14',
-        chhattisgarh: '15',
-        delhi: '16',
-        gujarat: '17',
-        haryana: '18',
-        'himachal-pradesh': '19',
-        'jammu-and-kashmir': '20',
-        jharkhand: '21',
-        karnataka: '22',
-        kerala: '23',
-        'madhya-pradesh': '24',
-        maharashtra: '25',
-        odisha: '26',
-        punjab: '27',
-        rajasthan: '28',
-        'tamil-nadu': '29',
-        telangana: '30',
-        'uttar-pradesh': '31',
-        uttarakhand: '32',
-        'west-bengal': '33',
-      }[(h = 'national' == l ? o : l)],
-      w = smartData.adaptive_urls[0].playback_url,
-      g = smartData.adaptive_urls[0].video_duration,
-      origin = isAMP
-        ? '/assets/embed_etv.html?contenturl='
-        : publicRuntimeConfig.APP_ENV === 'staging' ||
-          publicRuntimeConfig.APP_ENV === 'development'
-        ? 'https://etvbharatimages.akamaized.net/player/etvbharat-test/embed_etv.html?contenturl='
-        : 'https://etvbharatimages.akamaized.net/player/etvbharat-staging/embed_etv.html?contenturl=',
-      y =
-        origin +
-        w +
-        (a ? '' : '&video_duration=' + g) +
-        '&thumbnailurl=https://etvwinvideo.akamaized.net/etv-bharat/images/placeholder.png&autoplay=' +
-        (a ? 'true' : 'false') +
-        '&mute=' +
-        (a ? 'true' : 'false') +
-        '&content_id=' +
-        data.content_id +
-        (a ? '&content_type=livestream' : '&content_type=vods') +
-        '&comscorec3=' +
-        p +
-        '&ga_tracking=true&language=' +
-        o +
-        '&stateName=' +
-        l +
-        '&category=' +
-        c +
-        '&subcategory=' +
-        d +
-        '&videossection=true&videocity=' +
-        r +
-        '&videotitle=' +
-        u +
-        '&currentpageurl=' +
-        href +
-        '&videodistrict=' +
-        s +
-        '&constituency=INDIA';
-
-    return y;
-  };
 
   const relatedVideosFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
@@ -179,43 +215,13 @@ const VideoList = ({ videoData, appConfig }) => {
     });
   };
 
-  const smartUrlFetcher = (...args) => {
-    const [play_url, hash] = args;
-    if (publicRuntimeConfig.APP_ENV !== 'development') {
-      return VideoAPI(null)
-        .getSmartUrls({
-          params: {
-            play_url: play_url,
-            hash,
-          },
-          query: null,
-          payload: null,
-        })
-        .then((resp) => {
-          return resp;
-        });
-    } else {
-      const api = API(APIEnum.Video);
-
-      return api.Video.getSmartUrls({
-        params: {
-          play_url: play_url,
-          hash,
-          auth: 'kmAJAH4RTtqHjgoauC4o',
-        },
-        suv: true,
-      }).then((resp) => {
-        return resp.data;
-      });
-    }
-  };
-
   const { data: smartUrls, error: smartUrlError } = useSWR(
     [
       videoData.videos[0].data.play_url.url,
       createHash(
         'ywVXaTzycwZ8agEs3ujx' + videoData.videos[0].data.play_url.url
       ),
+      publicRuntimeConfig,
     ],
     smartUrlFetcher,
     {
@@ -251,7 +257,7 @@ const VideoList = ({ videoData, appConfig }) => {
     let video = videos.find(
       (article) => article.data.content_id === videoData.contentId
     );
-    
+
     if (video && adData) {
       video.rhs = adData.catalog_list_items.slice(2)[0].catalog_list_items;
       video.desktop = adData.catalog_list_items[0].catalog_list_items[0];
@@ -259,7 +265,12 @@ const VideoList = ({ videoData, appConfig }) => {
     }
 
     if (video && smartUrls) {
-      video.iframeSource = constructPlaybackUrl(video.data, smartUrls);
+      video.iframeSource = constructPlaybackUrl(
+        video.data,
+        smartUrls,
+        publicRuntimeConfig,
+        isAMP
+      );
       setVideos((videos) => [...videos]);
     }
   }, [videoData, data, adData, smartUrls]);
@@ -343,7 +354,12 @@ const VideoList = ({ videoData, appConfig }) => {
                   payload: null,
                 })
                 .then(async (res1) => {
-                  const iframeSource = constructPlaybackUrl(newVideo, res1);
+                  const iframeSource = constructPlaybackUrl(
+                    newVideo,
+                    res1,
+                    publicRuntimeConfig,
+                    isAMP
+                  );
 
                   const newList = [
                     ...videos,
@@ -370,7 +386,12 @@ const VideoList = ({ videoData, appConfig }) => {
                 },
                 suv: true,
               }).then(async (res1) => {
-                const iframeSource = constructPlaybackUrl(newVideo, res1.data);
+                const iframeSource = constructPlaybackUrl(
+                  newVideo,
+                  res1.data,
+                  publicRuntimeConfig,
+                  isAMP
+                );
 
                 const newList = [
                   ...videos,

@@ -3,7 +3,7 @@ import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor, linkInfoGenerator } from '@utils/Helpers';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 const SquareCard = ({ data, article, className }) => {
   const isRTL = useContext(RTLContext);
@@ -17,7 +17,7 @@ const SquareCard = ({ data, article, className }) => {
   return article ? (
     <NavLink
       key={article.friendly_id}
-      className={`flex flex-col pb-1 cursor-pointer rounded-md ${
+      className={`flex flex-col pb-1 cursor-pointer rounded-md shadow ${
         isRTL ? 'rtl' : ''
       } ${className}`}
       href={linkInfo.href}
@@ -36,7 +36,7 @@ const SquareCard = ({ data, article, className }) => {
 
       <div className="video-icon"></div>
 
-      <div className="h-12 my-2 pl-2 pr-1 text-sm text-gray-700 leading-tight">
+      <div className="h-12 my-2 pl-2 pr-1 text-gray-700 leading-tight">
         <div
           style={{
             overflow: 'hidden',
@@ -45,6 +45,7 @@ const SquareCard = ({ data, article, className }) => {
             display: '-webkit-box',
             WebkitLineClamp: '3',
           }}
+          className="text-sm md:text-base"
         >
           {article.display_title}
         </div>
@@ -59,7 +60,7 @@ const SquareCard = ({ data, article, className }) => {
       as={linkInfo.as}
       passHref
       onClick={() => {
-        GoogleTagManager.articleClick(article);
+        GoogleTagManager.seeAll(linkInfo);
       }}
     >
       {data.text}

@@ -14,7 +14,7 @@ const RectangleCard = ({ data, article, className }) => {
   return (
     <NavLink
       key={article.friendly_id}
-      className={`flex justify-between px-1 pt-2 pb-1 cursor-pointer border ${
+      className={`flex justify-between px-1 pt-2 pb-1 cursor-pointer border shadow ${
         isRTL ? 'rtl' : ''
       } ${className}`}
       href={{
@@ -27,13 +27,13 @@ const RectangleCard = ({ data, article, className }) => {
         GoogleTagManager.articleClick(article);
       }}
     >
-      <div className=" px-1 text-sm text-gray-700 leading-tight">
+      <div className=" px-1 text-sm md:text-base text-gray-700 leading-tight">
         {article.display_title}
       </div>
 
       <Thumbnail
         thumbnail={thumbnail}
-        className={'rounded-md w-20'}
+        className={'rounded-md w-20 md:w-24'}
         type={''}
         creditSize={'no-size'}
       />

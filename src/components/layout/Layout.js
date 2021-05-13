@@ -12,7 +12,7 @@ import Loader from 'react-loader-spinner';
 import { usePromiseTracker } from 'react-promise-tracker';
 import { useRouter } from 'next/router';
 import eventBus from '@utils/EventBus';
-import StateSelectModal from '@components/common/StateSelectModal'
+import StateSelectModal from '@components/common/StateSelectModal';
 
 const country = 'IN';
 export const RTLContext = React.createContext(false);
@@ -29,7 +29,7 @@ function debounce(fn, ms) {
   };
 }
 
-const Layout = ({ children, accessToken, appConfig }) => {
+const Layout = ({ children, accessToken, appConfig, pageType }) => {
   const router = useRouter();
 
   const api = API(APIEnum.Catalog, APIEnum.CatalogList);
@@ -63,7 +63,7 @@ const Layout = ({ children, accessToken, appConfig }) => {
       if (doCall) {
         window.appConfig = appConfig;
 
-        let convertedState = configStateCodeConverter();
+        let convertedState = configStateCodeConverter(state);
         convertedState =
           language === 'urdu' && convertedState !== 'jk'
             ? 'urdu'
@@ -230,7 +230,7 @@ const Layout = ({ children, accessToken, appConfig }) => {
       eventBus.remove('state-selector');
     };
   }, [language, accessToken]);
-
+console.log(pageType)
   return (
     <>
       {showStateModal ? (
@@ -262,7 +262,13 @@ const Layout = ({ children, accessToken, appConfig }) => {
               />
             </div>
           ) : (
-            <section className="content">{children}</section>
+            <section
+              className={`content ${
+                pageType === 'listing' ? 'bg-gray-200' : 'bg-white'
+              }`}
+            >
+              {children}
+            </section>
           )}
           <Footer
             data={data.footer}

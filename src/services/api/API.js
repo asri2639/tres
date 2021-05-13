@@ -79,7 +79,6 @@ export const accessTokenFetcher = (authToken) => {
 };
 
 async function errorResponseHandler(error) {
-  console.log(error.response)
   if (
     error.response &&
     error.response.status === 422 &&

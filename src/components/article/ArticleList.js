@@ -80,6 +80,10 @@ const ArticleList = ({ articleData }) => {
         setArticles((articles) => [...articles]);
       }
     }
+
+    return () => {
+      api && api.shutdown();
+    };
   }, [articleData, data, adData]);
 
   // Listen to scroll positions for loading more data on scroll
@@ -105,7 +109,12 @@ const ArticleList = ({ articleData }) => {
           (v) =>
             v.content_id === lastArticleLoaded.getAttribute('data-content-id')
         );
-        if (curIndex > -1 && curIndex < 9 && !loading && related[curIndex + 1]) {
+        if (
+          curIndex > -1 &&
+          curIndex < 9 &&
+          !loading &&
+          related[curIndex + 1]
+        ) {
           startLoading();
           await api.CatalogList.getArticleDetails({
             query: {
@@ -177,9 +186,7 @@ const ArticleList = ({ articleData }) => {
         </Media>
       </MediaContextProvider>
 
-      <ul
-        className={`article-list flex flex-col lg:container lg:mx-auto `}
-      >
+      <ul className={`article-list flex flex-col lg:container lg:mx-auto `}>
         {articles.length > 0 &&
           articles.map((article, i) => (
             <Article
