@@ -126,17 +126,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
     api.CatalogList.getListing(requestPayload)
   );
   const data = listingResp.data.data;
-  /* if (res) {
-    res.writeHead(302, {
-      // or 301
-      Location: `${
-        publicRuntimeConfig.APP_ENV === 'staging'
-          ? 'https://staging.etvbharat.com'
-          : 'https://www.etvbharat.com'
-      }${req.url}`,
-    });
-    res.end();
-  } */
+
   return {
     namespacesRequired: ['common'],
     pageType: 'listing',

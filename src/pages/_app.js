@@ -67,7 +67,11 @@ function App({ Component, noRender, pageProps, data, accessToken, appConfig }) {
               : false
           }
         >
-          <Layout accessToken={accessToken} appConfig={appConfig} pageType={pageProps.pageType}>
+          <Layout
+            accessToken={accessToken}
+            appConfig={appConfig}
+            pageType={pageProps.pageType}
+          >
             {noRender ? null : <Component {...pageProps} />}
           </Layout>
         </AMPContext.Provider>
@@ -80,9 +84,11 @@ App.getInitialProps = async ({ Component, ctx }) => {
   let pageProps = {};
 
   if (ctx.asPath === '/') {
-    process.browser
-      ? Router.push('/national')
-      : ctx.res.writeHead(302, { Location: '/national' }).end();
+    if (process.browser) {
+      Router.push('/national');
+    } else {
+      ctx.res.writeHead(302, { Location: '/national' }).end();
+    }
   }
   const api = API(APIEnum.Catalog);
 
