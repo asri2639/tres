@@ -110,7 +110,7 @@ const ListContainer = ({ children, data, payload }) => {
         <div className="md:w-4/12 "></div>
       </div> */}
       <div
-        className={`lg:container lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10`}
+        className={`lg:container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10`}
       >
         <div className="md:w-8/12 h-full px-2 md:flex md:flex-wrap">
           <MediaContextProvider>
