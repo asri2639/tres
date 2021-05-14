@@ -58,7 +58,7 @@ export const constructPlaybackUrl = (
   publicRuntimeConfig,
   isAMP
 ) => {
-  if (Object.keys(smartData).length === 0) {
+  if (Object.keys(smartData).length === 0 || !smartData.adaptive_urls) {
     return null;
   }
   let urlSplit = data.web_url.split('/');
