@@ -102,13 +102,13 @@ const ListContainer = ({ children, data, payload }) => {
 
   return (
     <>
-      <div className="w-full mb-3 lg:container lg:mx-auto ">
+     {/*  <div className="w-full mb-3 lg:container lg:mx-auto ">
         <MainArticle
           className="md:w-8/12 "
           article={listItems[0].catalog_list_items[0]}
         />
         <div className="md:w-4/12 "></div>
-      </div>
+      </div> */}
       <div
         className={`lg:container lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10`}
       >
@@ -139,7 +139,7 @@ const ListContainer = ({ children, data, payload }) => {
         </div>
         <MediaContextProvider>
           <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
-            {ads.length &&
+            {/* ads.length &&
               ads.map((ad, ind) => {
                 return (
                   <AdContainer
@@ -148,7 +148,7 @@ const ListContainer = ({ children, data, payload }) => {
                     className="mb-48"
                   />
                 );
-              })}
+              }) */}
           </Media>
         </MediaContextProvider>
       </div>
