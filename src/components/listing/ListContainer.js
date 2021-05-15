@@ -1,6 +1,6 @@
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { Media, MediaContextProvider } from '@media';
 import SquareCard from '@components/listing/mobile/SquareCard';
@@ -8,35 +8,70 @@ import RectangleCard from '@components/listing/mobile/RectangleCard';
 import AdContainer from '@components/article/AdContainer';
 import CatalogWall from './mobile/CatalogWall';
 import SeeAll from './mobile/SeeAll';
-import MainArticle from './mobile/MainArticle';
 import Loading from './mobile/Loading';
+import { stateCodeConverter } from '@utils/Helpers';
+import { I18nContext } from 'react-i18next';
+import useSWR from 'swr';
+import React from 'react';
 
 const ListContainer = ({ children, data, payload }) => {
   const api = API(APIEnum.CatalogList);
 
+  const {
+    i18n: { language, options },
+  } = useContext(I18nContext);
   const [listItems, setListItems] = useState(data.catalog_list_items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const totalCalls = Math.ceil(data.total_items_count / 8);
   const [callsDone, setCallsDone] = useState(1);
-  const [ads, setAds] = useState([]);
+  const [filteredRHS, setFilteredRHS] = useState([]);
+
+  const relatedArticlesFetcher = (...args) => {
+    const [apiEnum, methodName, contentId] = args;
+    return api[apiEnum][methodName]({
+      query: {
+        // region: country,
+        response: methodName === 'getArticleDetails' ? 'r2' : 'r1',
+        item_languages: language,
+        page: 0,
+        page_size: 10,
+        content_id: contentId,
+        gallery_ad: true,
+        scroll_no: 0,
+        // portal_state: english,
+        state: stateCodeConverter(location.pathname.split('/')[2]),
+      },
+    }).then((res) => {
+      return res.data.data;
+    });
+  };
+  const { data: adData, error: adError } = useSWR(
+    [
+      'CatalogList',
+      'getArticleDetails',
+      data.catalog_list_items[0].catalog_list_items[1].content_id,
+    ],
+    relatedArticlesFetcher,
+    { dedupingInterval: 5 * 60 * 1000 }
+  );
 
   useEffect(() => {
     setListItems(data.catalog_list_items);
-
-    extractAds(data.catalog_list_items);
   }, [data]);
 
   useEffect(() => {
-    extractAds(listItems);
-  }, [listItems]);
-
-  function extractAds(listItems) {
-    const filteredAds = listItems.filter(
-      (list) => list.layout_type === 'ad_unit_square'
-    );
-    console.log(ads);
-    setAds((prevAds) => [...prevAds, ...filteredAds]);
-  }
+    if (adData) {
+      fetchMoreListItems();
+      let filtered = adData.catalog_list_items.slice(1).filter((v) => {
+        return (
+          v.layout_type.indexOf('ad_unit') >= 0 ||
+          (v.layout_type.indexOf('ad_unit') === -1 &&
+            v.catalog_list_items.length > 0)
+        );
+      });
+      setFilteredRHS(filtered);
+    }
+  }, [adData]);
 
   async function fetchMoreListItems() {
     if (payload && callsDone < totalCalls) {
@@ -69,20 +104,16 @@ const ListContainer = ({ children, data, payload }) => {
         ));
       case 'ad_unit_square':
         return (
-          <>
+          <React.Fragment key={'ad' + ind}>
             <MediaContextProvider>
               <Media at="xs">
-                <AdContainer
-                  key={'ad' + ind}
-                  data={[catalog]}
-                  className="my-1"
-                />
+                <AdContainer data={[catalog]} className="my-1" />
               </Media>
             </MediaContextProvider>
             <MediaContextProvider>
               <Media at="xs"></Media>
             </MediaContextProvider>
-          </>
+          </React.Fragment>
         );
 
       case 'catalog_wall_menu':
@@ -102,7 +133,7 @@ const ListContainer = ({ children, data, payload }) => {
 
   return (
     <>
-     {/*  <div className="w-full mb-3 lg:container lg:mx-auto ">
+      {/*  <div className="w-full mb-3 lg:container lg:mx-auto ">
         <MainArticle
           className="md:w-8/12 "
           article={listItems[0].catalog_list_items[0]}
@@ -139,16 +170,7 @@ const ListContainer = ({ children, data, payload }) => {
         </div>
         <MediaContextProvider>
           <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
-            {/* ads.length &&
-              ads.map((ad, ind) => {
-                return (
-                  <AdContainer
-                    key={'ad' + ind + ind}
-                    data={[ad]}
-                    className="mb-48"
-                  />
-                );
-              }) */}
+            <AdContainer data={filteredRHS} />
           </Media>
         </MediaContextProvider>
       </div>
