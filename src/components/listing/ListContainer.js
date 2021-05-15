@@ -13,6 +13,7 @@ import { stateCodeConverter } from '@utils/Helpers';
 import { I18nContext } from 'react-i18next';
 import useSWR from 'swr';
 import React from 'react';
+import Sticky from 'wil-react-sticky';
 
 const ListContainer = ({ children, data, payload }) => {
   const api = API(APIEnum.CatalogList);
@@ -141,7 +142,7 @@ const ListContainer = ({ children, data, payload }) => {
         <div className="md:w-4/12 "></div>
       </div> */}
       <div
-        className={`lg:container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10`}
+        className={`lg:container listing-container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10`}
       >
         <div className="md:w-8/12 h-full px-2 md:flex md:flex-wrap">
           <MediaContextProvider>
@@ -170,7 +171,13 @@ const ListContainer = ({ children, data, payload }) => {
         </div>
         <MediaContextProvider>
           <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
-            <AdContainer data={filteredRHS} />
+            <Sticky
+              containerSelectorFocus={`.listing-container`}
+              stickyEnableRange={[768, Infinity]}
+              offsetTop={60}
+            >
+              <AdContainer data={filteredRHS} />
+            </Sticky>
           </Media>
         </MediaContextProvider>
       </div>
