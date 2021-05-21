@@ -74,14 +74,16 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
               ? appConfig.params_hash2.config_params[
                   isDesktop ? 'web_lists' : 'msite_lists'
                 ][convertedState][isDesktop ? 'tabs' : 'left-menu']
-              : 'msite-new-left-menu',
+              : `msite-new-left-menu${state !== 'national' ? '-' + state : ''}`,
           },
+
           isSSR: !isDesktop,
           query: {
             region: country,
             response: 'r2',
             item_languages: language,
             portal_state: stateCodeConverter(state),
+            only_items: 'catalog_list',
           },
         });
         if (isDesktop) {
@@ -169,13 +171,14 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
             ? appConfig.params_hash2.config_params[
                 isDesktop ? 'web_lists' : 'msite_lists'
               ][convertedState][isDesktop ? 'tabs' : 'left-menu']
-            : 'msite-new-left-menu',
+            : `msite-new-left-menu${state !== 'national' ? '-' + state : ''}`,
         },
         query: {
           region: country,
           response: 'r2',
           item_languages: language,
           portal_state: stateCodeConverter(state),
+          only_items: 'catalog_list',
         },
         isSSR: !isDesktop,
       });
@@ -197,6 +200,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
             response: 'r2',
             item_languages: language,
             portal_state: stateCodeConverter(state),
+            only_items: 'catalog_list',
           },
           isSSR: true,
         });
@@ -230,7 +234,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
       eventBus.remove('state-selector');
     };
   }, [language, accessToken]);
-console.log(pageType)
+  console.log(pageType);
   return (
     <>
       {showStateModal ? (
