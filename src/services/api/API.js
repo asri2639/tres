@@ -101,16 +101,18 @@ async function errorResponseHandler(error) {
   ) {
     return Promise.reject(error);
   }
+  console.error(error)
   // if has response show the error
   if (error.response) {
     const handled = apiStatusHandler(error);
     if (!handled) {
       const message = error.response.data ? error.response.data.error_code : '';
       // return Promise.reject(new APIError(message, error.response.data));
-      return Promise.reject(error);
+      // return Promise.reject(error);
       // throw new APIError(message, error.response.data);
+      console.error(message);
     }
-    return Promise.reject(new APIError(error)); // here it was Promise.resolve
+    return Promise.resolve(new APIError(error)); // here it was Promise.resolve
   } else {
     return Promise.reject(error);
   }

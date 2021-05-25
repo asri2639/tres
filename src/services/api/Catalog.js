@@ -209,8 +209,7 @@ export default function Catalog(inst) {
                     'breaking-news': '',
                   },
                 },
-              
-              
+
                 fb_pages: {
                   english: {
                     fb_page_id: '535536636554265',
@@ -442,6 +441,14 @@ export default function Catalog(inst) {
     },
     getPageAds({ params, query, config } = new APIRequest()) {
       return inst.get(`/page_ads?${new URLSearchParams(query)}`, config);
+    },
+    getDistricts({ params, query, config } = new APIRequest()) {
+      return inst.get(
+        `${controller}/city-state/items/india/states/${
+          params.state
+        }/districts?${new URLSearchParams(query)}`,
+        config
+      );
     },
   };
 }

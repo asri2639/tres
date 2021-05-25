@@ -230,11 +230,16 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
       setShowStateModal(data.show);
     });
 
+    eventBus.on('district-selector', (data) => {
+      setShowDistrictModal(data.show);
+    });
+
     return () => {
       eventBus.remove('state-selector');
+      eventBus.remove('district-selector');
     };
   }, [language, accessToken]);
-  console.log(pageType);
+  // console.log(pageType);
   return (
     <>
       {showStateModal ? (

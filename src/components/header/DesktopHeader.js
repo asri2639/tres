@@ -280,7 +280,7 @@ const DesktopHeader = ({ className, data, t }) => {
             isRTL ? 'flex-row-reverse rtl' : ''
           }`}
         >
-          <div className="flex space-x-6">
+          <div className=" bg-hbg flex space-x-6">
             {data.languages
               ? Object.entries(data.languages).map(([language, states]) => {
                   return (

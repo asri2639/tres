@@ -1,9 +1,6 @@
-const { render } = require('nprogress');
-
 const Loading = ({ isLoading } = { isLoading: false }) => {
   return isLoading ? (
-    <div
-      className="load-bar">
+    <div className="load-bar">
       <div className="bar"></div>
       <div className="bar"></div>
     </div>

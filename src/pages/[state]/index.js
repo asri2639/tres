@@ -74,7 +74,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const url = args.asPath;
   const { publicRuntimeConfig } = getConfig();
 
-  if (url !== '/english/national') {
+ /*  if (url !== '/english/national') {
     if (res) {
       res.writeHead(302, {
         // or 301
@@ -86,7 +86,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       });
       res.end();
     }
-  }
+  } */
 
   const response = await api.Listing.getListingApiKey({
     query: {

@@ -212,7 +212,7 @@ export default function MobileHeader({ data, className }) {
 
       <div
         next-page-hide="1"
-        className={`${className} ${header['mobile-header']} block md:hidden`}
+        className={`${className} ${header['mobile-header']} block md:hidden bg-mhbg`}
       >
         <div
           className={`${header['logo-container']} flex justify-start bg-white px-2 py-1 self-center border-b`}
@@ -247,7 +247,7 @@ export default function MobileHeader({ data, className }) {
           </div>
         </div>
 
-        <div className="bg-mhbg px-3 font-english border-b">
+        <div className="bg-mhbg h-53px px-3 font-english border-b border-white">
           <div className="bg-mhbg flex justify-between items-center py-1 overflow-x-auto">
             <div className="flex space-x-6">
               {data.languages
