@@ -16,6 +16,7 @@ import BBCHeader from '@components/common/BBCHeader';
 import stringToHTML from '@utils/StringToHtml';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
+import MobileAd from '@components/article/MobileAd';
 
 // initialPosition
 // div height
@@ -33,6 +34,8 @@ export default function Article({
   viewed,
   updateViewed,
   related,
+  ads,
+  index,
 }) {
   const isAMP = useContext(AMPContext);
   const [source, setSource] = useState(null);
@@ -225,7 +228,7 @@ export default function Article({
     }
 
     return () => {
-      api && api.shutdown();
+      // api && api.shutdown();
     };
   }, [inView, contentId, rhs, contentRef]);
 
@@ -433,7 +436,14 @@ export default function Article({
               scrollToNextArticle={scrollToNextArticle}
               nextArticle={nextArticle}
               showBbc={!!source}
-            />
+            >
+              {ads[index * 2 + 1] ? (
+                <MobileAd key={index * 2 + 1} adData={ads[index * 2 + 1]} />
+              ) : null}
+            </MobileNextArticle>
+            {ads[index * 2 + 2] ? (
+              <MobileAd key={index * 2 + 2} adData={ads[index * 2 + 2]} />
+            ) : null}
           </Media>
           {isAMP ? null : (
             <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>

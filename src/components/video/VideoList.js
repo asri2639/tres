@@ -174,6 +174,7 @@ const VideoList = ({ videoData, appConfig }) => {
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
   const [viewed, setViewed] = useState([]);
+  const [mobileAds, setMobileAds] = useState([]);
 
   const relatedVideosFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
@@ -194,6 +195,7 @@ const VideoList = ({ videoData, appConfig }) => {
     }
 
     return api[apiEnum][methodName]({
+      config: { isSSR: true },
       params: {
         state: location.pathname.split('/')[2],
         language: language,
@@ -249,6 +251,7 @@ const VideoList = ({ videoData, appConfig }) => {
     }
     if (data) {
       stopLoading();
+      setMobileAds(data.bf_af_ads ? data.bf_af_ads[0] : []);
       setRelated(data.catalog_list_items);
     } else {
       startLoading();
@@ -451,6 +454,8 @@ const VideoList = ({ videoData, appConfig }) => {
               scrollToNextVideo={() => scrollToVideo(related[i + 1])}
               viewed={viewed}
               related={related}
+              index={i}
+              ads={mobileAds}
               updateViewed={(viewed) => {
                 setViewed(viewed);
               }}

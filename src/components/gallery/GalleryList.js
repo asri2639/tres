@@ -22,6 +22,7 @@ const GalleryList = ({ galleryData }) => {
   const [galleries, setGalleries] = useState([]);
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
+  const [mobileAds, setMobileAds] = useState([]);
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
   const [viewed, setViewed] = useState([]);
@@ -32,6 +33,7 @@ const GalleryList = ({ galleryData }) => {
       //  return null;
     }
     return api[apiEnum][methodName]({
+      config: { isSSR: true },
       query: {
         response: methodName === 'getArticleDetails' ? 'r2' : 'r1',
         item_languages: language,
@@ -69,6 +71,7 @@ const GalleryList = ({ galleryData }) => {
     }
     if (data) {
       stopLoading();
+      setMobileAds(data.bf_af_ads ? data.bf_af_ads[0] : []);
       setRelated(data.catalog_list_items);
     } else {
       startLoading();
@@ -183,6 +186,8 @@ const GalleryList = ({ galleryData }) => {
               scrollToNextGallery={() => scrollToGallery(related[i + 1])}
               viewed={viewed}
               related={related}
+              index={i}
+              ads={mobileAds}
               updateViewed={(viewed) => {
                 setViewed(viewed);
               }}

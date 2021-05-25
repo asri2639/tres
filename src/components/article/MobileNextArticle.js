@@ -14,6 +14,7 @@ const MobileNextArticle = ({
   scrollToNextArticle,
   related,
   showBbc,
+  children,
 }) => {
   const isAMP = useContext(AMPContext);
 
@@ -84,6 +85,8 @@ const MobileNextArticle = ({
           </>
         </Modal>
       ) : null}
+
+      {children}
       <div className="flex justify-end">
         {!isAMP ? (
           <div

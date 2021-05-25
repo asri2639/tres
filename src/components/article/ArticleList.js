@@ -19,6 +19,7 @@ const ArticleList = ({ articleData }) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
+  const [mobileAds, setMobileAds] = useState([]);
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
 
@@ -27,6 +28,7 @@ const ArticleList = ({ articleData }) => {
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
     return api[apiEnum][methodName]({
+      config: { isSSR: true },
       query: {
         // region: country,
         response: methodName === 'getArticleDetails' ? 'r2' : 'r1',
@@ -65,6 +67,7 @@ const ArticleList = ({ articleData }) => {
     }
     if (data) {
       stopLoading();
+      setMobileAds(data.bf_af_ads ? data.bf_af_ads[0] : []);
       setRelated(data.catalog_list_items);
     } else {
       startLoading();
@@ -82,7 +85,7 @@ const ArticleList = ({ articleData }) => {
     }
 
     return () => {
-      api && api.shutdown();
+      // api && api.shutdown();
     };
   }, [articleData, data, adData]);
 
@@ -188,16 +191,18 @@ const ArticleList = ({ articleData }) => {
 
       <ul className={`article-list flex flex-col lg:container lg:mx-auto `}>
         {articles.length > 0 &&
-          articles.map((article, i) => (
+          articles.map((article, index) => (
             <Article
               key={article.contentId}
               {...article}
               rhs={article.rhs}
               related={related}
               desktop={article.desktop}
-              nextArticle={i < 9 ? related[i + 1] : null}
-              scrollToNextArticle={() => scrollToArticle(related[i + 1])}
+              nextArticle={index < 9 ? related[index + 1] : null}
+              scrollToNextArticle={() => scrollToArticle(related[index + 1])}
               viewed={viewed}
+              index={index}
+              ads={mobileAds}
               updateViewed={(viewed) => {
                 setViewed(viewed);
               }}

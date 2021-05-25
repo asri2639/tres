@@ -13,6 +13,7 @@ import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
 import { AMPContext } from '@pages/_app';
 import BBCHeader from '@components/common/BBCHeader';
+import MobileAd from '@components/article/MobileAd';
 
 const Video = ({
   contentId,
@@ -25,6 +26,8 @@ const Video = ({
   iframeSource,
   viewed,
   related,
+  ads,
+  index,
 }) => {
   const isAMP = useContext(AMPContext);
 
@@ -369,7 +372,14 @@ const Video = ({
             nextArticle={nextVideo}
             related={related}
             showBbc={!!source}
-          />
+          >
+            {ads[index * 2 + 1] ? (
+              <MobileAd key={index * 2 + 1} adData={ads[index * 2 + 1]} />
+            ) : null}
+          </MobileNextArticle>
+          {ads[index * 2 + 2] ? (
+            <MobileAd key={index * 2 + 2} adData={ads[index * 2 + 2]} />
+          ) : null}
         </Media>
         {isAMP ? null : (
           <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
