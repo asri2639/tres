@@ -75,7 +75,7 @@ export const stateCodeConverter = (e) => {
     chandigarh: 'ch',
     delhi: 'dl',
     gujarat: 'gj',
-    haryana: 'hr',
+    haryana: 'haryana',
     'himachal-pradesh': 'hp',
     jharkhand: 'jh',
     karnataka: 'ka',
