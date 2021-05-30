@@ -113,24 +113,24 @@ export default function Article({
 
       if (isDesktop) {
         if (rhs && data.ad_conf) {
-          id =
-            desktop && desktop.ad_conf && desktop.ad_conf.length > 0
-              ? desktop.ad_conf[0].gpt_id
-              : data.ad_conf.length && !!data.ad_conf[0]
-              ? data.ad_conf[0].gpt_id
+          const desktopAdConf =
+            Array.isArray(data.ad_conf) &&
+            data.ad_conf[0] &&
+            data.ad_conf[0].web
+              ? data.ad_conf[0].web[0]
               : null;
-          ad_id =
-            desktop && desktop.ad_conf && desktop.ad_conf.length > 0
-              ? desktop.ad_conf[0].ad_unit_id
-              : data.ad_conf.length && !!data.ad_conf[0]
-              ? data.ad_conf[0].gpt_id
-              : null;
+          id = desktopAdConf ? desktopAdConf.gpt_id : null;
+          ad_id = desktopAdConf ? desktopAdConf.ad_unit_id : null;
         }
       } else {
-        if (data.ad_conf && data.ad_conf.length > 0 && !!data.ad_conf[0]) {
-          id = data.ad_conf[0].gpt_id;
-          ad_id = data.ad_conf[0].ad_unit_id;
-        }
+        const mobileAdConf =
+          Array.isArray(data.ad_conf) &&
+          data.ad_conf[0] &&
+          data.ad_conf[0].msite
+            ? data.ad_conf[0].msite[0]
+            : null;
+        id = mobileAdConf ? mobileAdConf.gpt_id : null;
+        ad_id = mobileAdConf ? mobileAdConf.ad_unit_id : null;
       }
 
       if (id && ad_id) {
@@ -162,11 +162,13 @@ export default function Article({
     }
 
     if (isAMP) {
-      let id, ad_id;
-      if (data.ad_conf && data.ad_conf.length > 0 && !!data.ad_conf[0]) {
-        id = data.ad_conf[0].gpt_id;
-        ad_id = data.ad_conf[0].ad_unit_id;
-      }
+      const mobileAdConf =
+        Array.isArray(data.ad_conf) && data.ad_conf[0] && data.ad_conf[0].msite
+          ? data.ad_conf[0].msite
+          : null;
+      const id = mobileAdConf ? mobileAdConf.gpt_id : null;
+      const ad_id = mobileAdConf ? mobileAdConf.ad_unit_id : null;
+
       const parsedHtml = stringToHTML(html);
       if (ad_id) {
         const el = parsedHtml.querySelector(`.EtvadsSection`);
@@ -265,6 +267,31 @@ export default function Article({
             }`}
           >
             <SocialMedia data={data} />
+          </Media>
+        </MediaContextProvider>
+
+        <MediaContextProvider>
+          <Media at="xs">
+            <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
+            <h1 ref={setRefs} className="leading-tight text-xll font-bold p-2">
+              {data.title}
+            </h1>
+
+            <div className="px-2 text-sm text-gray-600 md:text-black always-english">
+              {data.publish_date_uts
+                ? `Published on: ${dateFormatter(data.publish_date_uts, isAMP)}`
+                : ''}
+              <span className="hidden md:inline-block">
+                {data.publish_date_uts && data.update_date_uts ? `  |  ` : ''}
+              </span>
+              <br className="md:hidden" />
+              {data.update_date_uts
+                ? `Updated on: ${dateFormatter(data.update_date_uts, isAMP)}`
+                : ''}
+            </div>
+            <div className="flex justify-between px-2 w-56 mb-2">
+              <SocialMedia data={data} />
+            </div>
           </Media>
         </MediaContextProvider>
 
@@ -437,14 +464,10 @@ export default function Article({
               nextArticle={nextArticle}
               showBbc={!!source}
             >
-              {ads[index * 2 + 1] ? (
-                <MobileAd key={index * 2 + 1} adData={ads[index * 2 + 1]} />
-              ) : null}
+              <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
             </MobileNextArticle>
-            {ads[index * 2 + 2] ? (
-              <MobileAd key={index * 2 + 2} adData={ads[index * 2 + 2]} />
-            ) : null}
           </Media>
+          
           {isAMP ? null : (
             <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
               <div className="w-full items-center space-y-6 pt-4 pb-4">

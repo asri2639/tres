@@ -206,6 +206,43 @@ const Gallery = ({
         </Media>
       </MediaContextProvider>
 
+      <MediaContextProvider>
+        <Media at="xs">
+          <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
+          <h1 ref={setRefs} className="leading-tight text-xll font-bold p-2">
+            {data[0].display_title}{' '}
+          </h1>
+
+          <div className="px-2 text-sm text-gray-600 md:text-black always-english">
+            {data[0].publish_date_uts ? (
+              <div className="text-sm text-gray-600 md:text-black always-english">
+                {data[0].publish_date_uts
+                  ? `Published on: ${dateFormatter(
+                      data[0].publish_date_uts,
+                      isAMP
+                    )}`
+                  : ''}
+                <span className="hidden md:inline-block">
+                  {data[0].publish_date_uts && data[0].update_date_uts
+                    ? `  |  `
+                    : ''}
+                </span>
+                <br className="md:hidden" />
+                {data[0].update_date_uts
+                  ? `Updated on: ${dateFormatter(
+                      data[0].update_date_uts,
+                      isAMP
+                    )}`
+                  : ''}
+              </div>
+            ) : null}
+          </div>
+          <div className="flex justify-between px-2 w-56 mb-2">
+            <SocialMedia data={data} />
+          </div>
+        </Media>
+      </MediaContextProvider>
+
       <div className="md:w-8/12">
         <Sticky
           containerSelectorFocus={`.article[data-content-id="${contentId}"]`}
@@ -419,13 +456,8 @@ const Gallery = ({
             related={related}
             showBbc={!!source}
           >
-            {ads[index * 2 + 1] ? (
-              <MobileAd key={index * 2 + 1} adData={ads[index * 2 + 1]} />
-            ) : null}
+            <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
           </MobileNextArticle>
-          {ads[index * 2 + 2] ? (
-            <MobileAd key={index * 2 + 2} adData={ads[index * 2 + 2]} />
-          ) : null}
         </Media>
         <Media greaterThan="xs" className="md:block md:w-4/12">
           <div className="w-full flex flex-col items-center space-y-6 pt-4 pb-4">
