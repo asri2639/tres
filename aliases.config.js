@@ -14,6 +14,7 @@ const aliases = {
   '@utils': 'src/utils',
   '@styles': 'src/styles',
   '@media': 'src/media',
+  '@i18n': 'src/i18n',
 };
 
 module.exports = {
