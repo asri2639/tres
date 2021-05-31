@@ -131,8 +131,6 @@ App.getInitialProps = async ({ Component, ctx }) => {
     url = window.location.pathname;
   }
 
-  console.log(Component);
-
   if (
     Component.getInitialProps &&
     !(

@@ -644,10 +644,15 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         }${req.url}`,
       });
       res.end();
+    } else {
+      location.href =
+        publicRuntimeConfig.APP_ENV === 'staging'
+          ? 'https://staging.etvbharat.com'
+          : 'https://www.etvbharat.com' + args.asPath;
     }
-    /*  return {
+    /* return {
       namespacesRequired: ['common'],
-      pageType: 'listing',  
+      pageType: 'listing',
       data: data,
       appConfig: applicationConfig.value,
       payload: requestPayload,
