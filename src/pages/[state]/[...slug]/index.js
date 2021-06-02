@@ -476,6 +476,9 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
+  console.log(urlSplit);
+  const languageState = urlSplit[1];
+  const stateValue = stateCodeConverter(urlSplit[4]);
   params = {
     state: query.state,
     language: language,
@@ -489,6 +492,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       // window.location.href = window.location.href.replace('http:', 'https:');
     }
   }
+  
   bypass = args.asPath.indexOf('live-streaming') >= 0;
   const id = query.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
@@ -605,6 +609,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     }
   } else {
     const api = API(APIEnum.Listing, APIEnum.CatalogList);
+    console.log(api)
     const response = await api.Listing.getListingApiKey({
       query: {
         app: 'msite',
@@ -625,32 +630,34 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         version: 'v2',
         response: 'r2',
         item_languages: language,
-        portal_state: state,
+        portal_state: languageState,
+        dynamic_state : stateValue
       },
     };
+    console.log(result.home_link);
     const listingResp = await trackPromise(
       api.CatalogList.getListing(requestPayload)
     );
 
     const data = listingResp.data.data;
 
-    if (res) {
-      res.writeHead(302, {
+    //if (res) {
+      //res.writeHead(302, {
         // or 301
-        Location: `${
-          publicRuntimeConfig.APP_ENV === 'staging'
-            ? 'https://staging.etvbharat.com'
-            : 'https://www.etvbharat.com'
-        }${req.url}`,
-      });
-      res.end();
-    } else {
-      location.href =
-        publicRuntimeConfig.APP_ENV === 'staging'
-          ? 'https://staging.etvbharat.com'
-          : 'https://www.etvbharat.com' + args.asPath;
-    }
-    /* return {
+        //Location: `${
+          //publicRuntimeConfig.APP_ENV === 'staging'
+            //? 'https://staging.etvbharat.com'
+            //: 'https://www.etvbharat.com'
+        //}${req.url}`,
+      //});
+      //res.end();
+    //} else {
+      //location.href =
+        //publicRuntimeConfig.APP_ENV === 'staging'
+          //? 'https://staging.etvbharat.com'
+          //: 'https://www.etvbharat.com' + args.asPath;
+    //}
+     return {
       namespacesRequired: ['common'],
       pageType: 'listing',
       data: data,
@@ -658,7 +665,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       payload: requestPayload,
       id: null,
     };
- */
+ 
     /*  const id = query.slug.slice(-1)[0];
     var match = id.match(/\w{2,6}[0-9]+$/);
     if (!(match && match[0])) {
