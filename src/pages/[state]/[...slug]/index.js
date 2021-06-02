@@ -476,7 +476,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
-  console.log(urlSplit);
+  
   const languageState = urlSplit[1];
   const stateValue = stateCodeConverter(urlSplit[4]);
   params = {
@@ -609,7 +609,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     }
   } else {
     const api = API(APIEnum.Listing, APIEnum.CatalogList);
-    console.log(api)
     const response = await api.Listing.getListingApiKey({
       query: {
         app: 'msite',
@@ -634,7 +633,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         dynamic_state : stateValue
       },
     };
-    console.log(result.home_link);
+   
     const listingResp = await trackPromise(
       api.CatalogList.getListing(requestPayload)
     );
