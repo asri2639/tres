@@ -476,9 +476,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
-  
+
   const languageState = urlSplit[1];
-  const stateValue = stateCodeConverter(urlSplit[4]);
   params = {
     state: query.state,
     language: language,
@@ -492,7 +491,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       // window.location.href = window.location.href.replace('http:', 'https:');
     }
   }
-  
+
   bypass = args.asPath.indexOf('live-streaming') >= 0;
   const id = query.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
@@ -609,7 +608,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     }
   } else {
 
-
     if (res) {
       res.writeHead(302, {
         Location: `${
@@ -625,7 +623,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           ? 'https://staging.etvbharat.com'
           : 'https://www.etvbharat.com' + args.asPath;
     }
-    
+
+    const stateValue = stateCodeConverter(urlSplit[4]);
     const api = API(APIEnum.Listing, APIEnum.CatalogList);
     const response = await api.Listing.getListingApiKey({
       query: {
@@ -648,17 +647,16 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         response: 'r2',
         item_languages: language,
         portal_state: languageState,
-        dynamic_state : stateValue
+        dynamic_state: stateValue,
       },
     };
-   
+
     const listingResp = await trackPromise(
       api.CatalogList.getListing(requestPayload)
     );
 
     const data = listingResp.data.data;
 
-   
     /*  return {
       namespacesRequired: ['common'],
       pageType: 'listing',
@@ -667,7 +665,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       payload: requestPayload,
       id: null,
     }; */
- 
+
     /*  const id = query.slug.slice(-1)[0];
     var match = id.match(/\w{2,6}[0-9]+$/);
     if (!(match && match[0])) {
