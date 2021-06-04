@@ -608,6 +608,24 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         };
     }
   } else {
+
+
+    if (res) {
+      res.writeHead(302, {
+        Location: `${
+          publicRuntimeConfig.APP_ENV === 'staging'
+            ? 'https://staging.etvbharat.com'
+            : 'https://www.etvbharat.com'
+        }${req.url}`,
+      });
+      res.end();
+    } else {
+      location.href =
+        publicRuntimeConfig.APP_ENV === 'staging'
+          ? 'https://staging.etvbharat.com'
+          : 'https://www.etvbharat.com' + args.asPath;
+    }
+    
     const api = API(APIEnum.Listing, APIEnum.CatalogList);
     const response = await api.Listing.getListingApiKey({
       query: {
@@ -640,30 +658,15 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
     const data = listingResp.data.data;
 
-    //if (res) {
-      //res.writeHead(302, {
-        // or 301
-        //Location: `${
-          //publicRuntimeConfig.APP_ENV === 'staging'
-            //? 'https://staging.etvbharat.com'
-            //: 'https://www.etvbharat.com'
-        //}${req.url}`,
-      //});
-      //res.end();
-    //} else {
-      //location.href =
-        //publicRuntimeConfig.APP_ENV === 'staging'
-          //? 'https://staging.etvbharat.com'
-          //: 'https://www.etvbharat.com' + args.asPath;
-    //}
-     return {
+   
+    /*  return {
       namespacesRequired: ['common'],
       pageType: 'listing',
       data: data,
       appConfig: applicationConfig.value,
       payload: requestPayload,
       id: null,
-    };
+    }; */
  
     /*  const id = query.slug.slice(-1)[0];
     var match = id.match(/\w{2,6}[0-9]+$/);

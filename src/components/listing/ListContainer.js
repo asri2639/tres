@@ -118,12 +118,13 @@ const ListContainer = ({ children, data, payload }) => {
         );
 
       case 'catalog_wall_menu':
-        return catalog.catalog_list_items.length > 0 ? (
+        /* return catalog.catalog_list_items.length > 0 ? (
           <CatalogWall
             key={catalog.friendly_id + ind}
             data={catalog.catalog_list_items}
           />
-        ) : null;
+        ) : null; */
+        return null;
       case 'auto_horizontal_dropdown_carousel_viewall':
       case 'featured_mosaic_carousel_seeall':
         return catalog.catalog_list_items.length > 0 ? (
