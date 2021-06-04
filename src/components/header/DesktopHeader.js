@@ -366,7 +366,7 @@ const DesktopHeader = ({ className, data, t }) => {
                 return (
                   <div
                     key={item.list_id}
-                    className={`${header['header-menu-item']} text-white cursor-pointer whitespace-no-wrap hover:text-red-700`}
+                    className={`${header['header-menu-item']} text-white cursor-pointer whitespace-nowrap hover:text-red-700`}
                   >
                     <div
                       className=" flex flex-col items-center relative"

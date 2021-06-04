@@ -14,7 +14,7 @@ const RectangleCard = ({ data, article, className }) => {
   return (
     <NavLink
       key={article.friendly_id}
-      className={`flex justify-between px-1 pt-2 pb-1 cursor-pointer border shadow ${
+      className={`flex relative justify-between px-1 pt-2 pb-1 cursor-pointer border shadow ${
         isRTL ? 'rtl' : ''
       } ${className}`}
       href={{
@@ -33,10 +33,17 @@ const RectangleCard = ({ data, article, className }) => {
 
       <Thumbnail
         thumbnail={thumbnail}
-        className={'rounded-md w-20 md:w-24'}
+        className={'rounded-md w-24'}
         type={''}
         creditSize={'no-size'}
       />
+
+      {article.has_videos ? (
+        <img
+          className="absolute w-5 bottom-2 right-2"
+          src="/assets/images/video_big_icon-2x.png"
+        />
+      ) : null}
     </NavLink>
   );
 };

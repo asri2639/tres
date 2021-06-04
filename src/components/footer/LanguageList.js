@@ -11,7 +11,7 @@ export default function LanguageList({ languages }) {
     return (
       <li
         key={language.display_title}
-        className="flex-1 text-sm text-center whitespace-no-wrap"
+        className="flex-1 text-sm text-center whitespace-nowrap"
         style={{ flexBasis: '10%' }}
       >
         <NavLink

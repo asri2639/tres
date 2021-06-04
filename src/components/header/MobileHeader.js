@@ -274,17 +274,17 @@ export default function MobileHeader({ data, className }) {
       </div>
 
       <div
-        className={`${className} bg-mhbg px-3  ${header['sub-header']} sticky block md:hidden -top-1 z-10`}
+        className={`${className} bg-mhbg px-3  ${header['sub-header']} sticky block md:hidden -t-1 z-10`}
         next-page-hide="1"
         onMouseLeave={containerOut}
       >
-        <div className="bg-mhbg lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ">
+        <div className="bg-mhbg h-7 lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ">
           {data.menu && data.menu.mobile
             ? data.menu.mobile.map((item) => {
                 return (
                   <div
                     key={item.list_id + item.ml_title[0].text}
-                    className={`${header['header-menu-item']} text-white cursor-pointer whitespace-no-wrap hover:text-red-700`}
+                    className={`${header['header-menu-item']} text-white cursor-pointer whitespace-nowrap hover:text-red-700`}
                   >
                     <div className=" flex flex-col items-center relative  text-sm">
                       <NavLink

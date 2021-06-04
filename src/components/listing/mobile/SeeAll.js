@@ -128,9 +128,7 @@ const SeeAll = ({ data, article, className, t }) => {
         />
       ) : null}
       <div className="my-2 flex w-full justify-between mb-1">
-        <div className="pull-left eb-mostview-title">
-          {data.ml_title[0].text}
-        </div>
+        <div className="text-base md:text-lg">{data.ml_title[0].text}</div>
 
         {scope.dropdown ? (
           <div className="flex items-center ">
@@ -183,6 +181,7 @@ const SeeAll = ({ data, article, className, t }) => {
                 url: displayData.url.startsWith('/')
                   ? displayData.url.slice(1)
                   : displayData.url,
+                thumbnails: displayData.catalog_list_items[3].thumbnails,
               }}
             />
           </div>

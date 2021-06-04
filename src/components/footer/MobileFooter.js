@@ -259,7 +259,7 @@ const MobileFooter = ({ data, menu, t }) => {
             >
               <div className="flex justify-around align-center">
                 <div className="item w-1/4">
-                  <div className="flex flex-col items-center justify-center whitespace-no-wrap">
+                  <div className="flex flex-col items-center justify-center whitespace-nowrap">
                     {!isiOS ? (
                       <NavLink
                         onClick={() => GoogleTagManager.appInstall('Android')}
@@ -298,7 +298,7 @@ const MobileFooter = ({ data, menu, t }) => {
                           alt="ETV"
                           src="/assets/images/applegrey.png"
                         />
-                        <p className="whitespace-no-wrap">INSTALL APP</p>
+                        <p className="whitespace-nowrap">INSTALL APP</p>
                       </NavLink>
                     )}
                   </div>
@@ -403,7 +403,7 @@ const MobileFooter = ({ data, menu, t }) => {
                       alt="ETV"
                       src="/assets/images/etv-grey.png"
                     />
-                    <p className="whitespace-no-wrap">CHANGE STATE</p>
+                    <p className="whitespace-nowrap">CHANGE STATE</p>
                   </div>
                 </div>
                 <div className="item w-1/4">
@@ -418,7 +418,7 @@ const MobileFooter = ({ data, menu, t }) => {
                       alt="ETV"
                       src="/assets/images/search-grey.png"
                     />
-                    <p className="whitespace-no-wrap">SEARCH</p>
+                    <p className="whitespace-nowrap">SEARCH</p>
                   </div>
                 </div>
                 <div className="item w-1/4">
@@ -437,7 +437,7 @@ const MobileFooter = ({ data, menu, t }) => {
                       src="/assets/images/hamburger-grey.png"
                     />
                     <p
-                      className="whitespace-no-wrap"
+                      className="whitespace-nowrap"
                       onClick={() => toggleSidebar(true)}
                     >
                       MORE
