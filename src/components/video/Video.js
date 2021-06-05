@@ -173,16 +173,6 @@ const Video = ({
     }
   }, [inView, contentId, rhs, desktop, iframeSource]);
 
-  let filteredRHS = [];
-  if (rhs) {
-    filteredRHS = rhs.filter((v) => {
-      return (
-        v.layout_type.indexOf('ad_unit') >= 0 ||
-        (v.layout_type.indexOf('ad_unit') === -1 &&
-          v.catalog_list_items.length > 0)
-      );
-    });
-  }
   return (
     <div
       data-content-id={contentId}
@@ -384,7 +374,7 @@ const Video = ({
         {isAMP ? null : (
           <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
             <div className="w-full items-center space-y-6 pt-4 pb-4">
-              {!rhs ? 'Loading...' : <AdContainer data={filteredRHS} />}
+              {!rhs ? 'Loading...' : <AdContainer data={rhs} index={index} />}
             </div>
           </Media>
         )}

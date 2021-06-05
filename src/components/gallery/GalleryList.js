@@ -81,7 +81,13 @@ const GalleryList = ({ galleryData }) => {
         (article) => article.content_id === galleryData.contentId
       );
       if (article) {
-        article.rhs = adData.catalog_list_items.slice(1);
+        article.rhs = adData.catalog_list_items.slice(1).filter((v) => {
+          return (
+            v.layout_type.indexOf('ad_unit') >= 0 ||
+            (v.layout_type.indexOf('ad_unit') === -1 &&
+              v.catalog_list_items.length > 0)
+          );
+        });;
         article.web_url = router.asPath.slice(1);
         article.desktop = adData.catalog_list_items[0].catalog_list_items[0];
 

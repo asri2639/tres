@@ -262,7 +262,15 @@ const VideoList = ({ videoData, appConfig }) => {
     );
 
     if (video && adData) {
-      video.rhs = adData.catalog_list_items.slice(2)[0].catalog_list_items;
+      video.rhs = adData.catalog_list_items
+        .slice(2)[0]
+        .catalog_list_items.filter((v) => {
+          return (
+            v.layout_type.indexOf('ad_unit') >= 0 ||
+            (v.layout_type.indexOf('ad_unit') === -1 &&
+              v.catalog_list_items.length > 0)
+          );
+        });
       video.desktop = adData.catalog_list_items[0].catalog_list_items[0];
       setVideos((videos) => [...videos]);
     }
@@ -447,7 +455,7 @@ const VideoList = ({ videoData, appConfig }) => {
             <Video
               key={video.contentId}
               {...video}
-              rhs={video.rhs}
+              rhs={videos[0].rhs}
               desktop={video.desktop}
               iframeSource={video.iframeSource}
               nextVideo={i < 9 ? related[i + 1] : null}

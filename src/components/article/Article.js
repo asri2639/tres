@@ -232,17 +232,6 @@ export default function Article({
     };
   }, [inView, contentId, rhs, contentRef]);
 
-  let filteredRHS = [];
-  if (rhs) {
-    filteredRHS = rhs.filter((v) => {
-      return (
-        v.layout_type.indexOf('ad_unit') >= 0 ||
-        (v.layout_type.indexOf('ad_unit') === -1 &&
-          v.catalog_list_items.length > 0)
-      );
-    });
-  }
-
   const thumbnail = thumbnailExtractor(
     data.thumbnails,
     '3_2',
@@ -285,7 +274,7 @@ export default function Article({
                   <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
                 </div>
               ) : null}
-             
+
               <MediaContextProvider>
                 <Media at="xs">
                   {index === 0 ? (
@@ -485,11 +474,7 @@ export default function Article({
           {isAMP ? null : (
             <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
               <div className="w-full items-center space-y-6 pt-4 pb-4">
-                {!rhs ? (
-                  'Loading...'
-                ) : (
-                  <AdContainer data={filteredRHS} index={index} />
-                )}
+                {!rhs ? 'Loading...' : <AdContainer data={rhs} index={index} />}
               </div>
             </Media>
           )}

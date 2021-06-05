@@ -61,39 +61,17 @@ const MobileAd = ({ adData }) => {
 
   return (
     <div style={{ padding: '5px 0' }}>
-      <div
-        style={{
-          display: 'table',
-          width: width ? width + 'px' : 'auto',
-          height: height ? height + 20 + 'px' : 'auto',
-          background: 'rgb(228 228 228 / 68%)',
-          margin: '0 auto',
-        }}
-      >
-        <span
+      {adData ? (
+        <div
+          ref={adEl}
+          data-ad-unit={adData.ad_unit}
+          id={adData.gpt_id}
           style={{
-            color: '#797e90',
-            display: 'inline-block',
-            fontSize: '11px',
-            padding: '1px 0',
-            width: '100%',
-            textAlign: 'center',
+            width: width ? width + 'px' : 'auto',
+            height: height ? height + 'px' : 'auto',
           }}
-        >
-          Advertisement
-        </span>
-        {adData ? (
-          <div
-            ref={adEl}
-            data-ad-unit={adData.ad_unit}
-            id={adData.gpt_id}
-            style={{
-              width: width ? width + 'px' : 'auto',
-              height: height ? height + 'px' : 'auto',
-            }}
-          ></div>
-        ) : null}
-      </div>
+        ></div>
+      ) : null}
     </div>
   );
 };

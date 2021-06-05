@@ -41,23 +41,11 @@ const FirstAd = ({ adData }) => {
         style={{
           display: 'table',
           width: width ? width + 'px' : 'auto',
-          height: height ? height + 20 + 'px' : 'auto',
+          height: height ? height + 5 + 'px' : 'auto',
           background: 'rgb(228 228 228 / 68%)',
           margin: '0 auto',
         }}
       >
-        <span
-          style={{
-            color: '#797e90',
-            display: 'inline-block',
-            fontSize: '11px',
-            padding: '1px 0',
-            width: '100%',
-            textAlign: 'center',
-          }}
-        >
-          Advertisement
-        </span>
         {adData ? (
           <div
             ref={adEl}
