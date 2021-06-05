@@ -124,14 +124,14 @@ const ArticleList = ({ articleData }) => {
               response: 'r2',
               item_languages: language,
               content_id: related[curIndex + 1].content_id, //variable
-              page_size: window.innerWidth < 769 ? 1 : 10,
+              page_size: 1, // window.innerWidth < 769 ? 1 : 10,
               portal_state: stateCodeConverter(location.pathname.split('/')[2]),
               scroll_no: articles.length,
             },
           }).then((res) => {
             const newArticle =
               res.data.data.catalog_list_items[0].catalog_list_items[0];
-            const rhs = res.data.data.catalog_list_items.slice(1);
+            // const rhs = res.data.data.catalog_list_items.slice(1);
             const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
             const html = newArticle
               ? newArticle.html_tag.replace(scriptTagExtractionRegex, '')
@@ -152,7 +152,6 @@ const ArticleList = ({ articleData }) => {
               {
                 html: html,
                 data: newArticle,
-                rhs,
                 contentId: newArticle.content_id,
               },
             ];
@@ -195,7 +194,7 @@ const ArticleList = ({ articleData }) => {
             <Article
               key={article.contentId}
               {...article}
-              rhs={article.rhs}
+              rhs={articles[0].rhs}
               related={related}
               desktop={article.desktop}
               nextArticle={index < 9 ? related[index + 1] : null}

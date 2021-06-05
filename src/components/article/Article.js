@@ -17,6 +17,7 @@ import stringToHTML from '@utils/StringToHtml';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import MobileAd from '@components/article/MobileAd';
+import FirstAd from '@components/article/FirstAd';
 
 // initialPosition
 // div height
@@ -109,29 +110,21 @@ export default function Article({
         : `width: 300px; height: 250px;`;
       const slotArr = isDesktop ? '[728, 90]' : '[300, 250]';
       let adHTML = null;
-      let id, ad_id;
-
-      if (isDesktop) {
-        if (rhs && data.ad_conf) {
-          const desktopAdConf =
-            Array.isArray(data.ad_conf) &&
-            data.ad_conf[0] &&
-            data.ad_conf[0].web
-              ? data.ad_conf[0].web[0]
-              : null;
-          id = desktopAdConf ? desktopAdConf.gpt_id : null;
-          ad_id = desktopAdConf ? desktopAdConf.ad_unit_id : null;
+      let adConf = null;
+      if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
+        if (data.ad_conf[0].web_msite && data.ad_conf[0].web_msite) {
+          adConf = data.ad_conf[0].web_msite[0];
+        } else {
+          if (isDesktop) {
+            adConf = data.ad_conf[0].web ? data.ad_conf[0].web[0] : null;
+          } else {
+            adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite[0] : null;
+          }
         }
-      } else {
-        const mobileAdConf =
-          Array.isArray(data.ad_conf) &&
-          data.ad_conf[0] &&
-          data.ad_conf[0].msite
-            ? data.ad_conf[0].msite[0]
-            : null;
-        id = mobileAdConf ? mobileAdConf.gpt_id : null;
-        ad_id = mobileAdConf ? mobileAdConf.ad_unit_id : null;
       }
+
+      const id = adConf ? adConf.gpt_id : null;
+      const ad_id = adConf ? adConf.ad_unit_id : null;
 
       if (id && ad_id) {
         adHTML = `<div id='${id}' style='${divStyle}'></div>`;
@@ -162,12 +155,17 @@ export default function Article({
     }
 
     if (isAMP) {
-      const mobileAdConf =
-        Array.isArray(data.ad_conf) && data.ad_conf[0] && data.ad_conf[0].msite
-          ? data.ad_conf[0].msite
-          : null;
-      const id = mobileAdConf ? mobileAdConf.gpt_id : null;
-      const ad_id = mobileAdConf ? mobileAdConf.ad_unit_id : null;
+      let adConf = null;
+      if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
+        if (data.ad_conf[0].web_msite && data.ad_conf[0].web_msite) {
+          adConf = data.ad_conf[0].web_msite[0];
+        } else {
+          adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite[0] : null;
+        }
+      }
+
+      const id = adConf ? adConf.gpt_id : null;
+      const ad_id = adConf ? adConf.ad_unit_id : null;
 
       const parsedHtml = stringToHTML(html);
       if (ad_id) {
@@ -270,31 +268,6 @@ export default function Article({
           </Media>
         </MediaContextProvider>
 
-        <MediaContextProvider>
-          <Media at="xs">
-            <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
-            <h1 ref={setRefs} className="leading-tight text-xll font-bold p-2">
-              {data.title}
-            </h1>
-
-            <div className="px-2 text-sm text-gray-600 md:text-black always-english">
-              {data.publish_date_uts
-                ? `Published on: ${dateFormatter(data.publish_date_uts, isAMP)}`
-                : ''}
-              <span className="hidden md:inline-block">
-                {data.publish_date_uts && data.update_date_uts ? `  |  ` : ''}
-              </span>
-              <br className="md:hidden" />
-              {data.update_date_uts
-                ? `Updated on: ${dateFormatter(data.update_date_uts, isAMP)}`
-                : ''}
-            </div>
-            <div className="flex justify-between px-2 w-56 mb-2">
-              <SocialMedia data={data} />
-            </div>
-          </Media>
-        </MediaContextProvider>
-
         <div className="md:w-8/12 h-full bg-white">
           <Sticky
             containerSelectorFocus={`.article[data-content-id="${contentId}"]`}
@@ -307,24 +280,26 @@ export default function Article({
               } actual-content lg:container lg:mx-auto px-3 md:px-0 bg-white `}
               ref={contentRef}
             >
-              <BBCHeader source={source} />
-
-              <div className="flex flex-col md:flex-col-reverse md:mb-8">
-                <div className="-mx-3 md:mx-0 relative">
-                  <Thumbnail
-                    thumbnail={thumbnail}
-                    className={'md:rounded-lg w-full'}
-                    type={data.media_type}
-                  />
+              {index > 0 ? (
+                <div className="pt-3">
+                  <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
                 </div>
-                <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
+              ) : null}
+             
+              <MediaContextProvider>
+                <Media at="xs">
+                  {index === 0 ? (
+                    <FirstAd adData={ads ? ads[index * 2 + 1] : null} />
+                  ) : null}
+
                   <h1
-                    ref={ref}
-                    className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
+                    ref={setRefs}
+                    className="leading-tight text-xll font-bold p-2"
                   >
                     {data.title}
                   </h1>
-                  <div className="text-sm text-gray-600 md:text-black always-english">
+
+                  <div className="px-2 text-sm text-gray-600 md:text-black always-english">
                     {data.publish_date_uts
                       ? `Published on: ${dateFormatter(
                           data.publish_date_uts,
@@ -344,30 +319,71 @@ export default function Article({
                         )}`
                       : ''}
                   </div>
-                </div>
-
-                <MediaContextProvider>
-                  <Media
-                    at="xs"
-                    className="flex justify-between mx-auto w-56 mb-2"
-                  >
+                  <div className="flex justify-between px-2 w-56 mb-2">
                     <SocialMedia data={data} />
-                  </Media>
-                </MediaContextProvider>
+                  </div>
+                </Media>
+              </MediaContextProvider>
+
+              <BBCHeader source={source} />
+
+              <div className="flex flex-col md:flex-col-reverse md:mb-8">
+                <div className="-mx-3 md:mx-0 relative">
+                  <Thumbnail
+                    thumbnail={thumbnail}
+                    className={'md:rounded-lg w-full'}
+                    type={data.media_type}
+                  />
+                </div>
+                <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
+                  <MediaContextProvider>
+                    <Media greaterThan="xs">
+                      <h1
+                        ref={setRefs}
+                        className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
+                      >
+                        {data.title}
+                      </h1>
+
+                      <div className="text-sm text-gray-600 md:text-black always-english">
+                        {data.publish_date_uts
+                          ? `Published on: ${dateFormatter(
+                              data.publish_date_uts,
+                              isAMP
+                            )}`
+                          : ''}
+                        <span className="hidden md:inline-block">
+                          {data.publish_date_uts && data.update_date_uts
+                            ? `  |  `
+                            : ''}
+                        </span>
+                        <br className="md:hidden" />
+                        {data.update_date_uts
+                          ? `Updated on: ${dateFormatter(
+                              data.update_date_uts,
+                              isAMP
+                            )}`
+                          : ''}
+                      </div>
+                    </Media>
+                  </MediaContextProvider>
+                </div>
               </div>
 
               {isAMP && ampHtml ? (
                 <div
-                  className="text-sm md:text-md"
+                  className="text-base md:text-md"
                   dangerouslySetInnerHTML={{
                     __html: ampHtml,
                   }}
                 />
               ) : null}
 
+              {/** actual article content */}
+
               {!isAMP ? (
                 <div
-                  className="text-sm md:text-md"
+                  className="text-base md:text-md"
                   dangerouslySetInnerHTML={{
                     __html: html,
                   }}
@@ -450,6 +466,7 @@ export default function Article({
               >
                 <span></span>
               </InView>
+              <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
             </div>
           </Sticky>
         </div>
@@ -463,15 +480,16 @@ export default function Article({
               scrollToNextArticle={scrollToNextArticle}
               nextArticle={nextArticle}
               showBbc={!!source}
-            >
-              <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
-            </MobileNextArticle>
+            ></MobileNextArticle>
           </Media>
-          
           {isAMP ? null : (
             <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
               <div className="w-full items-center space-y-6 pt-4 pb-4">
-                {!rhs ? 'Loading...' : <AdContainer data={filteredRHS} />}
+                {!rhs ? (
+                  'Loading...'
+                ) : (
+                  <AdContainer data={filteredRHS} index={index} />
+                )}
               </div>
             </Media>
           )}

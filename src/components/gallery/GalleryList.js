@@ -120,19 +120,19 @@ const GalleryList = ({ galleryData }) => {
               response: 'r2',
               item_languages: language,
               content_id: related[curIndex + 1].content_id, //variable
-              page_size: window.innerWidth < 769 ? 1 : 10,
+              page_size: 1, //window.innerWidth < 769 ? 1 : 10,
               portal_state: stateCodeConverter(location.pathname.split('/')[2]),
               scroll_no: galleries.length,
             },
           }).then((res) => {
             const newGallery =
               res.data.data.catalog_list_items[0].catalog_list_items;
-            const rhs = res.data.data.catalog_list_items.slice(1);
+            // const rhs = res.data.data.catalog_list_items.slice(1);
             const newList = [
               ...galleries,
               {
                 images: newGallery,
-                rhs,
+                // rhs,
                 content_id: newGallery[0].parent_id,
                 web_url: related[curIndex + 1].web_url,
                 count: res.data.data.catalog_list_items[0].total_items_count,
@@ -178,7 +178,7 @@ const GalleryList = ({ galleryData }) => {
               key={gallery.content_id}
               contentId={gallery.content_id}
               data={gallery.images}
-              rhs={gallery.rhs}
+              rhs={galleries[0].rhs}
               desktop={gallery.desktop}
               count={gallery.count}
               webUrl={gallery.web_url}
