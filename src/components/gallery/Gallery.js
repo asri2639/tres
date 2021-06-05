@@ -216,43 +216,6 @@ const Gallery = ({
         </Media>
       </MediaContextProvider>
 
-      <MediaContextProvider>
-        <Media at="xs">
-          <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
-          <h1 ref={setRefs} className="leading-tight text-xll font-bold p-2">
-            {data[0].display_title}{' '}
-          </h1>
-
-          <div className="px-2 text-sm text-gray-600 md:text-black always-english">
-            {data[0].publish_date_uts ? (
-              <div className="text-sm text-gray-600 md:text-black always-english">
-                {data[0].publish_date_uts
-                  ? `Published on: ${dateFormatter(
-                      data[0].publish_date_uts,
-                      isAMP
-                    )}`
-                  : ''}
-                <span className="hidden md:inline-block">
-                  {data[0].publish_date_uts && data[0].update_date_uts
-                    ? `  |  `
-                    : ''}
-                </span>
-                <br className="md:hidden" />
-                {data[0].update_date_uts
-                  ? `Updated on: ${dateFormatter(
-                      data[0].update_date_uts,
-                      isAMP
-                    )}`
-                  : ''}
-              </div>
-            ) : null}
-          </div>
-          <div className="flex justify-between px-2 w-56 mb-2">
-            <SocialMedia data={data} />
-          </div>
-        </Media>
-      </MediaContextProvider>
-
       <div className="md:w-8/12">
         <Sticky
           containerSelectorFocus={`.article[data-content-id="${contentId}"]`}
@@ -264,6 +227,55 @@ const Gallery = ({
               className || ''
             } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
           >
+            {index > 0 && router.query.state === 'karnataka' ? (
+              <div className="pt-3">
+                <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
+              </div>
+            ) : null}
+
+            <MediaContextProvider>
+              <Media at="xs">
+                {index === 0 && router.query.state === 'karnataka' ? (
+                  <FirstAd adData={ads ? ads[index * 2 + 1] : null} />
+                ) : null}
+
+                <h1
+                  ref={setRefs}
+                  className="leading-tight text-xll font-bold p-2"
+                >
+                  {data[0].display_title}{' '}
+                </h1>
+
+                <div className="px-2 text-sm text-gray-600 md:text-black always-english">
+                  {data[0].publish_date_uts ? (
+                    <div className="text-sm text-gray-600 md:text-black always-english">
+                      {data[0].publish_date_uts
+                        ? `Published on: ${dateFormatter(
+                            data[0].publish_date_uts,
+                            isAMP
+                          )}`
+                        : ''}
+                      <span className="hidden md:inline-block">
+                        {data[0].publish_date_uts && data[0].update_date_uts
+                          ? `  |  `
+                          : ''}
+                      </span>
+                      <br className="md:hidden" />
+                      {data[0].update_date_uts
+                        ? `Updated on: ${dateFormatter(
+                            data[0].update_date_uts,
+                            isAMP
+                          )}`
+                        : ''}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="flex justify-between px-2 w-56 mb-2">
+                  <SocialMedia data={data} />
+                </div>
+              </Media>
+            </MediaContextProvider>
+
             <BBCHeader source={source} />
 
             <div className="flex flex-col md:flex-col-reverse md:mb-4">
@@ -452,6 +464,10 @@ const Gallery = ({
             >
               <span></span>
             </InView>
+
+            {router.query.state === 'karnataka' ? (
+              <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
+            ) : null}
           </div>
         </Sticky>
       </div>
@@ -465,9 +481,7 @@ const Gallery = ({
             data={data}
             related={related}
             showBbc={!!source}
-          >
-            <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
-          </MobileNextArticle>
+          ></MobileNextArticle>
         </Media>
         <Media greaterThan="xs" className="md:block md:w-4/12">
           <div className="w-full flex flex-col items-center space-y-6 pt-4 pb-4">

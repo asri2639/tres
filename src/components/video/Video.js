@@ -362,14 +362,7 @@ const Video = ({
             nextArticle={nextVideo}
             related={related}
             showBbc={!!source}
-          >
-            {ads[index * 2 + 1] ? (
-              <MobileAd key={index * 2 + 1} adData={ads[index * 2 + 1]} />
-            ) : null}
-          </MobileNextArticle>
-          {ads[index * 2 + 2] ? (
-            <MobileAd key={index * 2 + 2} adData={ads[index * 2 + 2]} />
-          ) : null}
+          ></MobileNextArticle>
         </Media>
         {isAMP ? null : (
           <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
