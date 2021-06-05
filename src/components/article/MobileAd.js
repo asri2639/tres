@@ -1,33 +1,101 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-const MobileAd = ({ adData, className }) => {
-  const slotArr = '[300, 250]';
+const MobileAd = ({ adData }) => {
+  const adEl = useRef(null);
+
+  let [width, height] = [null, null];
+  if (
+    adData &&
+    adData.ad_unit &&
+    adData.ad_unit.indexOf('728x90-300x250') === -1
+  ) {
+    [width, height] = adData.ad_unit
+      .split('/')
+      .slice(-1)[0]
+      .split('x')
+      .map((v) => {
+        const num = /\d+/.exec(v);
+        return num ? +num[0] : 400;
+      });
+  }
 
   useEffect(() => {
-    if (adData && document.querySelector(adData.gpt_id)) {
-      console.log(adData);
-      var s = document.createElement('script');
-      s.type = 'text/javascript';
-      var code = `
-            if(window.googletag && googletag.apiReady) {
-              googletag.cmd.push(function() {
-                googletag.pubads().collapseEmptyDivs();
-                googletag.defineSlot('${adData.ad_unit}', ${slotArr}, '${adData.gpt_id}').addService(googletag.pubads()); 
-                googletag.enableServices(); 
-              }); 
-              googletag.cmd.push(function() { 
-                googletag.display('${adData.gpt_id}'); 
-              });
-          }`;
-      s.appendChild(document.createTextNode(code));
-      document.querySelector('#' + adData.gpt_id).appendChild(s);
+    if (adData && adData.ad_unit) {
+      const id = 'gpt-script- ' + adData.gpt_id;
+
+      let scriptContent = null;
+
+      if (adData.ad_unit.indexOf('728x90-300x250') > 0) {
+        scriptContent = `var responsiveAdSlot = googletag.defineSlot('${adData.ad_unit}', [[300, 250], [728, 90]], '${adData.gpt_id}').addService(googletag.pubads()); 
+        googletag.enableServices(); 
+        var mapping =
+            googletag.sizeMapping().addSize([980, 90], [728, 90]).addSize([320, 480], [300, 250]).build();
+        responsiveAdSlot.defineSizeMapping(mapping);`;
+      } else {
+        scriptContent = `googletag.defineSlot('${adData.ad_unit}', [${width},${height}], '${adData.gpt_id}').addService(googletag.pubads()); 
+                          googletag.enableServices(); `;
+      }
+
+      if (adEl.current) {
+        if (!document.getElementById(id)) {
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.id = id;
+          var code = `
+                if(window.googletag && googletag.apiReady) {
+                  googletag.cmd.push(function() {
+                    googletag.pubads().collapseEmptyDivs();
+                    ${scriptContent}
+                    
+                  }); 
+                  googletag.cmd.push(function() { 
+                    googletag.display('${adData.gpt_id}'); 
+                  });
+              }`;
+          s.appendChild(document.createTextNode(code));
+          adEl.current.appendChild(s);
+        }
+      }
     }
   }, [adData]);
 
   return (
-    <div id={adData.gpt_id} style={{ width: '300px', height: '250px' }}></div>
+    <div style={{ padding: '5px 0' }}>
+      <div
+        style={{
+          display: 'table',
+          width: width ? width + 'px' : 'auto',
+          height: height ? height + 20 + 'px' : 'auto',
+          background: 'rgb(228 228 228 / 68%)',
+          margin: '0 auto',
+        }}
+      >
+        <span
+          style={{
+            color: '#797e90',
+            display: 'inline-block',
+            fontSize: '11px',
+            padding: '1px 0',
+            width: '100%',
+            textAlign: 'center',
+          }}
+        >
+          Advertisement
+        </span>
+        {adData ? (
+          <div
+            ref={adEl}
+            data-ad-unit={adData.ad_unit}
+            id={adData.gpt_id}
+            style={{
+              width: width ? width + 'px' : 'auto',
+              height: height ? height + 'px' : 'auto',
+            }}
+          ></div>
+        ) : null}
+      </div>
+    </div>
   );
-  //   return <div>{JSON.stringify(adData)}</div>;
 };
 
 export default MobileAd;
