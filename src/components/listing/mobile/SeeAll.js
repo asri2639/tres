@@ -124,6 +124,7 @@ const SeeAll = ({ data, article, className, t }) => {
           onDistrictSelect={(district) => {
             startLoading();
             setDistrict(district);
+            setShowDistrictModal(false);
           }}
         />
       ) : null}

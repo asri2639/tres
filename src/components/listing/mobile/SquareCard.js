@@ -11,9 +11,9 @@ const SquareCard = ({ data, article, className }) => {
   const linkInfo = linkInfoGenerator(article ? article.web_url : data.url);
 
   const thumbnail = article
-    ? thumbnailExtractor(article.thumbnails, '3_2', 's2b', null)
+    ? thumbnailExtractor(article.thumbnails, '3_2', 's2b', 'breaking_news')
     : data.thumbnails
-    ? thumbnailExtractor(data.thumbnails, '3_2', 's2b', null)
+    ? thumbnailExtractor(data.thumbnails, '3_2', 's2b', 'breaking_news')
     : null;
 
   return article ? (

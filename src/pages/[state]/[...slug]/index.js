@@ -607,24 +607,22 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         };
     }
   } else {
+    const redirectUrl = `${
+      publicRuntimeConfig.APP_ENV === 'staging'
+        ? 'https://staging.etvbharat.com'
+        : 'https://www.etvbharat.com'
+    }${url}`;
 
     if (res) {
       res.writeHead(302, {
-        Location: `${
-          publicRuntimeConfig.APP_ENV === 'staging'
-            ? 'https://staging.etvbharat.com'
-            : 'https://www.etvbharat.com'
-        }${req.url}`,
+        Location: redirectUrl,
       });
       res.end();
     } else {
-      location.href =
-        publicRuntimeConfig.APP_ENV === 'staging'
-          ? 'https://staging.etvbharat.com'
-          : 'https://www.etvbharat.com' + args.asPath;
+      location.href = redirectUrl;
     }
 
-    const stateValue = stateCodeConverter(urlSplit[4]);
+    /* const stateValue = stateCodeConverter(urlSplit[4]);
     const api = API(APIEnum.Listing, APIEnum.CatalogList);
     const response = await api.Listing.getListingApiKey({
       query: {
@@ -655,7 +653,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       api.CatalogList.getListing(requestPayload)
     );
 
-    const data = listingResp.data.data;
+    const data = listingResp.data.data; */
 
     /*  return {
       namespacesRequired: ['common'],

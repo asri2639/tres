@@ -14,6 +14,7 @@ import { I18nContext } from 'react-i18next';
 import useSWR from 'swr';
 import React from 'react';
 import Sticky from 'wil-react-sticky';
+import MainArticle from '@components/listing/mobile/MainArticle';
 
 const ListContainer = ({ children, data, payload }) => {
   const api = API(APIEnum.CatalogList);
@@ -135,7 +136,7 @@ const ListContainer = ({ children, data, payload }) => {
 
   return (
     <>
-      {/*  <div className="w-full mb-3 lg:container lg:mx-auto ">
+    {/*    <div className="w-full mb-3 lg:container lg:mx-auto ">
         <MainArticle
           className="md:w-8/12 "
           article={listItems[0].catalog_list_items[0]}
