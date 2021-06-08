@@ -107,14 +107,7 @@ const ListContainer = ({ children, data, payload }) => {
       case 'ad_unit_square':
         return (
           <React.Fragment key={'ad' + ind}>
-            <MediaContextProvider>
-              <Media at="xs">
-                <AdContainer data={[catalog]} className="my-1" />
-              </Media>
-            </MediaContextProvider>
-            <MediaContextProvider>
-              <Media at="xs"></Media>
-            </MediaContextProvider>
+            <AdContainer data={[catalog]} className="my-1" listing={true} />
           </React.Fragment>
         );
 
@@ -136,7 +129,7 @@ const ListContainer = ({ children, data, payload }) => {
 
   return (
     <>
-    {/*    <div className="w-full mb-3 lg:container lg:mx-auto ">
+      {/*    <div className="w-full mb-3 lg:container lg:mx-auto ">
         <MainArticle
           className="md:w-8/12 "
           article={listItems[0].catalog_list_items[0]}
@@ -178,7 +171,7 @@ const ListContainer = ({ children, data, payload }) => {
               stickyEnableRange={[768, Infinity]}
               offsetTop={60}
             >
-              <AdContainer data={filteredRHS} />
+              <AdContainer data={filteredRHS} index={0} />
             </Sticky>
           </Media>
         </MediaContextProvider>
