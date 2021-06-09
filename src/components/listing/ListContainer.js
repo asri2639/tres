@@ -93,10 +93,8 @@ const ListContainer = ({ children, data, payload }) => {
       setIsDesktop(true);
       setTimeout(() => {
         const ads = document.querySelectorAll('.listing-ad');
-        for (let i = 0; i < ads.length; i = i + 2) {
-          let elem = ads[i];
-          elem.parentNode.removeChild(elem);
-        }
+        let elem = ads[0];
+        elem.parentNode.removeChild(elem);
       }, 100);
     }
   }, [data]);
