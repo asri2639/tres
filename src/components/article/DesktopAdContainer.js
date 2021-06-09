@@ -33,4 +33,4 @@ const DesktopAdContainer = ({ data, className, type, index, desktop }) => {
   );
 };
 
-export default desktopAdContainer;
+export default DesktopAdContainer;
