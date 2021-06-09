@@ -169,7 +169,6 @@ const ListContainer = ({ children, data, payload }) => {
           />
         ));
       case 'ad_unit_square':
-        console.log(ind);
         return (
           <React.Fragment key={'ad' + ind}>
             <AdContainer
