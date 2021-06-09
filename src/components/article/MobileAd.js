@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const MobileAd = ({ adData, className }) => {
+const MobileAd = ({ adData, className, refresh }) => {
   const adEl = useRef(null);
 
   let [width, height] = [null, null];
@@ -26,11 +26,17 @@ const MobileAd = ({ adData, className }) => {
       let scriptContent = null;
 
       if (adData.ad_unit.indexOf('728x90-300x250') > 0) {
-        scriptContent = `var responsiveAdSlot = googletag.defineSlot('${adData.ad_unit}', [[300, 250], [728, 90]], '${adData.gpt_id}').addService(googletag.pubads()); 
+        scriptContent = `var ad_${adData.gpt_id} = googletag.defineSlot('${adData.ad_unit}', [[300, 250], [728, 90]], '${adData.gpt_id}').addService(googletag.pubads()); 
         googletag.enableServices(); 
         var mapping =
             googletag.sizeMapping().addSize([980, 90], [728, 90]).addSize([320, 480], [300, 250]).build();
-        responsiveAdSlot.defineSizeMapping(mapping);`;
+            ad_${adData.gpt_id}.defineSizeMapping(mapping);
+        if(${refresh}) {
+          setTimeout(()=>{
+            googletag.pubads().refresh([ad_${adData.gpt_id}]);
+          },10)
+        }
+        `;
       } else {
         scriptContent = `googletag.defineSlot('${adData.ad_unit}', [${width},${height}], '${adData.gpt_id}').addService(googletag.pubads()); 
                           googletag.enableServices(); `;

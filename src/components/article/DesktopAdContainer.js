@@ -1,6 +1,6 @@
 import MobileAd from '@components/article/MobileAd';
 
-const AdContainer = ({ data, className, type, index, desktop }) => {
+const DesktopAdContainer = ({ data, className, type, index, desktop }) => {
   return (
     <>
       {data.map((val, i) => {
@@ -24,6 +24,7 @@ const AdContainer = ({ data, className, type, index, desktop }) => {
               className={className}
               key={`ad-rhs-${i}-${adData.gpt_id}`}
               adData={{ ad_unit: adData.ad_unit_id, gpt_id: adData.gpt_id }}
+              refresh={true}
             />
           ) : null;
         }
@@ -32,4 +33,4 @@ const AdContainer = ({ data, className, type, index, desktop }) => {
   );
 };
 
-export default AdContainer;
+export default desktopAdContainer;
