@@ -57,7 +57,7 @@ const LargeSquareCard = ({ data, article, className }) => {
           }}
           className="text-sm md:text-base relative -top-1"
         >
-          {article.display_title}
+          {article.display_title + ' ' + article.short_description}
         </div>
       </div>
     </NavLink>
