@@ -50,9 +50,10 @@ const MobileAd = ({ adData, className, refresh }) => {
                     ${scriptContent}
                     
                   }); 
+
                   setTimeout(()=>{
                     googletag.cmd.push(function() { 
-                      googletag.display(${adId}); 
+                      googletag.display('${adData.gpt_id}'); 
                     });
                   },10)
               }`;
