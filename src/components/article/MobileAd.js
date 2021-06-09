@@ -26,14 +26,15 @@ const MobileAd = ({ adData, className, refresh }) => {
       let scriptContent = null;
 
       if (adData.ad_unit.indexOf('728x90-300x250') > 0) {
-        scriptContent = `var ad_${adData.gpt_id.replace(/-/ig,'_')} = googletag.defineSlot('${adData.ad_unit}', [[300, 250], [728, 90]], '${adData.gpt_id}').addService(googletag.pubads()); 
+        const adId = `ad_${adData.gpt_id.replace(/-/gi, '_')}`;
+        scriptContent = `var ${adId} = googletag.defineSlot('${adData.ad_unit}', [[300, 250], [728, 90]], '${adData.gpt_id}').addService(googletag.pubads()); 
         googletag.enableServices(); 
         var mapping =
             googletag.sizeMapping().addSize([980, 90], [728, 90]).addSize([320, 480], [300, 250]).build();
-            ad_${adData.gpt_id}.defineSizeMapping(mapping);
+            ${adId}.defineSizeMapping(mapping);
         if(${refresh}) {
           setTimeout(()=>{
-            googletag.pubads().refresh([ad_${adData.gpt_id.replace(/-/ig,'_')}]);
+            googletag.pubads().refresh([${adId}]);
           },10)
         }
         `;
