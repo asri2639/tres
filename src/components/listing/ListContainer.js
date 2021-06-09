@@ -3,7 +3,6 @@ import APIEnum from '@api/APIEnum';
 import { useContext, useEffect, useState } from 'react';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { Media, MediaContextProvider } from '@media';
-import SquareCard from '@components/listing/mobile/SquareCard';
 import RectangleCard from '@components/listing/mobile/RectangleCard';
 import AdContainer from '@components/article/AdContainer';
 import CatalogWall from './mobile/CatalogWall';
@@ -14,19 +13,47 @@ import { I18nContext } from 'react-i18next';
 import useSWR from 'swr';
 import React from 'react';
 import Sticky from 'wil-react-sticky';
-import MainArticle from '@components/listing/mobile/MainArticle';
+import MainArticles from './MainArticles';
+import MobileMainArticles from './mobile/MobileMainArticles';
 
 const ListContainer = ({ children, data, payload }) => {
-  const api = API(APIEnum.CatalogList);
+  const reArrangeData = (data) => {
+    let extra = [];
+    return data.catalog_list_items.map((v, i) => {
+      if (v.catalog_list_items.length === 5) {
+        if (extra.length === 0) {
+          extra.push(v.catalog_list_items[4]);
+          return {
+            ...v,
+            catalog_list_items: [...v.catalog_list_items.slice(0, 4)],
+          };
+        } else {
+          return {
+            ...v,
+            catalog_list_items: [
+              ...extra.splice(0, 1),
+              ...v.catalog_list_items,
+            ],
+          };
+        }
+      }
 
+      return v;
+    });
+  };
+
+  const items = reArrangeData(data);
+
+  const api = API(APIEnum.CatalogList);
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
-  const [listItems, setListItems] = useState(data.catalog_list_items);
+  const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const totalCalls = Math.ceil(data.total_items_count / 8);
   const [callsDone, setCallsDone] = useState(1);
   const [filteredRHS, setFilteredRHS] = useState([]);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
@@ -51,14 +78,16 @@ const ListContainer = ({ children, data, payload }) => {
     [
       'CatalogList',
       'getArticleDetails',
-      data.catalog_list_items[0].catalog_list_items[1].content_id,
+      data.catalog_list_items[1].catalog_list_items.find(
+        (v) => v.content_type === 'article'
+      ).content_id,
     ],
     relatedArticlesFetcher,
     { dedupingInterval: 5 * 60 * 1000 }
   );
 
   useEffect(() => {
-    setListItems(data.catalog_list_items);
+    setListItems(reArrangeData(data));
   }, [data]);
 
   useEffect(() => {
@@ -87,14 +116,19 @@ const ListContainer = ({ children, data, payload }) => {
       const listingResp = await api.CatalogList.getListing(requestPayload);
 
       const data = listingResp.data.data;
-      setListItems((prevState) => [...prevState, ...data.catalog_list_items]);
+      const items = reArrangeData(data);
+      setListItems((prevState) => [...prevState, ...items]);
       setCallsDone((callsDone) => callsDone + 1);
     }
 
     setIsFetching(false);
   }
 
+  useEffect(() => {
+    setIsDesktop(window && window.innerWidth >= 768);
+  });
   function renderLayout(catalog, ind) {
+    console.log(catalog.catalog_list_items);
     switch (catalog.layout_type) {
       case 'news_listing':
         return catalog.catalog_list_items.map((article, ind) => (
@@ -104,10 +138,16 @@ const ListContainer = ({ children, data, payload }) => {
             className="rectangle-card bg-white mt-1 md:mt-2 md:w-1/2 rounded-md"
           />
         ));
+        return null;
       case 'ad_unit_square':
         return (
           <React.Fragment key={'ad' + ind}>
-            <AdContainer data={[catalog]} className="my-1" listing={true} />
+            <AdContainer
+              isDesktop={isDesktop}
+              data={[catalog]}
+              className="my-1"
+              type={'listing'}
+            />
           </React.Fragment>
         );
 
@@ -140,21 +180,16 @@ const ListContainer = ({ children, data, payload }) => {
         className={`lg:container listing-container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10`}
       >
         <div className="md:w-8/12 h-full px-2 md:flex md:flex-wrap">
+          {/* Mobile listing */}
           <MediaContextProvider>
-            {/* Mobile listing */}
-            {listItems.length > 0 ? (
+            {listItems && listItems.length > 0 ? (
               <>
-                <div className="w-full flex space-x-2">
-                  <SquareCard
-                    className="w-1/2 bg-white"
-                    article={listItems[0].catalog_list_items[1]}
-                  />
-
-                  <SquareCard
-                    className="w-1/2 bg-white"
-                    article={listItems[0].catalog_list_items[2]}
-                  />
-                </div>
+                <Media at="xs" className="w-full">
+                  <MobileMainArticles list={listItems[0].catalog_list_items} />
+                </Media>
+                <Media greaterThan="xs" className="w-full flex space-x-2">
+                  <MainArticles list={listItems[0].catalog_list_items} />
+                </Media>
                 {listItems.slice(1).map((subList, ind) => {
                   return renderLayout(subList, ind);
                 })}
@@ -165,13 +200,19 @@ const ListContainer = ({ children, data, payload }) => {
           </MediaContextProvider>
         </div>
         <MediaContextProvider>
-          <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
+          <Media
+            greaterThan="xs"
+            className={`ad-content px-3 pt-2 -my-3 bg-white md:block md:w-4/12`}
+          >
             <Sticky
               containerSelectorFocus={`.listing-container`}
               stickyEnableRange={[768, Infinity]}
               offsetTop={60}
             >
-              <AdContainer data={filteredRHS} index={0} />
+              <Loading isLoading={!filteredRHS} />
+              {filteredRHS ? (
+                <AdContainer data={filteredRHS} index={0} type={'home_page'} />
+              ) : null}
             </Sticky>
           </Media>
         </MediaContextProvider>

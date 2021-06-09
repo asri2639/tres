@@ -62,6 +62,8 @@ export default function Article({
     [inViewRef]
   );
 
+
+
   useEffect(() => {
     let api = null;
     if (data.source && data.source.indexOf('bbc_') === 0) {
@@ -283,7 +285,7 @@ export default function Article({
                   ) : null}
 
                   <h1
-                    ref={setRefs}
+                    ref={ref}
                     className="leading-tight text-xll font-bold p-2"
                   >
                     {data.title}
@@ -329,7 +331,7 @@ export default function Article({
                   <MediaContextProvider>
                     <Media greaterThan="xs">
                       <h1
-                        ref={setRefs}
+                        ref={ref}
                         className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
                       >
                         {data.title}

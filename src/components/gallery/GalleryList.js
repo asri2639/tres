@@ -33,7 +33,7 @@ const GalleryList = ({ galleryData }) => {
       //  return null;
     }
     return api[apiEnum][methodName]({
-      config: { isSSR: true },
+      config: { isSSR: methodName !== 'getArticleDetails' },
       query: {
         response: methodName === 'getArticleDetails' ? 'r2' : 'r1',
         item_languages: language,
@@ -87,7 +87,7 @@ const GalleryList = ({ galleryData }) => {
             (v.layout_type.indexOf('ad_unit') === -1 &&
               v.catalog_list_items.length > 0)
           );
-        });;
+        });
         article.web_url = router.asPath.slice(1);
         article.desktop = adData.catalog_list_items[0].catalog_list_items[0];
 

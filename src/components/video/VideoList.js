@@ -261,7 +261,7 @@ const VideoList = ({ videoData, appConfig }) => {
       (article) => article.data.content_id === videoData.contentId
     );
 
-    if (video && adData) {
+    if (video && adData && adData.catalog_list_items.slice(2)[0]) {
       video.rhs = adData.catalog_list_items
         .slice(2)[0]
         .catalog_list_items.filter((v) => {

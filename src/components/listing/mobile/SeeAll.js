@@ -62,6 +62,7 @@ const SeeAll = ({ data, article, className, t }) => {
 
   useEffect(() => {
     if (districtFetchedData) {
+      console.log(districtFetchedData);
       setDisplayData(districtFetchedData);
     }
   }, [districtFetchedData]);
@@ -111,6 +112,21 @@ const SeeAll = ({ data, article, className, t }) => {
         setShowDistrictModal(true);
         break;
     }
+  };
+
+  const getSeeAllData = (displayData) => {
+    let url = displayData.url.startsWith('/')
+      ? displayData.url.slice(1)
+      : displayData.url;
+
+    if (url.endsWith('/district')) {
+      url = url.split('/district')[0] + '/state/'+displayData.dynamic_district
+    }
+    return {
+      text: t('see_all'),
+      url: url,
+      thumbnails: displayData.catalog_list_items[3].thumbnails,
+    };
   };
 
   return (
@@ -177,13 +193,7 @@ const SeeAll = ({ data, article, className, t }) => {
           <div className="w-1/2 p-1" key={displayData.friendly_id + 'see_all'}>
             <SquareCard
               className="bg-white w-full h-full flex justify-center items-center"
-              data={{
-                text: t('see_all'),
-                url: displayData.url.startsWith('/')
-                  ? displayData.url.slice(1)
-                  : displayData.url,
-                thumbnails: displayData.catalog_list_items[3].thumbnails,
-              }}
+              data={getSeeAllData(displayData)}
             />
           </div>
         ) : null}

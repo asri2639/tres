@@ -5,7 +5,7 @@ import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor, linkInfoGenerator } from '@utils/Helpers';
 import { useContext } from 'react';
 
-const SquareCard = ({ data, article, className, lineClamp }) => {
+const LargeSquareCard = ({ data, article, className }) => {
   const isRTL = useContext(RTLContext);
 
   const linkInfo = linkInfoGenerator(article ? article.web_url : data.url);
@@ -19,7 +19,7 @@ const SquareCard = ({ data, article, className, lineClamp }) => {
   return article ? (
     <NavLink
       key={article.friendly_id}
-      className={`flex  flex-col pb-1 cursor-pointer rounded-md shadow ${
+      className={`flex h-full flex-col pb-1 cursor-pointer rounded-md shadow ${
         isRTL ? 'rtl' : ''
       } ${className}`}
       href={linkInfo.href}
@@ -53,7 +53,7 @@ const SquareCard = ({ data, article, className, lineClamp }) => {
             textOverflow: 'ellipsis',
             WebkitBoxOrient: 'vertical',
             display: '-webkit-box',
-            WebkitLineClamp: lineClamp || '3',
+            WebkitLineClamp: '3',
           }}
           className="text-sm md:text-base relative -top-1"
         >
@@ -61,38 +61,7 @@ const SquareCard = ({ data, article, className, lineClamp }) => {
         </div>
       </div>
     </NavLink>
-  ) : data ? (
-    <NavLink
-      className={`flex md:text-lg relative flex-col pb-1 cursor-pointer rounded-md ${
-        isRTL ? 'rtl' : ''
-      } ${className}`}
-      href={linkInfo.href}
-      as={linkInfo.as}
-      passHref
-      onClick={() => {
-        GoogleTagManager.seeAll(linkInfo);
-      }}
-    >
-      {data.text}
-      <div
-        style={{
-          backgroundImage: 'url(' + thumbnail.url + ')',
-          backgroundSize: 'cover',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          position: 'absolute',
-          zIndex: 0,
-          width: '100%',
-          height: '100%',
-          display: 'block',
-          opacity: '0.3',
-          borderRadius: '8px'
-        }}
-      ></div>
-    </NavLink>
   ) : null;
 };
 
-export default SquareCard;
+export default LargeSquareCard;

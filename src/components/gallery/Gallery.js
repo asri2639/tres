@@ -240,7 +240,7 @@ const Gallery = ({
                 ) : null}
 
                 <h1
-                  ref={setRefs}
+                  ref={ref}
                   className="leading-tight text-xll font-bold p-2"
                 >
                   {data[0].display_title}{' '}

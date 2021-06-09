@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-const MobileAd = ({ adData }) => {
+const MobileAd = ({ adData, className }) => {
   const adEl = useRef(null);
 
   let [width, height] = [null, null];
@@ -60,7 +60,7 @@ const MobileAd = ({ adData }) => {
   }, [adData]);
 
   return (
-    <div style={{ padding: '5px 0' }}>
+    <div style={{ padding: '5px 0' }} className={className}>
       {adData ? (
         <div
           ref={adEl}
