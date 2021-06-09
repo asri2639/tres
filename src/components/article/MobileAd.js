@@ -21,25 +21,20 @@ const MobileAd = ({ adData, className, refresh }) => {
 
   useEffect(() => {
     if (adData && adData.ad_unit) {
-      const id = 'gpt-script- ' + adData.gpt_id;
+      const id = 'gpt-script-' + adData.gpt_id;
+      const adId = `ad_${adData.gpt_id.replace(/-/gi, '_')}`;
 
       let scriptContent = null;
 
       if (adData.ad_unit.indexOf('728x90-300x250') > 0) {
-        const adId = `ad_${adData.gpt_id.replace(/-/gi, '_')}`;
         scriptContent = `var ${adId} = googletag.defineSlot('${adData.ad_unit}', [[300, 250], [728, 90]], '${adData.gpt_id}').addService(googletag.pubads()); 
         googletag.enableServices(); 
         var mapping =
             googletag.sizeMapping().addSize([980, 90], [728, 90]).addSize([320, 480], [300, 250]).build();
             ${adId}.defineSizeMapping(mapping);
-        if(${refresh}) {
-          setTimeout(()=>{
-            googletag.pubads().refresh([${adId}]);
-          },10)
-        }
         `;
       } else {
-        scriptContent = `googletag.defineSlot('${adData.ad_unit}', [${width},${height}], '${adData.gpt_id}').addService(googletag.pubads()); 
+        scriptContent = `var ${adId} = googletag.defineSlot('${adData.ad_unit}', [${width},${height}], '${adData.gpt_id}').addService(googletag.pubads()); 
                           googletag.enableServices(); `;
       }
 
@@ -55,9 +50,11 @@ const MobileAd = ({ adData, className, refresh }) => {
                     ${scriptContent}
                     
                   }); 
-                  googletag.cmd.push(function() { 
-                    googletag.display('${adData.gpt_id}'); 
-                  });
+                  setTimeout(()=>{
+                    googletag.cmd.push(function() { 
+                      googletag.display(${adId}); 
+                    });
+                  },10)
               }`;
           s.appendChild(document.createTextNode(code));
           adEl.current.appendChild(s);
