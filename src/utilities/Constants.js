@@ -11,7 +11,7 @@ const baseURL =
     ? 'https://prod.api.etvbharat.com'
     : env === 'development' || prd_test
     ? 'http://localhost:3000/api'
-    : 'http://15.207.60.106';
+    : 'https://prod.api.etvbharat.com';
 
 const mAuthToken = 'kmAJAH4RTtqHjgoauC4o';
 const authToken = 'xBUKcKnXfngfrqGoF93y';
