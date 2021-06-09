@@ -5,6 +5,7 @@ import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { Media, MediaContextProvider } from '@media';
 import RectangleCard from '@components/listing/mobile/RectangleCard';
 import AdContainer from '@components/article/AdContainer';
+import DesktopAdContainer from '@components/article/DesktopAdContainer';
 import CatalogWall from './mobile/CatalogWall';
 import SeeAll from './mobile/SeeAll';
 import Loading from './mobile/Loading';
@@ -55,6 +56,7 @@ const ListContainer = ({ children, data, payload }) => {
   const [callsDone, setCallsDone] = useState(1);
   const [filteredRHS, setFilteredRHS] = useState([]);
   const [isDesktop, setIsDesktop] = useState(false);
+  const adsMap = [];
 
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
@@ -90,14 +92,14 @@ const ListContainer = ({ children, data, payload }) => {
   useEffect(() => {
     setListItems(reArrangeData(data));
     if (typeof window !== 'undefined' && window.innerWidth >= 768) {
-      setIsDesktop(true);
       setTimeout(() => {
         const ads = document.querySelectorAll('.listing-ad');
-        for (let i = 0; i < ads.length; i = i + 2) {
+        for (let i = 0; i < ads.length; i++) {
           let elem = ads[i];
           elem.parentNode.removeChild(elem);
         }
-      }, 100);
+        setIsDesktop(true);
+      }, 10);
     }
   }, [data]);
 
@@ -159,26 +161,38 @@ const ListContainer = ({ children, data, payload }) => {
   }
 
   function renderLayout(catalog, ind) {
+    let returnValue = null;
     switch (catalog.layout_type) {
       case 'news_listing':
-        return catalog.catalog_list_items.map((article, ind) => (
+        returnValue = catalog.catalog_list_items.map((article, index) => (
           <RectangleCard
-            key={ind + article.content_id}
+            key={ind + article.content_id + index}
             article={article}
             className="rectangle-card bg-white mt-1 md:mt-2 md:w-1/2 rounded-md"
           />
         ));
+        break;
       case 'ad_unit_square':
-        return (
-          <React.Fragment key={'ad' + ind}>
-            <AdContainer
-              isDesktop={isDesktop}
-              data={[catalog]}
-              className="my-1 listing-ad"
-              type={'listing'}
-            />
-          </React.Fragment>
-        );
+        if (
+          adsMap.findIndex(
+            (v) => v && v.gpt_id === catalog.ad_conf.responsive_ad.gpt_id
+          ) === -1
+        ) {
+          adsMap.push(catalog);
+        }
+        if (!isDesktop) {
+          returnValue = (
+            <React.Fragment key={'ad' + ind}>
+              <AdContainer
+                isDesktop={isDesktop}
+                data={[catalog]}
+                className="my-1 listing-ad"
+                type={'listing'}
+              />
+            </React.Fragment>
+          );
+        }
+        break;
 
       case 'catalog_wall_menu':
         /* return catalog.catalog_list_items.length > 0 ? (
@@ -187,13 +201,31 @@ const ListContainer = ({ children, data, payload }) => {
             data={catalog.catalog_list_items}
           />
         ) : null; */
-        return null;
+        returnValue = null;
+        break;
+
       case 'auto_horizontal_dropdown_carousel_viewall':
       case 'featured_mosaic_carousel_seeall':
-        return catalog.catalog_list_items.length > 0 ? (
-          <SeeAll key={catalog.friendly_id + ind} data={catalog} />
-        ) : null;
+        returnValue =
+          catalog.catalog_list_items.length > 0 ? (
+            <SeeAll key={catalog.friendly_id + ind} data={catalog} />
+          ) : null;
+        break;
     }
+    const desktopAdIndex = [3, 6, 10, 14, 19].findIndex((v) => v == ind);
+    return (
+      <React.Fragment key={ind}>
+        {returnValue}
+        {desktopAdIndex !== -1 ? (
+          <DesktopAdContainer
+            desktop={isDesktop}
+            data={[adsMap[desktopAdIndex]]}
+            className="my-1 listing-ad"
+            type={'listing'}
+          />
+        ) : null}
+      </React.Fragment>
+    );
   }
 
   return (
@@ -206,6 +238,7 @@ const ListContainer = ({ children, data, payload }) => {
         <div className="md:w-4/12 "></div>
       </div> */}
       <div
+        key={1 + isDesktop}
         className={`lg:container listing-container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10`}
       >
         <div className="md:w-8/12 h-full px-2 md:flex md:flex-wrap">

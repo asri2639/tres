@@ -8,8 +8,16 @@ const MainArticles = ({ list, className }) => {
         <LargeSquareCard article={list[0]} className="bg-white" />
       </div>
       <div className="flex w-1/3 flex-col space-y-2">
-        <SquareCard className="w-full bg-white" article={list[1]} lineClamp="2" />
-        <SquareCard className="w-full bg-white" article={list[2]} lineClamp="2" />
+        <SquareCard
+          className="w-full bg-white"
+          article={list[1]}
+          lineClamp="2"
+        />
+        <SquareCard
+          className="w-full bg-white"
+          article={list[2]}
+          lineClamp="2"
+        />
       </div>
     </>
   );
