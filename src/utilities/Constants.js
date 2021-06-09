@@ -11,22 +11,7 @@ const baseURL =
     ? 'https://prod.api.etvbharat.com'
     : env === 'development' || prd_test
     ? 'http://localhost:3000/api'
-    : 'https://staging.api.etvbharat.com';
-
-
-// const accessToken =
-//   env === 'production'
-//     ? 'TjeNsXehJqhh2DGJzBY9'
-//     : env === 'development'
-//     ? 'TjeNsXehJqhh2DGJzBY9'
-//     : 'fwrYv4w5Tz8QKYWQ17u2';
-
-// const mAccessToken =
-//   env === 'production'
-//     ? 'woB1UukKSzZ5aduEUxwt'
-//     : env === 'development'
-//     ? 'woB1UukKSzZ5aduEUxwt'
-//     : 'oN5eiUpVazqaAYXzaPNY';
+    : 'http://15.207.60.106';
 
 const mAuthToken = 'kmAJAH4RTtqHjgoauC4o';
 const authToken = 'xBUKcKnXfngfrqGoF93y';
@@ -44,7 +29,17 @@ const Constants = Object.freeze({
 
 export const accessToken = {
   web: '',
+  // env === 'production'
+  //   ? 'TjeNsXehJqhh2DGJzBY9'
+  //   : env === 'development'
+  //   ? 'Fw3196P2FES3HBfytEtn'
+  //   : 'Fw3196P2FES3HBfytEtn',
   mobile: '',
+  // env === 'production'
+  //   ? 'woB1UukKSzZ5aduEUxwt'
+  //   : env === 'development'
+  //   ? 's2byd1VP6PN8hYDsb8zj'
+  //   : 's2byd1VP6PN8hYDsb8zj',
 };
 
 export const applicationConfig = {
