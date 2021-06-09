@@ -18,7 +18,7 @@ import MobileMainArticles from './mobile/MobileMainArticles';
 
 const ListContainer = ({ children, data, payload }) => {
   const reArrangeData = (data) => {
-    let extra = [];
+    /*  let extra = [];
     return data.catalog_list_items.map((v, i) => {
       if (v.catalog_list_items.length === 5) {
         if (extra.length === 0) {
@@ -39,7 +39,8 @@ const ListContainer = ({ children, data, payload }) => {
       }
 
       return v;
-    });
+    }); */
+    return data.catalog_list_items;
   };
 
   const items = reArrangeData(data);
@@ -88,6 +89,16 @@ const ListContainer = ({ children, data, payload }) => {
 
   useEffect(() => {
     setListItems(reArrangeData(data));
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+      setIsDesktop(true);
+      setTimeout(() => {
+        const ads = document.querySelectorAll('.listing-ad');
+        for (let i = 0; i < ads.length; i = i + 2) {
+          let elem = ads[i];
+          elem.parentNode.removeChild(elem);
+        }
+      }, 100);
+    }
   }, [data]);
 
   useEffect(() => {
@@ -114,21 +125,40 @@ const ListContainer = ({ children, data, payload }) => {
         },
       };
       const listingResp = await api.CatalogList.getListing(requestPayload);
+      if (listingResp.data) {
+        const data = listingResp.data.data;
+        let items = reArrangeData(data);
 
-      const data = listingResp.data.data;
-      const items = reArrangeData(data);
-      setListItems((prevState) => [...prevState, ...items]);
-      setCallsDone((callsDone) => callsDone + 1);
+        if (isDesktop) {
+          let first = [];
+          let result = [];
+          items.forEach((v) => {
+            if (v.catalog_list_items.length === 5) {
+              if (!first.length) {
+                first = v.catalog_list_items;
+              } else {
+                v.catalog_list_items = [...first, ...v.catalog_list_items];
+                result.push(v);
+                first = [];
+              }
+            } else {
+              result.push(v);
+            }
+          });
+          items = result;
+        }
+
+        setListItems((prevState) => {
+          return [...prevState, ...items];
+        });
+        setCallsDone((callsDone) => callsDone + 1);
+      }
     }
 
     setIsFetching(false);
   }
 
-  useEffect(() => {
-    setIsDesktop(window && window.innerWidth >= 768);
-  });
   function renderLayout(catalog, ind) {
-    console.log(catalog.catalog_list_items);
     switch (catalog.layout_type) {
       case 'news_listing':
         return catalog.catalog_list_items.map((article, ind) => (
@@ -138,14 +168,14 @@ const ListContainer = ({ children, data, payload }) => {
             className="rectangle-card bg-white mt-1 md:mt-2 md:w-1/2 rounded-md"
           />
         ));
-        return null;
       case 'ad_unit_square':
+        console.log(ind);
         return (
           <React.Fragment key={'ad' + ind}>
             <AdContainer
               isDesktop={isDesktop}
               data={[catalog]}
-              className="my-1"
+              className="my-1 listing-ad"
               type={'listing'}
             />
           </React.Fragment>

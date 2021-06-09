@@ -60,7 +60,15 @@ const MobileAd = ({ adData, className }) => {
   }, [adData]);
 
   return (
-    <div style={{ padding: '5px 0' }} className={className}>
+    <div
+      style={{
+        padding: '5px 0',
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'center',
+      }}
+      className={className}
+    >
       {adData ? (
         <div
           ref={adEl}
