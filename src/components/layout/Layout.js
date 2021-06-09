@@ -114,8 +114,6 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
             region: country,
             response: 'r2',
             item_languages: language,
-
-            env: 'staging'
           },
         });
         const requiredData = result.data.data.params_hash2.footer;
