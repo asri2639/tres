@@ -23,17 +23,17 @@ const StateSelectModal = ({ data, onClose }) => {
 
   const languageNStateSelect = (language, states) => {
     if (language === 'english') {
-      location.href = location.origin + `/${language}/national`;
-      // setTimeout(() => {
-      //   router.push(`/national`, `/${language}/national`);
-      // }, 100);
+      // location.href = location.origin + `/${language}/national`;
+      setTimeout(() => {
+        router.push(`/national`, `/${language}/national`);
+      }, 10);
     } else {
       if (states.length === 1) {
-        location.href = location.origin + `/${language}/${states[0].state}`;
+        // location.href = location.origin + `/${language}/${states[0].state}`;
 
-        // setTimeout(() => {
-        //   router.push(`/${states[0].state}`, `/${language}/${states[0].state}`);
-        // }, 100);
+        setTimeout(() => {
+          router.push(`/${states[0].state}`, `/${language}/${states[0].state}`);
+        }, 10);
       } else {
         close();
       }

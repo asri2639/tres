@@ -64,7 +64,11 @@ const state = ({ data, payload, pageType, t }) => {
           cardType: 'summary_large_image',
         }}
       />
-      <ListContainer key={router.query.state} data={data} payload={payload}></ListContainer>
+      <ListContainer
+        key={router.query.state}
+        data={data}
+        payload={payload}
+      ></ListContainer>
     </>
   ) : null;
 };
@@ -73,6 +77,23 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const api = API(APIEnum.Listing, APIEnum.CatalogList);
   const url = args.asPath;
   const { publicRuntimeConfig } = getConfig();
+
+  if (url.split('/').length === 3 && typeof window !== 'undefined') {
+    const redirectUrl = `${
+      publicRuntimeConfig.APP_ENV === 'staging'
+        ? 'https://staging.etvbharat.com'
+        : 'https://www.etvbharat.com'
+    }${url}`;
+
+    if (res) {
+      res.writeHead(302, {
+        Location: redirectUrl,
+      });
+      res.end();
+    } else {
+      location.href = redirectUrl;
+    }
+  }
 
   /*  if (url !== '/english/national') {
     if (res) {

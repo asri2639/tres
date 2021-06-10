@@ -82,7 +82,6 @@ function App({ Component, noRender, pageProps, data, accessToken, appConfig }) {
 
 let pageProps = {};
 App.getInitialProps = async ({ Component, ctx }) => {
-
   if (ctx.asPath === '/') {
     if (process.browser) {
       Router.push('/national');
@@ -135,13 +134,12 @@ App.getInitialProps = async ({ Component, ctx }) => {
   if (url !== ctx.asPath) {
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
-    } else{
+    } else {
       noRender = true;
     }
   }
 
-  
- /*  if (
+  /*  if (
     Component.getInitialProps &&
     !(
       url != null &&
