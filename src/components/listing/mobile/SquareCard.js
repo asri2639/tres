@@ -73,7 +73,9 @@ const SquareCard = ({
             display: '-webkit-box',
             WebkitLineClamp: lineClamp || '3',
           }}
-          className="text-sm md:text-base relative -top-1"
+          className={`text-sm md:text-base relative -top-1 ${
+            isRTL ? 'rtl' : ''
+          }`}
         >
           {noDescription ? '' : article.display_title}
         </div>

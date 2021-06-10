@@ -10,11 +10,14 @@ import { useRouter } from 'next/router';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import useSWR from 'swr';
+import { RTLContext } from '@components/layout/Layout';
 
 const capitalize = (s) => {
   return s && s[0].toUpperCase() + s.slice(1);
 };
 const SeeAll = ({ data, article, className, t }) => {
+  const isRTL = useContext(RTLContext);
+
   const api = API(APIEnum.CatalogList);
   const {
     i18n: { language, options },
@@ -120,7 +123,8 @@ const SeeAll = ({ data, article, className, t }) => {
       : displayData.url;
 
     if (url.endsWith('/district')) {
-      url = url.split('/district')[0] + '/state/'+displayData.dynamic_district
+      url =
+        url.split('/district')[0] + '/state/' + displayData.dynamic_district;
     }
     return {
       text: t('see_all'),
@@ -144,7 +148,7 @@ const SeeAll = ({ data, article, className, t }) => {
           }}
         />
       ) : null}
-      <div className="my-2 flex w-full justify-between mb-1">
+      <div className={`my-2 flex w-full justify-between mb-1 ${isRTL? 'flex-row-reverse': ''}`}>
         <div className="text-base md:text-lg">{data.ml_title[0].text}</div>
 
         {scope.dropdown ? (
