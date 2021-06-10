@@ -100,6 +100,11 @@ const ListContainer = ({ children, data, payload }) => {
         }
         setIsDesktop(true);
       }, 10);
+      setTimeout(() => {
+        document.addEventListener('load', () => {
+          googletag.pubads().refresh();
+        });
+      }, 300);
     }
   }, [data]);
 
