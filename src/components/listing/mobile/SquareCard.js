@@ -12,6 +12,7 @@ const SquareCard = ({
   lineClamp,
   style,
   imgHeight,
+  noDescription,
 }) => {
   const isRTL = useContext(RTLContext);
 
@@ -74,7 +75,7 @@ const SquareCard = ({
           }}
           className="text-sm md:text-base relative -top-1"
         >
-          {article.display_title}
+          {noDescription ? '' : article.display_title}
         </div>
       </div>
     </NavLink>

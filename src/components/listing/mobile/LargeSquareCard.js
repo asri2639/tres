@@ -5,7 +5,7 @@ import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor, linkInfoGenerator } from '@utils/Helpers';
 import { useContext } from 'react';
 
-const LargeSquareCard = ({ data, article, className }) => {
+const LargeSquareCard = ({ data, article, className, noDescription }) => {
   const isRTL = useContext(RTLContext);
 
   const linkInfo = linkInfoGenerator(article ? article.web_url : data.url);
@@ -63,7 +63,9 @@ const LargeSquareCard = ({ data, article, className }) => {
           }}
           className="text-sm md:text-base relative -top-1"
         >
-          {article.display_title + ' ' + article.short_description}
+          {noDescription
+            ? ''
+            : article.display_title + ' ' + article.short_description}
         </div>
       </div>
     </NavLink>
