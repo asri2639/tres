@@ -51,11 +51,9 @@ const MobileAd = ({ adData, className, refresh }) => {
                     
                   }); 
 
-                  setTimeout(()=>{
-                    googletag.cmd.push(function() { 
-                      googletag.display('${adData.gpt_id}'); 
-                    });
-                  },10)
+                  googletag.cmd.push(function() { 
+                    googletag.display('${adData.gpt_id}'); 
+                  });
               }`;
           s.appendChild(document.createTextNode(code));
           adEl.current.appendChild(s);
