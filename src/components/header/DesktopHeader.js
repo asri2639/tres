@@ -120,14 +120,16 @@ const DesktopHeader = ({ className, data, t }) => {
         },
       })
         .then((resp) => {
-          setHeaderAd(
-            <iframe
-              className="mx-auto hidden lg:block"
-              width={755}
-              height={110}
-              src={new URL(resp.data.data.ad_list[0].ad_Url).pathname}
-            />
-          );
+          if (resp.data && resp.data.data) {
+            setHeaderAd(
+              <iframe
+                className="mx-auto hidden lg:block"
+                width={755}
+                height={110}
+                src={new URL(resp.data.data.ad_list[0].ad_Url).pathname}
+              />
+            );
+          }
         })
         .catch((e) => {
           console.error(e);

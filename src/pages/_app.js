@@ -80,8 +80,8 @@ function App({ Component, noRender, pageProps, data, accessToken, appConfig }) {
   );
 }
 
+let pageProps = {};
 App.getInitialProps = async ({ Component, ctx }) => {
-  let pageProps = {};
 
   if (ctx.asPath === '/') {
     if (process.browser) {
@@ -130,8 +130,18 @@ App.getInitialProps = async ({ Component, ctx }) => {
   if (process.browser) {
     url = window.location.pathname;
   }
+
   let noRender = false;
-  if (
+  if (url !== ctx.asPath) {
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    } else{
+      noRender = true;
+    }
+  }
+
+  
+ /*  if (
     Component.getInitialProps &&
     !(
       url != null &&
@@ -140,14 +150,17 @@ App.getInitialProps = async ({ Component, ctx }) => {
       url.split('/').length === ctx.asPath.split('/').length
     )
   ) {
-    pageProps = await Component.getInitialProps(ctx);
+    debugger;
   } else {
-    if (url && url.split('/').length === 3) {
+    if (url !== ctx.asPath && process.browser) {
+      debugger;
+      console.log(ctx.asPath, url);
       pageProps = await Component.getInitialProps(ctx);
     } else {
       noRender = true;
     }
-  }
+  } */
+
   return {
     noRender: noRender,
     pageProps,

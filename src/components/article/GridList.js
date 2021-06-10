@@ -5,6 +5,7 @@ import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor } from '@utils/Helpers';
 import { useContext } from 'react';
 import grid from './GridList.module.scss';
+import { withTranslation } from '@i18n';
 
 const GridList = ({ data }) => {
   const isRTL = useContext(RTLContext);
@@ -45,4 +46,4 @@ const GridList = ({ data }) => {
   );
 };
 
-export default GridList;
+export default withTranslation('common')(GridList);

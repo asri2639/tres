@@ -34,7 +34,7 @@ const RectangleCard = ({ data, article, className }) => {
         {article.display_title}
       </div>
 
-      <div class="relative w-24 rounded-md ">
+      <div className="relative w-24 rounded-md ">
         <Thumbnail
           thumbnail={thumbnail}
           className={'w-full'}

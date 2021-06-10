@@ -47,9 +47,7 @@ const ListContainer = ({ children, data, payload }) => {
   const items = reArrangeData(data);
 
   const api = API(APIEnum.CatalogList);
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
+
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   let totalCalls = Math.ceil(data.total_items_count / 8);
@@ -58,8 +56,9 @@ const ListContainer = ({ children, data, payload }) => {
   const [isDesktop, setIsDesktop] = useState(false);
   const adsMap = [];
   const [firstSet, setFirstSet] = useState([]);
+
   const relatedArticlesFetcher = (...args) => {
-    const [apiEnum, methodName, contentId] = args;
+    const [apiEnum, methodName, contentId, language] = args;
     return api[apiEnum][methodName]({
       query: {
         // region: country,
@@ -84,6 +83,9 @@ const ListContainer = ({ children, data, payload }) => {
       data.catalog_list_items[1].catalog_list_items.find(
         (v) => v.content_type === 'article'
       ).content_id,
+      data.catalog_list_items[1].catalog_list_items.find(
+        (v) => v.content_type === 'article'
+      ).item_languages[0],
     ],
     relatedArticlesFetcher,
     { dedupingInterval: 5 * 60 * 1000 }

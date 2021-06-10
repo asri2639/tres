@@ -26,7 +26,7 @@ const state = ({ data, payload, pageType, t }) => {
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
 
-  return (
+  return data ? (
     <>
       <Head>
         <title>{data.meta_tag_title}</title>
@@ -64,9 +64,9 @@ const state = ({ data, payload, pageType, t }) => {
           cardType: 'summary_large_image',
         }}
       />
-      <ListContainer data={data} payload={payload}></ListContainer>
+      <ListContainer key={router.query.state} data={data} payload={payload}></ListContainer>
     </>
-  );
+  ) : null;
 };
 
 state.getInitialProps = async ({ query, req, res, ...args }) => {
@@ -74,7 +74,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const url = args.asPath;
   const { publicRuntimeConfig } = getConfig();
 
- /*  if (url !== '/english/national') {
+  /*  if (url !== '/english/national') {
     if (res) {
       res.writeHead(302, {
         // or 301
