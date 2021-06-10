@@ -1,6 +1,6 @@
-import Modal from "@components/modal/Modal";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import Modal from '@components/modal/Modal';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 const StateSelectModal = ({ data, onClose }) => {
   const [isShowing, setIsShowing] = useState(true);
@@ -23,14 +23,17 @@ const StateSelectModal = ({ data, onClose }) => {
 
   const languageNStateSelect = (language, states) => {
     if (language === 'english') {
-      setTimeout(() => {
-        router.push(`/national`, `/${language}/national`);
-      }, 100);
+      location.href = location.origin + `/${language}/national`;
+      // setTimeout(() => {
+      //   router.push(`/national`, `/${language}/national`);
+      // }, 100);
     } else {
       if (states.length === 1) {
-        setTimeout(() => {
-          router.push(`/${states[0].state}`, `/${language}/${states[0].state}`);
-        }, 100);
+        location.href = location.origin + `/${language}/${states[0].state}`;
+
+        // setTimeout(() => {
+        //   router.push(`/${states[0].state}`, `/${language}/${states[0].state}`);
+        // }, 100);
       } else {
         close();
       }
