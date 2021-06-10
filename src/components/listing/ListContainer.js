@@ -121,8 +121,7 @@ const ListContainer = ({ children, data, payload }) => {
       setFilteredRHS(filtered);
     }
     if (isDesktop) {
-      // await fetchMoreListItems();
-      // await fetchMoreListItems();
+      fetchMoreListItems();
     }
   }, [adData]);
 
