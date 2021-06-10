@@ -77,7 +77,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const api = API(APIEnum.Listing, APIEnum.CatalogList);
   const url = args.asPath;
   const { publicRuntimeConfig } = getConfig();
-  console.log(process.browser);
+  
   if (process.browser) {
     const redirectUrl = `${
       publicRuntimeConfig.APP_ENV === 'staging'
@@ -91,6 +91,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       });
       res.end();
     } else {
+      console.log(redirectUrl)
       location.href = redirectUrl;
     }
   }
