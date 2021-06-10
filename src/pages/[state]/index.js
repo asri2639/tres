@@ -83,7 +83,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       publicRuntimeConfig.APP_ENV === 'staging'
         ? 'https://staging.etvbharat.com'
         : 'https://www.etvbharat.com'
-    }${url}`;
+    }${url}/`;
 
     if (res && !process.browser) {
       res.writeHead(302, {
