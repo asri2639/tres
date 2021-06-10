@@ -50,9 +50,8 @@ const DesktopHeader = ({ className, data, t }) => {
   const goToLanguageListing = (language, routeParams) => {
     GoogleTagManager.languageChange(language);
     setTimeout(() => {
-      console.log(routeParams[0], routeParams[1])
-      location.href =
-        location.origin + routeParams[1];
+      console.log(routeParams[0], routeParams[1]);
+      location.href = location.origin + routeParams[1];
       //  router.push(routeParams[0], routeParams[1]);
     }, 10);
   };
@@ -112,6 +111,10 @@ const DesktopHeader = ({ className, data, t }) => {
     setSocialHandlers(socialLinks);
 
     const getHeaderAd = () => {
+      let url = splitPath.slice(0, -2).join('/');
+      if(url.trim().length === 0) {
+        url = location.pathname + (splitPath.length === 3 ? '/home':'');
+      }
       api.Catalog.getPageAds({
         query: {
           app: 'web',
@@ -119,7 +122,7 @@ const DesktopHeader = ({ className, data, t }) => {
           response: 'r2',
           language: splitPath[1],
           state: splitPath[2],
-          url: splitPath.slice(0, -2).join('/'),
+          url: url,
         },
       })
         .then((resp) => {
@@ -304,7 +307,11 @@ const DesktopHeader = ({ className, data, t }) => {
               : null}
           </div>
 
-          <div className="flex flex-row items-center space-x-3 right-side-container">
+          <div
+            className={`flex flex-row items-center space-x-3 ${
+              isRTL ? 'left-side-container' : 'right-side-container'
+            }`}
+          >
             <div>
               <a href={socialHandlers.fb}>
                 <p className="fb-icon"></p>
