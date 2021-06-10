@@ -48,7 +48,14 @@ const SquareCard = ({
           creditSize={'no-size'}
         ></Thumbnail>
 
-        {article.has_videos ? (
+        {article.overlay_tag ? (
+          <img
+            className="absolute bottom-0 left-0 h-full "
+            src={`https://etvbharatimages.akamaized.net/images/live/${
+              article.overlay_tag === 'live1' ? 'LIVE-1' : 'LIVE-2'
+            }.png`}
+          />
+        ) : article.has_videos ? (
           <img
             className="absolute w-6 bottom-1 right-1"
             src="/assets/images/video_big_icon-2x.png"

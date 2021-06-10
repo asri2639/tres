@@ -14,7 +14,7 @@ const RectangleCard = ({ data, article, className }) => {
   return (
     <NavLink
       key={article.friendly_id}
-      className={`flex relative justify-between px-1 pt-2 pb-1 cursor-pointer border shadow ${
+      className={`flex  justify-between px-1 pt-2 pb-1 cursor-pointer border shadow ${
         isRTL ? 'rtl' : ''
       } ${className}`}
       href={{
@@ -27,23 +27,35 @@ const RectangleCard = ({ data, article, className }) => {
         GoogleTagManager.articleClick(article);
       }}
     >
-      <div className=" px-1 text-sm md:text-base text-gray-700 leading-tight">
+      <div
+        className=" px-1 text-sm md:text-base text-gray-700 leading-tight"
+        style={{ width: 'calc(100% - 6rem)' }}
+      >
         {article.display_title}
       </div>
 
-      <Thumbnail
-        thumbnail={thumbnail}
-        className={'rounded-md w-24'}
-        type={''}
-        creditSize={'no-size'}
-      />
-
-      {article.has_videos ? (
-        <img
-          className="absolute w-5 bottom-2 right-2"
-          src="/assets/images/video_big_icon-2x.png"
+      <div class="relative w-24 rounded-md ">
+        <Thumbnail
+          thumbnail={thumbnail}
+          className={'w-full'}
+          type={''}
+          creditSize={'no-size'}
         />
-      ) : null}
+
+        {article.overlay_tag ? (
+          <img
+            className="absolute bottom-0 right-0 h-full"
+            src={`https://etvbharatimages.akamaized.net/images/live/${
+              article.overlay_tag === 'live1' ? 'LIVE-1' : 'LIVE-2'
+            }.png`}
+          />
+        ) : article.has_videos ? (
+          <img
+            className="absolute w-5 bottom-2 right-2 "
+            src="/assets/images/video_big_icon-2x.png"
+          />
+        ) : null}
+      </div>
     </NavLink>
   );
 };

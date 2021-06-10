@@ -52,12 +52,12 @@ const ListContainer = ({ children, data, payload }) => {
   } = useContext(I18nContext);
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
-  const totalCalls = Math.ceil(data.total_items_count / 8);
+  let totalCalls = Math.ceil(data.total_items_count / 8);
   const [callsDone, setCallsDone] = useState(1);
   const [filteredRHS, setFilteredRHS] = useState([]);
   const [isDesktop, setIsDesktop] = useState(false);
   const adsMap = [];
-
+  const [firstSet, setFirstSet] = useState([]);
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
     return api[apiEnum][methodName]({
@@ -110,7 +110,7 @@ const ListContainer = ({ children, data, payload }) => {
 
   useEffect(() => {
     if (adData) {
-      fetchMoreListItems();
+      // fetchMoreListItems();
       let filtered = adData.catalog_list_items.slice(1).filter((v) => {
         return (
           v.layout_type.indexOf('ad_unit') >= 0 ||
@@ -119,6 +119,10 @@ const ListContainer = ({ children, data, payload }) => {
         );
       });
       setFilteredRHS(filtered);
+    }
+    if (isDesktop) {
+      // await fetchMoreListItems();
+      // await fetchMoreListItems();
     }
   }, [adData]);
 
@@ -131,13 +135,14 @@ const ListContainer = ({ children, data, payload }) => {
           page: callsDone, // since page index startsfrom 0
         },
       };
+
       const listingResp = await api.CatalogList.getListing(requestPayload);
       if (listingResp.data) {
         const data = listingResp.data.data;
         let items = reArrangeData(data);
 
         if (isDesktop) {
-          let first = [];
+          let first = [...firstSet];
           let result = [];
           items.forEach((v) => {
             if (v.catalog_list_items.length === 5) {
@@ -153,11 +158,15 @@ const ListContainer = ({ children, data, payload }) => {
             }
           });
           items = result;
+          if (first.length) {
+            setFirstSet(first);
+          }
         }
 
         setListItems((prevState) => {
           return [...prevState, ...items];
         });
+
         setCallsDone((callsDone) => callsDone + 1);
       }
     }
