@@ -130,7 +130,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
   if (process.browser) {
     url = window.location.pathname;
   }
-
+  let noRender = false;
   if (
     Component.getInitialProps &&
     !(
@@ -141,13 +141,15 @@ App.getInitialProps = async ({ Component, ctx }) => {
     )
   ) {
     pageProps = await Component.getInitialProps(ctx);
+  } else {
+    if (url && url.split('/').length === 3) {
+      pageProps = await Component.getInitialProps(ctx);
+    } else {
+      noRender = true;
+    }
   }
   return {
-    noRender:
-      url != null &&
-      ctx.asPath &&
-      ctx.asPath !== url &&
-      url.split('/').length === ctx.asPath.split('/').length,
+    noRender: noRender,
     pageProps,
     data: '',
     accessToken,

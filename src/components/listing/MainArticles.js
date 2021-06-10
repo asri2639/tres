@@ -13,7 +13,7 @@ const MainArticles = ({ list, className }) => {
       >
         <SquareCard
           className="w-1/3 bg-white"
-          article={list[1]}
+          article={list[0]}
           lineClamp="2"
         />
         <SquareCard
