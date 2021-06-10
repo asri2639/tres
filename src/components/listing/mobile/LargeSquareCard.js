@@ -44,7 +44,6 @@ const LargeSquareCard = ({ data, article, className }) => {
           />
         ) : null}
       </div>
-      <div className="video-icon"></div>
 
       <div className="h-12 my-2 pl-2 pr-1 text-gray-700 leading-tight">
         <div

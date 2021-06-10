@@ -5,7 +5,14 @@ import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor, linkInfoGenerator } from '@utils/Helpers';
 import { useContext } from 'react';
 
-const SquareCard = ({ data, article, className, lineClamp }) => {
+const SquareCard = ({
+  data,
+  article,
+  className,
+  lineClamp,
+  style,
+  imgHeight,
+}) => {
   const isRTL = useContext(RTLContext);
 
   const linkInfo = linkInfoGenerator(article ? article.web_url : data.url);
@@ -28,11 +35,15 @@ const SquareCard = ({ data, article, className, lineClamp }) => {
       onClick={() => {
         GoogleTagManager.articleClick(article);
       }}
+      style={style}
     >
-      <div className="relative">
+      <div
+        className="relative"
+        style={{ height: imgHeight ? imgHeight : 'auto' }}
+      >
         <Thumbnail
           thumbnail={thumbnail}
-          className={'rounded-t-md w-full'}
+          className={`rounded-t-md w-full ${imgHeight ? 'h-full' : ''}`}
           type={''}
           creditSize={'no-size'}
         ></Thumbnail>
@@ -44,7 +55,6 @@ const SquareCard = ({ data, article, className, lineClamp }) => {
           />
         ) : null}
       </div>
-      <div className="video-icon"></div>
 
       <div className="h-12 my-2 pl-2 pr-1 text-gray-700 leading-tight">
         <div
@@ -88,7 +98,7 @@ const SquareCard = ({ data, article, className, lineClamp }) => {
           height: '100%',
           display: 'block',
           opacity: '0.3',
-          borderRadius: '8px'
+          borderRadius: '8px',
         }}
       ></div>
     </NavLink>
