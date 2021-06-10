@@ -77,7 +77,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const api = API(APIEnum.Listing, APIEnum.CatalogList);
   const url = args.asPath;
   const { publicRuntimeConfig } = getConfig();
-
+  console.log(process.browser);
   if (process.browser) {
     const redirectUrl = `${
       publicRuntimeConfig.APP_ENV === 'staging'
@@ -85,7 +85,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
         : 'https://www.etvbharat.com'
     }${url}`;
 
-    if (res) {
+    if (res && !process.browser) {
       res.writeHead(302, {
         Location: redirectUrl,
       });
