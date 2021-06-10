@@ -56,7 +56,7 @@ export default function CatalogList(inst) {
       return inst.get(
         `${controller}/${params.suffix}${getProperParam(
           params
-        )}.gzip?${new URLSearchParams({ ...query, env: 'staging' })}`,
+        )}.gzip?${new URLSearchParams(query)}`,
         config
       );
     },
