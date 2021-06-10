@@ -227,7 +227,7 @@ const Gallery = ({
               className || ''
             } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
           >
-            {index > 0 && router.query.state === 'karnataka' ? (
+            {index > 0  ? (
               <div className="pt-3">
                 <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
               </div>
@@ -235,7 +235,7 @@ const Gallery = ({
 
             <MediaContextProvider>
               <Media at="xs">
-                {index === 0 && router.query.state === 'karnataka' ? (
+                {index === 0  ? (
                   <FirstAd adData={ads ? ads[index * 2 + 1] : null} />
                 ) : null}
 

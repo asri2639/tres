@@ -272,7 +272,7 @@ export default function Article({
               } actual-content lg:container lg:mx-auto px-3 md:px-0 bg-white `}
               ref={contentRef}
             >
-              {index > 0 && router.query.state === 'karnataka' ? (
+              {index > 0  ? (
                 <div className="pt-3">
                   <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
                 </div>
@@ -280,7 +280,7 @@ export default function Article({
 
               <MediaContextProvider>
                 <Media at="xs">
-                  {index === 0 && router.query.state === 'karnataka' ? (
+                  {index === 0  ? (
                     <FirstAd adData={ads ? ads[index * 2 + 1] : null} />
                   ) : null}
 
