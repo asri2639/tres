@@ -50,8 +50,10 @@ const DesktopHeader = ({ className, data, t }) => {
   const goToLanguageListing = (language, routeParams) => {
     GoogleTagManager.languageChange(language);
     setTimeout(() => {
-      location.href = location.origin + '/' +routeParams[0]+'/'+routeParams
-    //  router.push(routeParams[0], routeParams[1]);
+      console.log(routeParams[0], routeParams[1])
+      location.href =
+        location.origin + routeParams[1];
+      //  router.push(routeParams[0], routeParams[1]);
     }, 10);
   };
   const languageNStateSelect = (language, states) => {
