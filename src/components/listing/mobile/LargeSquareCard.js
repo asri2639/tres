@@ -65,7 +65,7 @@ const LargeSquareCard = ({ data, article, className, noDescription }) => {
         >
           {noDescription
             ? ''
-            : article.display_title + ' ' + article.short_description}
+            : article.display_title}
         </div>
       </div>
     </NavLink>

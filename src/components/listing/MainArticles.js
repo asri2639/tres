@@ -14,7 +14,6 @@ const MainArticles = ({ list, className }) => {
         <SquareCard
           className="w-1/3 bg-white"
           article={list[0]}
-          noDescription={true}
           lineClamp="2"
         />
         <SquareCard

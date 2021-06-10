@@ -137,7 +137,7 @@ section.content {
 
   .rectangle-card {
     width: calc(50% - 4px);
-    &:nth-child(2n+1) {
+    &:nth-child(2n + 1) {
       margin-left: 4px;
     }
     &:nth-child(2n) {
@@ -398,14 +398,23 @@ button:focus {
   bottom: -400px;
 }
 
-.search-box {
-  z-index: 1010;
-  right: 20px;
-  top: 45px;
-}
 .right-side-container {
   position: absolute;
   right: 20px;
+  .search-box {
+    z-index: 1010;
+    right: 20px;
+    top: 45px;
+  }
+}
+.left-side-container {
+  position: absolute;
+  left: 20px;
+  .search-box {
+    z-index: 1010;
+    left: 20px;
+    top: 45px;
+  }
 }
 .h-13 {
   height: 52px;

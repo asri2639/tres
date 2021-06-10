@@ -16,8 +16,11 @@ import React from 'react';
 import Sticky from 'wil-react-sticky';
 import MainArticles from './MainArticles';
 import MobileMainArticles from './mobile/MobileMainArticles';
+import { RTLContext } from '@components/layout/Layout';
 
 const ListContainer = ({ children, data, payload }) => {
+  const isRTL = useContext(RTLContext);
+
   const reArrangeData = (data) => {
     /*  let extra = [];
     return data.catalog_list_items.map((v, i) => {
@@ -254,7 +257,9 @@ const ListContainer = ({ children, data, payload }) => {
       </div> */}
       <div
         key={1 + isDesktop}
-        className={`lg:container listing-container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10`}
+        className={`lg:container listing-container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
+          isRTL ? 'md:flex-row-reverse rtl' : ''
+        }`}
       >
         <div className="md:w-8/12 h-full px-2 md:flex md:flex-wrap">
           {/* Mobile listing */}
