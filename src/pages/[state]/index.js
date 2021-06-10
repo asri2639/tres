@@ -78,7 +78,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const url = args.asPath;
   const { publicRuntimeConfig } = getConfig();
   
-  if (process.browser) {
+/*   if (process.browser) {
     const redirectUrl = `${
       publicRuntimeConfig.APP_ENV === 'staging'
         ? 'https://staging.etvbharat.com'
@@ -94,7 +94,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       console.log(redirectUrl)
       location.href = redirectUrl;
     }
-  }
+  } */
 
   /*  if (url !== '/english/national') {
     if (res) {
