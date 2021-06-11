@@ -4,18 +4,20 @@ export const isEmpty = (obj) => {
   return true;
 };
 
-export const linkInfoGenerator = (url) => {
+export const linkInfoGenerator = (url, state) => {
   if (url.startsWith('/')) {
     url = url.slice(1);
   }
-
   const splitUrl = url.split('/');
+  if (splitUrl[0].toLowerCase() === 'urdu') {
+    splitUrl[1] = state;
+  }
   return {
     href: {
       pathname: '/[state]/[...slug]',
       query: { state: splitUrl[1], slug: splitUrl.slice(2).join('/') },
     },
-    as: `/${url}`,
+    as: `/${splitUrl.join('/')}`,
   };
 };
 

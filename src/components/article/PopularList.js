@@ -2,12 +2,14 @@ import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
 import GoogleTagManager from '@utils/GoogleTagManager';
-import { thumbnailExtractor } from '@utils/Helpers';
+import { linkInfoGenerator, thumbnailExtractor } from '@utils/Helpers';
+import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import popular from './PopularList.module.scss';
 
 const PopularList = ({ data }) => {
   const isRTL = useContext(RTLContext);
+  const router = useRouter();
 
   const [currentSelection, setCurrentSelection] = useState(
     data.catalog_list_items[0].list_id
@@ -55,6 +57,7 @@ const PopularList = ({ data }) => {
             's2b',
             null
           );
+          const linkInfo = linkInfoGenerator(v.web_url, router.query.state);
 
           return (
             <NavLink
@@ -62,14 +65,8 @@ const PopularList = ({ data }) => {
               className={`flex cursor-pointer ${
                 isRTL ? 'md:flex-row-reverse rtl' : ''
               } relative`}
-              href={{
-                pathname: '/[state]/[...slug]',
-                query: {
-                  state: splitUrl[1],
-                  slug: splitUrl.slice(2).join('/'),
-                },
-              }}
-              as={`/${v.web_url}`}
+              href={linkInfo.href}
+              as={linkInfo.as}
               passHref
               onClick={() => {
                 GoogleTagManager.articleClick(v);

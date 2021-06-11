@@ -6,7 +6,7 @@ import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import { useContext, useEffect, useState } from 'react';
 import { I18nContext } from 'next-i18next';
-import { accessToken as token } from '@utils/Constants';
+import { accessToken as token, languageMap } from '@utils/Constants';
 import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
 import Loader from 'react-loader-spinner';
 import { usePromiseTracker } from 'react-promise-tracker';
@@ -65,9 +65,10 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
 
         let convertedState = configStateCodeConverter(state);
         convertedState =
-          language === 'urdu' && convertedState !== 'jk'
+          language === 'ur' && convertedState !== 'jk'
             ? 'urdu'
             : convertedState;
+
         const headerResp = await api.CatalogList.getMenuDetails({
           params: {
             suffix: isDesktop
@@ -162,9 +163,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
 
       let convertedState = configStateCodeConverter(state);
       convertedState =
-        language === 'urdu' && convertedState !== 'jk'
-          ? 'urdu'
-          : convertedState;
+        language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
 
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
@@ -190,6 +189,11 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
         menu.mobile = headerResp.data.data.catalog_list_items;
       }
       if (!isDesktop && !menu.desktop.length) {
+        convertedState =
+          language === 'ur' && convertedState !== 'jk'
+            ? 'urdu'
+            : convertedState;
+
         const resp = await api.CatalogList.getMenuDetails({
           params: {
             suffix:

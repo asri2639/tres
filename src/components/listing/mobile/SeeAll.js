@@ -17,12 +17,12 @@ const capitalize = (s) => {
 };
 const SeeAll = ({ data, article, className, t }) => {
   const isRTL = useContext(RTLContext);
+  const router = useRouter();
 
   const api = API(APIEnum.CatalogList);
   const {
     i18n: { language, options },
   } = useContext(I18nContext);
-  const router = useRouter();
 
   const [district, setDistrict] = useState(null);
   const [showDistrictModal, setShowDistrictModal] = useState(false);
@@ -89,7 +89,8 @@ const SeeAll = ({ data, article, className, t }) => {
         scope.text = data.filter_type;
         scope.see_all = true;
         scope.link_info = linkInfoGenerator(
-          data.url.startsWith('/') ? data.url.slice(1) : data.url
+          data.url.startsWith('/') ? data.url.slice(1) : data.url,
+          router.query.state
         );
         break;
       default:
@@ -148,7 +149,11 @@ const SeeAll = ({ data, article, className, t }) => {
           }}
         />
       ) : null}
-      <div className={`my-2 flex w-full justify-between mb-1 ${isRTL? 'flex-row-reverse': ''}`}>
+      <div
+        className={`my-2 flex w-full justify-between mb-1 ${
+          isRTL ? 'flex-row-reverse' : ''
+        }`}
+      >
         <div className="text-base md:text-lg">{data.ml_title[0].text}</div>
 
         {scope.dropdown ? (

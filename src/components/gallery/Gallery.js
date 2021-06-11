@@ -19,6 +19,7 @@ import { AMPContext } from '@pages/_app';
 import BBCHeader from '@components/common/BBCHeader';
 import React from 'react';
 import MobileAd from '@components/article/MobileAd';
+import FirstAd from '@components/article/FirstAd';
 
 const Gallery = ({
   contentId,

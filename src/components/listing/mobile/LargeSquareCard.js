@@ -3,12 +3,17 @@ import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor, linkInfoGenerator } from '@utils/Helpers';
+import { useRouter } from 'next/router';
 import { useContext } from 'react';
 
 const LargeSquareCard = ({ data, article, className, noDescription }) => {
   const isRTL = useContext(RTLContext);
+  const router = useRouter();
 
-  const linkInfo = linkInfoGenerator(article ? article.web_url : data.url);
+  const linkInfo = linkInfoGenerator(
+    article ? article.web_url : data.url,
+    router.query.state
+  );
 
   const thumbnail = article
     ? thumbnailExtractor(article.thumbnails, '3_2', 's2b', 'breaking_news')

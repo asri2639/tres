@@ -80,16 +80,23 @@ const ListContainer = ({ children, data, payload }) => {
     });
   };
   const { data: adData, error: adError } = useSWR(
-    [
-      'CatalogList',
-      'getArticleDetails',
-      data.catalog_list_items[1].catalog_list_items.find(
-        (v) => v.content_type === 'article'
-      ).content_id,
-      data.catalog_list_items[1].catalog_list_items.find(
-        (v) => v.content_type === 'article'
-      ).item_languages[0],
-    ],
+    () => {
+      let article = null;
+      if (data && data.catalog_list_items && data.catalog_list_items[1]) {
+        article = data.catalog_list_items[1].catalog_list_items.find(
+          (v) => v.content_type === 'article'
+        );
+      }
+      article
+        ? [
+            'CatalogList',
+            'getArticleDetails',
+            article.content_id,
+            article.item_languages[0],
+          ]
+        : null;
+    },
+
     relatedArticlesFetcher,
     { dedupingInterval: 5 * 60 * 1000 }
   );

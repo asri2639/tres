@@ -2,11 +2,18 @@ import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
 import GoogleTagManager from '@utils/GoogleTagManager';
-import { thumbnailExtractor } from '@utils/Helpers';
+import { linkInfoGenerator, thumbnailExtractor } from '@utils/Helpers';
+import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
 const RectangleCard = ({ data, article, className }) => {
   const isRTL = useContext(RTLContext);
+
+  const router = useRouter();
+  const linkInfo = linkInfoGenerator(
+    article ? article.web_url : data.url,
+    router.query.state
+  );
 
   const splitUrl = article.web_url.split('/');
   const thumbnail = thumbnailExtractor(article.thumbnails, '3_2', 's2b', null);
@@ -17,11 +24,8 @@ const RectangleCard = ({ data, article, className }) => {
       className={`flex  justify-between px-1 pt-2 pb-1 cursor-pointer border shadow ${
         isRTL ? 'rtl' : ''
       } ${className}`}
-      href={{
-        pathname: '/[state]/[...slug]',
-        query: { state: splitUrl[1], slug: splitUrl.slice(2).join('/') },
-      }}
-      as={`/${article.web_url}`}
+      href={linkInfo.href}
+      as={linkInfo.as}
       passHref
       onClick={() => {
         GoogleTagManager.articleClick(article);

@@ -112,8 +112,8 @@ const DesktopHeader = ({ className, data, t }) => {
 
     const getHeaderAd = () => {
       let url = splitPath.slice(0, -2).join('/');
-      if(url.trim().length === 0) {
-        url = location.pathname + (splitPath.length === 3 ? '/home':'');
+      if (url.trim().length === 0) {
+        url = location.pathname + (splitPath.length === 3 ? '/home' : '');
       }
       api.Catalog.getPageAds({
         query: {
@@ -549,7 +549,11 @@ const DesktopHeader = ({ className, data, t }) => {
             </div>
           </div>
 
-          <div className="flex justify-center items-center w-full">
+          <div
+            className={`flex items-center w-full ${
+              isRTL ? 'justify-end' : ' justify-start'
+            }`}
+          >
             {/* <iframe className="mx-auto" width={755} height={110} src={`https://www.etvbharat.com/banner-near-logo/${router.query.state}/business/728x90-1.htm`}/> */}
 
             <MediaContextProvider>
