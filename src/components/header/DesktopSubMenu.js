@@ -65,7 +65,7 @@ export default function DesktopSubMenu({ category }) {
             ) : (
               <NavLink
                 key={item.content_id}
-                className="p-3 flex-grow-0 flex-shrink-0 whitespace-pre-wrap"
+                className="p-3 pt-2 flex-grow-0 flex flex-shrink-0 whitespace-pre-wrap"
                 style={{ flexBasis: '27%' }}
                 href={`/${item.web_url}`}
                 as={`/${item.web_url}`}
@@ -100,7 +100,7 @@ export default function DesktopSubMenu({ category }) {
             return (
               <div
                 key={item}
-                className="p-3 flex-grow-0 flex-shrink-0 whitespace-pre-wrap"
+                className="p-3 pt-2 flex-grow-0 flex flex-shrink-0 whitespace-pre-wrap"
                 style={{ flexBasis: '27%' }}
               >
                 <img
