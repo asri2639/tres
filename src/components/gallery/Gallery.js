@@ -228,7 +228,7 @@ const Gallery = ({
               className || ''
             } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
           >
-            {index > 0  ? (
+            {index > 0 ? (
               <div className="pt-3">
                 <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
               </div>
@@ -236,14 +236,11 @@ const Gallery = ({
 
             <MediaContextProvider>
               <Media at="xs">
-                {index === 0  ? (
+                {index === 0 ? (
                   <FirstAd adData={ads ? ads[index * 2 + 1] : null} />
                 ) : null}
 
-                <h1
-                  ref={ref}
-                  className="leading-tight text-xll font-bold p-2"
-                >
+                <h1 ref={ref} className="leading-tight text-xl font-bold p-2">
                   {data[0].display_title}{' '}
                 </h1>
 
@@ -281,44 +278,39 @@ const Gallery = ({
 
             <div className="flex flex-col md:flex-col-reverse md:mb-4">
               <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
-                <h1
-                  ref={ref}
-                  className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
-                >
-                  {data[0].display_title}
-                </h1>
-                {data[0].publish_date_uts ? (
-                  <div className="text-sm text-gray-600 md:text-black always-english">
-                    {data[0].publish_date_uts
-                      ? `Published on: ${dateFormatter(
-                          data[0].publish_date_uts,
-                          isAMP
-                        )}`
-                      : ''}
-                    <span className="hidden md:inline-block">
-                      {data[0].publish_date_uts && data[0].update_date_uts
-                        ? `  |  `
-                        : ''}
-                    </span>
-                    <br className="md:hidden" />
-                    {data[0].update_date_uts
-                      ? `Updated on: ${dateFormatter(
-                          data[0].update_date_uts,
-                          isAMP
-                        )}`
-                      : ''}
-                  </div>
-                ) : null}
+                <MediaContextProvider>
+                  <Media greaterThan="xs">
+                    <h1
+                      ref={ref}
+                      className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
+                    >
+                      {data[0].display_title}
+                    </h1>
+                    {data[0].publish_date_uts ? (
+                      <div className="text-sm text-gray-600 md:text-black always-english">
+                        {data[0].publish_date_uts
+                          ? `Published on: ${dateFormatter(
+                              data[0].publish_date_uts,
+                              isAMP
+                            )}`
+                          : ''}
+                        <span className="hidden md:inline-block">
+                          {data[0].publish_date_uts && data[0].update_date_uts
+                            ? `  |  `
+                            : ''}
+                        </span>
+                        <br className="md:hidden" />
+                        {data[0].update_date_uts
+                          ? `Updated on: ${dateFormatter(
+                              data[0].update_date_uts,
+                              isAMP
+                            )}`
+                          : ''}
+                      </div>
+                    ) : null}
+                  </Media>
+                </MediaContextProvider>
               </div>
-
-              <MediaContextProvider>
-                <Media
-                  at="xs"
-                  className="flex justify-between mx-auto w-56 mb-2"
-                >
-                  <SocialMedia data={data[0]} />
-                </Media>
-              </MediaContextProvider>
             </div>
 
             <div className="space-y-5 p-3 pt-0">

@@ -3,13 +3,11 @@ import DesktopSidebar from '@components/header/DesktopSidebar';
 import Modal from '@components/modal/Modal';
 import Constants from '@utils/Constants';
 import GoogleTagManager from '@utils/GoogleTagManager';
-import { I18nContext } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import footer from './Footer.module.scss';
 
 import { withTranslation } from '@i18n';
-import { WithTranslation } from 'next-i18next';
 import { AMPContext } from '@pages/_app';
 import AMPSidebar from '@components/header/AMPSidebar';
 import { getSocialLinks } from '@utils/Helpers';
@@ -20,9 +18,6 @@ const MobileFooter = ({ data, menu, t }) => {
 
   const isiOS = false;
   const router = useRouter();
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
 
   const [socialHandlers, setSocialHandlers] = useState({
     twitter: 'https://twitter.com/ETVBharatEng',
@@ -45,8 +40,7 @@ const MobileFooter = ({ data, menu, t }) => {
     const goTo = () => {
       toggleSearchBox(false);
       router.push(
-        `/${router.query.state}/search/${searchInput}`,
-        `/${options['localeSubpaths'][language]}/${router.query.state}/search/${searchInput}`
+        `/${router.query.language}/${router.query.state}/search/${searchInput}`
       );
     };
     if (e) {

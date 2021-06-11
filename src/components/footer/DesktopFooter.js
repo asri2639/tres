@@ -1,8 +1,5 @@
-import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { I18nContext } from 'next-i18next';
 import { useContext, useEffect, useState } from 'react';
-import { withTranslation } from '@i18n';
 
 import Constants from '@utils/Constants';
 
@@ -15,9 +12,6 @@ import { getSocialLinks } from '@utils/Helpers';
 
 const DesktopFooter = ({ data, t }) => {
   const router = useRouter();
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
   const isRTL = useContext(RTLContext);
 
   const [socialHandlers, setSocialHandlers] = useState({
@@ -58,15 +52,16 @@ const DesktopFooter = ({ data, t }) => {
           >
             <NavLink
               href={{
-                pathname: '/[state]',
-                query: { state: router.query.state },
+                pathname: '/[language]/[state]',
+                query: {
+                  language: router.query.language,
+                  state: router.query.state,
+                },
               }}
-              as={`/${options['localeSubpaths'][language]}/${router.query.state}`}
+              as={`/${router.query.language}/${router.query.state}`}
               passHref
             >
-              <div
-                className={`logo ${options['localeSubpaths'][language]}`}
-              ></div>
+              <div className={`logo ${router.query.language}`}></div>
             </NavLink>
 
             <LanguageList languages={data} />
@@ -169,4 +164,4 @@ const DesktopFooter = ({ data, t }) => {
   );
 };
 
-export default withTranslation('common')(DesktopFooter);
+export default DesktopFooter;

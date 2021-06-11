@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import useSWR from 'swr';
-import { I18nContext } from 'next-i18next';
 import { Media, MediaContextProvider } from 'media';
 
 import API from '@services/api/API';
@@ -11,13 +10,13 @@ import BottomRelatedBar from '@components/article/BottomRelatedBar';
 import Breadcrumbs from '@components/article/Breadcrumbs';
 import Gallery from '@components/gallery/Gallery';
 import { useRouter } from 'next/router';
+import { languageMap } from '@utils/Constants';
 
 const GalleryList = ({ galleryData }) => {
   const router = useRouter();
   const api = API(APIEnum.CatalogList);
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
+  const language = languageMap[router.query.language];
+
 
   const [galleries, setGalleries] = useState([]);
   const [loading, setLoading] = useState(false);

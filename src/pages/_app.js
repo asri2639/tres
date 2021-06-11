@@ -80,11 +80,10 @@ function App({ Component, noRender, pageProps, data, accessToken, appConfig }) {
   );
 }
 
-let pageProps = {};
 App.getInitialProps = async ({ Component, ctx }) => {
   if (ctx.asPath === '/') {
     if (process.browser) {
-      Router.push('/national');
+      Router.push('/english/national');
     } else {
       ctx.res.writeHead(302, { Location: '/national' }).end();
     }
@@ -125,42 +124,9 @@ App.getInitialProps = async ({ Component, ctx }) => {
     applicationConfig.value = appConfig;
   }
 
-  let url = null;
-  if (process.browser) {
-    url = window.location.pathname;
-  }
-
-  let noRender = false;
-  if (url !== ctx.asPath) {
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    } else {
-      noRender = true;
-    }
-  }
-
-  /*  if (
-    Component.getInitialProps &&
-    !(
-      url != null &&
-      ctx.asPath &&
-      ctx.asPath !== url &&
-      url.split('/').length === ctx.asPath.split('/').length
-    )
-  ) {
-    debugger;
-  } else {
-    if (url !== ctx.asPath && process.browser) {
-      debugger;
-      console.log(ctx.asPath, url);
-      pageProps = await Component.getInitialProps(ctx);
-    } else {
-      noRender = true;
-    }
-  } */
+  const pageProps = await Component.getInitialProps(ctx);
 
   return {
-    noRender: noRender,
     pageProps,
     data: '',
     accessToken,

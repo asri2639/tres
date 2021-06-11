@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { I18nContext, WithTranslation } from 'next-i18next';
 import { useContext } from 'react';
 
 import header from './Header.module.scss';
@@ -17,13 +16,13 @@ import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import { AMPContext } from '@pages/_app';
 import { getSocialLinks } from '@utils/Helpers';
+import { languageMap } from '@utils/Constants';
 
 const DesktopHeader = ({ className, data, t }) => {
   const isAMP = useContext(AMPContext);
   const router = useRouter();
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
+  const language = languageMap[router.query.language];
+
   const api = API(APIEnum.Catalog);
 
   const isRTL = useContext(RTLContext);
@@ -51,8 +50,8 @@ const DesktopHeader = ({ className, data, t }) => {
     GoogleTagManager.languageChange(language);
     setTimeout(() => {
       console.log(routeParams[0], routeParams[1]);
-      location.href = location.origin + routeParams[1];
-      //  router.push(routeParams[0], routeParams[1]);
+      // location.href = location.origin + routeParams[1];
+      router.push(routeParams[1]);
     }, 10);
   };
   const languageNStateSelect = (language, states) => {
@@ -84,8 +83,7 @@ const DesktopHeader = ({ className, data, t }) => {
       toggleSearchBox(false);
       GoogleTagManager.searchItem(searchInput);
       router.push(
-        `/${router.query.state}/search/${searchInput}`,
-        `/${options['localeSubpaths'][language]}/${router.query.state}/search/${searchInput}`
+        `/${router.query.language}/${router.query.state}/search/${searchInput}`
       );
     };
     if (e) {
@@ -99,7 +97,7 @@ const DesktopHeader = ({ className, data, t }) => {
 
   const stateData =
     data && data.languages
-      ? data.languages[options['localeSubpaths'][language]].find(
+      ? data.languages[router.query.language].find(
           (v) => v.state.toLowerCase() === router.query.state
         )
       : null;
@@ -385,22 +383,7 @@ const DesktopHeader = ({ className, data, t }) => {
                       onMouseEnter={() => setInitialCategory(item)}
                     >
                       <NavLink
-                        href={
-                          item.url.split('/').length > 3
-                            ? {
-                                pathname: '/[state]/[...slug]',
-                                query: {
-                                  state: item.url.split('/')[2],
-                                  slug: item.url.split('/').slice(3).join('/'),
-                                },
-                              }
-                            : {
-                                pathname: '/[state]',
-                                query: {
-                                  state: item.url.split('/')[2],
-                                },
-                              }
-                        }
+                        href={item.url}
                         as={item.url}
                         passHref
                         onClick={() => {
@@ -448,29 +431,7 @@ const DesktopHeader = ({ className, data, t }) => {
                                   >
                                     <NavLink
                                       className="block"
-                                      href={
-                                        subitem.url.split('/').length > 3
-                                          ? {
-                                              pathname: '/[state]/[...slug]',
-                                              query: {
-                                                state: subitem.url.split(
-                                                  '/'
-                                                )[2],
-                                                slug: subitem.url
-                                                  .split('/')
-                                                  .slice(3)
-                                                  .join('/'),
-                                              },
-                                            }
-                                          : {
-                                              pathname: '/[state]',
-                                              query: {
-                                                state: subitem.url.split(
-                                                  '/'
-                                                )[2],
-                                              },
-                                            }
-                                      }
+                                      href={subitem.url}
                                       as={subitem.url}
                                       passHref
                                       onClick={() => {
@@ -518,15 +479,16 @@ const DesktopHeader = ({ className, data, t }) => {
           >
             <NavLink
               href={{
-                pathname: '/[state]',
-                query: { state: router.query.state },
+                pathname: '/[language]/[state]',
+                query: {
+                  language: router.query.language,
+                  state: router.query.state,
+                },
               }}
-              as={`/${options['localeSubpaths'][language]}/${router.query.state}`}
+              as={`/${router.query.language}/${router.query.state}`}
               passHref
             >
-              <div
-                className={`logo ${options['localeSubpaths'][language]}`}
-              ></div>
+              <div className={`logo ${router.query.language}`}></div>
             </NavLink>
             <div className="flex items-center pl-3">
               {stateData ? (

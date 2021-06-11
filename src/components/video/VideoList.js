@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import useSWR from 'swr';
-import { I18nContext } from 'next-i18next';
 import { Media, MediaContextProvider } from 'media';
 
 import API from '@services/api/API';
@@ -18,7 +17,7 @@ import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import VideoAPI from '@services/api/Video';
 import { MenuContext } from '@components/layout/Layout';
-import { applicationConfig } from '@utils/Constants';
+import { applicationConfig, languageMap } from '@utils/Constants';
 import { AMPContext } from '@pages/_app';
 
 export const smartUrlFetcher = (...args) => {
@@ -164,9 +163,8 @@ const VideoList = ({ videoData, appConfig }) => {
 
   const router = useRouter();
   const api = API(APIEnum.CatalogList, APIEnum.Video);
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
+  const language = languageMap[router.query.language];
+
 
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);

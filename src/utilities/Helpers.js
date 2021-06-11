@@ -14,8 +14,12 @@ export const linkInfoGenerator = (url, state) => {
   }
   return {
     href: {
-      pathname: '/[state]/[...slug]',
-      query: { state: splitUrl[1], slug: splitUrl.slice(2).join('/') },
+      pathname: '/[language]/[state]/[...slug]',
+      query: {
+        language: splitUrl[0],
+        state: splitUrl[1],
+        slug: splitUrl.slice(2).join('/'),
+      },
     },
     as: `/${splitUrl.join('/')}`,
   };

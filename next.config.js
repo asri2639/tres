@@ -1,5 +1,5 @@
 const path = require('path');
-const { nextI18NextRewrites } = require('next-i18next/rewrites');
+
 const localeSubpaths = {
   asm: 'assamese',
   bn: 'bengali',
@@ -17,7 +17,7 @@ const localeSubpaths = {
 };
 module.exports = {
   distDir: 'dist',
-  rewrites: async () => nextI18NextRewrites(localeSubpaths),
+  // rewrites: async () => nextI18NextRewrites(localeSubpaths),
   publicRuntimeConfig: {
     localeSubpaths,
     APP_ENV: process.env.NEXT_PUBLIC_APP_ENV, // Pass through env variables

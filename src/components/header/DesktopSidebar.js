@@ -66,22 +66,7 @@ export default function DesktopSidebar({ data, onClose, isMobile = false }) {
               <div key={item.list_id} className="w-full">
                 <div className="flex items-center flex-wrap justify-between h-12 pl-8 pr-6 hover:bg-gray-300">
                   <NavLink
-                    href={
-                      item.url.split('/').length > 3
-                        ? {
-                            pathname: '/[state]/[...slug]',
-                            query: {
-                              state: item.url.split('/')[2],
-                              slug: item.url.split('/').slice(3).join('/'),
-                            },
-                          }
-                        : {
-                            pathname: '/[state]',
-                            query: {
-                              state: item.url.split('/')[2],
-                            },
-                          }
-                    }
+                    href={item.url}
                     as={item.url}
                     passHref
                     onClick={() => {
@@ -126,13 +111,7 @@ export default function DesktopSidebar({ data, onClose, isMobile = false }) {
                         <NavLink
                           key={subitem.list_id}
                           className="pl-10 h-8 flex items-center text-sm font-normal hover:bg-gray-300"
-                          href={{
-                            pathname: '/[state]/[...slug]',
-                            query: {
-                              state: subitem.url.split('/')[2],
-                              slug: subitem.url.split('/').slice(3).join('/'),
-                            },
-                          }}
+                          href={subitem.url}
                           as={subitem.url}
                           passHref
                           onClick={() => {

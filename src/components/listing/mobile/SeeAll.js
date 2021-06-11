@@ -11,6 +11,7 @@ import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import useSWR from 'swr';
 import { RTLContext } from '@components/layout/Layout';
+import { languageMap } from '@utils/Constants';
 
 const capitalize = (s) => {
   return s && s[0].toUpperCase() + s.slice(1);
@@ -20,9 +21,8 @@ const SeeAll = ({ data, article, className, t }) => {
   const router = useRouter();
 
   const api = API(APIEnum.CatalogList);
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
+  const language = languageMap[router.query.language];
+
 
   const [district, setDistrict] = useState(null);
   const [showDistrictModal, setShowDistrictModal] = useState(false);

@@ -1,15 +1,15 @@
 import Modal from '@components/modal/Modal';
 import { useContext, useEffect, useState } from 'react';
-import { I18nContext, withTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import useSWR from 'swr';
+import { useRouter } from 'next/router';
 
 const DistrictSelectModal = ({ state, onClose, onDistrictSelect, t }) => {
   const api = API(APIEnum.Catalog);
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
+  const router = useRouter();
+  const language = router.query.language;
 
   const [isShowing, setIsShowing] = useState(true);
   const [loading, setLoading] = useState(true);

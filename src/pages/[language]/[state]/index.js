@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { i18n, Link, withTranslation } from '@i18n';
-import { I18nContext } from 'next-i18next';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import ListContainer from '@components/listing/ListContainer';
@@ -14,9 +13,9 @@ import getConfig from 'next/config';
 
 const state = ({ data, payload, pageType, t }) => {
   const router = useRouter();
-  const {
-    i18n: { language },
-  } = useContext(I18nContext);
+  const language = languageMap[router.query.language];
+
+  console.log(language);
   const convertedState = configStateCodeConverter(router.query.state);
 
   let fbContentId = '';
@@ -77,8 +76,8 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const api = API(APIEnum.Listing, APIEnum.CatalogList);
   const url = args.asPath;
   const { publicRuntimeConfig } = getConfig();
-  
-/*   if (process.browser) {
+
+  /*   if (process.browser) {
     const redirectUrl = `${
       publicRuntimeConfig.APP_ENV === 'staging'
         ? 'https://staging.etvbharat.com'
@@ -150,7 +149,6 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const data = listingResp.data.data;
 
   return {
-    namespacesRequired: ['common'],
     pageType: 'listing',
     data: data,
     payload: requestPayload,

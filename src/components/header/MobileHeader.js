@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { I18nContext } from 'next-i18next';
 import { useContext, useState } from 'react';
 
 import NavLink from '@components/common/NavLink';
@@ -8,15 +7,14 @@ import header from './Header.module.scss';
 import Modal from '@components/modal/Modal';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { AMPContext } from '@pages/_app';
+import { languageMap } from '@utils/Constants';
 
 const country = 'IN';
 
 export default function MobileHeader({ data, className }) {
   const isAMP = useContext(AMPContext);
   const router = useRouter();
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
+  const language = languageMap[router.query.language];
 
   const [openStateModal, setOpenStateModal] = useState([]);
 
@@ -24,10 +22,10 @@ export default function MobileHeader({ data, className }) {
 
   const languageNStateSelect = (language, states) => {
     if (language === 'english') {
-      router.push(`/national`, `/${language}/national`);
+      router.push(`/${language}/national`);
     } else {
       if (states.length === 1) {
-        router.push(`/${states[0].state}`, `/${language}/${states[0].state}`);
+        router.push(`/${language}/${states[0].state}`);
       } else {
         setOpenStateModal(states);
       }
@@ -149,10 +147,9 @@ export default function MobileHeader({ data, className }) {
   const containerOut = (ev) => {
     setCategory(null);
   };
-
   const stateData =
     data && data.languages
-      ? data.languages[options['localeSubpaths'][language]].find(
+      ? data.languages[router.query.language].find(
           (v) => v.state.toLowerCase() === router.query.state
         )
       : null;
@@ -219,14 +216,14 @@ export default function MobileHeader({ data, className }) {
         >
           <NavLink
             href={{
-              pathname: '/[state]',
-              query: { state: router.query.state },
+              pathname: '/[language]/[state]',
+              query: { language: language, state: router.query.state },
             }}
-            as={`/${options['localeSubpaths'][language]}/${router.query.state}`}
+            as={`/${language}/${router.query.state}`}
             passHref
           >
             <div
-              className={`logo ${options['localeSubpaths'][language]}`}
+              className={`logo ${router.query.language}`}
               style={{ transform: `translate(-24px, -19px) scale(0.6)` }}
             ></div>
           </NavLink>
@@ -288,22 +285,7 @@ export default function MobileHeader({ data, className }) {
                   >
                     <div className=" flex flex-col items-center relative  text-sm">
                       <NavLink
-                        href={
-                          item.url.split('/').length > 3
-                            ? {
-                                pathname: '/[state]/[...slug]',
-                                query: {
-                                  state: item.url.split('/')[2],
-                                  slug: item.url.split('/').slice(3).join('/'),
-                                },
-                              }
-                            : {
-                                pathname: '/[state]',
-                                query: {
-                                  state: item.url.split('/')[2],
-                                },
-                              }
-                        }
+                        href={item.url}
                         as={item.url}
                         passHref
                         onClick={() => {

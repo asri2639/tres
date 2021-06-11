@@ -2,9 +2,10 @@ import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
+import { languageMap } from '@utils/Constants';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { stateCodeConverter, thumbnailExtractor } from '@utils/Helpers';
-import { I18nContext } from 'next-i18next';
+import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import useSWR from 'swr';
 
@@ -12,9 +13,8 @@ const country = 'IN';
 
 export default function DesktopSubMenu({ category }) {
   const api = API(APIEnum.CatalogList);
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
+  const router = useRouter();
+  const language = languageMap[router.query.language];
 
   let response = null;
   const catalogFetcher = (...args) => {
@@ -67,13 +67,7 @@ export default function DesktopSubMenu({ category }) {
                 key={item.content_id}
                 className="p-3 flex-grow-0 flex-shrink-0 whitespace-pre-wrap"
                 style={{ flexBasis: '27%' }}
-                href={{
-                  pathname: '/[state]/[...slug]',
-                  query: {
-                    state: splitUrl[1],
-                    slug: splitUrl.slice(2).join('/'),
-                  },
-                }}
+                href={`/${item.web_url}`}
                 as={`/${item.web_url}`}
                 passHref
                 onClick={() => {

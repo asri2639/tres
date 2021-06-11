@@ -16,7 +16,7 @@ export default function LanguageList({ languages }) {
       >
         <NavLink
           href={{
-            pathname: '/[state]',
+            pathname: '/[language]/[state]',
             query: {
               language: language.item_languages[0],
               state: state || 'national',

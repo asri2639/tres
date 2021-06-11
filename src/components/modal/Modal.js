@@ -1,7 +1,6 @@
 import ClientOnlyPortal from '@components/modal/ClientOnlyPortal';
 import { useState } from 'react';
 import { withTranslation } from '@i18n';
-import { WithTranslation } from 'next-i18next';
 
 const Modal = ({
   open,

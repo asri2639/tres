@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import { withTranslation } from '@i18n';
 
 const Index = () => {
   return (
@@ -10,4 +9,4 @@ const Index = () => {
   );
 };
 
-export default withTranslation('common')(Index);
+export default Index;

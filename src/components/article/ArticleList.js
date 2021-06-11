@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import useSWR from 'swr';
-import { I18nContext } from 'next-i18next';
 import { Media, MediaContextProvider } from 'media';
 
 import API from '@services/api/API';
@@ -10,12 +9,14 @@ import { stateCodeConverter } from '@utils/Helpers';
 import Article from '@components/article/Article';
 import BottomRelatedBar from '@components/article/BottomRelatedBar';
 import Breadcrumbs from '@components/article/Breadcrumbs';
+import { useRouter } from 'next/router';
+import { languageMap } from '@utils/Constants';
 
 const ArticleList = ({ articleData }) => {
   const api = API(APIEnum.CatalogList);
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
+  const router = useRouter();
+  const language = languageMap[router.query.language];
+
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
@@ -28,7 +29,7 @@ const ArticleList = ({ articleData }) => {
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
     return api[apiEnum][methodName]({
-      config: { isSSR:  methodName !== 'getArticleDetails' },
+      config: { isSSR: methodName !== 'getArticleDetails' },
       query: {
         // region: country,
         response: methodName === 'getArticleDetails' ? 'r2' : 'r1',
@@ -91,7 +92,7 @@ const ArticleList = ({ articleData }) => {
     }
 
     return () => {
-      // api && api.shutdown();
+      api && api.shutdown();
     };
   }, [articleData, data, adData]);
 

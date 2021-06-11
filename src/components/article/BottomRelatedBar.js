@@ -61,7 +61,12 @@ const BottomRelatedBar = ({ data }) => {
       </div>
       {visible.map((rel, ind) => {
         const splitUrl = rel.web_url.split('/');
-        const thumbnail = thumbnailExtractor(rel.thumbnails, '3_2', 's2b', null);
+        const thumbnail = thumbnailExtractor(
+          rel.thumbnails,
+          '3_2',
+          's2b',
+          null
+        );
 
         return (
           <NavLink
@@ -72,10 +77,7 @@ const BottomRelatedBar = ({ data }) => {
                 : 'border'
             } ${isRTL ? 'flex-row-reverse rtl' : ''}`}
             style={{ flexBasis: '20%' }}
-            href={{
-              pathname: '/[state]/[...slug]',
-              query: { state: splitUrl[1], slug: splitUrl.slice(2).join('/') },
-            }}
+            href={`/${rel.web_url}`}
             as={`/${rel.web_url}`}
             passHref
             onClick={() => {

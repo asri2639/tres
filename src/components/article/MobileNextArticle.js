@@ -3,7 +3,6 @@ import GoogleTagManager from '@utils/GoogleTagManager';
 import Modal from '@components/modal/Modal';
 import { useContext, useState } from 'react';
 import { withTranslation } from '@i18n';
-import { WithTranslation } from 'next-i18next';
 import { AMPContext } from '@pages/_app';
 
 const MobileNextArticle = ({

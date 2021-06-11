@@ -1,14 +1,10 @@
 import NavLink from '@components/common/NavLink';
 import { RTLContext } from '@components/layout/Layout';
-import { I18nContext } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
 const Breadcrumbs = () => {
   const router = useRouter();
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
   const isRTL = useContext(RTLContext);
 
   const [crumbsMap, setCrumbsMap] = useState([]);
@@ -31,7 +27,7 @@ const Breadcrumbs = () => {
           pathname: '/[state]',
           query: { state: router.query.state },
         },
-        as: `/${options['localeSubpaths'][language]}/${router.query.state}`,
+        as: `/${router.query.language}/${router.query.state}`,
       },
       ...crumbs.slice(0, -1).map((v) => {
         route += '/' + v;
@@ -41,7 +37,7 @@ const Breadcrumbs = () => {
             pathname: '/[state]/[...slug]',
             query: { state: router.query.state, slug: route },
           },
-          as: `/${options['localeSubpaths'][language]}/${router.query.state}${route}`, //
+          as: `/${router.query.language}/${router.query.state}${route}`, //
         };
       }),
     ]);

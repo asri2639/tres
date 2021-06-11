@@ -5,7 +5,6 @@ import GoogleTagManager from '@utils/GoogleTagManager';
 import { linkInfoGenerator, thumbnailExtractor } from '@utils/Helpers';
 import { useContext } from 'react';
 import grid from './GridList.module.scss';
-import { withTranslation } from '@i18n';
 import { useRouter } from 'next/router';
 
 const GridList = ({ data }) => {
@@ -49,4 +48,4 @@ const GridList = ({ data }) => {
   );
 };
 
-export default withTranslation('common')(GridList);
+export default GridList;

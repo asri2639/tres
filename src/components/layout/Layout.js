@@ -5,7 +5,6 @@ import React from 'react';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import { useContext, useEffect, useState } from 'react';
-import { I18nContext } from 'next-i18next';
 import { accessToken as token, languageMap } from '@utils/Constants';
 import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
 import Loader from 'react-loader-spinner';
@@ -37,9 +36,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
     footer: [],
     header: { menu: { desktop: [], mobile: [] }, languages: null },
   });
-  const {
-    i18n: { language, options },
-  } = useContext(I18nContext);
+  const language = languageMap[router.query.language];
   const state = router.query.state || 'national';
   const [showStateModal, setShowStateModal] = useState(false);
 
