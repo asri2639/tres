@@ -87,7 +87,7 @@ const ListContainer = ({ children, data, payload }) => {
           (v) => v.content_type === 'article'
         );
       }
-      article
+      return article
         ? [
             'CatalogList',
             'getArticleDetails',
