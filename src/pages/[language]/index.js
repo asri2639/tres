@@ -8,4 +8,4 @@ language.getInitialProps = async ({ query, req, res, ...args }) => {
   };
 };
 
-export default withTranslation('common')(language);
+export default language;
