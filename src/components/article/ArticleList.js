@@ -21,6 +21,7 @@ const ArticleList = ({ articleData }) => {
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
   const [mobileAds, setMobileAds] = useState([]);
+  const [rhs, setRhs] = useState(null);
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
 
@@ -79,20 +80,21 @@ const ArticleList = ({ articleData }) => {
         (article) => article.data.content_id === articleData.contentId
       );
       if (article) {
-        article.rhs = adData.catalog_list_items.slice(1).filter((v) => {
-          return (
-            v.layout_type.indexOf('ad_unit') >= 0 ||
-            (v.layout_type.indexOf('ad_unit') === -1 &&
-              v.catalog_list_items.length > 0)
-          );
-        });
+        setRhs(
+          adData.catalog_list_items.slice(1).filter((v) => {
+            return (
+              v.layout_type.indexOf('ad_unit') >= 0 ||
+              (v.layout_type.indexOf('ad_unit') === -1 &&
+                v.catalog_list_items.length > 0)
+            );
+          })
+        );
         article.desktop = adData.catalog_list_items[0].catalog_list_items[0];
-        setArticles((articles) => [...articles]);
       }
     }
 
     return () => {
-      api && api.shutdown();
+      // api && api.shutdown();
     };
   }, [articleData, data, adData]);
 
@@ -201,7 +203,7 @@ const ArticleList = ({ articleData }) => {
             <Article
               key={article.contentId}
               {...article}
-              rhs={articles[0].rhs}
+              rhs={rhs}
               related={related}
               desktop={article.desktop}
               nextArticle={index < 9 ? related[index + 1] : null}

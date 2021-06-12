@@ -197,7 +197,7 @@ const Gallery = ({
 
       setAmpHtml(parsedHtml.innerHTML);
     }
-  }, [inView, contentId, rhs]);
+  }, [inView, contentId]);
 
   return (
     <div
@@ -458,9 +458,7 @@ const Gallery = ({
               <span></span>
             </InView>
 
-            {router.query.state === 'karnataka' ? (
-              <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
-            ) : null}
+            <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
           </div>
         </Sticky>
       </div>

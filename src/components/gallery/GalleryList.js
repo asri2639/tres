@@ -17,7 +17,6 @@ const GalleryList = ({ galleryData }) => {
   const api = API(APIEnum.CatalogList);
   const language = languageMap[router.query.language];
 
-
   const [galleries, setGalleries] = useState([]);
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
@@ -25,6 +24,7 @@ const GalleryList = ({ galleryData }) => {
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
   const [viewed, setViewed] = useState([]);
+  const [rhs, setRhs] = useState(null);
 
   const relatedGalleriesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
@@ -80,13 +80,15 @@ const GalleryList = ({ galleryData }) => {
         (article) => article.content_id === galleryData.contentId
       );
       if (article) {
-        article.rhs = adData.catalog_list_items.slice(1).filter((v) => {
-          return (
-            v.layout_type.indexOf('ad_unit') >= 0 ||
-            (v.layout_type.indexOf('ad_unit') === -1 &&
-              v.catalog_list_items.length > 0)
-          );
-        });
+        setRhs(
+          adData.catalog_list_items.slice(1).filter((v) => {
+            return (
+              v.layout_type.indexOf('ad_unit') >= 0 ||
+              (v.layout_type.indexOf('ad_unit') === -1 &&
+                v.catalog_list_items.length > 0)
+            );
+          })
+        );
         article.web_url = router.asPath.slice(1);
         article.desktop = adData.catalog_list_items[0].catalog_list_items[0];
 
@@ -183,7 +185,7 @@ const GalleryList = ({ galleryData }) => {
               key={gallery.content_id}
               contentId={gallery.content_id}
               data={gallery.images}
-              rhs={galleries[0].rhs}
+              rhs={rhs}
               desktop={gallery.desktop}
               count={gallery.count}
               webUrl={gallery.web_url}
