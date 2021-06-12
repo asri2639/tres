@@ -3,19 +3,12 @@ import { TransitionContext } from '@pages/_app';
 
 const FirstAd = ({ adData, className, refresh }) => {
   const isTransitioning = useContext(TransitionContext);
-  const [isDesktop, setIsDesktop] = useState(null);
 
   const adEl = useRef(null);
-  let count = 0;
   let [width, height] = [300, 250];
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsDesktop(window.innerWidth >= 768);
-    }
-    if (!isTransitioning && typeof window !== undefined && isDesktop != null) {
-      console.log(adData);
-
+    if (!isTransitioning && typeof window !== undefined) {
       if (adData && adData.ad_unit) {
         window.ads = window.ads || new Set();
         const ads = window.ads;
@@ -55,7 +48,7 @@ const FirstAd = ({ adData, className, refresh }) => {
           margin: '0 auto',
         }}
       >
-        {isDesktop != null && adData ? (
+        {adData ? (
           <div
             ref={adEl}
             data-ad-unit={adData.ad_unit}
