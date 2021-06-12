@@ -10,11 +10,12 @@ const aliases = {
   '@api': 'src/api',
   '@layouts': 'src/layouts',
   '@components': 'src/components',
-  '@assets': 'src/assets',
+  '@assets': '../../public/assets',
   '@utils': 'src/utils',
   '@styles': 'src/styles',
   '@media': 'src/media',
   '@i18n': 'src/i18n',
+  '@context': 'src/context',
 };
 
 module.exports = {

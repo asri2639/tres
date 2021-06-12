@@ -96,7 +96,8 @@ export default function Video(inst) {
           // xhr.responseType = 'json';
           xhr.send();
 
-          /*           xhr.onload = function () {
+          /* 
+            xhr.onload = function () {
             let responseObj = xhr.response;
             console.log(responseObj)
             resolve(responseObj);

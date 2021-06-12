@@ -1,8 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { TransitionContext } from '@pages/_app';
 
 const MobileAd = ({ adData, className, refresh }) => {
-  const adEl = useRef(null);
+  const isTransitioning = useContext(TransitionContext);
 
+  const [isDesktop, setIsDesktop] = useState(null);
+
+  const adEl = useRef(null);
+  let count = 0;
   let [width, height] = [null, null];
   if (
     adData &&
@@ -20,49 +25,61 @@ const MobileAd = ({ adData, className, refresh }) => {
   }
 
   useEffect(() => {
-    if (adData && adData.ad_unit) {
-      const id = 'gpt-script-' + adData.gpt_id;
-      const adId = `ad_${adData.gpt_id.replace(/-/gi, '_')}`;
+    if (typeof window !== 'undefined') {
+      setIsDesktop(window.innerWidth >= 768);
+    }
+    if (!isTransitioning && typeof window !== undefined && isDesktop != null) {
+      console.log(adData);
 
-      let scriptContent = null;
+      if (adData && adData.ad_unit) {
+        window.ads = window.ads || new Set();
+        const ads = window.ads;
 
-      if (adData.ad_unit.indexOf('728x90-300x250') > 0) {
-        scriptContent = `var ${adId} = googletag.defineSlot('${adData.ad_unit}', [[300, 250], [728, 90]], '${adData.gpt_id}').addService(googletag.pubads()); 
-        googletag.enableServices(); 
-        var mapping =
-            googletag.sizeMapping().addSize([980, 90], [728, 90]).addSize([320, 480], [300, 250]).build();
-            ${adId}.defineSizeMapping(mapping);
-        `;
-      } else {
-        scriptContent = `var ${adId} = googletag.defineSlot('${adData.ad_unit}', [${width},${height}], '${adData.gpt_id}').addService(googletag.pubads()); 
-                          googletag.enableServices(); `;
-      }
+        if (!ads.has(adData.gpt_id)) {
+          if (adEl.current) {
+            const adId = `ad_${adData.gpt_id.replace(/-/gi, '_')}`;
+            if (window.googletag && googletag.apiReady) {
+              if (adData.ad_unit.indexOf('728x90-300x250') > 0) {
+                window[adId] = googletag
+                  .defineSlot(
+                    adData.ad_unit,
+                    [
+                      [300, 250],
+                      [728, 90],
+                    ],
+                    adData.gpt_id
+                  )
+                  .addService(googletag.pubads());
+                googletag.enableServices();
+                var mapping = googletag
+                  .sizeMapping()
+                  .addSize([980, 90], [728, 90])
+                  .addSize([320, 480], [300, 250])
+                  .build();
+                window[adId].defineSizeMapping(mapping);
+              } else {
+                window[adId] = googletag
+                  .defineSlot(adData.ad_unit, [width, height], adData.gpt_id)
+                  .addService(googletag.pubads());
+                googletag.enableServices();
+              }
 
-      if (adEl.current) {
-        if (!document.getElementById(id)) {
-          var s = document.createElement('script');
-          s.type = 'text/javascript';
-          s.id = id;
-          var code = `
-                if(window.googletag && googletag.apiReady) {
-                  googletag.cmd.push(function() {
-                    googletag.pubads().collapseEmptyDivs();
-                    ${scriptContent}
-                    
-                  }); 
+              googletag.cmd.push(function () {
+                googletag.pubads().collapseEmptyDivs();
+              });
 
-                  googletag.cmd.push(function() { 
-                    googletag.display('${adData.gpt_id}'); 
-                  });
-              }`;
-          s.appendChild(document.createTextNode(code));
-          adEl.current.appendChild(s);
+              googletag.cmd.push(function () {
+                googletag.display(adData.gpt_id);
+              });
+              window.ads.add(adData.gpt_id);
+            }
+          }
         }
       }
     }
   }, [adData]);
 
-  return (
+  return isDesktop == null ? null : (
     <div
       style={{
         padding: '5px 0',

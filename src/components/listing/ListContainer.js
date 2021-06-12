@@ -19,7 +19,9 @@ import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
 
 const ListContainer = ({ children, data, payload }) => {
+  const api = API(APIEnum.CatalogList);
   const isRTL = useContext(RTLContext);
+  let totalCalls = Math.ceil(data.total_items_count / 8);
 
   const reArrangeData = (data) => {
     /*  let extra = [];
@@ -46,19 +48,16 @@ const ListContainer = ({ children, data, payload }) => {
     }); */
     return data.catalog_list_items;
   };
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const items = reArrangeData(data);
 
-  const api = API(APIEnum.CatalogList);
-
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
-  let totalCalls = Math.ceil(data.total_items_count / 8);
-  const [callsDone, setCallsDone] = useState(1);
+  let callsDone = 1;
   const [filteredRHS, setFilteredRHS] = useState([]);
-  const [isDesktop, setIsDesktop] = useState(false);
   const adsMap = [];
-  const [firstSet, setFirstSet] = useState([]);
+  let firstSet = [];
 
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId, language] = args;
@@ -102,21 +101,23 @@ const ListContainer = ({ children, data, payload }) => {
   );
 
   useEffect(() => {
-    setListItems(reArrangeData(data));
+    // setListItems(reArrangeData(data));
     if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+      const { googletag } = window;
+
       setTimeout(() => {
-        const ads = document.querySelectorAll('.listing-ad');
+        /*  const ads = document.querySelectorAll('.listing-ad');
         for (let i = 0; i < ads.length; i++) {
           let elem = ads[i];
           elem.parentNode.removeChild(elem);
-        }
+        } */
         setIsDesktop(true);
       }, 10);
-      setTimeout(() => {
-        document.addEventListener('load', () => {
-          googletag.pubads().refresh();
-        });
-      }, 300);
+      document.addEventListener('load', () => {
+        setTimeout(() => {
+          // googletag.pubads().refresh();
+        }, 1000);
+      });
     }
   }, [data]);
 
@@ -170,15 +171,15 @@ const ListContainer = ({ children, data, payload }) => {
           });
           items = result;
           if (first.length) {
-            setFirstSet(first);
+            firstSet = first;
           }
         }
 
         setListItems((prevState) => {
-          return [...prevState, ...items];
+          return prevState.concat(items);
         });
 
-        setCallsDone((callsDone) => callsDone + 1);
+        callsDone = callsDone + 1;
       }
     }
 
@@ -263,7 +264,6 @@ const ListContainer = ({ children, data, payload }) => {
         <div className="md:w-4/12 "></div>
       </div> */}
       <div
-        key={1 + isDesktop}
         className={`lg:container listing-container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
           isRTL ? 'md:flex-row-reverse rtl' : ''
         }`}
@@ -298,10 +298,10 @@ const ListContainer = ({ children, data, payload }) => {
               stickyEnableRange={[768, Infinity]}
               offsetTop={60}
             >
-              <Loading isLoading={!filteredRHS} />
+              {/* <Loading isLoading={!filteredRHS} />
               {filteredRHS ? (
                 <AdContainer data={filteredRHS} index={0} type={'home_page'} />
-              ) : null}
+              ) : null} */}
             </Sticky>
           </Media>
         </MediaContextProvider>

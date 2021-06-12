@@ -72,6 +72,14 @@
         "components/index.scss",
         "components/index.css"
       ],
+      "@context/*": ["context/*"],
+      "@context": [
+        "context/index.js",
+        "context/index.json",
+        "context/index.jsx",
+        "context/index.scss",
+        "context/index.css"
+      ],
       "@assets/*": ["../public/assets/*"],
       "@assets": [
         "../public/assets/index.js",

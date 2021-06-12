@@ -15,7 +15,6 @@ const state = ({ data, payload, pageType, t }) => {
   const router = useRouter();
   const language = languageMap[router.query.language];
 
-  console.log(language);
   const convertedState = configStateCodeConverter(router.query.state);
 
   let fbContentId = '';
@@ -128,31 +127,37 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       // window.location.href = window.location.href.replace('http:', 'https:');
     }
   }
+  if (result) {
+    const requestPayload = {
+      params: {
+        key: result.home_link,
+      },
+      query: {
+        collective_ads_count: 0,
+        page: 0,
+        page_size: 8,
+        version: 'v2',
+        response: 'r2',
+        item_languages: language,
+        portal_state: state,
+      },
+    };
+    const listingResp = await trackPromise(
+      api.CatalogList.getListing(requestPayload)
+    );
+    const data = listingResp.data.data;
 
-  const requestPayload = {
-    params: {
-      key: result.home_link,
-    },
-    query: {
-      collective_ads_count: 0,
-      page: 0,
-      page_size: 8,
-      version: 'v2',
-      response: 'r2',
-      item_languages: language,
-      portal_state: state,
-    },
-  };
-  const listingResp = await trackPromise(
-    api.CatalogList.getListing(requestPayload)
-  );
-  const data = listingResp.data.data;
-
-  return {
-    pageType: 'listing',
-    data: data,
-    payload: requestPayload,
-  };
+    return {
+      pageType: 'listing',
+      data: data,
+      payload: requestPayload,
+    };
+  } else {
+    return {
+      pageType: 'listing',
+      data: null,
+    };
+  }
 };
 
 export default withTranslation('common')(state);
