@@ -43,8 +43,6 @@ export default function Article({
   const [source, setSource] = useState(null);
   const [ampHtml, setAmpHtml] = useState(null);
 
-  const [mobileAds, setMobileAds] = useState(ads);
-
   const contentRef = useRef(null);
   const isRTL = useContext(RTLContext);
 
@@ -271,20 +269,18 @@ export default function Article({
               } actual-content lg:container lg:mx-auto px-3 md:px-0 bg-white `}
               ref={contentRef}
             >
-              {index > 0 && mobileAds['' + (index * 2 + 1)] ? (
+              {index > 0 && ads ? (
                 <div className="pt-3">
                   <MobileAd
                     key={'art' + (index * 2 + 2)}
-                    adData={mobileAds['' + (index * 2 + 1)]}
+                    adData={ads['' + (index * 2 + 1)]}
                   />
                 </div>
               ) : null}
               <MediaContextProvider>
                 <Media at="xs">
                   {index === 0 ? (
-                    <FirstAd
-                      adData={mobileAds ? mobileAds[index * 2 + 1] : null}
-                    />
+                    <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
                   ) : null}
 
                   <h1
@@ -452,11 +448,11 @@ export default function Article({
               >
                 <span></span>
               </InView>
-              {mobileAds['' + (index * 2 + 2)] ? (
+              {ads ? (
                 <div className="pt-3">
                   <MobileAd
                     key={'art' + (index * 2 + 2)}
-                    adData={mobileAds['' + (index * 2 + 2)]}
+                    adData={ads['' + (index * 2 + 2)]}
                   />
                 </div>
               ) : null}
