@@ -1,14 +1,20 @@
 import SquareCard from '@components/listing/mobile/SquareCard';
 import LargeSquareCard from '@components/listing/mobile/LargeSquareCard';
+import { useContext } from 'react';
+import { RTLContext } from '@components/layout/Layout';
 
 const MainArticles = ({ list, className }) => {
+  const isRTL = useContext(RTLContext);
+
   return (
     <>
       {/*   <div className="w-1/2"  style={{ height: '330px' }}>
         <LargeSquareCard article={list[0]} className="bg-white" />
       </div> */}
       <div
-        className="flex w-full justify-between space-x-4"
+        className={`flex w-full justify-between space-x-4 ${
+          isRTL ? 'flex-row-reverse' : ''
+        }`}
         style={{ margin: '5px' }}
       >
         <SquareCard
