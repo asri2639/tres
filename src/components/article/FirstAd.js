@@ -55,7 +55,7 @@ const FirstAd = ({ adData, className, refresh }) => {
           margin: '0 auto',
         }}
       >
-        {adData ? (
+        {isDesktop != null && adData ? (
           <div
             ref={adEl}
             data-ad-unit={adData.ad_unit}
