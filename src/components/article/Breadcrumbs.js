@@ -9,11 +9,6 @@ const Breadcrumbs = () => {
 
   const [crumbsMap, setCrumbsMap] = useState([]);
 
-  /*     href={{
-          pathname: '/[state]/[...slug]',
-          query: { state: splitUrl[1], slug: splitUrl.slice(2).join('/') },
-      }}
-      as={`/${v.web_url}`} */
   useEffect(() => {
     const crumbs = Array.isArray(router.query.slug)
       ? router.query.slug
@@ -23,20 +18,14 @@ const Breadcrumbs = () => {
     setCrumbsMap([
       {
         label: 'HOME',
-        href: {
-          pathname: '/[state]',
-          query: { state: router.query.state },
-        },
+        href: '/[language]/[state]',
         as: `/${router.query.language}/${router.query.state}`,
       },
       ...crumbs.slice(0, -1).map((v) => {
         route += '/' + v;
         return {
           label: v.toUpperCase().replace(/-/gi, ' '),
-          href: {
-            pathname: '/[state]/[...slug]',
-            query: { state: router.query.state, slug: route },
-          },
+          href: '[language]/[state]/[...slug]',
           as: `/${router.query.language}/${router.query.state}${route}`, //
         };
       }),
@@ -55,12 +44,7 @@ const Breadcrumbs = () => {
             {v.label}
           </div>
         ) : (
-          <NavLink
-            key={i}
-            href={{ pathname: v.href.pathname, query: v.href.query }}
-            as={v.as}
-            passHref
-          >
+          <NavLink key={i} href={v.href} as={v.as} passHref>
             {isRTL ? <span className="px-2">/</span> : null}
             {v.label}
             {!isRTL ? <span className="px-2">/</span> : null}
