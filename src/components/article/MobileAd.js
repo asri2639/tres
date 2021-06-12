@@ -28,6 +28,9 @@ const MobileAd = ({ adData, className, refresh }) => {
     if (typeof window !== 'undefined') {
       setIsDesktop(window.innerWidth >= 768);
     }
+  }, [adData]);
+
+  useEffect(() => {
     if (!isTransitioning && typeof window !== undefined && isDesktop != null) {
       if (adData && adData.ad_unit) {
         window.ads = window.ads || new Set();
@@ -63,7 +66,7 @@ const MobileAd = ({ adData, className, refresh }) => {
               }
 
               googletag.cmd.push(function () {
-                googletag.pubads().collapseEmptyDivs();
+                // googletag.pubads().collapseEmptyDivs();
               });
 
               googletag.cmd.push(function () {
@@ -75,9 +78,9 @@ const MobileAd = ({ adData, className, refresh }) => {
         }
       }
     }
-  }, [adData]);
+  }, [adData, isDesktop, adEl]);
 
-  return isDesktop == null ? null : (
+  return (
     <div
       style={{
         padding: '5px 0',

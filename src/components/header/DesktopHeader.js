@@ -144,7 +144,7 @@ const DesktopHeader = ({ className, data, t }) => {
       const socialLinks = getSocialLinks(state);
       setSocialHandlers(socialLinks);
       // setTwitterHandler();
-      getHeaderAd();
+      getHeaderAd(url);
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);
@@ -154,7 +154,7 @@ const DesktopHeader = ({ className, data, t }) => {
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
-  }, []);
+  }, [router]);
 
   return (
     <>

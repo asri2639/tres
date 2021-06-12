@@ -69,7 +69,112 @@ const ArticleList = ({ articleData }) => {
     }
     if (data) {
       stopLoading();
-      setMobileAds(data.bf_af_ads ? data.bf_af_ads[0] : []);
+      setMobileAds(
+        data.bf_af_ads
+          ? data.bf_af_ads[0]
+          : {
+              1: {
+                ad_unit:
+                  '/175434344/ETB-MDOT-ADP-Kannada-Karnataka-Bharat-ATF-300x250',
+                gpt_id: 'div-gpt-ad-1622014099377-1',
+              },
+              2: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-1',
+                gpt_id: 'div-gpt-ad-1622264782181-1',
+              },
+              3: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-2',
+                gpt_id: 'div-gpt-ad-1622264782181-2',
+              },
+              4: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-3',
+                gpt_id: 'div-gpt-ad-1622264782181-3',
+              },
+              5: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-4',
+                gpt_id: 'div-gpt-ad-1622264782181-4',
+              },
+              6: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-5',
+                gpt_id: 'div-gpt-ad-1622264782181-5',
+              },
+              7: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-6',
+                gpt_id: 'div-gpt-ad-1622264782181-6',
+              },
+              8: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-7',
+                gpt_id: 'div-gpt-ad-1622264782181-7',
+              },
+              9: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-8',
+                gpt_id: 'div-gpt-ad-1622264782181-8',
+              },
+              10: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-9',
+                gpt_id: 'div-gpt-ad-1622264782181-9',
+              },
+              11: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-10',
+                gpt_id: 'div-gpt-ad-1622264782181-10',
+              },
+              12: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-11',
+                gpt_id: 'div-gpt-ad-1622264782181-11',
+              },
+              13: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-12',
+                gpt_id: 'div-gpt-ad-1622264782181-12',
+              },
+              14: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-13',
+                gpt_id: 'div-gpt-ad-1622264782181-13',
+              },
+              15: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-14',
+                gpt_id: 'div-gpt-ad-1622264782181-14',
+              },
+              16: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-15',
+                gpt_id: 'div-gpt-ad-1622264782181-15',
+              },
+              17: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-16',
+                gpt_id: 'div-gpt-ad-1622264782181-16',
+              },
+              18: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-17',
+                gpt_id: 'div-gpt-ad-1622264782181-17',
+              },
+              19: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-18',
+                gpt_id: 'div-gpt-ad-1622264782181-18',
+              },
+              20: {
+                ad_unit:
+                  '/175434344/ETB-Web-ADP-BTF-Kannada-Karnataka-728x90-300x250-19',
+                gpt_id: 'div-gpt-ad-1622264782181-19',
+              },
+            }
+      );
       setRelated(data.catalog_list_items);
     } else {
       startLoading();
