@@ -270,12 +270,11 @@ export default function Article({
               } actual-content lg:container lg:mx-auto px-3 md:px-0 bg-white `}
               ref={contentRef}
             >
-              {index > 0 ? (
+              {index > 0 && ads['' + (index * 2 + 1)] ? (
                 <div className="pt-3">
-                  <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
+                  <MobileAd  key={'art' + (index * 2 + 2)} adData={ads['' + (index * 2 + 1)]} />
                 </div>
               ) : null}
-
               <MediaContextProvider>
                 <Media at="xs">
                   {index === 0 ? (
@@ -314,9 +313,7 @@ export default function Article({
                   </div>
                 </Media>
               </MediaContextProvider>
-
               <BBCHeader source={source} />
-
               <div className="flex flex-col md:flex-col-reverse md:mb-8">
                 <div className="-mx-3 md:mx-0 relative">
                   <Thumbnail
@@ -359,7 +356,6 @@ export default function Article({
                   </MediaContextProvider>
                 </div>
               </div>
-
               {isAMP && ampHtml ? (
                 <div
                   className="text-base md:text-md"
@@ -368,9 +364,7 @@ export default function Article({
                   }}
                 />
               ) : null}
-
               {/** actual article content */}
-
               {!isAMP ? (
                 <div
                   className="text-base md:text-md"
@@ -379,7 +373,6 @@ export default function Article({
                   }}
                 />
               ) : null}
-
               {source ? (
                 <MediaContextProvider>
                   <Media greaterThan="xs">
@@ -389,7 +382,6 @@ export default function Article({
                   </Media>
                 </MediaContextProvider>
               ) : null}
-
               <InView
                 as="div"
                 className="pseudo quarter"
@@ -422,7 +414,6 @@ export default function Article({
               >
                 <span></span>
               </InView>
-
               <InView
                 as="div"
                 className="pseudo three-quarter"
@@ -439,7 +430,6 @@ export default function Article({
               >
                 <span></span>
               </InView>
-
               <InView
                 as="div"
                 className="pseudo full"
@@ -456,7 +446,11 @@ export default function Article({
               >
                 <span></span>
               </InView>
-              <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
+              {ads['' + (index * 2 + 2)] ? (
+                <div className="pt-3">
+                  <MobileAd key={'art' + (index * 2 + 2)} adData={ads['' + (index * 2 + 2)]} />
+                </div>
+              ) : null}
             </div>
           </Sticky>
         </div>
