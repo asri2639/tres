@@ -54,7 +54,6 @@ const ListContainer = ({ children, data, payload }) => {
 
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
-  let callsDone = 1;
   const [filteredRHS, setFilteredRHS] = useState([]);
   const adsMap = [];
   let firstSet = [];
@@ -179,7 +178,7 @@ const ListContainer = ({ children, data, payload }) => {
           return prevState.concat(items);
         });
 
-        callsDone = callsDone + 1;
+        setCallsDone((callsDone) => callsDone + 1);
       }
     }
 
