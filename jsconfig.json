@@ -72,13 +72,13 @@
         "components/index.scss",
         "components/index.css"
       ],
-      "@assets/*": ["assets/*"],
+      "@assets/*": ["../public/assets/*"],
       "@assets": [
-        "assets/index.js",
-        "assets/index.json",
-        "assets/index.jsx",
-        "assets/index.scss",
-        "assets/index.css"
+        "../public/assets/index.js",
+        "../public/assets/index.json",
+        "../public/assets/index.jsx",
+        "../public/assets/index.scss",
+        "../public/assets/index.css"
       ],
       "@utils/*": ["utilities/*"],
       "@utils": [

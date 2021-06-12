@@ -1,7 +1,7 @@
 import NavLink from '@components/common/NavLink';
 import eventBus from '@utils/EventBus';
 import GoogleTagManager from '@utils/GoogleTagManager';
-import { linkInfoGenerator } from '@utils/Helpers';
+import { configStateCodeConverter, linkInfoGenerator } from '@utils/Helpers';
 import { I18nContext, withTranslation } from 'react-i18next';
 import SquareCard from './SquareCard';
 import DistrictSelectModal from '@components/common/DistrictSelectModal';
@@ -12,6 +12,7 @@ import APIEnum from '@services/api/APIEnum';
 import useSWR from 'swr';
 import { RTLContext } from '@components/layout/Layout';
 import { languageMap } from '@utils/Constants';
+import { MenuContext } from '@components/layout/Layout';
 
 const capitalize = (s) => {
   return s && s[0].toUpperCase() + s.slice(1);
@@ -19,12 +20,14 @@ const capitalize = (s) => {
 const SeeAll = ({ data, article, className, t }) => {
   const isRTL = useContext(RTLContext);
   const router = useRouter();
+  const config = useContext(MenuContext);
 
   const api = API(APIEnum.CatalogList);
   const language = languageMap[router.query.language];
 
-
   const [district, setDistrict] = useState(null);
+
+  const [state, setState] = useState(null);
   const [showDistrictModal, setShowDistrictModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const startLoading = () => setLoading(true);
@@ -32,21 +35,45 @@ const SeeAll = ({ data, article, className, t }) => {
 
   const [displayData, setDisplayData] = useState(data);
 
-  const apiCaller = (...args) => {
-    startLoading();
-    const [apiEnum, methodName, district] = args;
+  const constructPayload = (type, code) => {
+    if (type === 'district') {
+      return {
+        params: {
+          state: router.query.state,
+        },
+        query: {
+          response: 'r2',
+          item_languages: language,
+          region: 'IN',
+          dynamic_district: code,
+        },
+      };
+    }
 
-    return api[apiEnum][methodName]({
+    return {
       params: {
-        state: router.query.state,
+        key:
+          config.params_hash2.config_params.carousel_on_selection[
+            configStateCodeConverter(code)
+          ]['dynamic-list'],
       },
       query: {
+        collective_ads_count: 0,
+        page: 0,
+        page_size: 8,
+        version: 'v2',
         response: 'r2',
         item_languages: language,
-        region: 'IN',
-        dynamic_district: district.code,
+        portal_state: router.query.state,
       },
-    })
+    };
+  };
+  const apiCaller = (...args) => {
+    startLoading();
+    const [apiEnum, methodName, type, code] = args;
+    const payload = constructPayload(type, code);
+
+    return api[apiEnum][methodName](payload)
       .then((res) => {
         return res.data && res.data.data ? res.data.data : [];
       })
@@ -55,8 +82,19 @@ const SeeAll = ({ data, article, className, t }) => {
       });
   };
 
-  const { data: districtFetchedData, error } = useSWR(
-    district ? ['CatalogList', 'getDistrictNews', district] : null,
+  const { data: districtFetchedData, error: stateError } = useSWR(
+    district
+      ? ['CatalogList', 'getDistrictNews', 'district', district.code]
+      : null,
+    apiCaller,
+    {
+      dedupingInterval: 5 * 60 * 1000,
+    }
+  );
+
+  const { data: stateFetchedData, error } = useSWR(
+    state ? ['CatalogList', 'getListing', 'state', state] : null,
+
     apiCaller,
     {
       dedupingInterval: 5 * 60 * 1000,
@@ -64,11 +102,12 @@ const SeeAll = ({ data, article, className, t }) => {
   );
 
   useEffect(() => {
-    if (districtFetchedData) {
-      console.log(districtFetchedData);
+    if (districtFetchedData && district) {
       setDisplayData(districtFetchedData);
+    } else if (stateFetchedData && state) {
+      setDisplayData(stateFetchedData);
     }
-  }, [districtFetchedData]);
+  }, [districtFetchedData, stateFetchedData]);
 
   const isEven = data.catalog_list_items.length % 2 === 0;
   const scope = {
@@ -110,6 +149,10 @@ const SeeAll = ({ data, article, className, t }) => {
       case 'state':
         eventBus.dispatch(`${scope.type}-selector`, {
           show: true,
+        /*   callback: (path) => {
+            startLoading();
+            setState(path.split('/').slice(-1)[0]);
+          }, */
         });
         break;
       case 'district':

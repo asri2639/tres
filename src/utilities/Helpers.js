@@ -406,7 +406,7 @@ const stateSocialLinks = [
     fb: 'https://www.facebook.com/ETVbharatPunjab',
   },
   {
-    state: 'himachal-Pradesh',
+    state: 'himachal-pradesh',
     twitter: 'https://twitter.com/ETVBharatHP',
     fb: 'https://www.facebook.com/ETVBharatHimachalPradesh',
   },

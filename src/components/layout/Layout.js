@@ -38,7 +38,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
   });
   const language = languageMap[router.query.language];
   const state = router.query.state || 'national';
-  const [showStateModal, setShowStateModal] = useState(false);
+  const [showStateModal, setShowStateModal] = useState(null);
 
   const { promiseInProgress } = usePromiseTracker();
 
@@ -230,7 +230,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
     }
 
     eventBus.on('state-selector', (data) => {
-      setShowStateModal(data.show);
+      setShowStateModal({ data: data });
     });
 
     eventBus.on('district-selector', (data) => {
@@ -248,8 +248,9 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
       {showStateModal ? (
         <StateSelectModal
           data={data ? data.footer : {}}
+          callback={showStateModal.data.callback}
           onClose={() => {
-            setShowStateModal(false);
+            setShowStateModal(null);
           }}
         />
       ) : null}

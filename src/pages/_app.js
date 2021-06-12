@@ -108,24 +108,23 @@ App.getInitialProps = async ({ Component, ctx }) => {
     accessToken.mobile = result.data.data.access_token;
   }
   let appConfig = null;
-  if (accessToken.mobile.length && !applicationConfig.value) {
-    const result = await api.Catalog.getAppConfig({
-      query: {
-        response: 'r2',
-        item_languages: 'en',
-        current_version: '1.1',
-        region: 'IN',
-        version: 'v2',
-      },
-      isSSR: true,
-    });
+  // if (accessToken.mobile.length && !applicationConfig.value) {
+  const result = await api.Catalog.getAppConfig({
+    query: {
+      response: 'r2',
+      item_languages: 'en',
+      current_version: '1.1',
+      region: 'IN',
+      version: 'v2',
+    },
+    isSSR: true,
+  });
 
-    appConfig = result.data.data;
-    applicationConfig.value = appConfig;
-  }
+  appConfig = result.data.data;
+  applicationConfig.value = appConfig;
+  // }
 
   const pageProps = await Component.getInitialProps(ctx);
-
   return {
     pageProps,
     data: '',
