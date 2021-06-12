@@ -29,8 +29,6 @@ const MobileAd = ({ adData, className, refresh }) => {
       setIsDesktop(window.innerWidth >= 768);
     }
     if (!isTransitioning && typeof window !== undefined && isDesktop != null) {
-      console.log(adData);
-
       if (adData && adData.ad_unit) {
         window.ads = window.ads || new Set();
         const ads = window.ads;

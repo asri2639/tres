@@ -152,4 +152,4 @@ App.getInitialProps = async ({ Component, ctx }) => {
   };
 };
 
-export default App;
+export default appWithTranslation(App);
