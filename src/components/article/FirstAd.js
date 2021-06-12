@@ -44,27 +44,29 @@ const FirstAd = ({ adData, className, refresh }) => {
     }
   }, [adData]);
 
-  return isDesktop == null ? null : (
-    <div
-      style={{
-        padding: '5px 0',
-        display: 'flex',
-        width: '100%',
-        justifyContent: 'center',
-      }}
-      className={className}
-    >
-      {adData ? (
-        <div
-          ref={adEl}
-          data-ad-unit={adData.ad_unit}
-          id={adData.gpt_id}
-          style={{
-            width: width ? width + 'px' : 'auto',
-            height: height ? height + 'px' : 'auto',
-          }}
-        ></div>
-      ) : null}
+  return (
+    <div style={{ padding: '5px 0' }}>
+      <div
+        style={{
+          display: 'table',
+          width: width ? width + 'px' : 'auto',
+          height: height ? height + 5 + 'px' : 'auto',
+          background: 'rgb(228 228 228 / 68%)',
+          margin: '0 auto',
+        }}
+      >
+        {adData ? (
+          <div
+            ref={adEl}
+            data-ad-unit={adData.ad_unit}
+            id={adData.gpt_id}
+            style={{
+              width: width ? width + 'px' : 'auto',
+              height: height ? height + 'px' : 'auto',
+            }}
+          ></div>
+        ) : null}
+      </div>
     </div>
   );
 };
