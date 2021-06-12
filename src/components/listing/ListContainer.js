@@ -57,7 +57,7 @@ const ListContainer = ({ children, data, payload }) => {
   const [callsDone, setCallsDone] = useState(1);
   const [filteredRHS, setFilteredRHS] = useState([]);
   const adsMap = [];
-  let firstSet = [];
+  const [firstSet, setFirstSet] = useState([]);
 
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId, language] = args;
@@ -171,7 +171,7 @@ const ListContainer = ({ children, data, payload }) => {
           });
           items = result;
           if (first.length) {
-            firstSet = first;
+            setFirstSet(first);
           }
         }
 
