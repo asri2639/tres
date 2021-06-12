@@ -54,6 +54,7 @@ const ListContainer = ({ children, data, payload }) => {
 
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
+  const [callsDone, setCallsDone] = useState(1);
   const [filteredRHS, setFilteredRHS] = useState([]);
   const adsMap = [];
   let firstSet = [];
@@ -297,10 +298,10 @@ const ListContainer = ({ children, data, payload }) => {
               stickyEnableRange={[768, Infinity]}
               offsetTop={60}
             >
-              {/* <Loading isLoading={!filteredRHS} />
+              <Loading isLoading={!filteredRHS} />
               {filteredRHS ? (
                 <AdContainer data={filteredRHS} index={0} type={'home_page'} />
-              ) : null} */}
+              ) : null}
             </Sticky>
           </Media>
         </MediaContextProvider>
