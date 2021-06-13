@@ -16,6 +16,7 @@ import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import { AMPContext } from '@pages/_app';
 import { getSocialLinks } from '@utils/Helpers';
+import getTranslatedValue from '../../translator'
 import { languageMap } from '@utils/Constants';
 
 const DesktopHeader = ({ className, data, t }) => {
@@ -168,7 +169,7 @@ const DesktopHeader = ({ className, data, t }) => {
           height={null}
         >
           <div className="px-6 py-4 flex justify-around items-center h-24">
-            <div className="text-md font-medium">{t('state')}</div>
+            <div className="text-md font-medium">{getTranslatedValue('state',language)}</div>
             <div className="w-40">
               <select
                 value={selected.state}
@@ -180,7 +181,7 @@ const DesktopHeader = ({ className, data, t }) => {
                 }}
                 className="form-control"
               >
-                <option value="select">{t('select_state')}</option>
+                <option value="select">{getTranslatedValue('select_state',language)}</option>
                 {openStateModal.map((v) => {
                   return (
                     <option key={v.state} value={v.state}>
@@ -197,7 +198,7 @@ const DesktopHeader = ({ className, data, t }) => {
               className="button px-4 py-2 border-2 border-red-700 text-red-700 rounded-md cursor-pointer focus:text-white focus:bg-red-700"
               onClick={() => setOpenStateModal([])}
             >
-              {t('cancel_capital')}
+              {getTranslatedValue('cancel_capital',language)}
             </div>
             <div
               className="button yes px-4 py-2 border-2 border-red-700 text-red-700 rounded-md ml-3 cursor-pointer"
@@ -205,7 +206,7 @@ const DesktopHeader = ({ className, data, t }) => {
                 selected.state && goToSelected();
               }}
             >
-              {t('done_txt')}
+              {getTranslatedValue('done_txt',language)}
             </div>
           </div>
 

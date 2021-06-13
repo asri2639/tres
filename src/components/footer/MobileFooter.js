@@ -2,11 +2,12 @@ import NavLink from '@components/common/NavLink';
 import DesktopSidebar from '@components/header/DesktopSidebar';
 import Modal from '@components/modal/Modal';
 import Constants from '@utils/Constants';
+import getTranslatedValue from '../../translator'
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import footer from './Footer.module.scss';
-
+import { languageMap } from '@utils/Constants';
 import { withTranslation } from '@i18n';
 import { AMPContext } from '@pages/_app';
 import AMPSidebar from '@components/header/AMPSidebar';
@@ -18,7 +19,7 @@ const MobileFooter = ({ data, menu, t }) => {
 
   const isiOS = false;
   const router = useRouter();
-
+ const language = languageMap[router.query.language];
   const [socialHandlers, setSocialHandlers] = useState({
     twitter: 'https://twitter.com/ETVBharatEng',
     fb: 'https://www.facebook.com/ETVBharatEnglish',
@@ -102,7 +103,7 @@ const MobileFooter = ({ data, menu, t }) => {
                     left: 'calc(50% - 5rem)',
                   }}
                 >
-                  {t('back_to_top')}
+                  {getTranslatedValue('back_to_top',language)}
                 </a>
               ) : (
                 <button
@@ -115,7 +116,8 @@ const MobileFooter = ({ data, menu, t }) => {
                     backToTop();
                   }}
                 >
-                  {t('back_to_top')}
+                
+                  {getTranslatedValue('back_to_top',language)}
                 </button>
               )}
               <div className="bottom-section mx-8">

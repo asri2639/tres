@@ -1,8 +1,10 @@
 import Modal from '@components/modal/Modal';
 import { useContext, useEffect, useState } from 'react';
+import getTranslatedValue from '../../translator'
 import { withTranslation } from 'react-i18next';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
+import { languageMap } from '@utils/Constants';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 
@@ -10,7 +12,7 @@ const DistrictSelectModal = ({ state, onClose, onDistrictSelect, t }) => {
   const api = API(APIEnum.Catalog);
   const router = useRouter();
   const language = router.query.language;
-
+  const languageSt = languageMap[router.query.language];
   const [isShowing, setIsShowing] = useState(true);
   const [loading, setLoading] = useState(true);
   const [districts, setDistricts] = useState([]);
@@ -68,7 +70,7 @@ const DistrictSelectModal = ({ state, onClose, onDistrictSelect, t }) => {
         <div className="p-3 pb-4 rounded-md" style={{ background: '#f0f0f0' }}>
           <div className="flex justify-between pb-4">
             <div className="text-gray-700 text-md pl-2">
-              {t('change_district')}
+              {getTranslatedValue('change_district',languageSt)}
             </div>
             <div>
               <button
