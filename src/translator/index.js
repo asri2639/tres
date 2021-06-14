@@ -1,13 +1,4 @@
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
  export default function getTranslatedValue(key,language){
      let translatedValue = '';
 
@@ -58,6 +49,9 @@
             translatedValue = punjabi[`${key}`];
         break;
 
+    case 'ta':
+      translatedValue = tamil[`${key}`];
+      break;
 
         case 'ta':
             const tamil = require('./locales/ta/common.json');

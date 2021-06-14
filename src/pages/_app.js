@@ -79,12 +79,14 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="googlebot" content="all" />
         <meta name="bingbots" content="all" />
         <meta name="robots" content="all" />
+
+        <script type="text/javascript" src="//cdn.ergadx.com/js/889/ads.js"></script>
       </Head>
 
       {accessToken.web.length && accessToken.mobile.length ? (
         <AMPContext.Provider value={router.query.amp === '1' ? true : false}>
           <TransitionContext.Provider value={isTransitioning}>
-            {isTransitioning ? <GlobalSpinner /> : null}
+          {/*   {isTransitioning ? <GlobalSpinner /> : null} */}
             <Layout
               accessToken={accessToken}
               appConfig={appConfig}
