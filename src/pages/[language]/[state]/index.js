@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { i18n, Link, withTranslation } from '@i18n';
+import React from 'react';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import ListContainer from '@components/listing/ListContainer';
@@ -9,11 +8,11 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
 import { NextSeo } from 'next-seo';
-import getConfig from 'next/config';
+import useTranslator from '@hooks/useTranslator';
 
-const state = ({ data, payload, pageType, t }) => {
+const state = ({ data, payload, pageType }) => {
   const router = useRouter();
-  const language = languageMap[router.query.language];
+  const { appLanguage } = useTranslator();
 
   const convertedState = configStateCodeConverter(router.query.state);
 
@@ -49,7 +48,7 @@ const state = ({ data, payload, pageType, t }) => {
           description: data.meta_tag_description,
           images: [
             {
-              url: `https://react.etvbharat.com/assets/logos/${language}.png`,
+              url: `https://react.etvbharat.com/assets/logos/${appLanguage.name}.png`,
               width: 200,
               height: 200,
               alt: 'ETV Bharat News',
@@ -74,7 +73,6 @@ const state = ({ data, payload, pageType, t }) => {
 state.getInitialProps = async ({ query, req, res, ...args }) => {
   const api = API(APIEnum.Listing, APIEnum.CatalogList);
   const url = args.asPath;
-  const { publicRuntimeConfig } = getConfig();
 
   /*   if (process.browser) {
     const redirectUrl = `${
@@ -121,12 +119,6 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const language = languageMap[urlSplit[1]];
   const state = stateCodeConverter(urlSplit[2]);
 
-  if (typeof window !== 'undefined') {
-    document.documentElement.lang = languageMap[language];
-    if (location.protocol === 'http') {
-      // window.location.href = window.location.href.replace('http:', 'https:');
-    }
-  }
   if (result) {
     const requestPayload = {
       params: {
@@ -160,4 +152,4 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   }
 };
 
-export default withTranslation('common')(state);
+export default state;

@@ -17,7 +17,7 @@ import APIEnum from '@services/api/APIEnum';
 import { thumbnailExtractor } from '@utils/Helpers';
 import NProgress from 'nprogress';
 import GlobalSpinner from '@components/global_spinner/GlobalSpinner';
-
+import useTranslator from '@hooks/useTranslator';
 // export function reportWebVitals(metric: NextWebVitalsMetric) {
 //   console.log(metric)
 // }
@@ -31,6 +31,9 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const { publicRuntimeConfig } = getConfig();
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [appLanguage, setAppLanguage] = useState(null);
+
+  useTranslator({ init: true });
 
   useEffect(() => {
     const handleRouteChange = (url) => {
@@ -48,13 +51,6 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 
     const handleRouteComplete = (url) => {
       NProgress.done();
-      document.documentElement.lang = languageMap[url.split('/')[1]];
-      const urlSplit = url.split('/');
-      if (urlSplit[1] !== currentLanguage) {
-        currentLanguage = urlSplit[1];
-        document.documentElement.lang = languageMap[currentLanguage];
-        i18n.changeLanguage(document.documentElement.lang);
-      }
       setIsTransitioning(false);
     };
 
@@ -80,13 +76,16 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="bingbots" content="all" />
         <meta name="robots" content="all" />
 
-        <script type="text/javascript" src="//cdn.ergadx.com/js/889/ads.js"></script>
+        <script
+          type="text/javascript"
+          src="//cdn.ergadx.com/js/889/ads.js"
+        ></script>
       </Head>
 
       {accessToken.web.length && accessToken.mobile.length ? (
         <AMPContext.Provider value={router.query.amp === '1' ? true : false}>
           <TransitionContext.Provider value={isTransitioning}>
-          {/*   {isTransitioning ? <GlobalSpinner /> : null} */}
+            {/*   {isTransitioning ? <GlobalSpinner /> : null} */}
             <Layout
               accessToken={accessToken}
               appConfig={appConfig}

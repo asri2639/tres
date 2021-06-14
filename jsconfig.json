@@ -64,6 +64,14 @@
         "components/index.scss",
         "components/index.css"
       ],
+      "@hooks/*": ["hooks/*"],
+      "@hooks": [
+        "hooks/index.js",
+        "hooks/index.json",
+        "hooks/index.jsx",
+        "hooks/index.scss",
+        "hooks/index.css"
+      ],
       "@modules/*": ["components/*"],
       "@modules": [
         "components/index.js",

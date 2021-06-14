@@ -2,25 +2,22 @@ import { thumbnailExtractor } from '@utils/Helpers';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import Modal from '@components/modal/Modal';
 import { useContext, useState } from 'react';
-import { withTranslation } from '@i18n';
 import { AMPContext } from '@pages/_app';
 import { useRouter } from 'next/router';
-import { languageMap } from '@utils/Constants';
-import getTranslatedValue from 'translator';
+import useTranslator from '@hooks/useTranslator';
 
 const MobileNextArticle = ({
   label,
   data,
-  t,
   nextArticle,
   scrollToNextArticle,
   related,
   showBbc,
   children,
 }) => {
+  const { t } = useTranslator();
   const isAMP = useContext(AMPContext);
   const router = useRouter();
-  const language = languageMap[router.query.language];
   const query = {
     amp: 'false',
     apiKey: '99a287d2-81b1-4013-8705-0805df9481e0',
@@ -99,7 +96,7 @@ const MobileNextArticle = ({
               toggleOpen(true);
             }}
           >
-            {getTranslatedValue('add_comment', language)}
+            {t('add_comment')}
           </div>
         ) : null}
       </div>
@@ -151,10 +148,7 @@ const MobileNextArticle = ({
               className="w-6"
               src="/assets/images/nextarticle.png"
             />
-            <span className="text-lg font-thin pl-2">
-              {' '}
-              {getTranslatedValue(label, language)}
-            </span>
+            <span className="text-lg font-thin pl-2"> {t(label)}</span>
           </div>
           <div
             className="text-gray-500 tracking-tighter pl-2"
@@ -173,9 +167,7 @@ const MobileNextArticle = ({
               className="w-6"
               src="/assets/images/nextarticle.png"
             />
-            <span className="text-lg font-thin pl-2">
-              {getTranslatedValue(label, language)}
-            </span>
+            <span className="text-lg font-thin pl-2">{t(label)}</span>
           </div>
           <div
             className="text-gray-500 tracking-tighter pl-2"
@@ -189,4 +181,4 @@ const MobileNextArticle = ({
   );
 };
 
-export default withTranslation('common')(MobileNextArticle);
+export default MobileNextArticle;

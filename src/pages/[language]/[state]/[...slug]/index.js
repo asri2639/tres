@@ -483,15 +483,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     language: language,
   };
 
-  if (typeof window !== 'undefined') {
-    document.documentElement.lang = languageMap[language];
-    window['applicationConfig'] = applicationConfig;
-
-    if (location.protocol === 'http') {
-      // window.location.href = window.location.href.replace('http:', 'https:');
-    }
-  }
-
   bypass = args.asPath.indexOf('live-streaming') >= 0;
   const id = query.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');

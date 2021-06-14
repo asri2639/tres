@@ -1,21 +1,11 @@
 import ClientOnlyPortal from '@components/modal/ClientOnlyPortal';
-import { withTranslation } from '@i18n';
+import useTranslator from '@hooks/useTranslator';
 import { useRouter } from 'next/router';
-import { languageMap } from '@utils/Constants';
-import getTranslatedValue from 'translator';
 
-const Modal = ({
-  open,
-  title,
-  onClose,
-  children,
-  isMobile,
-  t,
-  width,
-  height,
-}) => {
+const Modal = ({ open, title, onClose, children, isMobile, width, height }) => {
   const router = useRouter();
-  const language = languageMap[router.query.language];
+  const { t } = useTranslator();
+
   return (
     <>
       {open && (
@@ -28,7 +18,7 @@ const Modal = ({
               {!isMobile ? (
                 <div className="header text-xl flex justify-between bg-gray-300 p-4 items-center">
                   <div className="text-gray-600 font-semibold">
-                    {getTranslatedValue(title, language) || ''}
+                    {t(title) || ''}
                   </div>
                   <button
                     type="button"
@@ -75,4 +65,4 @@ const Modal = ({
   );
 };
 
-export default withTranslation('common')(Modal);
+export default Modal;

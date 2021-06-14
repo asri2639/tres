@@ -8,7 +8,6 @@ import NavLink from '@components/common/NavLink';
 import DesktopSidebar from '@components/header/DesktopSidebar';
 import Modal from '@components/modal/Modal';
 import DesktopSubMenu from '@components/header/DesktopSubMenu';
-import { withTranslation } from '@i18n';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { Media, MediaContextProvider } from '@media';
 import { RTLContext } from '@components/layout/Layout';
@@ -16,13 +15,12 @@ import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import { AMPContext } from '@pages/_app';
 import { getSocialLinks } from '@utils/Helpers';
-import getTranslatedValue from '../../translator'
-import { languageMap } from '@utils/Constants';
+import useTranslator from '@hooks/useTranslator';
 
-const DesktopHeader = ({ className, data, t }) => {
+const DesktopHeader = ({ className, data }) => {
   const isAMP = useContext(AMPContext);
   const router = useRouter();
-  const language = languageMap[router.query.language];
+  const { t, appLanguage } = useTranslator();
 
   const api = API(APIEnum.Catalog);
 
@@ -115,7 +113,7 @@ const DesktopHeader = ({ className, data, t }) => {
       api.Catalog.getPageAds({
         query: {
           app: 'web',
-          item_languages: language,
+          item_languages: appLanguage.name,
           response: 'r2',
           language: splitPath[1],
           state: splitPath[2],
@@ -169,7 +167,7 @@ const DesktopHeader = ({ className, data, t }) => {
           height={null}
         >
           <div className="px-6 py-4 flex justify-around items-center h-24">
-            <div className="text-md font-medium">{getTranslatedValue('state',language)}</div>
+            <div className="text-md font-medium">{t('state')}</div>
             <div className="w-40">
               <select
                 value={selected.state}
@@ -181,7 +179,7 @@ const DesktopHeader = ({ className, data, t }) => {
                 }}
                 className="form-control"
               >
-                <option value="select">{getTranslatedValue('select_state',language)}</option>
+                <option value="select">{t('select_state')}</option>
                 {openStateModal.map((v) => {
                   return (
                     <option key={v.state} value={v.state}>
@@ -198,7 +196,7 @@ const DesktopHeader = ({ className, data, t }) => {
               className="button px-4 py-2 border-2 border-red-700 text-red-700 rounded-md cursor-pointer focus:text-white focus:bg-red-700"
               onClick={() => setOpenStateModal([])}
             >
-              {getTranslatedValue('cancel_capital',language)}
+              {t('cancel_capital')}
             </div>
             <div
               className="button yes px-4 py-2 border-2 border-red-700 text-red-700 rounded-md ml-3 cursor-pointer"
@@ -206,7 +204,7 @@ const DesktopHeader = ({ className, data, t }) => {
                 selected.state && goToSelected();
               }}
             >
-              {getTranslatedValue('done_txt',language)}
+              {t('done_txt')}
             </div>
           </div>
 
@@ -491,7 +489,7 @@ const DesktopHeader = ({ className, data, t }) => {
             </NavLink>
             <div className="flex items-center pl-3">
               {stateData ? (
-                language !== 'en' ? (
+                appLanguage.code !== 'en' ? (
                   <div className="text-md">
                     <div className="border-b border-red-700">
                       {stateData.display_title}
@@ -527,4 +525,4 @@ const DesktopHeader = ({ className, data, t }) => {
   );
 };
 
-export default withTranslation('common')(DesktopHeader);
+export default DesktopHeader;

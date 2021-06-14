@@ -2,8 +2,6 @@ import NavLink from '@components/common/NavLink';
 import eventBus from '@utils/EventBus';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { configStateCodeConverter, linkInfoGenerator } from '@utils/Helpers';
-import getTranslatedValue from '../../../translator'
-import { I18nContext, withTranslation } from 'react-i18next';
 import SquareCard from './SquareCard';
 import DistrictSelectModal from '@components/common/DistrictSelectModal';
 import { useContext, useEffect, useState } from 'react';
@@ -12,19 +10,19 @@ import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import useSWR from 'swr';
 import { RTLContext } from '@components/layout/Layout';
-import { languageMap } from '@utils/Constants';
 import { MenuContext } from '@components/layout/Layout';
+import useTranslator from '@hooks/useTranslator';
 
 const capitalize = (s) => {
   return s && s[0].toUpperCase() + s.slice(1);
 };
-const SeeAll = ({ data, article, className, t }) => {
+const SeeAll = ({ data, article, className }) => {
   const isRTL = useContext(RTLContext);
   const router = useRouter();
   const config = useContext(MenuContext);
+  const { t, appLanguage } = useTranslator();
 
   const api = API(APIEnum.CatalogList);
-  const language = languageMap[router.query.language];
 
   const [district, setDistrict] = useState(null);
 
@@ -126,7 +124,7 @@ const SeeAll = ({ data, article, className, t }) => {
         break;
       case 'see_all':
         scope.dropdown = false;
-		
+
         scope.text = data.filter_type;
         scope.see_all = true;
         scope.link_info = linkInfoGenerator(
@@ -151,7 +149,7 @@ const SeeAll = ({ data, article, className, t }) => {
       case 'state':
         eventBus.dispatch(`${scope.type}-selector`, {
           show: true,
-        /*   callback: (path) => {
+          /*   callback: (path) => {
             startLoading();
             setState(path.split('/').slice(-1)[0]);
           }, */
@@ -173,7 +171,7 @@ const SeeAll = ({ data, article, className, t }) => {
         url.split('/district')[0] + '/state/' + displayData.dynamic_district;
     }
     return {
-      text: getTranslatedValue('see_all',language),
+      text: t('see_all'),
       url: url,
       thumbnails: displayData.catalog_list_items[3].thumbnails,
     };
@@ -203,7 +201,7 @@ const SeeAll = ({ data, article, className, t }) => {
 
         {scope.dropdown ? (
           <div className="flex items-center ">
-            <div className="pr-2 text-sm">{getTranslatedValue(`${scope.text}`,language)}</div>
+            <div className="pr-2 text-sm">{t(`${scope.text}`)}</div>
             <div
               className="flex items-center text-sm border border-gray-600 px-2 py-0 cursor-pointer"
               onClick={() => {
@@ -228,7 +226,7 @@ const SeeAll = ({ data, article, className, t }) => {
               GoogleTagManager.articleClick(article);
             }}
           >
-            {getTranslatedValue(scope.text,language)}
+            {t(scope.text)}
           </NavLink>
         ) : null}
       </div>
@@ -256,4 +254,4 @@ const SeeAll = ({ data, article, className, t }) => {
   );
 };
 
-export default withTranslation('common')(SeeAll);
+export default SeeAll;

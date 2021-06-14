@@ -1,23 +1,18 @@
 import Modal from '@components/modal/Modal';
-import { useContext, useEffect, useState } from 'react';
-import getTranslatedValue from '../../translator'
-import { withTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
-import { languageMap } from '@utils/Constants';
 import useSWR from 'swr';
-import { useRouter } from 'next/router';
+import useTranslator from '@hooks/useTranslator';
 
-const DistrictSelectModal = ({ state, onClose, onDistrictSelect, t }) => {
+const DistrictSelectModal = ({ state, onClose, onDistrictSelect }) => {
   const api = API(APIEnum.Catalog);
-  const router = useRouter();
-  const language = router.query.language;
-  const languageSt = languageMap[router.query.language];
   const [isShowing, setIsShowing] = useState(true);
   const [loading, setLoading] = useState(true);
   const [districts, setDistricts] = useState([]);
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
+  const { t, appLanguage } = useTranslator();
 
   const close = () => {
     onClose();
@@ -32,7 +27,7 @@ const DistrictSelectModal = ({ state, onClose, onDistrictSelect, t }) => {
       },
       query: {
         response: 'r2',
-        item_languages: language,
+        item_languages: appLanguage.language,
         region: 'IN',
       },
     }).then((res) => {
@@ -70,7 +65,7 @@ const DistrictSelectModal = ({ state, onClose, onDistrictSelect, t }) => {
         <div className="p-3 pb-4 rounded-md" style={{ background: '#f0f0f0' }}>
           <div className="flex justify-between pb-4">
             <div className="text-gray-700 text-md pl-2">
-              {getTranslatedValue('change_district',languageSt)}
+              {t('change_district')}
             </div>
             <div>
               <button
@@ -109,4 +104,4 @@ const DistrictSelectModal = ({ state, onClose, onDistrictSelect, t }) => {
   );
 };
 
-export default withTranslation('common')(DistrictSelectModal);
+export default DistrictSelectModal;

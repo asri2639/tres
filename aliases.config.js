@@ -16,6 +16,7 @@ const aliases = {
   '@media': 'src/media',
   '@i18n': 'src/i18n',
   '@context': 'src/context',
+  '@hooks': 'src/hooks',
 };
 
 module.exports = {
