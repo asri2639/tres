@@ -217,9 +217,9 @@ export default function MobileHeader({ data, className }) {
           <NavLink
             href={{
               pathname: '/[language]/[state]',
-              query: { language: language, state: router.query.state },
+              query: { language: router.query.language, state: router.query.state },
             }}
-            as={`/${language}/${router.query.state}`}
+            as={`/${router.query.language}/${router.query.state}`}
             passHref
           >
             <div
