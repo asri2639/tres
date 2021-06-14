@@ -1,6 +1,5 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
-import { useRouter } from 'next/router';
 import AdContainer from '@components/article/AdContainer';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';

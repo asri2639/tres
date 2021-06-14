@@ -1,5 +1,5 @@
 import { APIRequest } from '@interfaces/API';
-import appConfig from '../../../public/assets/appConfig.json';
+import Constants from '@utils/Constants';
 
 const controller = '/catalogs';
 
@@ -27,7 +27,9 @@ export default function Catalog(inst) {
         config
       ); */
 
-      return Promise.resolve(appConfig);
+      return fetch(
+        `${Constants.baseURL.replace('/api', '')}/assets/appConfig.json`
+      ).then((resp) => resp.json());
     },
     getPageAds({ params, query, config } = new APIRequest()) {
       return inst.get(`/page_ads?${new URLSearchParams(query)}`, config);
