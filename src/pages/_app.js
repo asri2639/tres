@@ -84,7 +84,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
       {accessToken.web.length && accessToken.mobile.length ? (
         <AMPContext.Provider value={router.query.amp === '1' ? true : false}>
           <TransitionContext.Provider value={isTransitioning}>
-            {isTransitioning ? <GlobalSpinner /> : null}
+          {/*   {isTransitioning ? <GlobalSpinner /> : null} */}
             <Layout
               accessToken={accessToken}
               appConfig={appConfig}
