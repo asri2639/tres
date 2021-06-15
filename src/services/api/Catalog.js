@@ -27,14 +27,10 @@ export default function Catalog(inst) {
         config
       ); */
 
-      console.log(`${Constants.baseURL.replace('/api', '')}/assets/appConfig.json`);
-
-      return fetch(
-        `${Constants.baseURL.replace('/api', '')}/assets/appConfig.json`
-      )
+      return fetch(`/assets/appConfig.json`)
         .then((resp) => resp.json())
         .catch((e) => {
-         /*  return fetch(
+          /*  return fetch(
             `https://react.etvbharat.com/assets/appConfig.json`
           ).then((resp) => resp.json()); */
         });
