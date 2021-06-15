@@ -27,6 +27,8 @@ export default function Catalog(inst) {
         config
       ); */
 
+      console.log(`${Constants.baseURL.replace('/api', '')}/assets/appConfig.json`);
+
       return fetch(
         `${Constants.baseURL.replace('/api', '')}/assets/appConfig.json`
       )
