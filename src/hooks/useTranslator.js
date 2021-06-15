@@ -1,4 +1,4 @@
-import { languageMap } from '@utils/Constants';
+import { domainUrl, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -13,7 +13,12 @@ const useTranslator = (options = { init: false }) => {
   const fetchTranslationData = (language) => {
     if (!appLanguage || appLanguage.name !== language || !translations) {
       document.documentElement.lang = languageMap[language];
-      fetch('/assets/locales/' + document.documentElement.lang + '/common.json')
+      fetch(
+        domainUrl +
+          '/assets/locales/' +
+          document.documentElement.lang +
+          '/common.json'
+      )
         .then((res) => res.json())
         .then((data) => {
           setAppLanguage((prevState) => ({
@@ -30,7 +35,7 @@ const useTranslator = (options = { init: false }) => {
     const handleRouteComplete = (url, a) => {
       fetchTranslationData(url.split('/')[1]);
     };
-    
+
     if (options.init) {
       if (typeof window !== undefined) {
         fetchTranslationData(router.query.language);
