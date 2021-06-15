@@ -109,7 +109,6 @@ const SeeAll = ({ data, article, className }) => {
   );
 
   useEffect(() => {
-    console.log(1);
     if (districtFetchedData && district) {
       setDisplayData(districtFetchedData);
     } else if (stateFetchedData && state) {
@@ -184,7 +183,6 @@ const SeeAll = ({ data, article, className }) => {
       ? displayData.url.slice(1)
       : displayData.url;
 
-    console.log(url);
 
     if (url.endsWith('/district')) {
       url =

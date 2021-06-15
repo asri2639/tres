@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 let translations = null;
 const useTranslator = (options = { init: false }) => {
   const router = useRouter();
-  console.log(router);
   const [appLanguage, setAppLanguage] = useState({
     code: languageMap[router.query.language],
     name: router.query.language,
