@@ -1,6 +1,7 @@
 import { APIRequest } from '@interfaces/API';
-import Constants from '@utils/Constants';
+import getConfig from 'next/config';
 
+const { publicRuntimeConfig } = getConfig();
 const controller = '/catalogs';
 
 export default function Catalog(inst) {
@@ -26,8 +27,15 @@ export default function Catalog(inst) {
         )}`,
         config
       ); */
+      const env = publicRuntimeConfig.APP_ENV;
+      let url = 'http://localhost:3000';
+      if (env === 'production') {
+        url = 'https://react.etvbharat.com';
+      } else if (env === 'staging') {
+        url = 'https://react.stagin.etvbharat.com';
+      }
 
-      return fetch(`/assets/appConfig.json`)
+      return fetch(`${url}/assets/appConfig.json`)
         .then((resp) => resp.json())
         .catch((e) => {
           /*  return fetch(
