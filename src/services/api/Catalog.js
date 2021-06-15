@@ -32,7 +32,7 @@ export default function Catalog(inst) {
       if (env === 'production') {
         url = 'https://react.etvbharat.com';
       } else if (env === 'staging') {
-        url = 'https://react.stagin.etvbharat.com';
+        url = 'https://react.staging.etvbharat.com';
       }
 
       return fetch(`${url}/assets/appConfig.json`)
