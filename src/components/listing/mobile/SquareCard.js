@@ -25,7 +25,7 @@ const SquareCard = ({
 
   const thumbnail = article
     ? thumbnailExtractor(article.thumbnails, '3_2', 's2b', 'breaking_news')
-    : data.thumbnails
+    : data && data.thumbnails
     ? thumbnailExtractor(data.thumbnails, '3_2', 's2b', 'breaking_news')
     : null;
 
