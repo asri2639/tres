@@ -116,7 +116,7 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
           ? data.publish_date_string.slice(0, 10)
           : '';
 
-        console.log('has videos :', data.has_videos);
+        // console.log('has videos :', data.has_videos);
         return (
           <>
             <Head>
