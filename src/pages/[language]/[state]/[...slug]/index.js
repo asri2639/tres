@@ -585,9 +585,9 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         const articleResp = articleResponse.data.data.catalog_list_items[0];
         const article = articleResp.catalog_list_items[0];
 
-        console.log(
-          articleResp.catalog_list_items.length === 0 ? 'Invalid Response' : ''
-        );
+        /* console.log(
+         articleResp.catalog_list_items.length === 0 ? 'Invalid Response' : ''
+        ); */
         // Pass data to the page via props
         return {
           pageType: 'article',
