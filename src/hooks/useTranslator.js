@@ -2,29 +2,26 @@ import { languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+let translations = null;
 const useTranslator = (options = { init: false }) => {
   const router = useRouter();
   const [appLanguage, setAppLanguage] = useState({
     code: languageMap[router.query.language],
     name: router.query.language,
-    translations: null,
   });
 
   const fetchTranslationData = (language) => {
-    if (
-      !appLanguage ||
-      appLanguage.name !== language ||
-      !appLanguage.translations
-    ) {
+    if (!appLanguage || appLanguage.name !== language || !translations) {
       document.documentElement.lang = languageMap[language];
       fetch('/assets/locales/' + document.documentElement.lang + '/common.json')
         .then((res) => res.json())
         .then((data) => {
-          setAppLanguage(() => ({
+          setAppLanguage((prevState) => ({
+            ...prevState,
             code: languageMap[language],
             name: language,
-            translations: data,
           }));
+          translations = data;
         });
     }
   };
@@ -51,9 +48,7 @@ const useTranslator = (options = { init: false }) => {
   }, []);
 
   const t = (key) => {
-    return appLanguage && appLanguage.translations
-      ? appLanguage.translations[key]
-      : '';
+    return translations ? translations[key] : '';
   };
 
   return { t, appLanguage };

@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { RTLContext } from '@components/layout/Layout';
 import { MenuContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
@@ -25,8 +25,8 @@ const SeeAll = ({ data, article, className }) => {
   const api = API(APIEnum.CatalogList);
 
   const [district, setDistrict] = useState(null);
-
   const [state, setState] = useState(null);
+
   const [showDistrictModal, setShowDistrictModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const startLoading = () => setLoading(true);
@@ -35,6 +35,7 @@ const SeeAll = ({ data, article, className }) => {
   const [displayData, setDisplayData] = useState(data);
 
   const constructPayload = (type, code) => {
+    if (!type) return;
     if (type === 'district') {
       return {
         params: {
@@ -42,7 +43,7 @@ const SeeAll = ({ data, article, className }) => {
         },
         query: {
           response: 'r2',
-          item_languages: language,
+          item_languages: appLanguage.code,
           region: 'IN',
           dynamic_district: code,
         },
@@ -53,7 +54,7 @@ const SeeAll = ({ data, article, className }) => {
       params: {
         key:
           config.params_hash2.config_params.carousel_on_selection[
-            configStateCodeConverter(code)
+            configStateCodeConverter(router.query.state)
           ]['dynamic-list'],
       },
       query: {
@@ -62,8 +63,9 @@ const SeeAll = ({ data, article, className }) => {
         page_size: 8,
         version: 'v2',
         response: 'r2',
-        item_languages: language,
+        item_languages: appLanguage.code,
         portal_state: router.query.state,
+        dynamic_state: configStateCodeConverter(code),
       },
     };
   };
@@ -71,10 +73,17 @@ const SeeAll = ({ data, article, className }) => {
     startLoading();
     const [apiEnum, methodName, type, code] = args;
     const payload = constructPayload(type, code);
+    if (!payload) {
+      return;
+    }
 
     return api[apiEnum][methodName](payload)
       .then((res) => {
-        return res.data && res.data.data ? res.data.data : [];
+        const result = res.data && res.data.data ? res.data.data : [];
+        if (type) {
+          setDisplayData(result);
+        }
+        return result;
       })
       .finally(() => {
         stopLoading();
@@ -93,7 +102,6 @@ const SeeAll = ({ data, article, className }) => {
 
   const { data: stateFetchedData, error } = useSWR(
     state ? ['CatalogList', 'getListing', 'state', state] : null,
-
     apiCaller,
     {
       dedupingInterval: 5 * 60 * 1000,
@@ -101,6 +109,7 @@ const SeeAll = ({ data, article, className }) => {
   );
 
   useEffect(() => {
+    console.log(1);
     if (districtFetchedData && district) {
       setDisplayData(districtFetchedData);
     } else if (stateFetchedData && state) {
@@ -149,10 +158,19 @@ const SeeAll = ({ data, article, className }) => {
       case 'state':
         eventBus.dispatch(`${scope.type}-selector`, {
           show: true,
-          /*   callback: (path) => {
+          callback: (path) => {
             startLoading();
-            setState(path.split('/').slice(-1)[0]);
-          }, */
+            setState((prevState) => {
+              const newState = path.split('/').slice(-1)[0];
+              if (prevState !== newState) {
+                mutate(
+                  ['CatalogList', 'getListing', 'state', newState],
+                  apiCaller
+                );
+              }
+              return newState;
+            });
+          },
         });
         break;
       case 'district':
@@ -165,6 +183,8 @@ const SeeAll = ({ data, article, className }) => {
     let url = displayData.url.startsWith('/')
       ? displayData.url.slice(1)
       : displayData.url;
+
+    console.log(url);
 
     if (url.endsWith('/district')) {
       url =
@@ -187,7 +207,17 @@ const SeeAll = ({ data, article, className }) => {
           }}
           onDistrictSelect={(district) => {
             startLoading();
-            setDistrict(district);
+
+            setDistrict((prevDist) => {
+              const newDist = district;
+              if (prevDist && prevDist.code !== newDist.code) {
+                mutate(
+                  ['CatalogList', 'getListing', 'district', district.code],
+                  apiCaller
+                );
+              }
+              return newDist;
+            });
             setShowDistrictModal(false);
           }}
         />
@@ -203,13 +233,17 @@ const SeeAll = ({ data, article, className }) => {
           <div className="flex items-center ">
             <div className="pr-2 text-sm">{t(`${scope.text}`)}</div>
             <div
-              className="flex items-center text-sm border border-gray-600 px-2 py-0 cursor-pointer"
+              className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
               onClick={() => {
                 selectorModal(scope);
               }}
             >
               <div>
-                {district ? district.ml_title[0].text : scope.input_text}
+                {district
+                  ? district.ml_title[0].text
+                  : state
+                  ? state
+                  : scope.input_text}
               </div>
               <span className="pl-1 caret text-gray-700 "> &#9660;</span>
             </div>

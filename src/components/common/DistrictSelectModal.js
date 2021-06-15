@@ -27,7 +27,7 @@ const DistrictSelectModal = ({ state, onClose, onDistrictSelect }) => {
       },
       query: {
         response: 'r2',
-        item_languages: appLanguage.language,
+        item_languages: appLanguage.code,
         region: 'IN',
       },
     }).then((res) => {

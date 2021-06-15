@@ -1,10 +1,8 @@
 import Modal from '@components/modal/Modal';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const StateSelectModal = ({ data, callback, onClose }) => {
   const [isShowing, setIsShowing] = useState(true);
-  const router = useRouter();
 
   const close = () => {
     onClose();
@@ -33,12 +31,11 @@ const StateSelectModal = ({ data, callback, onClose }) => {
       }
     }
     if (path) {
-      console.log(callback)
       setTimeout(() => {
         if (callback) {
           callback(path);
         } else {
-          // router.push(path);
+          router.push(path);
         }
       }, 10);
     }

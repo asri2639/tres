@@ -1,9 +1,7 @@
 import ClientOnlyPortal from '@components/modal/ClientOnlyPortal';
 import useTranslator from '@hooks/useTranslator';
-import { useRouter } from 'next/router';
 
 const Modal = ({ open, title, onClose, children, isMobile, width, height }) => {
-  const router = useRouter();
   const { t } = useTranslator();
 
   return (

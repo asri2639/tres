@@ -123,7 +123,6 @@ const ListContainer = ({ children, data, payload }) => {
 
   useEffect(() => {
     if (adData) {
-      // fetchMoreListItems();
       let filtered = adData.catalog_list_items.slice(1).filter((v) => {
         return (
           v.layout_type.indexOf('ad_unit') >= 0 ||
@@ -134,7 +133,7 @@ const ListContainer = ({ children, data, payload }) => {
       setFilteredRHS(filtered);
     }
     if (isDesktop) {
-      // fetchMoreListItems();
+      fetchMoreListItems();
     }
   }, [adData]);
 
