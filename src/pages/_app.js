@@ -25,13 +25,10 @@ import useTranslator from '@hooks/useTranslator';
 export const AMPContext = React.createContext(false);
 export const TransitionContext = React.createContext(true);
 
-let currentLanguage = 'english';
 
 function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
-  const { publicRuntimeConfig } = getConfig();
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [appLanguage, setAppLanguage] = useState(null);
 
   useTranslator({ init: true });
 

@@ -19,7 +19,7 @@ const SquareCard = ({
   const router = useRouter();
 
   const linkInfo = linkInfoGenerator(
-    article ? article.web_url : data.url,
+    article ? article.web_url : data ? data.url : null,
     router.query.state
   );
 
