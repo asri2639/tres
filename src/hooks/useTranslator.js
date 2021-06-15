@@ -27,7 +27,7 @@ const useTranslator = (options = { init: false }) => {
             name: language,
           }));
           translations = data;
-        });
+        }).catch((e) => {});
     }
   };
 

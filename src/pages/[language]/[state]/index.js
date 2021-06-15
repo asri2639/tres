@@ -119,6 +119,14 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const language = languageMap[urlSplit[1]];
   const state = stateCodeConverter(urlSplit[2]);
 
+  if (!state) {
+    if (process.browser) {
+      router.push('/english/national');
+    } else {
+      res.writeHead(302, { Location: '/english/national' }).end();
+    }
+  }
+
   if (result) {
     const requestPayload = {
       params: {

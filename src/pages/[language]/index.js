@@ -1,5 +1,5 @@
 const language = () => {
-  return <></>;
+  return <div></div>;
 };
 
 language.getInitialProps = async ({ query, req, res, ...args }) => {

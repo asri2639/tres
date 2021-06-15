@@ -25,10 +25,10 @@ import useTranslator from '@hooks/useTranslator';
 export const AMPContext = React.createContext(false);
 export const TransitionContext = React.createContext(true);
 
-
 function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const language = router.query.language;
 
   useTranslator({ init: true });
 
@@ -98,13 +98,15 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 }
 
 App.getInitialProps = async ({ Component, ctx }) => {
-  if (ctx.asPath === '/') {
+  const language = ctx.asPath.split('/')[1];
+  if (ctx.asPath === '/' || !languageMap[language]) {
     if (process.browser) {
       Router.push('/english/national');
     } else {
-      ctx.res.writeHead(302, { Location: '/national' }).end();
+      ctx.res.writeHead(302, { Location: '/english/national' }).end();
     }
   }
+
   const api = API(APIEnum.Catalog);
 
   if (accessToken.web.length === 0) {
