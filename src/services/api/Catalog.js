@@ -29,7 +29,13 @@ export default function Catalog(inst) {
 
       return fetch(
         `${Constants.baseURL.replace('/api', '')}/assets/appConfig.json`
-      ).then((resp) => resp.json());
+      )
+        .then((resp) => resp.json())
+        .catch((e) => {
+         /*  return fetch(
+            `https://react.etvbharat.com/assets/appConfig.json`
+          ).then((resp) => resp.json()); */
+        });
     },
     getPageAds({ params, query, config } = new APIRequest()) {
       return inst.get(`/page_ads?${new URLSearchParams(query)}`, config);

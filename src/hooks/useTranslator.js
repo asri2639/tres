@@ -27,13 +27,14 @@ const useTranslator = (options = { init: false }) => {
   };
 
   useEffect(() => {
+    const handleRouteComplete = (url, a) => {
+      fetchTranslationData(url.split('/')[1]);
+    };
+    
     if (options.init) {
       if (typeof window !== undefined) {
         fetchTranslationData(router.query.language);
       }
-      const handleRouteComplete = (url, a) => {
-        fetchTranslationData(url.split('/')[1]);
-      };
 
       router.events.on('routeChangeComplete', handleRouteComplete);
 
