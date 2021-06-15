@@ -5,6 +5,12 @@ export const isEmpty = (obj) => {
 };
 
 export const linkInfoGenerator = (url, state) => {
+  if (!url) {
+    return {
+      href: '/',
+      as: `/`,
+    };
+  }
   if (url.startsWith('/')) {
     url = url.slice(1);
   }

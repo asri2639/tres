@@ -13,6 +13,13 @@ const baseURL =
     ? 'http://localhost:3000/api'
     : 'https://staging.api.etvbharat.com';
 
+export const domainUrl =
+  env === 'production' && !prd_test
+    ? 'https://react.etvbharat.com'
+    : env === 'development' || prd_test
+    ? 'http://localhost:3000'
+    : 'https://react.staging.etvbharat.com';
+
 const mAuthToken = 'kmAJAH4RTtqHjgoauC4o';
 const authToken = 'xBUKcKnXfngfrqGoF93y';
 
