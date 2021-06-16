@@ -1,22 +1,18 @@
 import Layout from '@components/layout/Layout';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '@styles/tailwind.css';
 import '@styles/globals.scss';
 import '@styles/_fonts.scss';
 import Router, { useRouter } from 'next/router';
-import { i18n, appWithTranslation } from '@i18n';
 import Constants, {
   accessToken,
   languageMap,
   applicationConfig,
 } from '@utils/Constants';
 import Head from 'next/head';
-import getConfig from 'next/config';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
-import { thumbnailExtractor } from '@utils/Helpers';
 import NProgress from 'nprogress';
-import GlobalSpinner from '@components/global_spinner/GlobalSpinner';
 import useTranslator from '@hooks/useTranslator';
 // export function reportWebVitals(metric: NextWebVitalsMetric) {
 //   console.log(metric)
@@ -79,14 +75,14 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 
         <link
           rel="preload"
-          href={`/assets/fonts/English/english.woff2`}
+          href="/assets/fonts/English/english.woff2`"
           as="font"
           type="font/woff2"
           crossorigin="anonymous"
         />
         <link
           rel="preload"
-          href={`/assets/fonts/English/english.woff`}
+          href="/assets/fonts/English/english.woff"
           as="font"
           type="font/woff2"
           crossorigin="anonymous"
