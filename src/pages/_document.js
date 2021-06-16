@@ -19,7 +19,7 @@ export default class ETVDocument extends Document {
           />
           {!isAMP ? (
             <>
-             {/*  <script
+              {/*  <script
                 dangerouslySetInnerHTML={{
                   __html: ` if (location.protocol === 'http:' && !location.hostname.contains('localhost')) {
                 window.location.href = window.location.href.replace('http:', 'https:');
@@ -64,6 +64,11 @@ export default class ETVDocument extends Document {
                 dangerouslySetInnerHTML={{
                   __html: ` window.googletag=window.googletag||{cmd:[]};`,
                 }}
+              ></script>
+              <script
+                async
+                type="text/javascript"
+                src="//cdn.ergadx.com/js/889/ads.js"
               ></script>
 
               <script

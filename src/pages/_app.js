@@ -73,10 +73,6 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="bingbots" content="all" />
         <meta name="robots" content="all" />
         <meta name="theme-color" content="#07254c" />
-        <script
-          type="text/javascript"
-          src="//cdn.ergadx.com/js/889/ads.js"
-        ></script>
       </Head>
 
       {accessToken.web.length && accessToken.mobile.length ? (
