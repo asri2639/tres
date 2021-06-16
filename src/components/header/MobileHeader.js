@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 import { useContext, useState } from 'react';
 
 import NavLink from '@components/common/NavLink';

@@ -14,10 +14,17 @@ export default function Catalog(inst) {
       );
     },
     getFooterDetails({ params, query, config } = new APIRequest()) {
-      return inst.get(
+      /*  return inst.get(
         `${controller}/message/items/footer-api?${new URLSearchParams(query)}`,
         config
-      );
+      ); */
+      return fetch(`${domainUrl}/assets/footer.json`)
+        .then((resp) => resp.json())
+        .catch((e) => {
+          /*  return fetch(
+          `https://react.etvbharat.com/assets/appConfig.json`
+        ).then((resp) => resp.json()); */
+        });
     },
     getAppConfig({ params, query, ...config }) {
       /* return inst.get(

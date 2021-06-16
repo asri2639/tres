@@ -6,7 +6,13 @@ import { thumbnailExtractor, linkInfoGenerator } from '@utils/Helpers';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 
-const LargeSquareCard = ({ data, article, className, noDescription }) => {
+const LargeSquareCard = ({
+  data,
+  article,
+  className,
+  noDescription,
+  styleObj,
+}) => {
   const isRTL = useContext(RTLContext);
   const router = useRouter();
 
@@ -39,7 +45,9 @@ const LargeSquareCard = ({ data, article, className, noDescription }) => {
           thumbnail={thumbnail}
           className={'rounded-t-md w-full'}
           type={''}
+          lazy={false}
           creditSize={'no-size'}
+          styleObj={styleObj}
         ></Thumbnail>
 
         {article.overlay_tag ? (
@@ -66,11 +74,11 @@ const LargeSquareCard = ({ data, article, className, noDescription }) => {
             display: '-webkit-box',
             WebkitLineClamp: '3',
           }}
-          className={`text-sm md:text-base relative -top-1 ${ isRTL ? 'rtl' : ''}`}
+          className={`text-sm md:text-base relative -top-1 ${
+            isRTL ? 'rtl' : ''
+          }`}
         >
-          {noDescription
-            ? ''
-            : article.display_title}
+          {noDescription ? '' : article.display_title}
         </div>
       </div>
     </NavLink>

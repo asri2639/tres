@@ -50,6 +50,7 @@ const RectangleCard = ({ data, article, className }) => {
 
         {article.overlay_tag ? (
           <img
+            loading="lazy"
             className="absolute bottom-0 right-0 h-full"
             src={`https://etvbharatimages.akamaized.net/images/live/${
               article.overlay_tag === 'live1' ? 'LIVE-1' : 'LIVE-2'

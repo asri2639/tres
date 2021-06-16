@@ -14,6 +14,7 @@ const SquareCard = ({
   style,
   imgHeight,
   noDescription,
+  styleObj
 }) => {
   const isRTL = useContext(RTLContext);
   const router = useRouter();
@@ -51,7 +52,9 @@ const SquareCard = ({
           thumbnail={thumbnail}
           className={`rounded-t-md w-full ${imgHeight ? 'h-full' : ''}`}
           type={''}
+          lazy={false}
           creditSize={'no-size'}
+          styleObj={styleObj}
         ></Thumbnail>
 
         {article.overlay_tag ? (
