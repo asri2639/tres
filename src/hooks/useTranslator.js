@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 let translations = null;
+let oLanguage = null;
 const useTranslator = (options = { init: false }) => {
   const router = useRouter();
   const [appLanguage, setAppLanguage] = useState({
@@ -11,7 +12,7 @@ const useTranslator = (options = { init: false }) => {
   });
 
   const fetchTranslationData = (language) => {
-    if (!appLanguage || appLanguage.name !== language || !translations) {
+    if (!oLanguage || oLanguage !== language || !translations) {
       document.documentElement.lang = languageMap[language];
       fetch(
         domainUrl +
@@ -27,7 +28,9 @@ const useTranslator = (options = { init: false }) => {
             name: language,
           }));
           translations = data;
-        }).catch((e) => {});
+          oLanguage = language;
+        })
+        .catch((e) => {});
     }
   };
 
