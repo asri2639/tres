@@ -12,6 +12,7 @@ const MobileMainArticles = ({ list, className }) => {
         className="w-full bg-white mb-2"
         article={list[0]}
         styleObj={{ height: '30vh' }}
+        main={true}
       />
       <div
         className={`w-full flex space-x-2 ${isRTL ? 'flex-row-reverse' : ''}`}
@@ -20,12 +21,14 @@ const MobileMainArticles = ({ list, className }) => {
           className="w-1/2 bg-white"
           article={list[1]}
           styleObj={{ height: '17vh' }}
+          main={true}
         />
 
         <SquareCard
           className="w-1/2 bg-white"
           article={list[2]}
           styleObj={{ height: '17vh' }}
+          main={true}
         />
       </div>
     </>

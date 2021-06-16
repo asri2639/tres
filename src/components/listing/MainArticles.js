@@ -21,16 +21,21 @@ const MainArticles = ({ list, className }) => {
           className="w-1/3 bg-white"
           article={list[0]}
           lineClamp="2"
+          main={true}
         />
         <SquareCard
           className="w-1/3 bg-white"
           article={list[1]}
           lineClamp="2"
+          main={true}
+
         />
         <SquareCard
           className="w-1/3 bg-white"
           article={list[2]}
           lineClamp="2"
+          main={true}
+
         />
       </div>
     </>

@@ -78,14 +78,16 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
           href="/assets/fonts/English/english.woff2`"
           as="font"
           type="font/woff2"
-          crossorigin="anonymous"
+          crossorigin
+          crossOrigin
         />
         <link
           rel="preload"
           href="/assets/fonts/English/english.woff"
           as="font"
           type="font/woff2"
-          crossorigin="anonymous"
+          crossorigin
+          crossOrigin
         />
         {langName !== 'english' ? (
           <>
@@ -94,14 +96,16 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
               href={`/assets/fonts/${langCap}/${langName}.woff2`}
               as="font"
               type="font/woff2"
-              crossorigin="anonymous"
+              crossorigin
+              crossOrigin
             />
             <link
               rel="preload"
               href={`/assets/fonts/${langCap}/${langName}.woff`}
               as="font"
               type="font/woff2"
-              crossorigin="anonymous"
+              crossorigin
+              crossOrigin
             />
           </>
         ) : null}

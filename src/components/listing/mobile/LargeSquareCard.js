@@ -12,6 +12,7 @@ const LargeSquareCard = ({
   className,
   noDescription,
   styleObj,
+  main,
 }) => {
   const isRTL = useContext(RTLContext);
   const router = useRouter();
@@ -45,9 +46,9 @@ const LargeSquareCard = ({
           thumbnail={thumbnail}
           className={'rounded-t-md w-full'}
           type={''}
-          lazy={false}
           creditSize={'no-size'}
           styleObj={styleObj}
+          lazy={!main}
         ></Thumbnail>
 
         {article.overlay_tag ? (

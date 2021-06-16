@@ -1,10 +1,14 @@
 import { useState } from 'react';
 
-const Thumbnail = (
-  { thumbnail, className, type, creditSize = '', children, lazy, styleObj } = {
-    lazy: true,
-  }
-) => {
+const Thumbnail = ({
+  thumbnail,
+  className,
+  type,
+  creditSize = '',
+  children,
+  lazy,
+  styleObj,
+}) => {
   const [state, setState] = useState({
     src: thumbnail.url,
     errored: false,
@@ -19,7 +23,7 @@ const Thumbnail = (
   };
   return (type === 'breaking_news' || type === 'news') && !state.src ? (
     <img
-      loading={lazy}
+      loading={lazy === undefined || lazy === true ? 'lazy' : ''}
       className="breaking_news"
       alt="Breaking News"
       src="/assets/images/breakingplate.jpg"
@@ -27,7 +31,7 @@ const Thumbnail = (
   ) : (
     <>
       <img
-        loading={lazy ? 'lazy' : ''}
+        loading={lazy === undefined || lazy === true ? 'lazy' : ''}
         src={state.src}
         onError={onError}
         className={`${className} ${type}`}

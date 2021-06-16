@@ -355,6 +355,7 @@ const Gallery = ({
                       <div className="relative">
                         {isAMP ? (
                           <img
+                            loading={ind > 2 ? 'lazy' : ''}
                             className="rounded-lg"
                             alt={image.description || image.title}
                             src={image.thumbnails.l_large.url}

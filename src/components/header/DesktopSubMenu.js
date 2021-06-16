@@ -84,6 +84,7 @@ export default function DesktopSubMenu({ category }) {
                     />
                   ) : (
                     <img
+                      loading="lazy"
                       className="w-full rounded-md"
                       src="/assets/images/placeholder.png"
                       alt="placeholder image"
@@ -104,6 +105,7 @@ export default function DesktopSubMenu({ category }) {
                 style={{ flexBasis: '27%' }}
               >
                 <img
+                  loading="lazy"
                   className="w-full rounded-md"
                   src="/assets/images/placeholder.png"
                   alt="placeholder image"
