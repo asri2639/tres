@@ -64,6 +64,9 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
     };
   }, []);
 
+  const langName = language === 'oriya' ? 'oriya2' : language;
+  const langCap = langName.charAt(0).toUpperCase() + langName.slice(1);
+
   return (
     <>
       <Head>
@@ -73,6 +76,39 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="bingbots" content="all" />
         <meta name="robots" content="all" />
         <meta name="theme-color" content="#07254c" />
+
+        <link
+          rel="preload"
+          href={`/assets/fonts/English/english.woff2`}
+          as="font"
+          type="font/woff2"
+          crossorigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href={`/assets/fonts/English/english.woff`}
+          as="font"
+          type="font/woff2"
+          crossorigin="anonymous"
+        />
+        {langName !== 'english' ? (
+          <>
+            <link
+              rel="preload"
+              href={`/assets/fonts/${langCap}/${langName}.woff2`}
+              as="font"
+              type="font/woff2"
+              crossorigin="anonymous"
+            />
+            <link
+              rel="preload"
+              href={`/assets/fonts/${langCap}/${langName}.woff`}
+              as="font"
+              type="font/woff2"
+              crossorigin="anonymous"
+            />
+          </>
+        ) : null}
       </Head>
 
       {accessToken.web.length && accessToken.mobile.length ? (
