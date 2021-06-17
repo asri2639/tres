@@ -21,7 +21,20 @@ module.exports = {
   publicRuntimeConfig: {
     localeSubpaths,
     APP_ENV: process.env.NEXT_PUBLIC_APP_ENV, // Pass through env variables
-    TEST: process.env.NEXT_TEST
+    TEST: process.env.NEXT_TEST,
+  },
+
+  rewrites: async () => {
+    return [
+      {
+        source: '/robots.txt',
+        destination: '/api/robots',
+      },
+      {
+        source: '/ads.txt',
+        destination: '/api/ads',
+      },
+    ];
   },
 
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
@@ -33,6 +46,6 @@ module.exports = {
 
   generateBuildId: async () => {
     const date = new Date();
-    return date.toISOString().slice(0,16);
+    return date.toISOString().slice(0, 16);
   },
 };

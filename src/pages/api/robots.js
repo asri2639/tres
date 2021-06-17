@@ -1,4 +1,3 @@
-import React from 'react';
 import getConfig from 'next/config';
 
 const getRobots = (config) =>
@@ -28,9 +27,8 @@ Sitemap: https://www.etvbharat.com/sitemap.xml
 Sitemap: https://www.etvbharat.com/latest_news_sitemap.xml
 `;
 
-class Sitemap extends React.Component {
+/* class Sitemap extends React.Component {
   static async getInitialProps({ res }) {
-    const { publicRuntimeConfig } = getConfig();
 
     res.setHeader('Content-Type', 'text/plain');
     res.write(getRobots(publicRuntimeConfig));
@@ -38,4 +36,14 @@ class Sitemap extends React.Component {
   }
 }
 
-export default Sitemap;
+export default Sitemap; */
+
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
+export default (req, res) => {
+  const { publicRuntimeConfig } = getConfig();
+
+  res.setHeader('Content-Type', 'text/plain');
+  res.write(getRobots(publicRuntimeConfig));
+  res.end();
+};
