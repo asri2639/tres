@@ -42,6 +42,47 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
   // const ampExists = false; // prod enabling amp
 
   const getComponent = () => {
+    let component = null;
+    let headerObj = {};
+    let stateName = null;
+
+    if (pageType === 'article' || pageType === 'video') {
+      if (
+        data.state &&
+        data.state.length > 0 &&
+        data.state.indexOf('na') !== -1
+      ) {
+        if (data.item_languages.indexOf('hi') !== -1) {
+          stateName = 'delhi';
+        } else if (data.item_languages.indexOf('te') !== -1) {
+          stateName = 'telangana';
+        } else if (data.item_languages.indexOf('ur') !== -1) {
+          stateName = 'national';
+        }
+      }
+
+      if (stateName) {
+        const pathname = new URL(`http:localhost:3000${router.asPath}`)
+          .pathname;
+
+        const splitPath = pathname.split('/');
+
+        canonicalUrl = `https://react.etvbharat.com${[
+          ...splitPath.slice(0, 2),
+          stateName,
+          ...splitPath.slice(3),
+        ].join('/')}`;
+      } else {
+        canonicalUrl = `https://react.etvbharat.com${
+          new URL(`http:localhost:3000${router.asPath}`).pathname
+        }`;
+      }
+
+      ampUrl = `https://react.etvbharat.com/amp${
+        new URL(`http:localhost:3000${router.asPath}`).pathname
+      }`;
+    }
+
     switch (pageType) {
       case 'article':
         const tags = new Set();
@@ -75,40 +116,6 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
         datum.contentType = data.content_type;
         datum.contentId = data.content_id;
 
-        canonicalUrl = `https://react.etvbharat.com${
-          new URL(`http:localhost:3000${router.asPath}`).pathname
-        }`;
-
-        if (
-          datum.data.state &&
-          datum.data.state.length > 0 &&
-          datum.data.state.indexOf('na') !== -1
-        ) {
-          const pathname = new URL(`http:localhost:3000${router.asPath}`)
-            .pathname;
-
-          const splitPath = pathname.split('/');
-          let stateName = null;
-          if (datum.data.item_languages.indexOf('hi') !== -1) {
-            stateName = 'delhi';
-          } else if (datum.data.item_languages.indexOf('te') !== -1) {
-            stateName = 'telangana';
-          } else if (datum.data.item_languages.indexOf('ur') !== -1) {
-            stateName = 'national';
-          }
-          if (stateName) {
-            canonicalUrl = `https://react.etvbharat.com${[
-              ...splitPath.slice(0, 2),
-              stateName,
-              ...splitPath.slice(3),
-            ].join('/')}`;
-          }
-        }
-
-        ampUrl = `https://react.etvbharat.com/amp${
-          new URL(`http:localhost:3000${router.asPath}`).pathname
-        }`;
-
         let k = data.update_date_string
           ? data.update_date_string.slice(0, 10)
           : '';
@@ -116,125 +123,39 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
           ? data.publish_date_string.slice(0, 10)
           : '';
 
-        // console.log('has videos :', data.has_videos);
-        return (
-          <>
-            <Head>
-              <title>{data.title}</title>
-              <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists && data.is_amp ? (
-                <link rel="amphtml" href={ampUrl}></link>
-              ) : null}
-              <meta
-                name="fbPages"
-                property="fb:pages"
-                content={fbContentId}
-              ></meta>
-              <link
-                rel="preload"
-                as="image"
-                href={(() => {
-                  const thumbnail = thumbnailExtractor(
-                    data.thumbnails,
-                    '3_2',
-                    'b2s',
-                    data.media_type
-                  );
-                  return thumbnail.url;
-                })()}
-              />
-            </Head>
-            <NextSeo
-              title={data.title}
-              description={data.short_description || data.description}
-              additionalMetaTags={[
-                {
-                  name: 'keywords',
-                  content: data.keywords ? data.keywords.join(', ') : '',
-                },
-              ]}
-              openGraph={{
-                site_name: 'ETV Bharat News',
-                url: `https://www.etvbharat.com/${data.web_url}`,
-                type: data.content_type,
-                title: data.title,
-                description: data.short_description || data.description,
-                images: (() => {
-                  const thumbnail = thumbnailExtractor(
-                    data.thumbnails,
-                    '3_2',
-                    'b2s',
-                    data.media_type
-                  );
-                  return [
-                    {
-                      url: thumbnail.url,
-                      width: 768,
-                      height: 512,
-                      alt: thumbnail.alt_tags,
-                    },
-                  ];
-                })(),
-              }}
-              twitter={{
-                handle: '@etvbharat',
-                site: '@etvbharat',
-                cardType: 'summary_large_image',
-              }}
-            />
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: `
-            {
-              "@context": "https://schema.org",
-              "@type": "NewsArticle",
-              "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": "https://react.etvbharat.com/${data.web_url}"
-              },
-              "headline": "${data.title.replace(/\"/gi, '\\"')}",
-              "description": "${(
-                data.description || data.short_description
-              ).replace(/\"/gi, '\\"')}",
-              "image": {
-                "@type": "ImageObject",
-                "url": "${
-                  data.thumbnails && data.thumbnails.medium_3_2
-                    ? data.thumbnails.medium_3_2.url
-                    : ''
-                }",
-                "width": 708,
-                "height": 474
-              },
-              "author": {
-                "@type": "Organization",
-                "name": "ETV Bharat"
-              },
-              "publisher": {
-                "@type": "Organization",
-                "name": "ETV Bharat",
-                "logo": {
-                  "@type": "ImageObject",
-                  "url": "https://www.etvbharat.com/src/assets/images/etvlogo/${(
-                    data.web_url.split('/')[0] + ''
-                  ).toLowerCase()}.png",
-                  "width": 82,
-                  "height": 60
-                }
-              },
-              "datePublished": "${T}",
-              "dateModified": "${k || T}"
-            }`,
-              }}
-            ></script>
-            {
-              <ArticleList
-                articleData={{ articles: [datum], contentId: datum.contentId }}
-              />
-            }
-          </>
+        headerObj = {
+          title: data.title,
+          canonicalUrl: canonicalUrl,
+          ampUrl: ampUrl,
+          fbContentId: fbContentId,
+          thumbnail: thumbnailExtractor(
+            data.thumbnails,
+            '3_2',
+            'b2s',
+            data.media_type
+          ),
+
+          description: data.short_description || data.description,
+          keywords: data.keywords ? data.keywords.join(', ') : '',
+          url: data.web_url,
+          contentType: data.content_type,
+          ldjson: true,
+          headline: data.title.replace(/\"/gi, '\\"'),
+          thumbnailM:
+            data.thumbnails && data.thumbnails.medium_3_2
+              ? data.thumbnails.medium_3_2.url
+              : '',
+          updatedAt: k,
+          publishedAt: T,
+        };
+
+        component = (
+          <ArticleList
+            articleData={{ articles: [datum], contentId: datum.contentId }}
+          />
         );
+        break;
+
       case 'video':
         let videoDatum = {};
         videoDatum.data = data;
@@ -257,206 +178,183 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
             'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
           );
         }
-        canonicalUrl = `https://react.etvbharat.com${
-          new URL(`http:localhost:3000${router.asPath}`).pathname
-        }`;
 
-        if (
-          videoDatum.data.state &&
-          videoDatum.data.state.length > 0 &&
-          videoDatum.data.state.indexOf('na') !== -1
-        ) {
-          const pathname = new URL(`http:localhost:3000${router.asPath}`)
-            .pathname;
+        headerObj = {
+          title: data.title,
+          canonicalUrl: canonicalUrl,
+          ampUrl: ampUrl,
+          fbContentId: fbContentId,
+          thumbnail: thumbnailExtractor(
+            data.thumbnails,
+            '3_2',
+            'b2s',
+            data.media_type
+          ),
 
-          const splitPath = pathname.split('/');
-          let stateName = null;
-          if (videoDatum.data.item_languages.indexOf('hi') !== -1) {
-            stateName = 'delhi';
-          } else if (videoDatum.data.item_languages.indexOf('te') !== -1) {
-            stateName = 'telangana';
-          } else if (videoDatum.data.item_languages.indexOf('ur') !== -1) {
-            stateName = 'national';
-          }
-          if (stateName) {
-            canonicalUrl = `https://react.etvbharat.com${[
-              ...splitPath.slice(0, 2),
-              stateName,
-              ...splitPath.slice(3),
-            ].join('/')}`;
-          }
-        }
-        ampUrl = `https://react.etvbharat.com/amp${
-          new URL(`http:localhost:3000${router.asPath}`).pathname
-        }`;
+          description: data.short_description || data.description,
+          keywords: data.keywords ? data.keywords.join(', ') : '',
+          url: data.web_url,
+          contentType: data.content_type,
+          ldjson: false,
+        };
 
-        return (
-          <>
-            <Head>
-              <title>{data.title}</title>
-              <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists && !isLive && data.is_amp ? (
-                <link rel="amphtml" href={ampUrl}></link>
-              ) : null}
-              <meta
-                name="fbPages"
-                property="fb:pages"
-                content={fbContentId}
-              ></meta>
-            </Head>
-            <NextSeo
-              title={data.title}
-              description={data.short_description || data.description}
-              additionalMetaTags={[
-                {
-                  name: 'keywords',
-                  content: data.keywords ? data.keywords.join(', ') : '',
-                },
-              ]}
-              openGraph={{
-                site_name: 'ETV Bharat News',
-                url: `https://www.etvbharat.com/${data.web_url}`,
-                type: data.content_type,
-                title: data.title,
-                description: data.short_description || data.description,
-                images: (() => {
-                  const thumbnail = thumbnailExtractor(
-                    data.thumbnails,
-                    '3_2',
-                    'b2s',
-                    data.media_type
-                  );
-                  return [
-                    {
-                      url: thumbnail.url,
-                      width: 768,
-                      height: 512,
-                      alt: thumbnail.alt_tags,
-                    },
-                  ];
-                })(),
-              }}
-              twitter={{
-                handle: '@etvbharat',
-                site: '@etvbharat',
-                cardType: 'summary_large_image',
-              }}
-            />
-            <VideoList
-              videoData={{
-                videos: [videoDatum],
-                contentId: videoDatum.contentId,
-              }}
-              appConfig={appConfig}
-            />
-          </>
+        component = (
+          <VideoList
+            videoData={{
+              videos: [videoDatum],
+              contentId: videoDatum.contentId,
+            }}
+            appConfig={appConfig}
+          />
         );
+        break;
       case 'gallery':
         const main = data.gallery[0];
         const keywords = data.gallery.map((v) => {
           return v.description;
         });
-        canonicalUrl = `https://react.etvbharat.com${
-          new URL(`http:localhost:3000${router.asPath}`).pathname
-        }`;
 
-        if (
-          data.state &&
-          data.state.length > 0 &&
-          data.state.indexOf('na') !== -1
-        ) {
-          const pathname = new URL(`http:localhost:3000${router.asPath}`)
-            .pathname;
+        headerObj = {
+          title: main.display_title,
+          canonicalUrl: canonicalUrl,
+          ampUrl: ampUrl,
+          fbContentId: fbContentId,
+          thumbnail: thumbnailExtractor(
+            data.thumbnails,
+            '3_2',
+            'b2s',
+            data.media_type
+          ),
 
-          const splitPath = pathname.split('/');
-          let stateName = null;
-          if (data.item_languages.indexOf('hi') !== -1) {
-            stateName = 'delhi';
-          } else if (data.item_languages.indexOf('te') !== -1) {
-            stateName = 'telangana';
-          } else if (data.item_languages.indexOf('ur') !== -1) {
-            stateName = 'national';
-          }
-          if (stateName) {
-            canonicalUrl = `https://react.etvbharat.com${[
-              ...splitPath.slice(0, 2),
-              stateName,
-              ...splitPath.slice(3),
-            ].join('/')}`;
-          }
-        }
-        ampUrl = `https://react.etvbharat.com/amp${
-          new URL(`http:localhost:3000${router.asPath}`).pathname
-        }`;
+          description:
+            main.short_description || main.description || main.display_title,
+          keywords: keywords ? keywords.join(', ') : '',
+          url: `https://www.etvbharat.com/${router.asPath.slice(1)}`,
+          contentType: main.content_type,
+          images: [
+            {
+              url: main.thumbnails.banner
+                ? main.thumbnails.banner.url
+                : main.thumbnails.web_3_2.url,
+              width: 768,
+              height: 512,
+              alt: main.thumbnails.banner
+                ? main.thumbnails.banner.alt_tags
+                : main.thumbnails.web_3_2.alt_tags,
+            },
+          ],
+          ldjson: false,
+        };
 
-        return (
-          <>
-            <Head>
-              <title>{main.display_title}</title>
-              <link rel="canonical" href={canonicalUrl}></link>
-              {ampExists && data.is_amp ? (
-                <link rel="amphtml" href={ampUrl}></link>
-              ) : null}
-              <meta
-                name="fbPages"
-                property="fb:pages"
-                content={fbContentId}
-              ></meta>
-            </Head>
-            <NextSeo
-              title={main.display_title}
-              description={
-                main.short_description || main.description || main.display_title
-              }
-              additionalMetaTags={[
+        component = (
+          <GalleryList
+            galleryData={{
+              galleries: [
                 {
-                  name: 'keywords',
-                  content: keywords ? keywords.join(', ') : '',
+                  content_id: data.gallery[0].parent_id,
+                  images: data.gallery,
+                  count: data.items_count,
                 },
-              ]}
-              openGraph={{
-                site_name: 'ETV Bharat News',
-                url: `https://www.etvbharat.com/${router.asPath.slice(1)}`,
-                type: main.content_type,
-                title: main.title,
-                description: main.short_description || main.description,
-                images: [
-                  {
-                    url: main.thumbnails.banner
-                      ? main.thumbnails.banner.url
-                      : main.thumbnails.web_3_2.url,
-                    width: 768,
-                    height: 512,
-                    alt: main.thumbnails.banner
-                      ? main.thumbnails.banner.alt_tags
-                      : main.thumbnails.web_3_2.alt_tags,
-                  },
-                ],
-              }}
-              twitter={{
-                handle: '@etvbharat',
-                site: '@etvbharat',
-                cardType: 'summary_large_image',
-              }}
-            />
-            <GalleryList
-              galleryData={{
-                galleries: [
-                  {
-                    content_id: data.gallery[0].parent_id,
-                    images: data.gallery,
-                    count: data.items_count,
-                  },
-                ],
-                contentId: data.gallery[0].parent_id,
-              }}
-            />
-          </>
+              ],
+              contentId: data.gallery[0].parent_id,
+            }}
+          />
         );
-
+        break;
       case 'listing':
         return <ListContainer data={data} payload={payload}></ListContainer>;
     }
+
+    return (
+      <>
+        <Head>
+          <title>{headerObj.title}</title>
+          <link rel="canonical" href={headerObj.canonicalUrl}></link>
+          {ampExists && data.is_amp ? (
+            <link rel="amphtml" href={headerObj.ampUrl}></link>
+          ) : null}
+          <meta
+            name="fbPages"
+            property="fb:pages"
+            content={headerObj.fbContentId}
+          ></meta>
+          <link rel="preload" as="image" href={headerObj.thumbnail.url} />
+        </Head>
+        <NextSeo
+          title={headerObj.title}
+          description={headerObj.description}
+          additionalMetaTags={[
+            {
+              name: 'keywords',
+              content: headerObj.keywords,
+            },
+          ]}
+          openGraph={{
+            site_name: 'ETV Bharat News',
+            url: `https://www.etvbharat.com/${headerObj.url}`,
+            type: headerObj.contentType,
+            title: headerObj.title,
+            description: headerObj.description,
+            images: headerObj.images || [
+              {
+                url: headerObj.thumbnail.url,
+                width: 768,
+                height: 512,
+                alt: headerObj.thumbnail.alt_tags,
+              },
+            ],
+          }}
+          twitter={{
+            handle: '@etvbharat',
+            site: '@etvbharat',
+            cardType: 'summary_large_image',
+          }}
+        />
+        {headerObj.ldjson ? (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: `
+      {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://react.etvbharat.com/${headerObj.url}"
+        },
+        "headline": "${headerObj.headline}",
+        "description": "${headerObj.description.replace(/\"/gi, '\\"')}",
+        "image": {
+          "@type": "ImageObject",
+          "url": "${headerObj.thumbnailM}",
+          "width": 708,
+          "height": 474
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "ETV Bharat"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ETV Bharat",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.etvbharat.com/src/assets/images/etvlogo/${(
+              headerObj.url.split('/')[0] + ''
+            ).toLowerCase()}.png",
+            "width": 82,
+            "height": 60
+          }
+        },
+        "datePublished": "${headerObj.publishedAt}",
+        "dateModified": "${headerObj.updatedAt || headerObj.publishedAt}"
+      }`,
+            }}
+          ></script>
+        ) : null}
+        {component}
+      </>
+    );
   };
   return <>{data ? getComponent() : <div>No article data</div>}</>;
 };

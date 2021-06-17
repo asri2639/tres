@@ -74,38 +74,6 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const api = API(APIEnum.Listing, APIEnum.CatalogList);
   const url = args.asPath;
 
-  /*   if (process.browser) {
-    const redirectUrl = `${
-      publicRuntimeConfig.APP_ENV === 'staging'
-        ? 'https://staging.etvbharat.com'
-        : 'https://www.etvbharat.com'
-    }${url}/`;
-
-    if (res && !process.browser) {
-      res.writeHead(302, {
-        Location: redirectUrl,
-      });
-      res.end();
-    } else {
-      console.log(redirectUrl)
-      location.href = redirectUrl;
-    }
-  } */
-
-  /*  if (url !== '/english/national') {
-    if (res) {
-      res.writeHead(302, {
-        // or 301
-        Location: `${
-          publicRuntimeConfig.APP_ENV === 'staging'
-            ? 'https://staging.etvbharat.com'
-            : 'https://www.etvbharat.com'
-        }${url}`,
-      });
-      res.end();
-    }
-  } */
-
   const response = await api.Listing.getListingApiKey({
     query: {
       app: 'msite',
