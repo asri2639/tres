@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NextSeo, ArticleJsonLd } from 'next-seo';
 
 import API from '@api/API';
@@ -18,10 +18,14 @@ import ArticleList from '@components/article/ArticleList';
 import VideoList from '@components/video/VideoList';
 import GalleryList from '@components/gallery/GalleryList';
 import ListContainer from '@components/listing/ListContainer';
-import { trackPromise } from 'react-promise-tracker';
+import LazyLoadImages from '@utils/LazyLoadImages';
 
 const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
   const router = useRouter();
+
+  useEffect(() => {
+    LazyLoadImages();
+  });
   let canonicalUrl = '',
     ampUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;

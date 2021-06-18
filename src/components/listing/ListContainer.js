@@ -119,24 +119,6 @@ const ListContainer = ({ children, data, payload }) => {
         }, 1000);
       });
     }
-    if (typeof window !== 'undefined') {
-      if (!!window.IntersectionObserver) {
-        let observer = new IntersectionObserver(
-          (entries, observer) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.src = entry.target.dataset.src;
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          { rootMargin: '0px 0px 50px 0px' }
-        );
-        document.querySelectorAll('img[data-src]').forEach((img) => {
-          observer.observe(img);
-        });
-      }
-    }
   }, [data]);
 
   useEffect(() => {
