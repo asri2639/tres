@@ -41,7 +41,7 @@ const Thumbnail = ({
         src={
           lazy === undefined || lazy === true
             ? '/assets/images/placeholder.png'
-            : src
+            : state.src
         }
         onError={onError}
         className={`${className} ${type}`}
