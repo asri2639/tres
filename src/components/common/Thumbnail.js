@@ -29,13 +29,20 @@ const Thumbnail = ({
       alt="Breaking News"
       src="/assets/images/placeholder.png"
       data-src="/assets/images/breakingplate.jpg"
+      src={`/assets/images/${
+        lazy === undefined || lazy === true ? 'placeholder' : 'breakingplate'
+      }.png`}
     />
   ) : (
     <>
       <img
         loading={lazy === undefined || lazy === true ? 'lazy' : ''}
         data-src={state.src}
-        src="/assets/images/placeholder.png"
+        src={
+          lazy === undefined || lazy === true
+            ? '/assets/images/placeholder.png'
+            : src
+        }
         onError={onError}
         className={`${className} ${type}`}
         alt={thumbnail.alt_tags}
