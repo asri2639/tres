@@ -19,13 +19,15 @@ export default class ETVDocument extends Document {
           />
           {!isAMP ? (
             <>
-              {/*  <script
-                dangerouslySetInnerHTML={{
-                  __html: ` if (location.protocol === 'http:' && !location.hostname.contains('localhost')) {
+              {
+                <script
+                  dangerouslySetInnerHTML={{
+                    __html: ` if (location.protocol === 'http:' && !location.hostname === 'localhost') {
                 window.location.href = window.location.href.replace('http:', 'https:');
               }`,
-                }}
-              ></script> */}
+                  }}
+                ></script>
+              }
               <script
                 dangerouslySetInnerHTML={{
                   __html: `window.dataLayer = window.dataLayer || [];

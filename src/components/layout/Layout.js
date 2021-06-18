@@ -176,7 +176,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
           item_languages: language,
           portal_state: stateCodeConverter(state),
           only_items: 'catalog_list',
-          env: 'staging',
+          // env: 'staging',
         },
         isSSR: !isDesktop,
       });
