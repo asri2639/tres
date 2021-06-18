@@ -46,6 +46,10 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
     let headerObj = {};
     let stateName = null;
 
+    if (pageType === 'error') {
+      return <div>URL Not Found</div>;
+    }
+
     if (pageType === 'article' || pageType === 'video') {
       if (
         data.state &&
@@ -480,19 +484,26 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           config: { isSSR: typeof window === 'undefined' },
         });
 
-        const articleResp = articleResponse.data.data.catalog_list_items[0];
-        const article = articleResp.catalog_list_items[0];
+        let article = null;
+        let error = '';
+        try {
+          const articleResp = articleResponse.data.data.catalog_list_items[0];
+          article = articleResp.catalog_list_items[0];
+        } catch (e) {
+          error = 'Invalid URL';
+        }
 
         /* console.log(
          articleResp.catalog_list_items.length === 0 ? 'Invalid Response' : ''
         ); */
         // Pass data to the page via props
         return {
-          pageType: 'article',
+          pageType: error ? 'error' : 'article',
           data: article,
           appConfig: applicationConfig.value,
           isAmp: isAmp,
           id: id,
+          error: error,
         };
     }
   } else {
