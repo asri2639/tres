@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const Thumbnail = ({
   thumbnail,
@@ -13,6 +13,28 @@ const Thumbnail = ({
     src: thumbnail.url,
     errored: false,
   });
+  const imgEl = useRef(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (!!window.IntersectionObserver) {
+        let observer = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.src = entry.target.dataset.src;
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px 10px 0px' }
+        );
+        imgEl && observer.observe(imgEl.current);
+      } else {
+        imgEl && (imgEl.current.src = imgEl.current.dataset.src);
+      }
+    }
+  });
   const onError = () => {
     if (!state.errored) {
       setState({
@@ -24,6 +46,7 @@ const Thumbnail = ({
 
   return (type === 'breaking_news' || type === 'news') && !state.src ? (
     <img
+      ref={imgEl}
       loading={lazy === undefined || lazy === true ? 'lazy' : ''}
       className="breaking_news"
       alt="Breaking News"
@@ -36,6 +59,7 @@ const Thumbnail = ({
   ) : (
     <>
       <img
+        ref={imgEl}
         loading={lazy === undefined || lazy === true ? 'lazy' : ''}
         data-src={state.src}
         src={

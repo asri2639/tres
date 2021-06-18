@@ -9,13 +9,10 @@ import Head from 'next/head';
 import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
 import { NextSeo } from 'next-seo';
 import useTranslator from '@hooks/useTranslator';
-import LazyLoadImages from '@utils/LazyLoadImages';
 
 const state = ({ data, payload, pageType }) => {
   const router = useRouter();
-  useEffect(() => {
-    LazyLoadImages();
-  });
+
   const { appLanguage } = useTranslator();
 
   const convertedState = configStateCodeConverter(router.query.state);
