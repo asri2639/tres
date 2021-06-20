@@ -89,11 +89,11 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   const state = stateCodeConverter(urlSplit[2]);
 
   if (!state) {
-    if (process.browser) {
+   /*  if (process.browser) {
       router.push('/english/national');
     } else {
       res.writeHead(302, { Location: '/english/national' }).end();
-    }
+    } */
   }
 
   if (result) {

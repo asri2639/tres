@@ -62,7 +62,6 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 
   const langName = language === 'oriya' ? 'oriya2' : language;
   const langCap = langName.charAt(0).toUpperCase() + langName.slice(1);
-
   return (
     <>
       <Head>
@@ -132,11 +131,11 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 App.getInitialProps = async ({ Component, ctx }) => {
   const language = ctx.asPath.split('/')[1];
   if (ctx.asPath === '/' || !languageMap[language]) {
-    if (process.browser) {
+    /*  if (process.browser) {
       Router.push('/english/national');
     } else {
       ctx.res.writeHead(302, { Location: '/english/national' }).end();
-    }
+    } */
   }
 
   const api = API(APIEnum.Catalog);
@@ -176,6 +175,16 @@ App.getInitialProps = async ({ Component, ctx }) => {
   // }
 
   const pageProps = await Component.getInitialProps(ctx);
+  if (pageProps.pageType === 'redirect') {
+    const redirectUrl = decodeURI(
+      pageProps.data.indexOf('.woff') === -1 ? pageProps.data : ''
+    );
+    if (process.browser) {
+      location.href = redirectUrl;
+    } else {
+      // ctx.res.writeHead(302, { Location: decodeURI(pageProps.data) }).end();
+    }
+  }
   return {
     pageProps,
     data: '',

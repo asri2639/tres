@@ -26,6 +26,13 @@ const DesktopHeader = ({ className, data }) => {
 
   const isRTL = useContext(RTLContext);
 
+  const [stateData, setStateData] = useState(
+    data && data.languages
+      ? data.languages[router.query.language].find(
+          (v) => v.state.toLowerCase() === router.query.state
+        )
+      : null
+  );
   const [headerAd, setHeaderAd] = useState(null);
   const [socialHandlers, setSocialHandlers] = useState({
     twitter: 'https://twitter.com/ETVBharatEng',
@@ -80,7 +87,9 @@ const DesktopHeader = ({ className, data }) => {
       toggleSearchBox(false);
       GoogleTagManager.searchItem(searchInput);
       router.push(
-        `/${router.query.language}/${router.query.state}/search/${searchInput}`
+        `/${router.query.language}/${router.query.state}/search/${decodeURI(
+          searchInput
+        )}`
       );
     };
     if (e) {
@@ -91,13 +100,6 @@ const DesktopHeader = ({ className, data }) => {
       goTo();
     }
   };
-
-  const stateData =
-    data && data.languages
-      ? data.languages[router.query.language].find(
-          (v) => v.state.toLowerCase() === router.query.state
-        )
-      : null;
 
   useEffect(() => {
     const splitPath = location.pathname.split('/');
@@ -117,7 +119,7 @@ const DesktopHeader = ({ className, data }) => {
           response: 'r2',
           language: splitPath[1],
           state: splitPath[2],
-          url: url,
+          url: decodeURI(url),
         },
       })
         .then((resp) => {
@@ -145,6 +147,14 @@ const DesktopHeader = ({ className, data }) => {
       // setTwitterHandler();
       getHeaderAd(url);
     };
+
+    setStateData(
+      data && data.languages
+        ? data.languages[router.query.language].find(
+            (v) => v.state.toLowerCase() === router.query.state
+          )
+        : null
+    );
 
     router.events.on('routeChangeComplete', handleRouteChange);
 
@@ -326,7 +336,7 @@ const DesktopHeader = ({ className, data }) => {
                 <div className="absolute z-50 search-box">
                   <input
                     placeholder="Search stories"
-                    value={searchInput}
+                    defaultValue={searchInput}
                     onInput={(e) => setSearchInput(e.target['value'])}
                     onKeyPress={(e) => searchitem(e)}
                     type="text"

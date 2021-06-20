@@ -267,53 +267,61 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
         break;
       case 'listing':
         return <ListContainer data={data} payload={payload}></ListContainer>;
+      case 'redirect':
+        return null;
     }
 
     return (
       <>
-        <Head>
-          <title>{headerObj.title}</title>
-          <link rel="canonical" href={headerObj.canonicalUrl}></link>
-          {ampExists && data.is_amp ? (
-            <link rel="amphtml" href={headerObj.ampUrl}></link>
-          ) : null}
-          <meta
-            name="fbPages"
-            property="fb:pages"
-            content={headerObj.fbContentId}
-          ></meta>
-          <link rel="preload" as="image" href={headerObj.thumbnail.url} />
-        </Head>
-        <NextSeo
-          title={headerObj.title}
-          description={headerObj.description}
-          additionalMetaTags={[
-            {
-              name: 'keywords',
-              content: headerObj.keywords,
-            },
-          ]}
-          openGraph={{
-            site_name: 'ETV Bharat News',
-            url: `https://www.etvbharat.com/${headerObj.url}`,
-            type: headerObj.contentType,
-            title: headerObj.title,
-            description: headerObj.description,
-            images: headerObj.images || [
-              {
-                url: headerObj.thumbnail.url,
-                width: 768,
-                height: 512,
-                alt: headerObj.thumbnail.alt_tags,
-              },
-            ],
-          }}
-          twitter={{
-            handle: '@etvbharat',
-            site: '@etvbharat',
-            cardType: 'summary_large_image',
-          }}
-        />
+        {headerObj.title ? (
+          <>
+            {' '}
+            <Head>
+              <title>{headerObj.title}</title>
+              <link rel="canonical" href={headerObj.canonicalUrl}></link>
+              {ampExists && data.is_amp ? (
+                <link rel="amphtml" href={headerObj.ampUrl}></link>
+              ) : null}
+              <meta
+                name="fbPages"
+                property="fb:pages"
+                content={headerObj.fbContentId}
+              ></meta>
+              <link rel="preload" as="image" href={headerObj.thumbnail.url} />
+            </Head>
+            )
+            <NextSeo
+              title={headerObj.title}
+              description={headerObj.description}
+              additionalMetaTags={[
+                {
+                  name: 'keywords',
+                  content: headerObj.keywords,
+                },
+              ]}
+              openGraph={{
+                site_name: 'ETV Bharat News',
+                url: `https://www.etvbharat.com/${headerObj.url}`,
+                type: headerObj.contentType,
+                title: headerObj.title,
+                description: headerObj.description,
+                images: headerObj.images || [
+                  {
+                    url: headerObj.thumbnail.url,
+                    width: 768,
+                    height: 512,
+                    alt: headerObj.thumbnail.alt_tags,
+                  },
+                ],
+              }}
+              twitter={{
+                handle: '@etvbharat',
+                site: '@etvbharat',
+                cardType: 'summary_large_image',
+              }}
+            />
+          </>
+        ) : null}
         {headerObj.ldjson ? (
           <script
             type="application/ld+json"
@@ -364,8 +372,7 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
 };
 
 slug.getInitialProps = async ({ query, req, res, ...args }) => {
-  let i18n = null,
-    language = 'en',
+  let language = 'en',
     state = 'na',
     params = null,
     bypass = false;
@@ -513,14 +520,10 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         : 'https://www.etvbharat.com'
     }${url}`;
 
-    if (res) {
-      res.writeHead(302, {
-        Location: redirectUrl,
-      });
-      res.end();
-    } else {
-      location.href = redirectUrl;
-    }
+    return {
+      pageType: 'redirect',
+      data: redirectUrl,
+    };
 
     /* const stateValue = stateCodeConverter(urlSplit[4]);
     const api = API(APIEnum.Listing, APIEnum.CatalogList);
