@@ -7,6 +7,7 @@ import Modal from '@components/modal/Modal';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { AMPContext } from '@pages/_app';
 import { languageMap } from '@utils/Constants';
+import useTranslator from '@hooks/useTranslator';
 
 const country = 'IN';
 
@@ -15,6 +16,7 @@ export default function MobileHeader({ data, className }) {
   const router = useRouter();
   const language = languageMap[router.query.language];
   const [stateData, setStateData] = useState(null);
+  const { t, appLanguage } = useTranslator();
 
   const [openStateModal, setOpenStateModal] = useState([]);
 
