@@ -289,7 +289,6 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
               ></meta>
               <link rel="preload" as="image" href={headerObj.thumbnail.url} />
             </Head>
-            )
             <NextSeo
               title={headerObj.title}
               description={headerObj.description}

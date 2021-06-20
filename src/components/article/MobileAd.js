@@ -7,7 +7,6 @@ const MobileAd = ({ adData, className, refresh }) => {
   const [isDesktop, setIsDesktop] = useState(null);
 
   const adEl = useRef(null);
-  let count = 0;
   let [width, height] = [null, null];
   if (
     adData &&

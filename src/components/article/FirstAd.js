@@ -6,15 +6,16 @@ const FirstAd = ({ adData, className, refresh }) => {
   const [isDesktop, setIsDesktop] = useState(null);
 
   const adEl = useRef(null);
-  let count = 0;
   let [width, height] = [300, 250];
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsDesktop(window.innerWidth >= 768);
     }
-    if (!isTransitioning && typeof window !== undefined && isDesktop != null) {
+  }, [adData]);
 
+  useEffect(() => {
+    if (!isTransitioning && typeof window !== undefined && isDesktop != null) {
       if (adData && adData.ad_unit) {
         window.ads = window.ads || new Set();
         const ads = window.ads;
@@ -27,21 +28,21 @@ const FirstAd = ({ adData, className, refresh }) => {
                 .defineSlot(adData.ad_unit, [width, height], adData.gpt_id)
                 .addService(googletag.pubads());
               googletag.enableServices();
+
+              googletag.cmd.push(function () {
+                googletag.pubads().collapseEmptyDivs();
+              });
+
+              googletag.cmd.push(function () {
+                googletag.display(adData.gpt_id);
+              });
+              window.ads.add(adData.gpt_id);
             }
-
-            googletag.cmd.push(function () {
-              googletag.pubads().collapseEmptyDivs();
-            });
-
-            googletag.cmd.push(function () {
-              googletag.display(adData.gpt_id);
-            });
-            window.ads.add(adData.gpt_id);
           }
         }
       }
     }
-  }, [adData]);
+  }, [adData, isDesktop, adEl]);
 
   return (
     <div style={{ padding: '5px 0' }}>
