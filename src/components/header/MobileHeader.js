@@ -14,6 +14,7 @@ export default function MobileHeader({ data, className }) {
   const isAMP = useContext(AMPContext);
   const router = useRouter();
   const language = languageMap[router.query.language];
+  const [stateData, setStateData] = useState(null);
 
   const [openStateModal, setOpenStateModal] = useState([]);
 
@@ -146,12 +147,15 @@ export default function MobileHeader({ data, className }) {
   const containerOut = (ev) => {
     setCategory(null);
   };
-  const stateData =
-    data && data.languages
-      ? data.languages[router.query.language].find(
-          (v) => v.state.toLowerCase() === router.query.state
-        )
-      : null;
+  useEffect(() => {
+    setStateData(
+      data && data.languages
+        ? data.languages[router.query.language].find(
+            (v) => v.state.toLowerCase() === router.query.state
+          )
+        : null
+    );
+  }, [data, router, appLanguage]);
 
   // menu: headerResp.data.data.catalog_list_items
   return (
@@ -216,7 +220,10 @@ export default function MobileHeader({ data, className }) {
           <NavLink
             href={{
               pathname: '/[language]/[state]',
-              query: { language: router.query.language, state: router.query.state },
+              query: {
+                language: router.query.language,
+                state: router.query.state,
+              },
             }}
             as={`/${router.query.language}/${router.query.state}`}
             passHref

@@ -26,13 +26,7 @@ const DesktopHeader = ({ className, data }) => {
 
   const isRTL = useContext(RTLContext);
 
-  const [stateData, setStateData] = useState(
-    data && data.languages
-      ? data.languages[router.query.language].find(
-          (v) => v.state.toLowerCase() === router.query.state
-        )
-      : null
-  );
+  const [stateData, setStateData] = useState(null);
   const [headerAd, setHeaderAd] = useState(null);
   const [socialHandlers, setSocialHandlers] = useState({
     twitter: 'https://twitter.com/ETVBharatEng',
@@ -100,6 +94,15 @@ const DesktopHeader = ({ className, data }) => {
       goTo();
     }
   };
+  useEffect(() => {
+    setStateData(
+      data && data.languages
+        ? data.languages[router.query.language].find(
+            (v) => v.state.toLowerCase() === router.query.state
+          )
+        : null
+    );
+  }, [data, router, appLanguage]);
 
   useEffect(() => {
     const splitPath = location.pathname.split('/');
@@ -147,14 +150,6 @@ const DesktopHeader = ({ className, data }) => {
       // setTwitterHandler();
       getHeaderAd(url);
     };
-
-    setStateData(
-      data && data.languages
-        ? data.languages[router.query.language].find(
-            (v) => v.state.toLowerCase() === router.query.state
-          )
-        : null
-    );
 
     router.events.on('routeChangeComplete', handleRouteChange);
 
@@ -499,22 +494,20 @@ const DesktopHeader = ({ className, data }) => {
             </NavLink>
             <div className="flex items-center pl-3">
               {stateData ? (
-                appLanguage.code !== 'en' ? (
-                  <div className="text-md">
-                    <div className="border-b border-red-700">
-                      {stateData.display_title}
-                    </div>
-                    <div>
-                      {stateData.state
-                        .split('-')
-                        .map((v) => v.charAt(0).toUpperCase() + v.slice(1))
-                        .join(' ')}
-                    </div>
+                <div className="text-md">
+                  <div className="border-b border-red-700">
+                    {stateData.display_title}
                   </div>
-                ) : (
-                  <div>{'English'}</div>
-                )
-              ) : null}
+                  <div>
+                    {stateData.state
+                      .split('-')
+                      .map((v) => v.charAt(0).toUpperCase() + v.slice(1))
+                      .join(' ')}
+                  </div>
+                </div>
+              ) : (
+                router.query.language
+              )}
             </div>
           </div>
 
