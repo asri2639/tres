@@ -32,7 +32,7 @@ const GalleryList = ({ galleryData }) => {
       //  return null;
     }
     return api[apiEnum][methodName]({
-      isSSR: methodName !== 'getArticleDetails',
+      config: { isSSR: methodName !== 'getArticleDetails' },
       query: {
         response: methodName === 'getArticleDetails' ? 'r2' : 'r1',
         item_languages: language,

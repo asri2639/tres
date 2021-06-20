@@ -165,6 +165,7 @@ const VideoList = ({ videoData, appConfig }) => {
   const api = API(APIEnum.CatalogList, APIEnum.Video);
   const language = languageMap[router.query.language];
 
+
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
@@ -192,7 +193,7 @@ const VideoList = ({ videoData, appConfig }) => {
     }
 
     return api[apiEnum][methodName]({
-      isSSR: true,
+      config: { isSSR: true },
       params: {
         state: location.pathname.split('/')[2],
         language: language,
