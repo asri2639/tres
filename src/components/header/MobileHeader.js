@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import NavLink from '@components/common/NavLink';
 import header from './Header.module.scss';
