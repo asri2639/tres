@@ -30,7 +30,7 @@ const ArticleList = ({ articleData }) => {
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
     return api[apiEnum][methodName]({
-      config: { isSSR: methodName !== 'getArticleDetails' },
+      isSSR: methodName !== 'getArticleDetails',
       query: {
         // region: country,
         response: methodName === 'getArticleDetails' ? 'r2' : 'r1',

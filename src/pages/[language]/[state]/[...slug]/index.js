@@ -459,7 +459,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             portal_state: state, //national
             scroll_no: 0,
           },
-          config: { isSSR: typeof window === 'undefined' },
+          isSSR: typeof window === 'undefined',
         });
 
         const galleryResp = galleryResponse.data.data.catalog_list_items[0];
@@ -487,7 +487,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             portal_state: state, //national
             scroll_no: 0,
           },
-          config: { isSSR: typeof window === 'undefined' },
+          isSSR: typeof window === 'undefined',
         });
 
         let article = null;

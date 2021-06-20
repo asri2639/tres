@@ -139,7 +139,6 @@ App.getInitialProps = async ({ Component, ctx }) => {
   }
 
   const api = API(APIEnum.Catalog);
-
   if (accessToken.web.length === 0) {
     const result = await api.getAccessToken({
       params: {
