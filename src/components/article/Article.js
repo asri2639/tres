@@ -280,9 +280,9 @@ export default function Article({
                 : null} */}
               <MediaContextProvider>
                 <Media at="xs">
-                  {index === 0 ? (
+                {/*   {index === 0 ? (
                     <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
-                  ) : null}
+                  ) : null} */}
 
                   <h1
                     ref={ref}
