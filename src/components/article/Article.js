@@ -219,7 +219,6 @@ export default function Article({
         // videos.forEach((el) => {
 
         // el.innerHTML = '<span>video</span>';
-        // console.log(el);
         // });
       } else {
         setAmpHtml(parsedHtml.innerHTML);

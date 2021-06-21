@@ -137,9 +137,7 @@ const DesktopHeader = ({ className, data }) => {
             );
           }
         })
-        .catch((e) => {
-          console.error(e);
-        });
+        .catch((e) => {});
     };
     getHeaderAd();
     const handleRouteChange = (url) => {

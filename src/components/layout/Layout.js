@@ -65,7 +65,6 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
           language === 'ur' && convertedState !== 'jk'
             ? 'urdu'
             : convertedState;
-
         const headerResp = await api.CatalogList.getMenuDetails({
           params: {
             suffix: isDesktop
@@ -186,11 +185,6 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
         menu.mobile = headerResp.data.data.catalog_list_items;
       }
       if (!isDesktop && !menu.desktop.length) {
-        convertedState =
-          language === 'ur' && convertedState !== 'jk'
-            ? 'urdu'
-            : convertedState;
-
         const resp = await api.CatalogList.getMenuDetails({
           params: {
             suffix:
@@ -241,7 +235,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
       eventBus.remove('state-selector');
       eventBus.remove('district-selector');
     };
-  }, [language, accessToken]);
+  }, [language, router.query.state, accessToken]);
   return (
     <>
       {showStateModal ? (

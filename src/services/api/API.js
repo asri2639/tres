@@ -110,7 +110,6 @@ async function errorResponseHandler(error) {
       // return Promise.reject(new APIError(message, error.response.data));
       // return Promise.reject(error);
       // throw new APIError(message, error.response.data);
-      console.error(message);
     }
     return Promise.resolve(new APIError(error)); // here it was Promise.resolve
   } else {
