@@ -18,7 +18,6 @@ import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import MobileAd from '@components/article/MobileAd';
 import FirstAd from '@components/article/FirstAd';
-import { useRouter } from 'next/router';
 
 // initialPosition
 // div height
@@ -269,14 +268,16 @@ export default function Article({
               } actual-content lg:container lg:mx-auto px-3 md:px-0 bg-white `}
               ref={contentRef}
             >
-              {index > 0 && ads ? (
-                <div className="pt-3">
-                  <MobileAd
+              {index > 0 && ads
+                ? {
+                    /* <div className="pt-3">
+                 <MobileAd
                     key={'art' + (index * 2 + 2)}
                     adData={ads['' + (index * 2 + 1)]}
-                  />
-                </div>
-              ) : null}
+                  /> 
+                </div> */
+                  }
+                : null}
               <MediaContextProvider>
                 <Media at="xs">
                   {index === 0 ? (
@@ -450,10 +451,10 @@ export default function Article({
               </InView>
               {ads ? (
                 <div className="pt-3">
-                  <MobileAd
+                  {/*  <MobileAd
                     key={'art' + (index * 2 + 2)}
                     adData={ads['' + (index * 2 + 2)]}
-                  />
+                  /> */}
                 </div>
               ) : null}
             </div>

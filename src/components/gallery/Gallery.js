@@ -228,11 +228,13 @@ const Gallery = ({
               className || ''
             } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
           >
-            {index > 0 ? (
-              <div className="pt-3">
-                <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
-              </div>
-            ) : null}
+            {index > 0 && ads
+              ? {
+                  /* <div className="pt-3">
+               <MobileAd adData={ads ? ads[index * 2 + 1] : null} /> 
+              </div> */
+                }
+              : null}
 
             <MediaContextProvider>
               <Media at="xs">
@@ -459,7 +461,7 @@ const Gallery = ({
               <span></span>
             </InView>
 
-            <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
+            {/*   <MobileAd adData={ads ? ads[index * 2 + 2] : null} /> */}
           </div>
         </Sticky>
       </div>
