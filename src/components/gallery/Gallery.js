@@ -227,13 +227,11 @@ const Gallery = ({
               className || ''
             } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
           >
-            {index > 0 && ads
-              ? {
-                  /* <div className="pt-3">
+        {/*     {index > 0 && ads
+              ?  <div className="pt-3">
                <MobileAd adData={ads ? ads[index * 2 + 1] : null} /> 
-              </div> */
-                }
-              : null}
+              </div> 
+              : null} */}
 
             <MediaContextProvider>
               <Media at="xs">

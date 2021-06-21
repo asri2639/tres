@@ -268,16 +268,16 @@ export default function Article({
               } actual-content lg:container lg:mx-auto px-3 md:px-0 bg-white `}
               ref={contentRef}
             >
-              {index > 0 && ads
-                ? {
-                    /* <div className="pt-3">
+             {/*  {index > 0 && ads
+                ? 
+                     <div className="pt-3">
                  <MobileAd
                     key={'art' + (index * 2 + 2)}
                     adData={ads['' + (index * 2 + 1)]}
                   /> 
-                </div> */
-                  }
-                : null}
+                </div> 
+                  
+                : null} */}
               <MediaContextProvider>
                 <Media at="xs">
                   {index === 0 ? (
