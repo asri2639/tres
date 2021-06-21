@@ -58,24 +58,25 @@ class APIError extends Error {
 }
 
 export const accessTokenFetcher = (authToken) => {
-  return fetch(
-    `${Constants.baseURL}${
-      Constants.baseURL.indexOf('localhost') != -1 ? '/api' : ''
-    }/access_token?auth_token=${authToken}`,
-    {
-      headers: {
-        accept:
-          'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-        'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
-        'cache-control': 'max-age=0',
-      },
-      referrerPolicy: 'strict-origin-when-cross-origin',
-      body: null,
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'include',
-    }
-  ).then((response) => response.json());
+  let url =
+    Constants.baseURL.indexOf('localhost') != -1
+      ? 'https://prod.api.etvbharat.com/'
+      : Constants.baseURL;
+
+  url = url + `/access_token?auth_token=${authToken}`;
+  return fetch(url, {
+    headers: {
+      accept:
+        'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+      'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+      'cache-control': 'max-age=0',
+    },
+    referrerPolicy: 'strict-origin-when-cross-origin',
+    body: null,
+    method: 'GET',
+    mode: 'cors',
+    credentials: 'include',
+  }).then((response) => response.json());
 };
 
 async function errorResponseHandler(error) {
@@ -101,7 +102,6 @@ async function errorResponseHandler(error) {
   ) {
     return Promise.reject(error);
   }
-  console.error(error)
   // if has response show the error
   if (error.response) {
     const handled = apiStatusHandler(error);
