@@ -4,9 +4,12 @@ import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import { languageMap } from '@utils/Constants';
 import GoogleTagManager from '@utils/GoogleTagManager';
-import { stateCodeConverter, thumbnailExtractor } from '@utils/Helpers';
+import {
+  linkInfoGenerator,
+  stateCodeConverter,
+  thumbnailExtractor,
+} from '@utils/Helpers';
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
 import useSWR from 'swr';
 
 const country = 'IN';
@@ -59,6 +62,10 @@ export default function DesktopSubMenu({ category }) {
               'b2s',
               ''
             );
+            const linkInfo = linkInfoGenerator(
+              item.web_url,
+              router.query.state
+            );
 
             return !splitUrl.length ? (
               <div></div>
@@ -67,8 +74,8 @@ export default function DesktopSubMenu({ category }) {
                 key={item.content_id}
                 className="p-3 pt-2 flex-grow-0 flex flex-shrink-0 whitespace-pre-wrap"
                 style={{ flexBasis: '27%' }}
-                href={`/${item.web_url}`}
-                as={`/${item.web_url}`}
+                href={linkInfo.href}
+                as={linkInfo.as}
                 passHref
                 onClick={() => {
                   GoogleTagManager.articleClick(item);
