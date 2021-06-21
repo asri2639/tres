@@ -72,7 +72,6 @@ const Gallery = ({
     if (viewed.indexOf(contentId) === -1) {
       viewed.push(contentId);
       // updateViewed(viewed);
-      // console.log(viewed);
       GoogleTagManager.articleViewScroll(data[0], { galleryArticle: true });
 
       if (viewed.length === 1) {

@@ -4,7 +4,6 @@ const { publicRuntimeConfig } = getConfig();
 const env = publicRuntimeConfig.APP_ENV;
 
 const prd_test = publicRuntimeConfig.TEST === 'test';
-// console.log(prd_test);
 
 const baseURL =
   env === 'production' && !prd_test

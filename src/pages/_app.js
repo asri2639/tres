@@ -74,7 +74,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 
         <link
           rel="preload"
-          href="/assets/fonts/English/english.woff2`"
+          href="/assets/fonts/English/english.woff2"
           as="font"
           type="font/woff2"
           crossorigin
@@ -131,11 +131,11 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 App.getInitialProps = async ({ Component, ctx }) => {
   const language = ctx.asPath.split('/')[1];
   if (ctx.asPath === '/' || !languageMap[language]) {
-    /*  if (process.browser) {
+    if (process.browser) {
       Router.push('/english/national');
     } else {
       ctx.res.writeHead(302, { Location: '/english/national' }).end();
-    } */
+    }
   }
 
   const api = API(APIEnum.Catalog);

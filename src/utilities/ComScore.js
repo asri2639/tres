@@ -1,6 +1,5 @@
 export default {
-  pageView: () => {
-  },
+  pageView: () => {},
   nextPageView: () => {
     setTimeout(() => {
       var request = new XMLHttpRequest();
@@ -9,8 +8,6 @@ export default {
           if (typeof window !== 'undefined') {
             window['comscoreDisplay'] = JSON.parse(this.response);
           }
-  
-          // console.log($rootScope.comscoreDisplay.comscore + " Comscore Response");
         }
       };
       request.open(
@@ -26,7 +23,6 @@ export default {
         window['COMSCORE'] &&
           window['COMSCORE'].beacon({ c1: '2', c2: '20416623' });
       }
-
     }, 200);
   },
 };

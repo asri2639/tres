@@ -9,4 +9,9 @@ const Index = () => {
   );
 };
 
+Index.getInitialProps = async ({ query, req, res, ...args }) => {
+  return {
+    pageType: 'listing',
+  };
+};
 export default Index;

@@ -242,7 +242,6 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
       eventBus.remove('district-selector');
     };
   }, [language, accessToken]);
-  // console.log(pageType);
   return (
     <>
       {showStateModal ? (
