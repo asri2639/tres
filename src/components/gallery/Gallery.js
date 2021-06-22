@@ -241,18 +241,16 @@ const Gallery = ({
 
             <MediaContextProvider>
               <Media at="xs">
-                {/*    {index === 0 ? (
-                  <FirstAd adData={ads ? ads[index * 2 + 1] : null} />
-                ) : null} */}
-
-                <ins
-                  className="adsbygoogle"
-                  style={{ display: 'block', height: '300px' }}
-                  data-ad-client="ca-pub-6839490876252364"
-                  data-ad-slot="3091962699"
-                  data-ad-format="auto"
-                  data-full-width-responsive="true"
-                ></ins>
+                {index === 0 ? (
+                  <ins
+                    className="adsbygoogle"
+                    style={{ display: 'block', height: '300px' }}
+                    data-ad-client="ca-pub-6839490876252364"
+                    data-ad-slot="3091962699"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"
+                  ></ins>
+                ) : null}
 
                 <h1 ref={ref} className="leading-tight text-xl font-bold p-2">
                   {data[0].display_title}{' '}
