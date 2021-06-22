@@ -267,7 +267,7 @@ export default function Article({
               } actual-content lg:container lg:mx-auto px-3 md:px-0 bg-white `}
               ref={contentRef}
             >
-             {/*  {index > 0 && ads
+              {/*  {index > 0 && ads
                 ? 
                      <div className="pt-3">
                  <MobileAd
@@ -279,9 +279,18 @@ export default function Article({
                 : null} */}
               <MediaContextProvider>
                 <Media at="xs">
-                {/*   {index === 0 ? (
+                  {/*   {index === 0 ? (
                     <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
                   ) : null} */}
+
+                  <ins
+                    className="adsbygoogle"
+                    style={{ display: 'block' }}
+                    data-ad-client="ca-pub-6839490876252364"
+                    data-ad-slot="3091962699"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"
+                  ></ins>
 
                   <h1
                     ref={ref}
