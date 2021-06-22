@@ -151,6 +151,12 @@ export default function Article({
           el.querySelector('#' + id).appendChild(s);
         }
       }
+
+      if (!isDesktop) {
+        try{
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch(e){}
+      }
     }
 
     if (isAMP) {
@@ -285,13 +291,12 @@ export default function Article({
 
                   <ins
                     className="adsbygoogle"
-                    style={{ display: 'block' }}
+                    style={{ display: 'block', height: '300px' }}
                     data-ad-client="ca-pub-6839490876252364"
                     data-ad-slot="3091962699"
                     data-ad-format="auto"
                     data-full-width-responsive="true"
                   ></ins>
-
                   <h1
                     ref={ref}
                     className="leading-tight text-xll font-bold p-2"

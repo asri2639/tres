@@ -166,6 +166,12 @@ const Gallery = ({
           el.querySelector('#' + id).appendChild(s);
         }
       }
+
+      if (!isDesktop) {
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {}
+      }
     }
 
     if (isAMP) {
@@ -241,7 +247,7 @@ const Gallery = ({
 
                 <ins
                   className="adsbygoogle"
-                  style={{ display: 'block' }}
+                  style={{ display: 'block', height: '300px' }}
                   data-ad-client="ca-pub-6839490876252364"
                   data-ad-slot="3091962699"
                   data-ad-format="auto"
