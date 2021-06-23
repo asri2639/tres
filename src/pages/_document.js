@@ -30,11 +30,6 @@ export default class ETVDocument extends Document {
               }
 
               <script
-                async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-              ></script>
-
-              <script
                 dangerouslySetInnerHTML={{
                   __html: `window.dataLayer = window.dataLayer || [];
                 (function(w,d,s,l,i){

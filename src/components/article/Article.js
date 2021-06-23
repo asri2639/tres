@@ -18,6 +18,7 @@ import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import MobileAd from '@components/article/MobileAd';
 import FirstAd from '@components/article/FirstAd';
+import { useRouter } from 'next/router';
 
 // initialPosition
 // div height
@@ -151,12 +152,6 @@ export default function Article({
           el.querySelector('#' + id).appendChild(s);
         }
       }
-
-      if (!isDesktop) {
-        try {
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {}
-      }
     }
 
     if (isAMP) {
@@ -225,6 +220,7 @@ export default function Article({
         // videos.forEach((el) => {
 
         // el.innerHTML = '<span>video</span>';
+        // console.log(el);
         // });
       } else {
         setAmpHtml(parsedHtml.innerHTML);
@@ -273,27 +269,18 @@ export default function Article({
               } actual-content lg:container lg:mx-auto px-3 md:px-0 bg-white `}
               ref={contentRef}
             >
-              {/*  {index > 0 && ads
-                ? 
-                     <div className="pt-3">
-                 <MobileAd
+              {index > 0 && ads ? (
+                <div className="pt-3">
+                  <MobileAd
                     key={'art' + (index * 2 + 2)}
                     adData={ads['' + (index * 2 + 1)]}
-                  /> 
-                </div> 
-                  
-                : null} */}
+                  />
+                </div>
+              ) : null}
               <MediaContextProvider>
                 <Media at="xs">
                   {index === 0 ? (
-                    <ins
-                      className="adsbygoogle"
-                      style={{ display: 'block', height: '300px' }}
-                      data-ad-client="ca-pub-6839490876252364"
-                      data-ad-slot="3091962699"
-                      data-ad-format="auto"
-                      data-full-width-responsive="true"
-                    ></ins>
+                    <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
                   ) : null}
 
                   <h1
@@ -463,10 +450,10 @@ export default function Article({
               </InView>
               {ads ? (
                 <div className="pt-3">
-                  {/*  <MobileAd
+                  <MobileAd
                     key={'art' + (index * 2 + 2)}
                     adData={ads['' + (index * 2 + 2)]}
-                  /> */}
+                  />
                 </div>
               ) : null}
             </div>
