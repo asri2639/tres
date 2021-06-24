@@ -108,7 +108,7 @@ export default function Article({
       const divStyle = isDesktop
         ? `width: 728px; height: 90px;`
         : `width: 300px; height: 250px;`;
-      const slotArr = isDesktop ? '[728, 90]' : '[300, 250]';
+      const slotArr = isDesktop ? [728, 90] : [300, 250];
       let adHTML = null;
       let adConf = null;
       if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
@@ -125,31 +125,37 @@ export default function Article({
 
       const id = adConf ? adConf.gpt_id : null;
       const ad_id = adConf ? adConf.ad_unit_id : null;
+      window.ads = window.ads || new Set();
+      const ads = window.ads;
 
       if (id && ad_id) {
-        adHTML = `<div id='${id}' style='${divStyle}'></div>`;
-        const el = document.querySelector(
-          `[data-content-id="${contentId}"] .EtvadsSection`
-        );
+        if (!ads.has(adConf.gpt_id)) {
+          adHTML = `<div id='${id}' style='${divStyle}'></div>`;
+          const el = document.querySelector(
+            `[data-content-id="${contentId}"] .EtvadsSection`
+          );
 
-        if (el && el.querySelector('#adsContainer')) {
-          var s = document.createElement('script');
-          s.type = 'text/javascript';
-          var code = `
-          if(window.googletag && googletag.apiReady) {
-            googletag.cmd.push(function() {
-              googletag.pubads().collapseEmptyDivs();
-              googletag.defineSlot('${ad_id}', ${slotArr}, '${id}').addService(googletag.pubads()); 
-              googletag.enableServices(); 
-            }); 
-            googletag.cmd.push(function() { 
-              googletag.display('${id}'); 
-            });
-        }`;
-          s.appendChild(document.createTextNode(code));
-          // document.body.appendChild(s);
-          el.innerHTML = adHTML;
-          el.querySelector('#' + id).appendChild(s);
+          if (el && el.querySelector('#adsContainer')) {
+            // document.body.appendChild(s);
+            el.innerHTML = adHTML;
+            setTimeout(() => {
+              if (window.googletag && googletag.apiReady) {
+                googletag.cmd.push(function () {
+                  googletag.pubads().collapseEmptyDivs();
+                  googletag
+                    .defineSlot(ad_id, slotArr, id)
+                    .addService(googletag.pubads());
+                  googletag.enableServices();
+                });
+                googletag.cmd.push(function () {
+                  googletag.display(id);
+                });
+                window.ads.add(adConf.gpt_id);
+              }
+            }, 10);
+          } else {
+            console.log('In-Article ad container not found!!!', contentId);
+          }
         }
       }
     }
