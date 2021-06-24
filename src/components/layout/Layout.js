@@ -36,10 +36,9 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
     footer: [],
     header: { menu: { desktop: [], mobile: [] }, languages: null },
   });
-  const language = languageMap[router.query.language];
+  const language = languageMap[router.query.language] || 'en';
   const state = router.query.state || 'national';
   const [showStateModal, setShowStateModal] = useState(null);
-
   const { promiseInProgress } = usePromiseTracker();
 
   React.useEffect(() => {
@@ -160,7 +159,6 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
       let convertedState = configStateCodeConverter(state);
       convertedState =
         language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
-
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
           suffix: isDesktop

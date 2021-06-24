@@ -119,7 +119,7 @@ const DesktopFooter = ({ data, t }) => {
               <li>
                 <NavLink
                   href="/english/aboutUs"
-                  as={`/english/about-us`}
+                  as={`/english/aboutUs`}
                   passHref
                   title="About us"
                 />
@@ -127,15 +127,15 @@ const DesktopFooter = ({ data, t }) => {
               <li>
                 <NavLink
                   href="/english/privacyPolicy"
-                  as={`/english/privacy-policy`}
+                  as={`/english/privacyPolicy`}
                   passHref
                   title="Privacy Policy"
                 />
               </li>
               <li>
                 <NavLink
-                  href="/english/termsOfServices"
-                  as={`/english/terms-of-services`}
+                  href="/english/termsOfService"
+                  as={`/english/termsOfService`}
                   passHref
                   title="Terms & Conditions"
                 />
@@ -143,14 +143,14 @@ const DesktopFooter = ({ data, t }) => {
               <li>
                 <NavLink
                   href="/english/contactUs"
-                  as={`/english/contact-us`}
+                  as={`/english/contactUs`}
                   passHref
                   title="Contact us"
                 />
               </li>
-              <li>
+              {/* <li>
                 <p onClick={openFeedback}>Feedback</p>
-              </li>
+              </li> */}
             </ul>
           </div>
 

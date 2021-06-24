@@ -114,7 +114,7 @@ const MobileFooter = ({ data, menu }) => {
                     backToTop();
                   }}
                 >
-                  {t('back_to_top')}
+                  {router.query.language ? t('back_to_top') : 'BACK TO TOP'}
                 </button>
               )}
               <div className="bottom-section mx-8">
@@ -126,27 +126,27 @@ const MobileFooter = ({ data, menu }) => {
                     <div className="flex justify-between w-full">
                       <NavLink
                         href="/english/aboutUs"
-                        as={`/english/about-us`}
+                        as={`/english/aboutUs`}
                         passHref
                         title="About us"
                       />
                       <NavLink
                         href="/english/privacyPolicy"
-                        as={`/english/privacy-policy`}
+                        as={`/english/privacyPolicy`}
                         passHref
                         title="Privacy Policy"
                       />
                     </div>
                     <div className="flex justify-between w-full">
                       <NavLink
-                        href="/english/termsOfServices"
-                        as={`/english/terms-of-services`}
+                        href="/english/termsOfService"
+                        as={`/english/termsOfService`}
                         passHref
                         title="Terms & Conditions"
                       />
                       <NavLink
                         href="/english/contactUs"
-                        as={`/english/contact-us`}
+                        as={`/english/contactUs`}
                         passHref
                         title="Contact us"
                       />{' '}

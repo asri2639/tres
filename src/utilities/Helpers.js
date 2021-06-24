@@ -105,7 +105,7 @@ export const stateCodeConverter = (e) => {
 };
 
 export const configStateCodeConverter = (e) => {
-  return {
+  const state = {
     'andhra-pradesh': 'ap',
     assam: 'assam',
     bihar: 'bh',
@@ -131,6 +131,8 @@ export const configStateCodeConverter = (e) => {
     uttarakhand: 'uttarakhand',
     'west-bengal': 'wb',
   }[e.toLowerCase()];
+
+  return state || 'english';
 };
 
 export const loadJS = (file) => {

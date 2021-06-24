@@ -21,7 +21,7 @@ const DesktopHeader = ({ className, data }) => {
   const isAMP = useContext(AMPContext);
   const router = useRouter();
   const { t, appLanguage } = useTranslator();
-
+  const language = router.query.language || 'english';
   const api = API(APIEnum.Catalog);
 
   const isRTL = useContext(RTLContext);
@@ -81,7 +81,7 @@ const DesktopHeader = ({ className, data }) => {
       toggleSearchBox(false);
       GoogleTagManager.searchItem(searchInput);
       router.push(
-        `/${router.query.language}/${router.query.state}/search/${decodeURI(
+        `/${language}/${router.query.state}/search/${decodeURI(
           searchInput
         )}`
       );
@@ -97,7 +97,7 @@ const DesktopHeader = ({ className, data }) => {
   useEffect(() => {
     setStateData(
       data && data.languages
-        ? data.languages[router.query.language].find(
+        ? data.languages[language].find(
             (v) => v.state.toLowerCase() === router.query.state
           )
         : null
@@ -481,14 +481,14 @@ const DesktopHeader = ({ className, data }) => {
               href={{
                 pathname: '/[language]/[state]',
                 query: {
-                  language: router.query.language,
+                  language: language,
                   state: router.query.state,
                 },
               }}
-              as={`/${router.query.language}/${router.query.state}`}
+              as={`/${language}/${router.query.state}`}
               passHref
             >
-              <div className={`logo ${router.query.language}`}></div>
+              <div className={`logo ${language}`}></div>
             </NavLink>
             <div className="flex items-center pl-3">
               {stateData ? (
@@ -504,7 +504,7 @@ const DesktopHeader = ({ className, data }) => {
                   </div>
                 </div>
               ) : (
-                router.query.language
+                language
               )}
             </div>
           </div>

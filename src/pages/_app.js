@@ -24,7 +24,7 @@ export const TransitionContext = React.createContext(true);
 function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const language = router.query.language;
+  const language = router.query.language || 'english';
 
   useTranslator({ init: true });
 

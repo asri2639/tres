@@ -14,7 +14,7 @@ const country = 'IN';
 export default function MobileHeader({ data, className }) {
   const isAMP = useContext(AMPContext);
   const router = useRouter();
-  const language = languageMap[router.query.language];
+  const language = router.query.language || 'english';
   const [stateData, setStateData] = useState(null);
   const { t, appLanguage } = useTranslator();
 
@@ -152,7 +152,7 @@ export default function MobileHeader({ data, className }) {
   useEffect(() => {
     setStateData(
       data && data.languages
-        ? data.languages[router.query.language].find(
+        ? data.languages[language].find(
             (v) => v.state.toLowerCase() === router.query.state
           )
         : null
@@ -223,15 +223,15 @@ export default function MobileHeader({ data, className }) {
             href={{
               pathname: '/[language]/[state]',
               query: {
-                language: router.query.language,
+                language: language,
                 state: router.query.state,
               },
             }}
-            as={`/${router.query.language}/${router.query.state}`}
+            as={`/${language}/${router.query.state}`}
             passHref
           >
             <div
-              className={`logo ${router.query.language}`}
+              className={`logo ${language}`}
               style={{ transform: `translate(-24px, -19px) scale(0.6)` }}
             ></div>
           </NavLink>

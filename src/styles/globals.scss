@@ -614,3 +614,22 @@ button:focus {
     transform: scale3D(0, 0, 1);
   }
 }
+
+.abs-video {
+  width: 100%;
+  height: 600px;
+}
+
+@media screen and (max-width: 800px) {
+  .abs-video {
+    width: 100%;
+    height: 400px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .abs-video {
+    width: 100%;
+    height: 35vh;
+  }
+}

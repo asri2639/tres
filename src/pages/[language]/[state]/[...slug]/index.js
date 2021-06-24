@@ -86,7 +86,6 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
         new URL(`http:localhost:3000${router.asPath}`).pathname
       }`;
     }
-
     switch (pageType) {
       case 'article':
         const tags = new Set();
