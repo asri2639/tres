@@ -164,10 +164,11 @@ const VideoList = ({ videoData, appConfig }) => {
   const api = API(APIEnum.CatalogList, APIEnum.Video);
   const language = languageMap[router.query.language];
 
-
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
+  const [rhs, setRhs] = useState(null);
+
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
   const [viewed, setViewed] = useState([]);
@@ -192,7 +193,7 @@ const VideoList = ({ videoData, appConfig }) => {
     }
 
     return api[apiEnum][methodName]({
-      config: { isSSR: true },
+      config: { isSSR: methodName !== 'getVideoDetails' },
       params: {
         state: location.pathname.split('/')[2],
         language: language,
@@ -227,6 +228,7 @@ const VideoList = ({ videoData, appConfig }) => {
       dedupingInterval: 5 * 60 * 1000,
     }
   );
+
   const { data: adData, error: adError } = useSWR(
     ['CatalogList', 'getVideoDetails', videoData.contentId],
     relatedVideosFetcher,
@@ -257,21 +259,20 @@ const VideoList = ({ videoData, appConfig }) => {
     let video = videos.find(
       (article) => article.data.content_id === videoData.contentId
     );
-
-    if (video && adData && adData.catalog_list_items.slice(2)[0]) {
-      video.rhs = adData.catalog_list_items
-        .slice(2)[0]
-        .catalog_list_items.filter((v) => {
-          return (
-            v.layout_type.indexOf('ad_unit') >= 0 ||
-            (v.layout_type.indexOf('ad_unit') === -1 &&
-              v.catalog_list_items.length > 0)
-          );
-        });
-      video.desktop = adData.catalog_list_items[0].catalog_list_items[0];
-      setVideos((videos) => [...videos]);
+    if (adData) {
+      if (video) {
+        setRhs(
+          adData.catalog_list_items.slice(1).filter((v) => {
+            return (
+              v.layout_type.indexOf('ad_unit') >= 0 ||
+              (v.layout_type.indexOf('ad_unit') === -1 &&
+                v.catalog_list_items.length > 0)
+            );
+          })
+        );
+        video.desktop = adData.catalog_list_items[0].catalog_list_items[0];
+      }
     }
-
     if (video && smartUrls) {
       video.iframeSource = constructPlaybackUrl(
         video.data,
@@ -282,159 +283,6 @@ const VideoList = ({ videoData, appConfig }) => {
       setVideos((videos) => [...videos]);
     }
   }, [videoData, data, adData, smartUrls]);
-
-  // Listen to scroll positions for loading more data on scroll
-  useEffect(() => {
-    // window.addEventListener('scroll', handleScroll);
-    return () => {
-      // window.removeEventListener('scroll', handleScroll);
-    };
-  });
-
-  const handleScroll = async () => {
-    // To get page offset of last article
-    const lastVideoLoaded = document.querySelector(
-      '.article-list > .article:last-child'
-    );
-    if (lastVideoLoaded) {
-      let offsetHeight = document.body.offsetHeight;
-      if (window.innerWidth < 769) {
-        offsetHeight -= 350;
-      }
-      if (window.innerHeight + window.pageYOffset >= offsetHeight) {
-        const curIndex = related.findIndex(
-          (v) =>
-            v.content_id === lastVideoLoaded.getAttribute('data-content-id')
-        );
-        if (curIndex > -1 && curIndex < 9 && !loading) {
-          startLoading();
-          let convertedState = configStateCodeConverter(
-            location.pathname.split('/')[2]
-          );
-          convertedState =
-            location.pathname.split('/')[1] === 'urdu'
-              ? 'urdu'
-              : convertedState;
-
-          let suffix = null;
-
-          if (appConfig) {
-            suffix =
-              appConfig['params_hash2'].config_params.ssr_details[
-                configStateCodeConverter(location.pathname.split('/')[2])
-              ].video_details_link;
-          } else if (applicationConfig.value) {
-            suffix =
-              applicationConfig.value['params_hash2'].config_params.ssr_details[
-                convertedState
-              ].video_details_link;
-          }
-          await api.CatalogList.getVideoDetails({
-            params: {
-              suffix: suffix,
-              state: location.pathname.split('/')[2],
-              language: language,
-            },
-            query: {
-              response: 'r2',
-              item_languages: language,
-              content_id: related[curIndex + 1].content_id, //variable
-              // page_size: window.innerWidth < 769 ? 1 : 10,
-              page_size: 10,
-              portal_state: stateCodeConverter(location.pathname.split('/')[2]),
-            },
-          }).then(async (res) => {
-            const newVideo =
-              res.data.data.catalog_list_items[0].catalog_list_items[0];
-            const rhs = res.data.data.catalog_list_items.slice(2)[0]
-              .catalog_list_items;
-
-            if (publicRuntimeConfig.APP_ENV !== 'development') {
-              await VideoAPI(null)
-                .getSmartUrls({
-                  params: {
-                    play_url: newVideo.play_url.url,
-                    hash: createHash(
-                      'ywVXaTzycwZ8agEs3ujx' + newVideo.play_url.url
-                    ),
-                  },
-                  query: null,
-                  payload: null,
-                })
-                .then(async (res1) => {
-                  const iframeSource = constructPlaybackUrl(
-                    newVideo,
-                    res1,
-                    publicRuntimeConfig,
-                    isAMP
-                  );
-
-                  const newList = [
-                    ...videos,
-                    {
-                      data: newVideo,
-                      rhs,
-                      contentId: newVideo.content_id,
-                      iframeSource,
-                    },
-                  ];
-
-                  setVideos(newList);
-                  stopLoading();
-                });
-            } else {
-              const api = API(APIEnum.Video);
-
-              return api.Video.getSmartUrls({
-                params: {
-                  play_url: newVideo.play_url.url,
-                  hash: createHash(
-                    'ywVXaTzycwZ8agEs3ujx' + newVideo.play_url.url
-                  ),
-                },
-                suv: true,
-              }).then(async (res1) => {
-                const iframeSource = constructPlaybackUrl(
-                  newVideo,
-                  res1.data,
-                  publicRuntimeConfig,
-                  isAMP
-                );
-
-                const newList = [
-                  ...videos,
-                  {
-                    data: newVideo,
-                    rhs,
-                    contentId: newVideo.content_id,
-                    iframeSource,
-                  },
-                ];
-
-                setVideos(newList);
-                stopLoading();
-              });
-            }
-          });
-        }
-      }
-    }
-  };
-
-  const scrollToVideo = (video) => {
-    const articleEl = document.querySelector(
-      `.article[data-content-id=${video.content_id}]`
-    );
-    if (articleEl) {
-      // articleEl.scrollIntoView({ behavior: "smooth", inline: "nearest" });
-
-      const y = articleEl.getBoundingClientRect().top + window.scrollY - 28;
-      window.scroll({
-        top: y,
-        behavior: 'smooth',
-      });
-    }
-  };
 
   return (
     <>
@@ -452,11 +300,10 @@ const VideoList = ({ videoData, appConfig }) => {
             <Video
               key={video.contentId}
               {...video}
-              rhs={videos[0].rhs}
-              desktop={video.desktop}
+              rhs={rhs}
               iframeSource={video.iframeSource}
               nextVideo={i < 9 ? related[i + 1] : null}
-              scrollToNextVideo={() => scrollToVideo(related[i + 1])}
+              scrollToNextVideo={() => {}}
               viewed={viewed}
               related={related}
               index={i}
