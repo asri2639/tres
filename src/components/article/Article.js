@@ -128,6 +128,22 @@ export default function Article({
       window.ads = window.ads || new Set();
       const ads = window.ads;
 
+      const showAd = (ad_id, slotArr, id) => {
+        if (window.googletag && googletag.apiReady) {
+          googletag.cmd.push(function () {
+            googletag.pubads().collapseEmptyDivs();
+            googletag
+              .defineSlot(ad_id, slotArr, id)
+              .addService(googletag.pubads());
+            googletag.enableServices();
+          });
+          googletag.cmd.push(function () {
+            googletag.display(id);
+          });
+          window.ads.add(id);
+        }
+      };
+
       if (id && ad_id) {
         if (!ads.has(adConf.gpt_id)) {
           adHTML = `<div id='${id}' style='${divStyle}'></div>`;
@@ -139,21 +155,16 @@ export default function Article({
             // document.body.appendChild(s);
             el.innerHTML = adHTML;
             setTimeout(() => {
-              if (window.googletag && googletag.apiReady) {
-                googletag.cmd.push(function () {
-                  googletag.pubads().collapseEmptyDivs();
-                  googletag
-                    .defineSlot(ad_id, slotArr, id)
-                    .addService(googletag.pubads());
-                  googletag.enableServices();
-                });
-                googletag.cmd.push(function () {
-                  googletag.display(id);
-                });
-                window.ads.add(adConf.gpt_id);
-              }
+              showAd(ad_id, slotArr, id);
             }, 10);
           } else {
+            const el = document.getElementById(adConf.gpt_id);
+            if (el && !el.hasChildNodes()) {
+              showAd(ad_id, slotArr, id);
+            }
+
+            console.log(window.ads);
+            console.log(adConf.gpt_id);
             console.log('In-Article ad container not found!!!', contentId);
           }
         }

@@ -14,6 +14,20 @@ const FirstAd = ({ adData, className, refresh }) => {
     }
   }, [adData]);
 
+  const showAd = (ad_id, slotArr, id) => {
+    if (window.googletag && googletag.apiReady) {
+      googletag.cmd.push(function () {
+        googletag.pubads().collapseEmptyDivs();
+        googletag.defineSlot(ad_id, slotArr, id).addService(googletag.pubads());
+        googletag.enableServices();
+      });
+      googletag.cmd.push(function () {
+        googletag.display(id);
+      });
+      window.ads.add(id);
+    }
+  };
+
   useEffect(() => {
     if (!isTransitioning && typeof window !== undefined && isDesktop != null) {
       if (adData && adData.ad_unit) {
@@ -22,22 +36,12 @@ const FirstAd = ({ adData, className, refresh }) => {
 
         if (!ads.has(adData.gpt_id)) {
           if (adEl.current) {
-            const adId = `ad_${adData.gpt_id.replace(/-/gi, '_')}`;
-            if (window.googletag && googletag.apiReady) {
-              window[adId] = googletag
-                .defineSlot(adData.ad_unit, [width, height], adData.gpt_id)
-                .addService(googletag.pubads());
-              googletag.enableServices();
+            showAdd(adData.ad_unit, [width, height], adData.gpt_id);
+          }
 
-              googletag.cmd.push(function () {
-                googletag.pubads().collapseEmptyDivs();
-              });
-
-              googletag.cmd.push(function () {
-                googletag.display(adData.gpt_id);
-              });
-              window.ads.add(adData.gpt_id);
-            }
+          const el = document.getElementById(adData.gpt_id);
+          if (el && !el.hasChildNodes()) {
+            showAdd(adData.ad_unit, [width, height], adData.gpt_id);
           }
         }
       }
