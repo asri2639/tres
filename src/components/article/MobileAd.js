@@ -37,10 +37,9 @@ const MobileAd = ({ adData, className, refresh }) => {
 
         if (!ads.has(adData.gpt_id)) {
           if (adEl.current) {
-            const adId = `ad_${adData.gpt_id.replace(/-/gi, '_')}`;
             if (window.googletag && googletag.apiReady) {
               if (adData.ad_unit.indexOf('728x90-300x250') > 0) {
-                window[adId] = googletag
+                window[adData.gpt_id] = googletag
                   .defineSlot(
                     adData.ad_unit,
                     [
@@ -56,9 +55,9 @@ const MobileAd = ({ adData, className, refresh }) => {
                   .addSize([980, 90], [728, 90])
                   .addSize([320, 480], [300, 250])
                   .build();
-                window[adId].defineSizeMapping(mapping);
+                window[adData.gpt_id].defineSizeMapping(mapping);
               } else {
-                window[adId] = googletag
+                window[adData.gpt_id] = googletag
                   .defineSlot(adData.ad_unit, [width, height], adData.gpt_id)
                   .addService(googletag.pubads());
                 googletag.enableServices();
