@@ -101,72 +101,89 @@ const Video = ({
         ComScore.nextPageView();
       }
     }
-
     if (typeof window !== 'undefined' && !isAMP) {
       const isDesktop = window.innerWidth >= 768;
       const divStyle = isDesktop
         ? `width: 728px; height: 90px;`
         : `width: 300px; height: 250px;`;
-      const slotArr = isDesktop ? '[728, 90]' : '[300, 250]';
+      const slotArr = isDesktop ? [728, 90] : [300, 250];
       let adHTML = null;
-      let id, ad_id;
-      if (isDesktop) {
-        if (rhs && desktop) {
-          id =
-            desktop && desktop.ad_conf && desktop.ad_conf.length > 0
-              ? desktop.ad_conf[0].gpt_id
-              : data.ad_conf.length && !!data.ad_conf[0]
-              ? data.ad_conf[0].gpt_id
-              : null;
-          ad_id =
-            desktop && desktop.ad_conf && desktop.ad_conf.length > 0
-              ? desktop.ad_conf[0].ad_unit_id
-              : data.ad_conf.length && !!data.ad_conf[0]
-              ? data.ad_conf[0].gpt_id
-              : null;
-        }
-      } else {
-        if (desktop) {
-          id =
-            desktop && desktop.ad_conf && desktop.ad_conf.length > 0
-              ? desktop.ad_conf[0].gpt_id
-              : data.ad_conf.length && !!data.ad_conf[0]
-              ? data.ad_conf[0].gpt_id
-              : null;
-          ad_id =
-            desktop && desktop.ad_conf && desktop.ad_conf.length > 0
-              ? desktop.ad_conf[0].ad_unit_id
-              : data.ad_conf.length && !!data.ad_conf[0]
-              ? data.ad_conf[0].gpt_id
-              : null;
+      let adConf = null;
+      if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
+        if (data.ad_conf[0].web_msite && data.ad_conf[0].web_msite) {
+          adConf = data.ad_conf[0].web_msite[0];
+        } else {
+          if (isDesktop) {
+            adConf = data.ad_conf[0].web ? data.ad_conf[0].web[0] : null;
+          } else {
+            adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite[0] : null;
+          }
         }
       }
-      if (id) {
-        adHTML = `<div id='${id + contentId}' style='${divStyle}'></div>`;
-        const el = document.querySelector(
-          `[data-content-id="${contentId}"] .EtvadsSection`
-        );
 
-        if (el && el.querySelector('#adsContainer')) {
-          var s = document.createElement('script');
-          s.type = 'text/javascript';
-          var code = `
-          if(window.googletag && googletag.apiReady) {
-            googletag.cmd.push(function() {
-              googletag.pubads().collapseEmptyDivs();
-              googletag.defineSlot('${ad_id}', ${slotArr}, '${
-            id + contentId
-          }').addService(googletag.pubads()); 
-              googletag.enableServices(); 
-            }); 
-            googletag.cmd.push(function() { 
-              googletag.display('${id + contentId}'); 
-            });
-        }`;
-          s.appendChild(document.createTextNode(code));
-          // document.body.appendChild(s);
-          el.innerHTML = adHTML;
-          el.querySelector('#' + id + contentId).appendChild(s);
+      const id = adConf ? adConf.gpt_id : null;
+      const ad_id = adConf ? adConf.ad_unit_id : null;
+
+      window.ads = window.ads || new Set();
+      const ads = window.ads;
+
+      if (id && ad_id) {
+        if (!ads.has(adConf.gpt_id)) {
+          adHTML = `<div id='${id}' style='${divStyle}'></div>`;
+          const el = document.querySelector(
+            `[data-content-id="${contentId}"] .EtvadsSection`
+          );
+
+          if (el && el.querySelector('#adsContainer')) {
+            // document.body.appendChild(s);
+            el.innerHTML = adHTML;
+            setTimeout(() => {
+              if (window.googletag && googletag.apiReady) {
+                googletag.cmd.push(function () {
+                  googletag.pubads().collapseEmptyDivs();
+                  googletag
+                    .defineSlot(ad_id, slotArr, id)
+                    .addService(googletag.pubads());
+                  googletag.enableServices();
+                });
+                googletag.cmd.push(function () {
+                  googletag.display(id);
+                });
+                window.ads.add(adConf.gpt_id);
+              }
+            }, 10);
+          } else {
+            console.log('In-Article ad container not found!!!', contentId);
+          }
+        }
+      }
+    }
+    
+    if (typeof window !== 'undefined' && isAMP) {
+      let adConf = null;
+      if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
+        if (data.ad_conf[0].web_msite && data.ad_conf[0].web_msite) {
+          adConf = data.ad_conf[0].web_msite[0];
+        } else {
+          if (isDesktop) {
+            adConf = data.ad_conf[0].web ? data.ad_conf[0].web[0] : null;
+          } else {
+            adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite[0] : null;
+          }
+        }
+      }
+      const id = adConf ? adConf.gpt_id : null;
+      const ad_id = adConf ? adConf.ad_unit_id : null;
+
+      if (ad_id) {
+        const el = document.querySelector(`.EtvadsSection`);
+        if (el) {
+          el.innerHTML = `<amp-ad width=300 height=250
+                  type="doubleclick"
+                  data-slot="${ad_id}">
+                <div placeholder></div>
+                <div fallback></div>
+              </amp-ad>`;
         }
       }
     }
@@ -352,7 +369,7 @@ const Video = ({
         </Sticky>
       </div>
 
-      <MediaContextProvider>
+  {/*     <MediaContextProvider>
         <Media at="xs">
           <MobileNextArticle
             label={'next_videos'}
@@ -370,7 +387,7 @@ const Video = ({
             </div>
           </Media>
         )}
-      </MediaContextProvider>
+      </MediaContextProvider> */}
     </div>
   );
 };

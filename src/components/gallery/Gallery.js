@@ -40,6 +40,7 @@ const Gallery = ({
   const isAMP = useContext(AMPContext);
   const router = useRouter();
   const isRTL = useContext(RTLContext);
+  const [ampHtml, setAmpHtml] = useState(null);
 
   const [source, setSource] = useState(null);
 
@@ -176,22 +177,24 @@ const Gallery = ({
       }
     }
 
-    if (isAMP) {
+    if (typeof window !== 'undefined' && isAMP) {
       let adConf = null;
       if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
         if (data.ad_conf[0].web_msite && data.ad_conf[0].web_msite) {
           adConf = data.ad_conf[0].web_msite[0];
         } else {
-          adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite[0] : null;
+          if (isDesktop) {
+            adConf = data.ad_conf[0].web ? data.ad_conf[0].web[0] : null;
+          } else {
+            adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite[0] : null;
+          }
         }
       }
-
       const id = adConf ? adConf.gpt_id : null;
       const ad_id = adConf ? adConf.ad_unit_id : null;
 
-      const parsedHtml = stringToHTML(html);
       if (ad_id) {
-        const el = parsedHtml.querySelector(`.EtvadsSection`);
+        const el = document.querySelector(`.EtvadsSection`);
         if (el) {
           el.innerHTML = `<amp-ad width=300 height=250
                   type="doubleclick"
@@ -202,7 +205,6 @@ const Gallery = ({
         }
       }
 
-      setAmpHtml(parsedHtml.innerHTML);
     }
   }, [inView, contentId]);
 
