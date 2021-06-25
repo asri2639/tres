@@ -33,20 +33,20 @@ const Constants = Object.freeze({
   },
 });
 
-export const accessToken = {
-  web: '',
-  // env === 'production'
-  //   ? 'TjeNsXehJqhh2DGJzBY9'
-  //   : env === 'development'
-  //   ? 'Fw3196P2FES3HBfytEtn'
-  //   : 'Fw3196P2FES3HBfytEtn'
-  mobile:'',
 
-  // env === 'production'
-  // ? 'woB1UukKSzZ5aduEUxwt'
-  // : env === 'development'
-  // ? 'woB1UukKSzZ5aduEUxwt'
-  // : 's2byd1VP6PN8hYDsb8zj'
+export const accessToken = {
+  web:
+    env === 'production'
+      ? 'TjeNsXehJqhh2DGJzBY9'
+      : env === 'development'
+      ? 'TjeNsXehJqhh2DGJzBY9'
+      : 'Fw3196P2FES3HBfytEtn',
+  mobile:
+    env === 'production'
+      ? 'woB1UukKSzZ5aduEUxwt'
+      : env === 'development'
+      ? 'woB1UukKSzZ5aduEUxwt'
+      : 's2byd1VP6PN8hYDsb8zj',
 };
 
 export const applicationConfig = {

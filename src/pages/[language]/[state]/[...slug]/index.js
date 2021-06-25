@@ -432,7 +432,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             portal_state: state, //national
             version: 'v2',
           },
-          config: { isSSR: typeof window === 'undefined' },
+          // config: { isSSR: typeof window === 'undefined' },
 
           // isSSR: typeof window === 'undefined',
         });

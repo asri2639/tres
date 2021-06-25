@@ -159,7 +159,6 @@ const VideoList = ({ videoData, appConfig }) => {
   const isAMP = useContext(AMPContext);
 
   const { publicRuntimeConfig } = getConfig();
-  const config = useContext(MenuContext);
 
   const router = useRouter();
   const api = API(APIEnum.CatalogList, APIEnum.Video);
