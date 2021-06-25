@@ -36,12 +36,12 @@ const FirstAd = ({ adData, className, refresh }) => {
 
         if (!ads.has(adData.gpt_id)) {
           if (adEl.current) {
-            showAdd(adData.ad_unit, [width, height], adData.gpt_id);
+            showAd(adData.ad_unit, [width, height], adData.gpt_id);
           }
 
           const el = document.getElementById(adData.gpt_id);
           if (el && !el.hasChildNodes()) {
-            showAdd(adData.ad_unit, [width, height], adData.gpt_id);
+            showAd(adData.ad_unit, [width, height], adData.gpt_id);
           }
         }
       }
