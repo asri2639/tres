@@ -29,23 +29,23 @@ const FirstAd = ({ adData, className, refresh }) => {
   };
 
   useEffect(() => {
-    if (typeof window !== undefined && isDesktop != null) {
-      if (adData && adData.ad_unit) {
-        window.ads = window.ads || new Set();
-        const ads = window.ads;
+    const intervalID = window.setInterval(() => {
+      if (typeof window !== undefined && isDesktop != null) {
+        if (adData && adData.ad_unit) {
+          window.ads = window.ads || new Set();
+          const ads = window.ads;
 
-        if (!ads.has(adData.gpt_id)) {
-          if (adEl.current) {
-            // showAd(adData.ad_unit, [width, height], adData.gpt_id);
-          }
-
-          const el = document.getElementById(adData.gpt_id);
-          if (el && !el.hasChildNodes()) {
-            showAd(adData.ad_unit, [width, height], adData.gpt_id);
+          if (!ads.has(adData.gpt_id)) {
+            const el = document.getElementById(adData.gpt_id);
+            if (el && !el.hasChildNodes()) {
+              showAd(adData.ad_unit, [width, height], adData.gpt_id);
+            }
+          } else {
+            clearInterval(intervalID);
           }
         }
       }
-    }
+    }, 500);
   }, [adData, isDesktop, adEl]);
 
   return (
