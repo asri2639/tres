@@ -18,7 +18,6 @@ import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import MobileAd from '@components/article/MobileAd';
 import FirstAd from '@components/article/FirstAd';
-import { useRouter } from 'next/router';
 
 // initialPosition
 // div height

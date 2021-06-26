@@ -17,7 +17,7 @@ const FirstAd = ({ adData, className, refresh }) => {
   const showAd = (ad_id, slotArr, id) => {
     if (window.googletag && googletag.apiReady) {
       googletag.cmd.push(function () {
-        googletag.pubads().collapseEmptyDivs();
+        // googletag.pubads().collapseEmptyDivs();
         googletag.defineSlot(ad_id, slotArr, id).addService(googletag.pubads());
         googletag.enableServices();
       });
@@ -29,14 +29,14 @@ const FirstAd = ({ adData, className, refresh }) => {
   };
 
   useEffect(() => {
-    if (!isTransitioning && typeof window !== undefined && isDesktop != null) {
+    if (typeof window !== undefined && isDesktop != null) {
       if (adData && adData.ad_unit) {
         window.ads = window.ads || new Set();
         const ads = window.ads;
 
         if (!ads.has(adData.gpt_id)) {
           if (adEl.current) {
-            showAd(adData.ad_unit, [width, height], adData.gpt_id);
+            // showAd(adData.ad_unit, [width, height], adData.gpt_id);
           }
 
           const el = document.getElementById(adData.gpt_id);
