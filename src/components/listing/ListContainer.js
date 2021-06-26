@@ -198,12 +198,14 @@ const ListContainer = ({ children, data, payload }) => {
         ));
         break;
       case 'ad_unit_square':
-        if (
-          adsMap.findIndex(
-            (v) => v && v.gpt_id === catalog.ad_conf.responsive_ad.gpt_id
-          ) === -1
-        ) {
-          adsMap.push(catalog);
+        if (catalog.ad_conf.responsive_ad) {
+          if (
+            adsMap.findIndex(
+              (v) => v && v.gpt_id === catalog.ad_conf.responsive_ad.gpt_id
+            ) === -1
+          ) {
+            adsMap.push(catalog);
+          }
         }
         if (!isDesktop) {
           returnValue = (
@@ -241,7 +243,7 @@ const ListContainer = ({ children, data, payload }) => {
     return (
       <React.Fragment key={ind}>
         {returnValue}
-        {desktopAdIndex !== -1 ? (
+        {desktopAdIndex !== -1 && adsMap[desktopAdIndex] ? (
           <DesktopAdContainer
             desktop={isDesktop}
             data={[adsMap[desktopAdIndex]]}

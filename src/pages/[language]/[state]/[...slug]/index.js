@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { NextSeo, ArticleJsonLd } from 'next-seo';
-
+import { trackPromise } from 'react-promise-tracker';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import Head from 'next/head';
@@ -86,6 +86,7 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
         new URL(`http:localhost:3000${router.asPath}`).pathname
       }`;
     }
+    console.log('called', pageType);
     switch (pageType) {
       case 'article':
         const tags = new Set();
@@ -266,8 +267,12 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
         break;
       case 'listing':
         return <ListContainer data={data} payload={payload}></ListContainer>;
+      case 'navlisting':
+        return <ListContainer data={data} payload={payload}></ListContainer>;
+      case 'search':
+        return <ListContainer data={data} payload={payload}></ListContainer>;
       case 'redirect':
-        return null;
+        return '';
     }
 
     return (
@@ -393,7 +398,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   bypass = args.asPath.indexOf('/live-streaming/') >= 0;
   const id = query.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
-
+console.log('checking',query.slug[0].toLowerCase())
   if (re.test(id) || bypass) {
     const api = API(APIEnum.CatalogList);
     let type = query.slug[0].toLowerCase();
@@ -514,16 +519,101 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         };
     }
   } else {
-    const redirectUrl = `${
-      publicRuntimeConfig.APP_ENV === 'staging'
-        ? 'https://staging.etvbharat.com'
-        : 'https://www.etvbharat.com'
-    }${url}`;
+    const api = API(APIEnum.Listing, APIEnum.CatalogList);
+    if (!url.includes('assets') && !url.includes('search')) {
 
-    return {
-      pageType: 'redirect',
-      data: redirectUrl,
-    };
+      const url = args.asPath;
+      const response = await api.Listing.getListingApiKey({
+        query: {
+          app: 'msite',
+          url: url,
+        },
+      });
+
+      const result = response.data;
+      console.log('params', state);
+      const redirectUrl = `${
+        publicRuntimeConfig.APP_ENV === 'staging'
+          ? 'https://staging.etvbharat.com'
+          : 'https://www.etvbharat.com'
+      }${url}`;
+      const params = {
+        collective_ads_count: 0,
+        page: 0,
+        page_size: 8,
+        version: 'v2',
+        response: 'r2',
+        item_languages: language,
+        portal_state: state,
+      };
+
+      if (result) {
+        var finalQueryParamObject = {};
+        for (var i = 0; i < result.query_params.length; i++) {
+          finalQueryParamObject = Object.assign(
+            {},
+            finalQueryParamObject,
+            result.query_params[i]
+          );
+        }
+        if(url.includes('state') && Object.keys(finalQueryParamObject).length === 0){
+          finalQueryParamObject.dynamic_state = 'ap'
+        }
+        const requestPayload = {
+          params: {
+            key: result.home_link,
+          },
+          query: Object.assign({}, params, finalQueryParamObject),
+        };
+
+        const listingResp = await trackPromise(
+          api.CatalogList.getListing(requestPayload)
+        );
+
+        const data = listingResp.data.data;
+        console.log(listingResp.data.data.catalog_list_items[0].catalog_list_items[0].display_title)
+        return {
+          pageType: 'navlisting',
+          data: data,
+          payload: requestPayload,
+        };
+        //console.log(data);
+      } else {
+        return {
+          pageType: 'navlisting',
+          data: '',
+        };
+      }
+    } else if(url.includes('search')){
+
+      const searchTerm = query.slug.slice(-1)[0];
+       const params = {
+        q:searchTerm,
+        region: 'IN',
+        response: 'r2',
+        item_languages: language,
+        state: state,
+      };
+       const requestPayload = {
+
+          query: params,
+        };
+        const searchResults = await trackPromise(
+          api.CatalogList.getSearchResults(requestPayload)
+        );
+        const data = searchResults.data.data;
+        return {
+          pageType: 'search',
+          data: data,
+          payload: requestPayload,
+        };
+
+    }else {
+      return {
+        pageType: 'redirect',
+        data: url,
+      };
+    }
 
     /* const stateValue = stateCodeConverter(urlSplit[4]);
     const api = API(APIEnum.Listing, APIEnum.CatalogList);

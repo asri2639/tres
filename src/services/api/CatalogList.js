@@ -72,6 +72,12 @@ export default function CatalogList(inst) {
         config
       );
     },
+    getSearchResults({  query, config } = new APIRequest()) {
+      return inst.get(
+        `${controller}/search-page-list?${new URLSearchParams(query)}`,
+        config
+      );
+    },
 
     // https://prod.api.etvbharat.com/catalog_lists/app-new-headlines-district-carousel1-andhra-pradesh?item_languages=te&auth_token=kmAJAH4RTtqHjgoauC4o&region=IN&response=r2&access_token=woB1UukKSzZ5aduEUxwt&dynamic_district=chittoor&portal_state=ap
     getDistrictNews({ params, query, config } = new APIRequest()) {
