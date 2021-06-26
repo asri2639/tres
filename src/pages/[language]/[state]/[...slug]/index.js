@@ -50,43 +50,42 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
       return <div>URL Not Found</div>;
     }
 
-    if (pageType === 'article' || pageType === 'video') {
-      if (
-        data.state &&
-        data.state.length > 0 &&
-        data.state.indexOf('na') !== -1
-      ) {
-        if (data.item_languages.indexOf('hi') !== -1) {
-          stateName = 'delhi';
-        } else if (data.item_languages.indexOf('te') !== -1) {
-          stateName = 'telangana';
-        } else if (data.item_languages.indexOf('ur') !== -1) {
-          stateName = 'national';
-        }
+    const pathname = new URL(`http:localhost:3000${router.asPath}`).pathname;
+    canonicalUrl = pathname;
+    if (
+      data.state &&
+      data.state.length > 0 &&
+      data.state.indexOf('na') !== -1
+    ) {
+      if (data.item_languages.indexOf('hi') !== -1) {
+        stateName = 'delhi';
+      } else if (data.item_languages.indexOf('te') !== -1) {
+        stateName = 'telangana';
+      } else if (data.item_languages.indexOf('ur') !== -1) {
+        stateName = 'national';
       }
+    }
 
-      if (stateName) {
-        const pathname = new URL(`http:localhost:3000${router.asPath}`)
-          .pathname;
+    if (stateName) {
+      const splitPath = pathname.split('/');
 
-        const splitPath = pathname.split('/');
+      canonicalUrl = `https://react.etvbharat.com${[
+        ...splitPath.slice(0, 2),
+        stateName,
+        ...splitPath.slice(3),
+      ].join('/')}`;
+    }
 
-        canonicalUrl = `https://react.etvbharat.com${[
-          ...splitPath.slice(0, 2),
-          stateName,
-          ...splitPath.slice(3),
-        ].join('/')}`;
-      } else {
-        canonicalUrl = `https://react.etvbharat.com${
-          new URL(`http:localhost:3000${router.asPath}`).pathname
-        }`;
-      }
-
+    if (
+      pageType === 'gallery' ||
+      pageType === 'video' ||
+      pageType === 'article'
+    ) {
       ampUrl = `https://react.etvbharat.com/amp${
         new URL(`http:localhost:3000${router.asPath}`).pathname
       }`;
     }
-    console.log('called', pageType);
+
     switch (pageType) {
       case 'article':
         const tags = new Set();
@@ -268,7 +267,13 @@ const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
       case 'listing':
         return <ListContainer data={data} payload={payload}></ListContainer>;
       case 'navlisting':
-        return <ListContainer data={data} payload={payload}></ListContainer>;
+        return (
+          <ListContainer
+            key={canonicalUrl}
+            data={data}
+            payload={payload}
+          ></ListContainer>
+        );
       case 'search':
         return <ListContainer data={data} payload={payload}></ListContainer>;
       case 'redirect':
@@ -398,7 +403,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   bypass = args.asPath.indexOf('/live-streaming/') >= 0;
   const id = query.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
-console.log('checking',query.slug[0].toLowerCase())
+
   if (re.test(id) || bypass) {
     const api = API(APIEnum.CatalogList);
     let type = query.slug[0].toLowerCase();
@@ -521,7 +526,6 @@ console.log('checking',query.slug[0].toLowerCase())
   } else {
     const api = API(APIEnum.Listing, APIEnum.CatalogList);
     if (!url.includes('assets') && !url.includes('search')) {
-
       const url = args.asPath;
       const response = await api.Listing.getListingApiKey({
         query: {
@@ -556,8 +560,11 @@ console.log('checking',query.slug[0].toLowerCase())
             result.query_params[i]
           );
         }
-        if(url.includes('state') && Object.keys(finalQueryParamObject).length === 0){
-          finalQueryParamObject.dynamic_state = 'ap'
+        if (
+          url.includes('state') &&
+          Object.keys(finalQueryParamObject).length === 0
+        ) {
+          finalQueryParamObject.dynamic_state = 'ap';
         }
         const requestPayload = {
           params: {
@@ -571,7 +578,10 @@ console.log('checking',query.slug[0].toLowerCase())
         );
 
         const data = listingResp.data.data;
-        console.log(listingResp.data.data.catalog_list_items[0].catalog_list_items[0].display_title)
+        console.log(
+          listingResp.data.data.catalog_list_items[0].catalog_list_items[0]
+            .display_title
+        );
         return {
           pageType: 'navlisting',
           data: data,
@@ -584,31 +594,28 @@ console.log('checking',query.slug[0].toLowerCase())
           data: '',
         };
       }
-    } else if(url.includes('search')){
-
+    } else if (url.includes('search')) {
       const searchTerm = query.slug.slice(-1)[0];
-       const params = {
-        q:searchTerm,
+      const params = {
+        q: searchTerm,
         region: 'IN',
         response: 'r2',
         item_languages: language,
         state: state,
       };
-       const requestPayload = {
-
-          query: params,
-        };
-        const searchResults = await trackPromise(
-          api.CatalogList.getSearchResults(requestPayload)
-        );
-        const data = searchResults.data.data;
-        return {
-          pageType: 'search',
-          data: data,
-          payload: requestPayload,
-        };
-
-    }else {
+      const requestPayload = {
+        query: params,
+      };
+      const searchResults = await trackPromise(
+        api.CatalogList.getSearchResults(requestPayload)
+      );
+      const data = searchResults.data.data;
+      return {
+        pageType: 'search',
+        data: data,
+        payload: requestPayload,
+      };
+    } else {
       return {
         pageType: 'redirect',
         data: url,
