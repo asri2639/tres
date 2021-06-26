@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { NextSeo, ArticleJsonLd } from 'next-seo';
 import { trackPromise } from 'react-promise-tracker';
-import cacheData from 'memory-cache';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import Head from 'next/head';
@@ -20,15 +19,7 @@ import VideoList from '@components/video/VideoList';
 import GalleryList from '@components/gallery/GalleryList';
 import ListContainer from '@components/listing/ListContainer';
 
-const slug = ({
-  data,
-  pageType,
-  appConfig,
-  id,
-  isAmp,
-  payload,
-  dropDownData,
-}) => {
+const slug = ({ data, pageType, appConfig, id, isAmp, payload }) => {
   const router = useRouter();
 
   let canonicalUrl = '',
@@ -276,36 +267,17 @@ const slug = ({
       case 'listing':
         return <ListContainer data={data} payload={payload}></ListContainer>;
       case 'navlisting':
-        headerObj = {
-          title: 'ETV Bharat',
-          canonicalUrl: canonicalUrl,
-          ampUrl: ampUrl,
-          fbContentId: fbContentId,
-          thumbnail: thumbnailExtractor(
-            data.thumbnails,
-            '3_2',
-            'b2s',
-            data.media_type
-          ),
-
-          description: data.short_description || data.description,
-          keywords: data.keywords ? data.keywords.join(', ') : '',
-          url: data.web_url,
-          contentType: data.content_type,
-          ldjson: false,
-        };
         return (
           <ListContainer
             key={canonicalUrl}
             data={data}
             payload={payload}
-            dropdown={dropDownData}
           ></ListContainer>
         );
       case 'search':
         return <ListContainer data={data} payload={payload}></ListContainer>;
       case 'redirect':
-        return null;
+        return '';
     }
 
     return (
@@ -363,40 +335,40 @@ const slug = ({
             type="application/ld+json"
             dangerouslySetInnerHTML={{
               __html: `
- {
- "@context": "https://schema.org",
- "@type": "NewsArticle",
- "mainEntityOfPage": {
- "@type": "WebPage",
- "@id": "https://react.etvbharat.com/${headerObj.url}"
- },
- "headline": "${headerObj.headline}",
- "description": "${headerObj.description.replace(/\"/gi, '\\"')}",
- "image": {
- "@type": "ImageObject",
- "url": "${headerObj.thumbnailM}",
- "width": 708,
- "height": 474
- },
- "author": {
- "@type": "Organization",
- "name": "ETV Bharat"
- },
- "publisher": {
- "@type": "Organization",
- "name": "ETV Bharat",
- "logo": {
- "@type": "ImageObject",
- "url": "https://www.etvbharat.com/src/assets/images/etvlogo/${(
-   headerObj.url.split('/')[0] + ''
- ).toLowerCase()}.png",
- "width": 82,
- "height": 60
- }
- },
- "datePublished": "${headerObj.publishedAt}",
- "dateModified": "${headerObj.updatedAt || headerObj.publishedAt}"
- }`,
+      {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://react.etvbharat.com/${headerObj.url}"
+        },
+        "headline": "${headerObj.headline}",
+        "description": "${headerObj.description.replace(/\"/gi, '\\"')}",
+        "image": {
+          "@type": "ImageObject",
+          "url": "${headerObj.thumbnailM}",
+          "width": 708,
+          "height": 474
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "ETV Bharat"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ETV Bharat",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.etvbharat.com/src/assets/images/etvlogo/${(
+              headerObj.url.split('/')[0] + ''
+            ).toLowerCase()}.png",
+            "width": 82,
+            "height": 60
+          }
+        },
+        "datePublished": "${headerObj.publishedAt}",
+        "dateModified": "${headerObj.updatedAt || headerObj.publishedAt}"
+      }`,
             }}
           ></script>
         ) : null}
@@ -539,8 +511,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         }
 
         /* console.log(
- articleResp.catalog_list_items.length === 0 ? 'Invalid Response' : ''
- ); */
+         articleResp.catalog_list_items.length === 0 ? 'Invalid Response' : ''
+        ); */
         // Pass data to the page via props
         return {
           pageType: error ? 'error' : 'article',
@@ -552,13 +524,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         };
     }
   } else {
-    const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
-    if (
-      url.includes('state') ||
-      url.includes('city') ||
-      url.includes('bharat') ||
-      url.includes('sitara')
-    ) {
+    const api = API(APIEnum.Listing, APIEnum.CatalogList);
+    if (!url.includes('assets') && !url.includes('search')) {
       const url = args.asPath;
       const response = await api.Listing.getListingApiKey({
         query: {
@@ -568,61 +535,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       });
 
       const result = response.data;
-      let finalDataObj = {
-        title: '',
-        data: [],
-      };
-      let dropDownData = undefined;
-      if (url.includes('state')) {
-        let otherStates = '';
-        if (url.includes('english')) {
-          otherStates = 'yes';
-        }
-        const statePayload = {
-          params: {
-            state: state,
-          },
-          query: {
-            response: 'r2',
-            item_languages: language,
-            region: 'IN',
-            other_states: otherStates,
-          },
-        };
-        const data = cacheData.get(language);
-        if (data) {
-          dropDownData = data;
-        } else {
-          const response = await trackPromise(
-            api.Catalog.getListingPageSates(statePayload)
-          );
-          dropDownData = response.data.data.items;
-          if (dropDownData.length > 0) {
-            cacheData.put(language, dropDownData, 5 * 1000 * 60 * 60);
-          }
-        }
-        let selectedValue = '';
-
-        if (language == 'en') {
-          if (url.substring(url.length - 'state'.length) == 'state') {
-            selectedValue = dropDownData[0].ml_title[0].text;
-          } else {
-            let titleobj = dropDownData.filter(
-              (item) => urlSplit[4] == item.friendly_id
-            );
-            console.log('', titleobj[0].ml_title[0].text);
-            selectedValue = titleobj[0].ml_title[0].text;
-          }
-        } else {
-          let titleobj = dropDownData.filter(
-            (item) => urlSplit[2] == item.friendly_id
-          );
-          selectedValue = titleobj[0].ml_title[0].text;
-        }
-        finalDataObj.data = dropDownData;
-        finalDataObj.title = selectedValue;
-      }
-
+      console.log('params', state);
       const redirectUrl = `${
         publicRuntimeConfig.APP_ENV === 'staging'
           ? 'https://staging.etvbharat.com'
@@ -665,11 +578,14 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         );
 
         const data = listingResp.data.data;
+        console.log(
+          listingResp.data.data.catalog_list_items[0].catalog_list_items[0]
+            .display_title
+        );
         return {
           pageType: 'navlisting',
           data: data,
           payload: requestPayload,
-          dropDownData: finalDataObj,
         };
         //console.log(data);
       } else {
@@ -700,82 +616,78 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         payload: requestPayload,
       };
     } else {
-      const redirectUrl = `${
-        publicRuntimeConfig.APP_ENV === 'staging'
-          ? 'https://staging.etvbharat.com'
-          : 'https://www.etvbharat.com'
-      }${url}`;
       return {
         pageType: 'redirect',
-        data: redirectUrl,
+        data: url,
       };
     }
 
     /* const stateValue = stateCodeConverter(urlSplit[4]);
- const api = API(APIEnum.Listing, APIEnum.CatalogList);
- const response = await api.Listing.getListingApiKey({
- query: {
- app: 'msite',
- url: args.asPath,
- },
- });
+    const api = API(APIEnum.Listing, APIEnum.CatalogList);
+    const response = await api.Listing.getListingApiKey({
+      query: {
+        app: 'msite',
+        url: args.asPath,
+      },
+    });
 
- const result = response.data;
+    const result = response.data;
 
- const requestPayload = {
- params: {
- key: result.home_link,
- },
- query: {
- collective_ads_count: 0,
- page: 0,
- page_size: 8,
- version: 'v2',
- response: 'r2',
- item_languages: language,
- portal_state: languageState,
- dynamic_state: stateValue,
- },
- };
+    const requestPayload = {
+      params: {
+        key: result.home_link,
+      },
+      query: {
+        collective_ads_count: 0,
+        page: 0,
+        page_size: 8,
+        version: 'v2',
+        response: 'r2',
+        item_languages: language,
+        portal_state: languageState,
+        dynamic_state: stateValue,
+      },
+    };
 
- const listingResp = await trackPromise(
- api.CatalogList.getListing(requestPayload)
- );
+    const listingResp = await trackPromise(
+      api.CatalogList.getListing(requestPayload)
+    );
 
- const data = listingResp.data.data; */
+    const data = listingResp.data.data; */
 
-    /* return {
- namespacesRequired: ['common'],
- pageType: 'listing',
- data: data,
- appConfig: applicationConfig.value,
- payload: requestPayload,
- id: null,
- }; */
+    /*  return {
+      namespacesRequired: ['common'],
+      pageType: 'listing',
+      data: data,
+      appConfig: applicationConfig.value,
+      payload: requestPayload,
+      id: null,
+    }; */
 
-    /* const id = query.slug.slice(-1)[0];
- var match = id.match(/\w{2,6}[0-9]+$/);
- if (!(match && match[0])) {
- res.writeHead(302, {
- // or 301
- Location: `${
- publicRuntimeConfig.APP_ENV === 'staging'
- ? 'https://staging.etvbharat.com'
- : 'https://www.etvbharat.com'
- }${req.url}`,
- });
- res.end();
- }
- if (
- req['protocol'] === 'http' &&
- publicRuntimeConfig.APP_ENV !== 'development' &&
- req.headers.host.endsWith('.etvbharat.com')
- ) {
- res.writeHead(302, {
- Location: 'https://' + req.headers.host + req.url,
- });
- res.end();
- } */
+    /*  const id = query.slug.slice(-1)[0];
+    var match = id.match(/\w{2,6}[0-9]+$/);
+    if (!(match && match[0])) {
+      res.writeHead(302, {
+        // or 301
+        Location: `${
+          publicRuntimeConfig.APP_ENV === 'staging'
+            ? 'https://staging.etvbharat.com'
+            : 'https://www.etvbharat.com'
+        }${req.url}`,
+      });
+      res.end();
+    }
+    if (
+      req['protocol'] === 'http' &&
+      publicRuntimeConfig.APP_ENV !== 'development' &&
+      req.headers.host.endsWith('.etvbharat.com')
+    ) {
+      res.writeHead(302, {
+        Location: 'https://' + req.headers.host + req.url,
+      });
+      res.end();
+    } */
   }
 };
+
 export default slug;
