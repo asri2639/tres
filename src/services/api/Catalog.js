@@ -13,6 +13,14 @@ export default function Catalog(inst) {
         config
       );
     },
+    getListingPageSates({ params, query, config } = new APIRequest()) {
+      return inst.get(
+        `${controller}/city-state/states?${new URLSearchParams(
+          query
+        )}`,
+        config
+      );
+    },
     getFooterDetails({ params, query, config } = new APIRequest()) {
       /*  return inst.get(
         `${controller}/message/items/footer-api?${new URLSearchParams(query)}`,

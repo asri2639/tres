@@ -25,6 +25,7 @@
     "express": "^4.17.1",
     "he": "^1.2.0",
     "js-service-wrapper": "^1.1.4",
+    "memory-cache": "^0.2.0",
     "next": "v10.0.3",
     "next-i18next": "^6.0.3",
     "next-seo": "^4.11.0",

@@ -18,7 +18,7 @@ import MainArticles from './MainArticles';
 import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
 
-const ListContainer = ({ children, data, payload }) => {
+const ListContainer = ({ children, data, payload, dropdown }) => {
   const api = API(APIEnum.CatalogList);
   const isRTL = useContext(RTLContext);
   let totalCalls = Math.ceil(data.total_items_count / 8);
@@ -275,7 +275,7 @@ const ListContainer = ({ children, data, payload }) => {
             {listItems && listItems.length > 0 ? (
               <>
                 <Media at="xs" className="w-full">
-                  <MobileMainArticles list={listItems[0].catalog_list_items} />
+                  <MobileMainArticles list={listItems[0].catalog_list_items} dropdown={dropdown} />
                 </Media>
                 <Media greaterThan="xs" className="w-full flex space-x-2">
                   <MainArticles list={listItems[0].catalog_list_items} />
