@@ -312,7 +312,7 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
               }}
 
             >
-              <div>{dropdown.title}</div>
+              <div className="text-center"  style={{ minWidth: '100px' }}>{dropdown.title}</div>
               <span className="pl-1 caret text-gray-700 "> &#9660;</span>
             </div>
           </div>
