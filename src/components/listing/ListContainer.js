@@ -10,17 +10,22 @@ import CatalogWall from './mobile/CatalogWall';
 import SeeAll from './mobile/SeeAll';
 import Loading from './mobile/Loading';
 import { stateCodeConverter } from '@utils/Helpers';
+import ListingStateSelectModal from '@components/common/ListingStateSelectModal';
 import { I18nContext } from 'react-i18next';
 import useSWR from 'swr';
 import React from 'react';
 import Sticky from 'wil-react-sticky';
+import { useRouter } from 'next/router';
 import MainArticles from './MainArticles';
 import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
-
+import useTranslator from '@hooks/useTranslator';
 const ListContainer = ({ children, data, payload, dropdown }) => {
   const api = API(APIEnum.CatalogList);
+  const router = useRouter();
   const isRTL = useContext(RTLContext);
+  const { t, appLanguage } = useTranslator();
+  const [showStateModal, setShowStateModal] = useState(false);
   let totalCalls = Math.ceil(data.total_items_count / 8);
 
   const reArrangeData = (data) => {
@@ -264,6 +269,58 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
         />
         <div className="md:w-4/12 "></div>
       </div> */}
+      <MediaContextProvider>
+         <Media at="xs" className="w-full mt-2">
+         {showStateModal ? (
+        <ListingStateSelectModal
+          data={dropdown.data}
+          state={router.query.state}
+          onClose={() => {
+            setShowStateModal(false);
+          }}
+          onStateSelect={(district) => {
+            setShowStateModal(false);
+
+            if (dropdown.title !== district.ml_title[0].text) {
+              let url = '';
+
+              if (router.query.language === 'english') {
+                url = '/english/national/state';
+                router.push(url + '/' + district.friendly_id);
+              } else {
+                url =
+                  '/' +
+                  router.query.language +
+                  '/' +
+                  district.friendly_id +
+                  '/state';
+                router.push(url);
+              }
+            }
+          }}
+        />
+      ) : null}
+         {dropdown ? (
+        dropdown.data && dropdown.data.length > 1 ? (
+          <div>
+          <div className="flex items-center float-right">
+            <div className="pr-2 text-sm">{t('select')}</div>
+            <div
+              className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
+              onClick={() => {
+                setShowStateModal(true);
+              }}
+
+            >
+              <div>{dropdown.title}</div>
+              <span className="pl-1 caret text-gray-700 "> &#9660;</span>
+            </div>
+          </div>
+          </div>
+        ) : null
+      ) : null}
+         </Media>
+      </MediaContextProvider>
       <div
         className={`lg:container listing-container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
           isRTL ? 'md:flex-row-reverse rtl' : ''
