@@ -303,7 +303,7 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
          {dropdown ? (
         dropdown.data && dropdown.data.length > 1 ? (
           <div>
-          <div className="flex items-center float-right">
+          <div className="flex items-center float-right mr-2.5">
             <div className="pr-2 text-sm">{t('select')}</div>
             <div
               className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
