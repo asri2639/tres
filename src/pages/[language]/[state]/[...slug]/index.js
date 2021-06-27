@@ -556,7 +556,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     if (
       url.includes('state') ||
       url.includes('city') ||
-      url.includes('bharat')
+      url.includes('bharat') ||
+      url.includes('sitara')
     ) {
       const url = args.asPath;
       const response = await api.Listing.getListingApiKey({
