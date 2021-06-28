@@ -149,13 +149,9 @@ export default function Article({
           const el = document.querySelector(
             `[data-content-id="${contentId}"] .EtvadsSection`
           );
-
           if (el && el.querySelector('#adsContainer')) {
-            // document.body.appendChild(s);
             el.innerHTML = adHTML;
-            setTimeout(() => {
-              showAd(ad_id, slotArr, id);
-            }, 10);
+            showAd(ad_id, slotArr, id);
           } else {
             const el = document.getElementById(adConf.gpt_id);
             if (el && !el.hasChildNodes()) {

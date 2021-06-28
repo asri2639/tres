@@ -41,7 +41,71 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
   const [showStateModal, setShowStateModal] = useState(null);
   const { promiseInProgress } = usePromiseTracker();
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const populateData = async () => {
+      if (!data.footer.length) {
+        const result = await api.Catalog.getFooterDetails({
+          query: {
+            region: country,
+            response: 'r2',
+            item_languages: language,
+            // env: 'staging',
+          },
+        });
+        const requiredData = result.data.data.params_hash2.footer;
+        let languageData = {};
+        requiredData.forEach((state) => {
+          state.item_languages.forEach((language) => {
+            languageData[language] = languageData[language] || [];
+            if (state.state) {
+              if (state.state === 'tamilnadu') {
+                state.state = 'tamil-nadu';
+              } else if (state.state === 'orissa') {
+                state.state = 'odisha';
+              } else if (state.state === 'maharastra') {
+                state.state = 'maharashtra';
+              } else if (state.state === 'Assam') {
+                state.state = 'assam';
+              } else if (state.state === 'tripura') {
+              }
+              state.display_title = state.display_title.replace(' ETV', '');
+              if (state.state !== 'tripura') {
+                languageData[language].push(state);
+              }
+            }
+          });
+        });
+        languageData = Object.keys(languageData)
+          .sort()
+          .reduce((a, c) => ((a[c] = languageData[c]), a), {});
+
+        setData({
+          header: {
+            ...data.header,
+            languages: languageData,
+          },
+          footer: requiredData,
+        });
+      }
+    };
+
+    populateData();
+
+    eventBus.on('state-selector', (data) => {
+      setShowStateModal({ data: data });
+    });
+
+    eventBus.on('district-selector', (data) => {
+      setShowDistrictModal(data.show);
+    });
+
+    return () => {
+      eventBus.remove('state-selector');
+      eventBus.remove('district-selector');
+    };
+  });
+
+  useEffect(() => {
     const debouncedHandleResize = debounce(async function handleResize() {
       let doCall = null;
       const isDesktop = window.innerWidth > 768;
@@ -104,51 +168,6 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
 
   useEffect(() => {
     const populateData = async () => {
-      if (!data.footer.length) {
-        const result = await api.Catalog.getFooterDetails({
-          query: {
-            region: country,
-            response: 'r2',
-            item_languages: language,
-            // env: 'staging',
-          },
-        });
-        const requiredData = result.data.data.params_hash2.footer;
-        let languageData = {};
-        requiredData.forEach((state) => {
-          state.item_languages.forEach((language) => {
-            languageData[language] = languageData[language] || [];
-            if (state.state) {
-              if (state.state === 'tamilnadu') {
-                state.state = 'tamil-nadu';
-              } else if (state.state === 'orissa') {
-                state.state = 'odisha';
-              } else if (state.state === 'maharastra') {
-                state.state = 'maharashtra';
-              } else if (state.state === 'Assam') {
-                state.state = 'assam';
-              } else if (state.state === 'tripura') {
-              }
-              state.display_title = state.display_title.replace(' ETV', '');
-              if (state.state !== 'tripura') {
-                languageData[language].push(state);
-              }
-            }
-          });
-        });
-        languageData = Object.keys(languageData)
-          .sort()
-          .reduce((a, c) => ((a[c] = languageData[c]), a), {});
-
-        setData({
-          header: {
-            ...data.header,
-            languages: languageData,
-          },
-          footer: requiredData,
-        });
-      }
-
       const menu = {
         desktop: [],
         mobile: [],
@@ -220,19 +239,6 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
     if (typeof window !== 'undefined') {
       window['menu'] = data.header;
     }
-
-    eventBus.on('state-selector', (data) => {
-      setShowStateModal({ data: data });
-    });
-
-    eventBus.on('district-selector', (data) => {
-      setShowDistrictModal(data.show);
-    });
-
-    return () => {
-      eventBus.remove('state-selector');
-      eventBus.remove('district-selector');
-    };
   }, [language, router.query.state, accessToken]);
   return (
     <>
