@@ -278,21 +278,7 @@ const slug = ({
       case 'navlisting':
         headerObj = {
           title: 'ETV Bharat',
-          canonicalUrl: canonicalUrl,
-          ampUrl: ampUrl,
-          fbContentId: fbContentId,
-          thumbnail: thumbnailExtractor(
-            data.thumbnails,
-            '3_2',
-            'b2s',
-            data.media_type
-          ),
 
-          description: data.short_description || data.description,
-          keywords: data.keywords ? data.keywords.join(', ') : '',
-          url: data.web_url,
-          contentType: data.content_type,
-          ldjson: false,
         };
         return (
           <ListContainer
@@ -557,7 +543,9 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       url.includes('state') ||
       url.includes('city') ||
       url.includes('bharat') ||
-      url.includes('sitara')
+      url.includes('sitara') ||
+      url.includes('film-and-tv') ||
+      url.includes('international')
     ) {
       const url = args.asPath;
       const response = await api.Listing.getListingApiKey({
@@ -589,7 +577,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             other_states: otherStates,
           },
         };
-        const data = cacheData.get(language);
+
+        const data = cacheData.get(language+urlSplit[2]);
         if (data) {
           dropDownData = data;
         } else {
@@ -598,7 +587,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           );
           dropDownData = response.data.data.items;
           if (dropDownData.length > 0) {
-            cacheData.put(language, dropDownData, 5 * 1000 * 60 * 60);
+            cacheData.put(language+urlSplit[2], dropDownData, 5 * 1000 * 60 * 60);
           }
         }
         let selectedValue = '';

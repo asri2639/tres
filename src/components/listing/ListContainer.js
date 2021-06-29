@@ -5,9 +5,11 @@ import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { Media, MediaContextProvider } from '@media';
 import RectangleCard from '@components/listing/mobile/RectangleCard';
 import AdContainer from '@components/article/AdContainer';
+import NavLink from '@components/common/NavLink';
 import DesktopAdContainer from '@components/article/DesktopAdContainer';
 import CatalogWall from './mobile/CatalogWall';
 import SeeAll from './mobile/SeeAll';
+import GoogleTagManager from '@utils/GoogleTagManager';
 import Loading from './mobile/Loading';
 import { stateCodeConverter } from '@utils/Helpers';
 import ListingStateSelectModal from '@components/common/ListingStateSelectModal';
@@ -235,7 +237,9 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
         ) : null; */
         returnValue = null;
         break;
-
+      case 'news_grid_seeall':
+      case 'featured_mosaic_carousel':
+      case 'slider_seeall':
       case 'auto_horizontal_dropdown_carousel_viewall':
       case 'featured_mosaic_carousel_seeall':
         returnValue =
@@ -270,56 +274,71 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
         <div className="md:w-4/12 "></div>
       </div> */}
       <MediaContextProvider>
-         <Media at="xs" className="w-full mt-2">
-         {showStateModal ? (
-        <ListingStateSelectModal
-          data={dropdown.data}
-          state={router.query.state}
-          onClose={() => {
-            setShowStateModal(false);
-          }}
-          onStateSelect={(district) => {
-            setShowStateModal(false);
-
-            if (dropdown.title !== district.ml_title[0].text) {
-              let url = '';
-
-              if (router.query.language === 'english') {
-                url = '/english/national/state';
-                router.push(url + '/' + district.friendly_id);
-              } else {
-                url =
-                  '/' +
-                  router.query.language +
-                  '/' +
-                  district.friendly_id +
-                  '/state';
-                router.push(url);
-              }
-            }
-          }}
-        />
-      ) : null}
-         {dropdown ? (
-        dropdown.data && dropdown.data.length > 1 ? (
-          <div>
-          <div className="flex items-center float-right mr-2.5">
-            <div className="pr-2 text-sm">{t('select')}</div>
-            <div
-              className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
-              onClick={() => {
-                setShowStateModal(true);
-              }}
-
-            >
-              <div className="text-center"  style={{ minWidth: '100px' }}>{dropdown.title}</div>
-              <span className="pl-1 caret text-gray-700 "> &#9660;</span>
+        <Media at="xs" className="w-full mt-2">
+          {listItems[0].layout_type == 'featured_topnews_seeall' || 'featured_staggered_grid' && listItems[0].url != '' ? (
+            <div>
+              <div className="flex items-center font-extrabold float-left ml-3.5">{listItems[0].ml_title[0].text}</div>
+              <div className="flex items-center font-semibold text-sm text-red-500 float-right mr-10">
+              {listItems[0].url != '' ? <NavLink
+                        href={listItems[0].url}
+                        as={listItems[0].url}
+                        passHref
+                        onClick={() => {
+                          GoogleTagManager.menuClick(listItems[0], 'headermenu');
+                        }}
+                      >{t('see_all')}</NavLink> : null}</div>
             </div>
-          </div>
-          </div>
-        ) : null
-      ) : null}
-         </Media>
+          ) : null}
+          {showStateModal ? (
+            <ListingStateSelectModal
+              data={dropdown.data}
+              state={router.query.state}
+              onClose={() => {
+                setShowStateModal(false);
+              }}
+              onStateSelect={(district) => {
+                setShowStateModal(false);
+
+                if (dropdown.title !== district.ml_title[0].text) {
+                  let url = '';
+
+                  if (router.query.language === 'english') {
+                    url = '/english/national/state';
+                    router.push(url + '/' + district.friendly_id);
+                  } else {
+                    url =
+                      '/' +
+                      router.query.language +
+                      '/' +
+                      district.friendly_id +
+                      '/state';
+                    router.push(url);
+                  }
+                }
+              }}
+            />
+          ) : null}
+          {dropdown ? (
+            dropdown.data && dropdown.data.length > 1 ? (
+              <div>
+                <div className="flex items-center float-right mr-2.5">
+                  <div className="pr-2 text-sm">{t('select')}</div>
+                  <div
+                    className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
+                    onClick={() => {
+                      setShowStateModal(true);
+                    }}
+                  >
+                    <div className="text-center" style={{ minWidth: '100px' }}>
+                      {dropdown.title}
+                    </div>
+                    <span className="pl-1 caret text-gray-700 "> &#9660;</span>
+                  </div>
+                </div>
+              </div>
+            ) : null
+          ) : null}
+        </Media>
       </MediaContextProvider>
       <div
         className={`lg:container listing-container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
@@ -332,7 +351,10 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
             {listItems && listItems.length > 0 ? (
               <>
                 <Media at="xs" className="w-full">
-                  <MobileMainArticles list={listItems[0].catalog_list_items} dropdown={dropdown} />
+                  <MobileMainArticles
+                    list={listItems[0].catalog_list_items}
+                    dropdown={dropdown}
+                  />
                 </Media>
                 <Media greaterThan="xs" className="w-full flex space-x-2">
                   <MainArticles list={listItems[0].catalog_list_items} />

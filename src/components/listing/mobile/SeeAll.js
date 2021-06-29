@@ -120,6 +120,17 @@ const SeeAll = ({ data, article, className }) => {
   const scope = {
     dropdown: false,
   };
+
+   if(data.layout_type === 'featured_mosaic_carousel_seeall') {
+     console.log('gg',data.layout_type)
+         scope.dropdown = false;
+         scope.see_all = true;
+          scope.text = 'see_all';
+        scope.link_info = linkInfoGenerator(
+          data.url.startsWith('/') ? data.url.slice(1) : data.url,
+          router.query.state
+        );
+      }
   if (data.filter_type) {
     scope.dropdown = true;
     scope.text = 'select';
@@ -140,10 +151,16 @@ const SeeAll = ({ data, article, className }) => {
           router.query.state
         );
         break;
+      case 'none':
+       scope.dropdown = false;
+       scope.text = 'see_all';
+      break;
       default:
         scope.type = 'district';
         break;
     }
+
+
     scope.input_text = data[`dynamic_${scope.type}_name`]
       ? data[`dynamic_${scope.type}_name`][0].text
           .split(' ')
@@ -172,6 +189,7 @@ const SeeAll = ({ data, article, className }) => {
           },
         });
         break;
+
       case 'district':
         setShowDistrictModal(true);
         break;
@@ -247,7 +265,7 @@ const SeeAll = ({ data, article, className }) => {
             </div>
           </div>
         ) : null}
-
+        {console.log('hh',scope.see_all)}
         {scope.see_all ? (
           <NavLink
             className={`text-sm`}
@@ -273,7 +291,7 @@ const SeeAll = ({ data, article, className }) => {
               </div>
             );
           })}
-        {!isEven ? (
+        {!isEven && displayData.catalog_list_items.length > 3 ? (
           <div className="w-1/2 p-1" key={displayData.friendly_id + 'see_all'}>
             <SquareCard
               className="bg-white w-full h-full flex justify-center items-center"
