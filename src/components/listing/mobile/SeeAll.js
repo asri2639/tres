@@ -121,16 +121,16 @@ const SeeAll = ({ data, article, className }) => {
     dropdown: false,
   };
 
-   if(data.layout_type === 'featured_mosaic_carousel_seeall') {
-     console.log('gg',data.layout_type)
-         scope.dropdown = false;
-         scope.see_all = true;
-          scope.text = 'see_all';
-        scope.link_info = linkInfoGenerator(
-          data.url.startsWith('/') ? data.url.slice(1) : data.url,
-          router.query.state
-        );
-      }
+  if (data.layout_type === 'featured_mosaic_carousel_seeall') {
+    console.log('gg', data.layout_type);
+    scope.dropdown = false;
+    scope.see_all = true;
+    scope.text = 'see_all';
+    scope.link_info = linkInfoGenerator(
+      data.url.startsWith('/') ? data.url.slice(1) : data.url,
+      router.query.state
+    );
+  }
   if (data.filter_type) {
     scope.dropdown = true;
     scope.text = 'select';
@@ -152,14 +152,21 @@ const SeeAll = ({ data, article, className }) => {
         );
         break;
       case 'none':
-       scope.dropdown = false;
-       scope.text = 'see_all';
-      break;
+        scope.dropdown = false;
+        if (data.url) {
+          scope.text = 'see_all';
+          scope.see_all = true;
+          scope.link_info = linkInfoGenerator(
+            data.url.startsWith('/') ? data.url.slice(1) : data.url,
+            router.query.state
+          );
+        }
+
+        break;
       default:
         scope.type = 'district';
         break;
     }
-
 
     scope.input_text = data[`dynamic_${scope.type}_name`]
       ? data[`dynamic_${scope.type}_name`][0].text
@@ -200,7 +207,6 @@ const SeeAll = ({ data, article, className }) => {
     let url = displayData.url.startsWith('/')
       ? displayData.url.slice(1)
       : displayData.url;
-
 
     if (url.endsWith('/district')) {
       url =
@@ -265,7 +271,7 @@ const SeeAll = ({ data, article, className }) => {
             </div>
           </div>
         ) : null}
-        {console.log('hh',scope.see_all)}
+        {console.log('hh', scope.see_all)}
         {scope.see_all ? (
           <NavLink
             className={`text-sm`}

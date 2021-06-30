@@ -9,6 +9,7 @@ import NavLink from '@components/common/NavLink';
 import DesktopAdContainer from '@components/article/DesktopAdContainer';
 import CatalogWall from './mobile/CatalogWall';
 import SeeAll from './mobile/SeeAll';
+import SliderSeeAll from './mobile/SliderSeeAll'
 import GoogleTagManager from '@utils/GoogleTagManager';
 import Loading from './mobile/Loading';
 import { stateCodeConverter } from '@utils/Helpers';
@@ -237,9 +238,12 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
         ) : null; */
         returnValue = null;
         break;
-      case 'news_grid_seeall':
-      case 'featured_mosaic_carousel':
       case 'slider_seeall':
+      case 'news_grid_seeall':
+        returnValue=(<SliderSeeAll key={catalog.friendly_id + ind} data={catalog} />)
+        break;
+
+      case 'featured_mosaic_carousel':
       case 'auto_horizontal_dropdown_carousel_viewall':
       case 'featured_mosaic_carousel_seeall':
         returnValue =
