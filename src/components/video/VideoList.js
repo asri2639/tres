@@ -8,6 +8,7 @@ import {
   configStateCodeConverter,
   createHash,
   stateCodeConverter,
+  thumbnailExtractor,
 } from '@utils/Helpers';
 
 import BottomRelatedBar from '@components/article/BottomRelatedBar';
@@ -65,6 +66,17 @@ export const constructPlaybackUrl = (
     publicRuntimeConfig.APP_ENV !== 'development'
       ? `${window.location.origin}/${data.web_url}`
       : `https://www.etvbharat.com/${data.web_url}`;
+
+  let thumbnail = thumbnailExtractor(
+    data.thumbnails,
+    '3_2',
+    'b2s',
+    data.media_type
+  );
+
+  if (thumbnail.url.indexOf('/placeholder.png') > 0) {
+    thumbnail.url = 'https://react.etvbharat.com/assets/images/newstime.png';
+  }
 
   var s,
     r,
@@ -125,7 +137,9 @@ export const constructPlaybackUrl = (
       origin +
       w +
       (a ? '' : '&video_duration=' + g) +
-      '&thumbnailurl=https://react.etvbharat.com/assets/images/newstime.png&autoplay=' +
+      '&thumbnailurl=' +
+      thumbnail.url +
+      '&autoplay=' +
       (a ? 'true' : 'false') +
       '&mute=' +
       (a ? 'true' : 'false') +
