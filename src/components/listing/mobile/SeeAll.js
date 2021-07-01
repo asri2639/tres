@@ -122,7 +122,6 @@ const SeeAll = ({ data, article, className }) => {
   };
 
   if (data.layout_type === 'featured_mosaic_carousel_seeall') {
-    console.log('gg', data.layout_type);
     scope.dropdown = false;
     scope.see_all = true;
     scope.text = 'see_all';
@@ -271,7 +270,6 @@ const SeeAll = ({ data, article, className }) => {
             </div>
           </div>
         ) : null}
-        {console.log('hh', scope.see_all)}
         {scope.see_all ? (
           <NavLink
             className={`text-sm`}

@@ -9,7 +9,7 @@ import NavLink from '@components/common/NavLink';
 import DesktopAdContainer from '@components/article/DesktopAdContainer';
 import CatalogWall from './mobile/CatalogWall';
 import SeeAll from './mobile/SeeAll';
-import SliderSeeAll from './mobile/SliderSeeAll'
+import SliderSeeAll from './mobile/SliderSeeAll';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import Loading from './mobile/Loading';
 import { stateCodeConverter } from '@utils/Helpers';
@@ -197,7 +197,12 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
     let returnValue = null;
     switch (catalog.layout_type) {
       case 'news_listing':
-        returnValue = catalog.catalog_list_items.map((article, index) => (
+        const len = catalog.catalog_list_items.length;
+        const items = catalog.catalog_list_items;
+        if (len % 2 === 1) {
+          // items = catalog.catalog_list_items.slice(0, -1);
+        }
+        returnValue = items.map((article, index) => (
           <RectangleCard
             key={ind + article.content_id + index}
             article={article}
@@ -240,7 +245,9 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
         break;
       case 'slider_seeall':
       case 'news_grid_seeall':
-        returnValue=(<SliderSeeAll key={catalog.friendly_id + ind} data={catalog} />)
+        returnValue = (
+          <SliderSeeAll key={catalog.friendly_id + ind} data={catalog} />
+        );
         break;
 
       case 'featured_mosaic_carousel':
@@ -279,18 +286,26 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
       </div> */}
       <MediaContextProvider>
         <Media at="xs" className="w-full mt-2">
-          {listItems[0].layout_type == 'featured_topnews_seeall' || 'featured_staggered_grid' && listItems[0].url != '' ? (
+          {listItems[0].layout_type == 'featured_topnews_seeall' ||
+          ('featured_staggered_grid' && listItems[0].url != '') ? (
             <div>
-              <div className="flex items-center font-extrabold float-left ml-3.5">{listItems[0].ml_title[0].text}</div>
+              <div className="flex items-center font-extrabold float-left ml-3.5">
+                {listItems[0].ml_title[0].text}
+              </div>
               <div className="flex items-center font-semibold text-sm text-red-500 float-right mr-10">
-              {listItems[0].url != '' ? <NavLink
-                        href={listItems[0].url}
-                        as={listItems[0].url}
-                        passHref
-                        onClick={() => {
-                          GoogleTagManager.menuClick(listItems[0], 'headermenu');
-                        }}
-                      >{t('see_all')}</NavLink> : null}</div>
+                {listItems[0].url != '' ? (
+                  <NavLink
+                    href={listItems[0].url}
+                    as={listItems[0].url}
+                    passHref
+                    onClick={() => {
+                      GoogleTagManager.menuClick(listItems[0], 'headermenu');
+                    }}
+                  >
+                    {t('see_all')}
+                  </NavLink>
+                ) : null}
+              </div>
             </div>
           ) : null}
           {showStateModal ? (

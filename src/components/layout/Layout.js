@@ -146,10 +146,14 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
             only_items: 'catalog_list',
           },
         });
-        if (isDesktop) {
-          data.header['menu'].desktop = headerResp.data.data.catalog_list_items;
-        } else {
-          data.header['menu'].mobile = headerResp.data.data.catalog_list_items;
+        if (headerResp.data) {
+          if (isDesktop) {
+            data.header['menu'].desktop =
+              headerResp.data.data.catalog_list_items;
+          } else {
+            data.header['menu'].mobile =
+              headerResp.data.data.catalog_list_items;
+          }
         }
 
         setData({
@@ -319,7 +323,9 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
           ) : (
             <section
               className={`content ${
-                pageType === 'listing' ? 'bg-gray-200' : 'bg-white'
+                pageType === 'listing' || pageType === 'navlisting'
+                  ? 'bg-gray-200'
+                  : 'bg-white'
               }`}
             >
               {children}

@@ -274,11 +274,16 @@ const slug = ({
         );
         break;
       case 'listing':
-        return <ListContainer data={data} payload={payload}></ListContainer>;
+        return (
+          <ListContainer
+            key={canonicalUrl}
+            data={data}
+            payload={payload}
+          ></ListContainer>
+        );
       case 'navlisting':
         headerObj = {
           title: 'ETV Bharat',
-
         };
         return (
           <ListContainer
@@ -541,11 +546,12 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
     if (
       (url.includes('state') ||
-      url.includes('city') ||
-      url.includes('bharat') ||
-      url.includes('sitara') ||
-      url.includes('film-and-tv') ||
-      url.includes('international')) && !url.includes('video')
+        url.includes('city') ||
+        url.includes('bharat') ||
+        url.includes('sitara') ||
+        url.includes('film-and-tv') ||
+        url.includes('international')) &&
+      !url.includes('video')
     ) {
       const url = args.asPath;
       const response = await api.Listing.getListingApiKey({
@@ -578,7 +584,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           },
         };
 
-        const data = cacheData.get(language+urlSplit[2]);
+        const data = cacheData.get(language + urlSplit[2]);
         if (data) {
           dropDownData = data;
         } else {
@@ -587,7 +593,11 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           );
           dropDownData = response.data.data.items;
           if (dropDownData.length > 0) {
-            cacheData.put(language+urlSplit[2], dropDownData, 5 * 1000 * 60 * 60);
+            cacheData.put(
+              language + urlSplit[2],
+              dropDownData,
+              5 * 1000 * 60 * 60
+            );
           }
         }
         let selectedValue = '';
