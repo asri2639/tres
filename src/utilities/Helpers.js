@@ -545,12 +545,21 @@ export const getSocialLinks = (state) => {
   return links ? links : stateSocialLinks[0];
 };
 
-export const getAmpUrl = (dynamic_purl) => {
+export const getAmpUrl = (dynamic_purl, listing) => {
   var amphtml_fields = dynamic_purl.split('/');
   var ampHTML_category = amphtml_fields[3];
   var ampHTML_slug = amphtml_fields[amphtml_fields.length - 2];
   var ampHTML_contentid = amphtml_fields[amphtml_fields.length - 1];
   var ampHTML_baseurl = '';
+
+  if (listing) {
+    if (ampHTML_category == 'english') {
+      return 'https://englishamp.etvbharat.com/';
+    } else {
+      ampHTML_baseurl = 'https://hindiamp.etvbharat.com/';
+    }
+  }
+
   if (ampHTML_category == 'english') {
     ampHTML_baseurl = 'https://englishamp.etvbharat.com/article/';
   } else {
