@@ -31,15 +31,10 @@ const state = ({ data, payload, pageType }) => {
   const canonicalUrl = `https://www.etvbharat.com${
     new URL(`http:localhost:3000${router.asPath}`).pathname
   }`;
-  const ampUrl = getAmpUrl(canonicalUrl, true);
+  const ampUrl = getAmpUrl(canonicalUrl);
   let ampExists = false;
 
-  const splitPath = router.asPath.split('/');
-  const state = splitPath[2];
-  if (
-    state === 'uttar-pradesh' ||
-    (state === 'national' && splitPath[1] !== 'urdu')
-  ) {
+  if (stateName === 'uttar-pradesh' || stateName === 'national') {
     ampExists = true;
   }
 
