@@ -556,7 +556,7 @@ export const getAmpUrl = (dynamic_purl, listing) => {
     if (ampHTML_category == 'english') {
       return 'https://englishamp.etvbharat.com/';
     } else {
-      ampHTML_baseurl = 'https://hindiamp.etvbharat.com/';
+      return 'https://hindiamp.etvbharat.com/';
     }
   }
 
