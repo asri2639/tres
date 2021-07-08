@@ -545,11 +545,12 @@ export const getSocialLinks = (state) => {
   return links ? links : stateSocialLinks[0];
 };
 
-export const getAmpUrl = (share_url) => {
+export const getAmpUrl = (dynamic_purl) => {
   var amphtml_fields = dynamic_purl.split('/');
   var ampHTML_category = amphtml_fields[3];
   var ampHTML_slug = amphtml_fields[amphtml_fields.length - 2];
   var ampHTML_contentid = amphtml_fields[amphtml_fields.length - 1];
+  var ampHTML_baseurl = '';
   if (ampHTML_category == 'english') {
     ampHTML_baseurl = 'https://englishamp.etvbharat.com/article/';
   } else {

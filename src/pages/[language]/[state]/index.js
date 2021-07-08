@@ -34,7 +34,9 @@ const state = ({ data, payload, pageType }) => {
   const ampUrl = getAmpUrl(canonicalUrl);
   let ampExists = false;
 
-  if (stateName === 'uttar-pradesh' || stateName === 'national') {
+  const splitPath = router.asPath.split('/');
+  const state = splitPath[2];
+  if (state === 'uttar-pradesh' || state === 'national') {
     ampExists = true;
   }
 

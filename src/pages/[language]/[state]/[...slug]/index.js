@@ -102,7 +102,8 @@ const { appLanguage } = useTranslator();
       }`;
     }
 
-    if (stateName === 'uttar-pradesh' || stateName === 'national') {
+    const state = splitPath[2];
+    if (state === 'uttar-pradesh' || state === 'national') {
       ampUrl = getAmpUrl(canonicalUrl);
     }
 
