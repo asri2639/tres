@@ -555,14 +555,14 @@ export const getAmpUrl = (dynamic_purl, listing) => {
   if (listing) {
     if (ampHTML_category == 'english') {
       return 'https://englishamp.etvbharat.com/';
-    } else {
+    } else if (ampHTML_category == 'hindi') {
       return 'https://hindiamp.etvbharat.com/';
     }
   }
 
   if (ampHTML_category == 'english') {
     ampHTML_baseurl = 'https://englishamp.etvbharat.com/article/';
-  } else {
+  } else if (ampHTML_category == 'hindi') {
     ampHTML_baseurl = 'https://hindiamp.etvbharat.com/article/';
   }
   var final_AMPHTML_url =
