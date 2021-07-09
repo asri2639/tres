@@ -294,10 +294,10 @@ const getAds = (config) =>
   rubiconproject.com, 17960, RESELLER, 0bfd66d529a55807
   indexexchange.com, 192787, RESELLER
   indexexchange.com, 192769, RESELLER
-  vdopia.com, 15364, DIRECT, 49a66ce31a704197 #video
-  chocolateplatform.com, 15364, DIRECT, 49a66ce31a704197 #video
-  vdopia.com, 15364, DIRECT, 49a66ce31a704197 #banner
-  chocolateplatform.com, 15364, DIRECT, 49a66ce31a704197 #banner
+  vdopia.com,Â 15364, DIRECT, 49a66ce31a704197 #video
+  chocolateplatform.com,Â 15364, DIRECT, 49a66ce31a704197 #video
+  vdopia.com,Â 15364, DIRECT, 49a66ce31a704197 #banner
+  chocolateplatform.com,Â 15364, DIRECT, 49a66ce31a704197 #banner
   mobfox.com,4459, DIRECT, 5529a3d1f59865be
   mobfox.com,4459, RESELLER, 5529a3d1f59865be
   appnexus.com,2637,RESELLER,f5ab79cb980f11d1
@@ -505,7 +505,95 @@ const getAds = (config) =>
   adyoulike.com, b4bf4fdd9b0b915f746f6747ff432bde, RESELLER
   axonix.com, 57264, RESELLER
   admanmedia.com, 43, RESELLER
-  #<!StreamLyn>`;
+  #<!StreamLyn>
+
+  #<!VDO.AI>
+  vdo.ai, 2190, DIRECT
+  atlas5.co, 2190, DIRECT
+  google.com, pub-2403018226404213, DIRECT, f08c47fec0942fa0
+  google.com, pub-7094677798399606, RESELLER, f08c47fec0942fa0
+  appnexus.com, 8148, RESELLER, f5ab79cb980f11d1
+  appnexus.com, 12495, RESELLER, f5ab79cb980f11d1
+  rhythmone.com, 1222734754, DIRECT, a670c89d4a324e47
+  rhythmone.com, 3736940343, DIRECT, a670c89d4a324e47
+  video.unrulymedia.com, 1222734754, DIRECT
+  video.unrulymedia.com, 3736940343, DIRECT
+  pubmatic.com, 159175, RESELLER, 5d62403b186f2ace
+  pubmatic.com, 160350, RESELLER, 5d62403b186f2ace
+  indexexchange.com, 194364, RESELLER, 50b1c356f2c5c8fc
+  openx.com, 541072983, RESELLER, 6a698e2ec38604c6
+  onetag.com, 62e564782c44a66, DIRECT
+  spotxchange.com, 280397, RESELLER, 7842df1d2fe2db34
+  spotx.tv, 280397, RESELLER, 7842df1d2fe2db34
+  sovrn.com, 276595, DIRECT, fafdf38b16bf6b2b
+  lijit.com, 276595, DIRECT, fafdf38b16bf6b2b
+  lijit.com, 276595-eb, DIRECT, fafdf38b16bf6b2b
+  appnexus.com,8148,DIRECT,f5ab79cb980f11d1
+  pubmatic.com,157150,RESELLER,5d62403b186f2ace
+  rubiconproject.com,18020,RESELLER,0bfd66d529a55807
+  appnexus.com,3663,RESELLER,f5ab79cb980f11d1
+  pubmatic.com,160006,RESELLER,5d62403b186f2ace
+  pubmatic.com,160096,RESELLER,5d62403b186f2ace
+  synacor.com, 82275, RESELLER, e108f11b2cdf7d5b
+  video.unrulymedia.com, 905992537, RESELLER, a670c89d4a324e47
+  rhythmone.com, 905992537, RESELLER, a670c89d4a324e47
+  advertising.com, 28605, RESELLER
+  appnexus.com, 6849, RESELLER, f5ab79cb980f11d1
+  indexexchange.com, 182257, RESELLER, 50b1c356f2c5c8fc
+  pubmatic.com, 159277, RESELLER, 5d62403b186f2ace
+  rubiconproject.com, 15268, RESELLER, 0bfd66d529a55807
+  spotx.tv, 285547, RESELLER, 7842df1d2fe2db34
+  spotxchange.com, 285547, RESELLER, 7842df1d2fe2db34
+  e-planning.net,c3ca9a631e4d70f5,DIRECT,c1ba615865ed87b2
+  pubmatic.com,156631,RESELLER,5d62403b186f2ace
+  rhythmone.com,1767353092,RESELLER,a670c89d4a324e47
+  openx.com, 541031350, RESELLER, 6a698e2ec38604c6
+  aol.com, 57545, RESELLER, e1a5b5b6e3255540
+  yahoo.com, 57545, RESELLER, e1a5b5b6e3255540
+  rhythmone.com, 1059622079, RESELLER, a670c89d4a324e47
+  EMXDGT.com, 524, DIRECT, 1e1d41537f7cad7f
+  yieldmo.com, 2651367909216952967, DIRECT
+  contextweb.com, 561118, RESELLER, 89ff185a4c4e857c
+  appnexus.com, 7911, RESELLER, f5ab79cb980f11d1
+  rubiconproject.com, 17070, RESELLER, 0bfd66d529a55807
+  onetag.com, 664e107d9f2b748, RESELLER
+  loopme.com, 11356, RESELLER, 6c8d5f95897a5a3b
+  loopme.com, 11356, DIRECT, 6c8d5f95897a5a3b
+  rubiconproject.com, 20744, RESELLER, 0bfd66d529a55807
+  openx.com, 540298543, RESELLER, 6a698e2ec38604c6
+  pubmatic.com, 158154, RESELLER, 5d62403b186f2ace
+  gumgum.com,14199, DIRECT,ffdef49475d318a9
+  adtelligent.com, 314762, DIRECT
+  33across.com, 0010b00002VZJneAAH, DIRECT, bbea06d9c4d2853c
+  rtbhouse.com, RlWjKokeUOHRIH9PD08W, DIRECT
+  openx.com, 544021216, RESELLER, 6a698e2ec38604c6
+  video.unrulymedia.com, 4163070607, DIRECT
+  rhythmone.com, 4163070607, DIRECT, a670c89d4a324e47
+  indexexchange.com, 182257, RESELLER
+  appnexus.com, 6849, RESELLER
+  rubiconproject.com, 15268, RESELLER
+  improvedigital.com, 1699, RESELLER
+  improvedigital.com, 1888, DIRECT
+  conversantmedia.com, 100177, DIRECT, 03113cd04947736d
+  appnexus.com, 4052, RESELLER
+  contextweb.com, 561998, RESELLER, 89ff185a4c4e857c
+  openx.com, 540031703, RESELLER, 6a698e2ec38604c6
+  pubmatic.com, 158100, RESELLER, 5d62403b186f2ace
+  yahoo.com, 55771, RESELLER, e1a5b5b6e3255540
+  districtm.io, 100428, DIRECT, 3fd707be9c4527c3
+  appnexus.com, 1908, RESELLER, f5ab79cb980f11d1
+  google.com, pub-9685734445476814, RESELLER, f08c47fec0942fa0
+  sharethrough.com, caf7e432, DIRECT, d53b998a7bd4ecd2
+  appnexus.com, 1360, RESELLER, f5ab79cb980f11d1
+  gumgum.com, 11645, RESELLER, ffdef49475d318a9
+  openx.com, 538959099, RESELLER, 6a698e2ec38604c6
+  pubmatic.com, 137711, RESELLER, 5d62403b186f2ace
+  pubmatic.com, 156212, RESELLER, 5d62403b186f2ace
+  rubiconproject.com, 17960, RESELLER, 0bfd66d529a55807
+  sonobi.com, a5a1f04c15, DIRECT, d1a215d9eb5aee9e
+  rubiconproject.com, 23580, DIRECT, 0bfd66d529a55807
+  rubiconproject.com, 23582, DIRECT, 0bfd66d529a55807
+  #<!VDO.AI>`;
 
 export default (req, res) => {
   const { publicRuntimeConfig } = getConfig();
