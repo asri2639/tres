@@ -546,7 +546,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
     if (
       (url.includes('state') ||
-        url.includes('city') ||
         url.includes('bharat') ||
         url.includes('sitara') ||
         url.includes('film-and-tv') ||
