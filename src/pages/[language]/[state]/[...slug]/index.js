@@ -7,6 +7,7 @@ import APIEnum from '@api/APIEnum';
 import Head from 'next/head';
 import {
   configStateCodeConverter,
+  getAmpUrl,
   loadJS,
   stateCodeConverter,
   thumbnailExtractor,
@@ -19,6 +20,7 @@ import ArticleList from '@components/article/ArticleList';
 import VideoList from '@components/video/VideoList';
 import GalleryList from '@components/gallery/GalleryList';
 import ListContainer from '@components/listing/ListContainer';
+import PageListing from '@components/listing/PageListing';
 
 const slug = ({
   data,
@@ -54,35 +56,41 @@ const slug = ({
     let component = null;
     let headerObj = {};
     let stateName = null;
+    let canonicalUrl = '';
 
     if (pageType === 'error') {
       return <div>URL Not Found</div>;
     }
 
     const pathname = new URL(`http:localhost:3000${router.asPath}`).pathname;
-    canonicalUrl = pathname;
-    if (
-      data.state &&
-      data.state.length > 0 &&
-      data.state.indexOf('na') !== -1
-    ) {
-      if (data.item_languages.indexOf('hi') !== -1) {
-        stateName = 'delhi';
-      } else if (data.item_languages.indexOf('te') !== -1) {
-        stateName = 'telangana';
-      } else if (data.item_languages.indexOf('ur') !== -1) {
-        stateName = 'national';
+    const splitPath = pathname.split('/');
+
+    if (pageType === 'article' || pageType === 'video') {
+      if (
+        data.state &&
+        data.state.length > 0 &&
+        data.state.indexOf('na') !== -1
+      ) {
+        if (data.item_languages.indexOf('hi') !== -1) {
+          stateName = 'delhi';
+        } else if (data.item_languages.indexOf('te') !== -1) {
+          stateName = 'telangana';
+        } else if (data.item_languages.indexOf('ur') !== -1) {
+          stateName = 'national';
+        }
       }
     }
 
     if (stateName) {
-      const splitPath = pathname.split('/');
-
       canonicalUrl = `https://react.etvbharat.com${[
         ...splitPath.slice(0, 2),
         stateName,
         ...splitPath.slice(3),
       ].join('/')}`;
+    } else {
+      canonicalUrl = `https://react.etvbharat.com${
+        new URL(`http:localhost:3000${router.asPath}`).pathname
+      }`;
     }
 
     if (
@@ -93,6 +101,14 @@ const slug = ({
       ampUrl = `https://react.etvbharat.com/amp${
         new URL(`http:localhost:3000${router.asPath}`).pathname
       }`;
+    }
+
+    const state = splitPath[2];
+    if (
+      state === 'uttar-pradesh' ||
+      (state === 'national' && splitPath[1] !== 'urdu')
+    ) {
+      ampUrl = getAmpUrl(canonicalUrl, splitPath.length === 3);
     }
 
     switch (pageType) {
@@ -282,16 +298,17 @@ const slug = ({
           ></ListContainer>
         );
       case 'navlisting':
-        headerObj = {
-          title: 'ETV Bharat',
-        };
+         <Head>
+              <title>{data.meta_tag_title ? data.meta_tag_title : '' }</title>
+          
+            </Head>
         return (
-          <ListContainer
+          <PageListing
             key={canonicalUrl}
             data={data}
             payload={payload}
             dropdown={dropDownData}
-          ></ListContainer>
+          ></PageListing>
         );
       case 'search':
         return <ListContainer data={data} payload={payload}></ListContainer>;
@@ -307,7 +324,7 @@ const slug = ({
             <Head>
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
-              {ampExists && data.is_amp ? (
+              {ampExists /* && data.is_amp */ ? (
                 <link rel="amphtml" href={headerObj.ampUrl}></link>
               ) : null}
               <meta
@@ -399,6 +416,7 @@ const slug = ({
 };
 
 slug.getInitialProps = async ({ query, req, res, ...args }) => {
+
   let language = 'en',
     state = 'na',
     params = null,
@@ -545,12 +563,15 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   } else {
     const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
     if (
-      (url.includes('state') ||
+      ( (url.includes('state') && language === 'en') ||
+	  (url.substring(url.length - 'state'.length) == 'state') ||
         url.includes('bharat') ||
-        url.includes('sitara') ||
+		url.includes('crime') ||
+		url.includes('video') ||
+		url.includes('gallery') ||
+        (url.substring(url.length - 'sitara'.length) == 'sitara') ||
         url.includes('film-and-tv') ||
-        url.includes('international')) &&
-      !url.includes('video')
+        url.includes('international')) 
     ) {
       const url = args.asPath;
       const response = await api.Listing.getListingApiKey({
@@ -603,7 +624,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
         if (language == 'en') {
           if (url.substring(url.length - 'state'.length) == 'state') {
-            selectedValue = dropDownData[0].ml_title[0].text;
+            selectedValue = 'Delhi';
           } else {
             let titleobj = dropDownData.filter(
               (item) => urlSplit[4] == item.friendly_id
@@ -649,7 +670,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           url.includes('state') &&
           Object.keys(finalQueryParamObject).length === 0
         ) {
-          finalQueryParamObject.dynamic_state = 'ap';
+          finalQueryParamObject.dynamic_state = 'dl';
         }
         const requestPayload = {
           params: {
@@ -676,28 +697,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           data: '',
         };
       }
-    } else if (url.includes('search')) {
-      const searchTerm = query.slug.slice(-1)[0];
-      const params = {
-        q: searchTerm,
-        region: 'IN',
-        response: 'r2',
-        item_languages: language,
-        state: state,
-      };
-      const requestPayload = {
-        query: params,
-      };
-      const searchResults = await trackPromise(
-        api.CatalogList.getSearchResults(requestPayload)
-      );
-      const data = searchResults.data.data;
-      return {
-        pageType: 'search',
-        data: data,
-        payload: requestPayload,
-      };
-    } else {
+    }  else {
       const redirectUrl = `${
         publicRuntimeConfig.APP_ENV === 'staging'
           ? 'https://staging.etvbharat.com'

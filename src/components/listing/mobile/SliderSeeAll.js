@@ -4,6 +4,8 @@ import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Media, MediaContextProvider } from '@media';
 import { RTLContext } from '@components/layout/Layout';
+import NavLink from '@components/common/NavLink';
+import GoogleTagManager from '@utils/GoogleTagManager';
 import cacheData from 'memory-cache';
 import eventBus from '@utils/EventBus';
 import MainArticles from '../MainArticles';
@@ -17,9 +19,11 @@ const SliderSeeAll = ({ data }) => {
 
   return (
     <>
-    <div className="mt-3">
-    <div className="text-base md:text-lg">{data.ml_title[0].text}</div>
+
+    <div className="mt-3 ">
+    <div className="text-base md:text-lg flex items-center font-extrabold float-left ml-3.5">{data.ml_title[0].text}</div>
          {data.url ? (
+           <div className="tems-center font-semibold text-sm text-red-500 float-right mr-10">
           <NavLink
             className={`text-sm`}
             href={data.url}
@@ -31,6 +35,7 @@ const SliderSeeAll = ({ data }) => {
           >
             {t('see_all')}
           </NavLink>
+          </div>
         ) : null}
       <MediaContextProvider>
 
