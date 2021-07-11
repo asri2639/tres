@@ -6,7 +6,11 @@ import { applicationConfig, languageMap } from '@utils/Constants';
 import { trackPromise } from 'react-promise-tracker';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
+import {
+  configStateCodeConverter,
+  getAmpUrl,
+  stateCodeConverter,
+} from '@utils/Helpers';
 import { NextSeo } from 'next-seo';
 import useTranslator from '@hooks/useTranslator';
 
@@ -24,10 +28,27 @@ const state = ({ data, payload, pageType }) => {
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
 
+  const canonicalUrl = `https://react.etvbharat.com${
+    new URL(`http:localhost:3000${router.asPath}`).pathname
+  }`;
+  const ampUrl = getAmpUrl(canonicalUrl, true);
+  let ampExists = false;
+
+  const splitPath = router.asPath.split('/');
+  const state = splitPath[2];
+  if (
+    state === 'uttar-pradesh' ||
+    (state === 'national' && splitPath[1] !== 'urdu')
+  ) {
+    ampExists = true;
+  }
+
   return data ? (
     <>
       <Head>
         <title>{data.meta_tag_title}</title>
+        <link rel="canonical" href={canonicalUrl}></link>
+        {ampExists ? <link rel="amphtml" href={ampUrl}></link> : null}
         <meta name="fbPages" property="fb:pages" content={fbContentId}></meta>
       </Head>
       <NextSeo
