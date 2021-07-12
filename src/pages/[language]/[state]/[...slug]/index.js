@@ -450,6 +450,7 @@ const { appLanguage } = useTranslator();
 };
 
 slug.getInitialProps = async ({ query, req, res, ...args }) => {
+
   let language = 'en',
     state = 'na',
     params = null,

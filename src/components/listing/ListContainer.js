@@ -59,7 +59,11 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
   const [isDesktop, setIsDesktop] = useState(false);
 
   const items = reArrangeData(data);
-
+  const [selected, setSelected] = useState({
+    state: '',
+    language: '',
+    text: '',
+  });
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [callsDone, setCallsDone] = useState(1);
@@ -360,7 +364,7 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
         </Media>
       </MediaContextProvider>
       <div
-        className={`lg:container listing-container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
+        className={`lg:container lg:mx-auto listing-container mt-2 bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
           isRTL ? 'md:flex-row-reverse rtl' : ''
         }`}
       >

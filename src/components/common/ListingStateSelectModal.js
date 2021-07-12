@@ -5,8 +5,13 @@ import APIEnum from '@services/api/APIEnum';
 import useSWR from 'swr';
 import useTranslator from '@hooks/useTranslator';
 
-const ListingStateSelectModal = ({ data,state, onClose, onStateSelect,type }) => {
-
+const ListingStateSelectModal = ({
+  data,
+  state,
+  onClose,
+  onStateSelect,
+  type,
+}) => {
   const [isShowing, setIsShowing] = useState(true);
   const [loading, setLoading] = useState(true);
   const startLoading = () => setLoading(true);
@@ -17,11 +22,9 @@ const ListingStateSelectModal = ({ data,state, onClose, onStateSelect,type }) =>
     onClose();
     setIsShowing(false);
   };
-useEffect(() => {
-
-      stopLoading();
-
-  })
+  useEffect(() => {
+    stopLoading();
+  });
 
   return (
     <Modal
@@ -38,7 +41,7 @@ useEffect(() => {
         <div className="p-3 pb-4 rounded-md" style={{ background: '#f0f0f0' }}>
           <div className="flex justify-between pb-4">
             <div className="text-gray-700 text-md pl-2">
-              {t('change_'+type)}
+              {t('change_' + type)}
             </div>
             <div>
               <button
