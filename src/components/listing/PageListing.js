@@ -60,7 +60,11 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   const [isDesktop, setIsDesktop] = useState(false);
 
   const items = reArrangeData(data);
-const [selected, setSelected] = useState({ state: '', language: '' , text:''});
+  const [selected, setSelected] = useState({
+    state: '',
+    language: '',
+    text: '',
+  });
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [callsDone, setCallsDone] = useState(1);
@@ -90,11 +94,15 @@ const [selected, setSelected] = useState({ state: '', language: '' , text:''});
   const { data: adData, error: adError } = useSWR(
     () => {
       let article = null;
-      if (data && data.catalog_list_items && (data.catalog_list_items[2] || data.catalog_list_items[1] )) {
+      if (
+        data &&
+        data.catalog_list_items &&
+        (data.catalog_list_items[2] || data.catalog_list_items[1])
+      ) {
         article = data.catalog_list_items[1].catalog_list_items.find(
           (v) => v.content_type === 'article' || 'video'
         );
-        if(!article){
+        if (!article) {
           article = data.catalog_list_items[2].catalog_list_items.find(
             (v) => v.content_type === 'article' || 'video'
           );
@@ -152,7 +160,7 @@ const [selected, setSelected] = useState({ state: '', language: '' , text:''});
   }, [adData]);
 
   async function fetchMoreListItems() {
-    if (payload && callsDone < totalCalls) {
+    if (payload && callsDone <= totalCalls) {
       const requestPayload = {
         ...payload,
         query: {
@@ -254,9 +262,10 @@ const [selected, setSelected] = useState({ state: '', language: '' , text:''});
       case 'staggered_grid_seeall':
       case 'slider_seeall':
       case 'news_grid_seeall':
-        returnValue = catalog.catalog_list_items.length > 0 ? (
-          <SliderSeeAll key={catalog.friendly_id + ind} data={catalog} />
-        ) : null;
+        returnValue =
+          catalog.catalog_list_items.length > 0 ? (
+            <SliderSeeAll key={catalog.friendly_id + ind} data={catalog} />
+          ) : null;
         break;
 
       case 'featured_mosaic_carousel':
@@ -368,9 +377,9 @@ const [selected, setSelected] = useState({ state: '', language: '' , text:''});
           ) : null}
         </Media>
         <Media greaterThan="xs" className="w-full flex space-x-2">
-        {listItems[0].layout_type == 'featured_topnews_seeall' ||
+          {listItems[0].layout_type == 'featured_topnews_seeall' ||
           ('featured_staggered_grid' && listItems[0].url != '') ? (
-            <div style={{width : '63%',marginLeft:'25px',marginTop:'7px'}}>
+            <div style={{ width: '63%', marginLeft: '25px', marginTop: '7px' }}>
               <div className="flex items-center font-extrabold float-left ml-3.5">
                 {listItems[0].ml_title[0].text}
               </div>
@@ -391,142 +400,149 @@ const [selected, setSelected] = useState({ state: '', language: '' , text:''});
             </div>
           ) : null}
           {showStateModal ? (
-           <Modal
-          title={'change_state'}
-          open={!!showStateModal}
-          isMobile={false}
-          onClose={() => {
+            <Modal
+              title={'change_state'}
+              open={!!showStateModal}
+              isMobile={false}
+              onClose={() => {
                 setShowStateModal(false);
               }}
-          width={null}
-          height={null}
-        >
-          <div className="px-6 py-4 flex justify-around items-center h-24">
-            <div className="text-md font-medium">{t('state')}</div>
-            <div className="w-40">
-              <select
-                value={selected.state}
-                onChange={(e) => {
-                  setSelected({
-
-                    state: e.target.value,
-		    text: e.target.text,
-                  });
-                }}
-                className="form-control"
-              >
-                <option value="select">{t('select_state')}</option>
-                {dropdown.data.map((v) => {
-                  return (
-                    <option key={v.state} value={v.friendly_id}>
-                      {v.ml_title[0].text}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-end w-full p-4 pb-6">
-            <div
-              className="button px-4 py-2 border-2 border-red-700 text-red-700 rounded-md cursor-pointer focus:text-white focus:bg-red-700"
-              onClick={() => {setSelected({language: '',state: '',text: ''});setShowStateModal(false);}}
+              width={null}
+              height={null}
             >
-              {t('cancel_capital')}
-            </div>
-            <div
-              className="button yes px-4 py-2 border-2 border-red-700 text-red-700 rounded-md ml-3 cursor-pointer"
-              onClick={() => {
-setSelected({language: '',state: '',text: ''})
-                 setShowStateModal(false);
+              <div className="px-6 py-4 flex justify-around items-center h-24">
+                <div className="text-md font-medium">{t('state')}</div>
+                <div className="w-40">
+                  <select
+                    value={selected.state}
+                    onChange={(e) => {
+                      setSelected({
+                        state: e.target.value,
+                        text: e.target.text,
+                      });
+                    }}
+                    className="form-control"
+                  >
+                    <option value="select">{t('select_state')}</option>
+                    {dropdown.data.map((v) => {
+                      return (
+                        <option key={v.state} value={v.friendly_id}>
+                          {v.ml_title[0].text}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
 
-                if (dropdown.title !== selected.text) {
-                  let url = '';
+              <div className="flex items-center justify-end w-full p-4 pb-6">
+                <div
+                  className="button px-4 py-2 border-2 border-red-700 text-red-700 rounded-md cursor-pointer focus:text-white focus:bg-red-700"
+                  onClick={() => {
+                    setSelected({ language: '', state: '', text: '' });
+                    setShowStateModal(false);
+                  }}
+                >
+                  {t('cancel_capital')}
+                </div>
+                <div
+                  className="button yes px-4 py-2 border-2 border-red-700 text-red-700 rounded-md ml-3 cursor-pointer"
+                  onClick={() => {
+                    setSelected({ language: '', state: '', text: '' });
+                    setShowStateModal(false);
 
-                  if (router.query.language === 'english') {
-                    url = '/english/national/state';
-                    router.push(url + '/' + selected.state);
-                  } else {
-                    url =
-                      '/' +
-                      router.query.language +
-                      '/' +
-                     selected.state +
-                      '/state';
-                    router.push(url);
+                    if (dropdown.title !== selected.text) {
+                      let url = '';
+
+                      if (router.query.language === 'english') {
+                        url = '/english/national/state';
+                        router.push(url + '/' + selected.state);
+                      } else {
+                        url =
+                          '/' +
+                          router.query.language +
+                          '/' +
+                          selected.state +
+                          '/state';
+                        router.push(url);
+                      }
+                    }
+                  }}
+                >
+                  {t('done_txt')}
+                </div>
+              </div>
+
+              <style jsx>
+                {`
+                  select {
+                    display: block;
+                    width: 100%;
+                    height: 34px;
+                    padding: 6px 12px;
+                    font-size: 14px;
+                    line-height: 1.42857143;
+                    color: #555;
+                    background-color: #fff;
+                    background-image: none;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                    -webkit-transition: border-color ease-in-out 0.15s,
+                      -webkit-box-shadow ease-in-out 0.15s;
+                    -o-transition: border-color ease-in-out 0.15s,
+                      box-shadow ease-in-out 0.15s;
+                    transition: border-color ease-in-out 0.15s,
+                      box-shadow ease-in-out 0.15s;
+                    cursor: pointer;
                   }
-                }
-              }}
-            >
-              {t('done_txt')}
-            </div>
-          </div>
 
-          <style jsx>
-            {`
-              select {
-                display: block;
-                width: 100%;
-                height: 34px;
-                padding: 6px 12px;
-                font-size: 14px;
-                line-height: 1.42857143;
-                color: #555;
-                background-color: #fff;
-                background-image: none;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-                -webkit-transition: border-color ease-in-out 0.15s,
-                  -webkit-box-shadow ease-in-out 0.15s;
-                -o-transition: border-color ease-in-out 0.15s,
-                  box-shadow ease-in-out 0.15s;
-                transition: border-color ease-in-out 0.15s,
-                  box-shadow ease-in-out 0.15s;
-                cursor: pointer;
-              }
+                  .form-control:focus {
+                    border-color: #c53030;
+                    outline: 0;
+                    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+                      0 0 8px rgba(233, 102, 102, 0.6);
+                    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+                      0 0 8px rgba(233, 102, 102, 0.6);
+                  }
+                  .form-control::-moz-placeholder {
+                    color: #999;
+                    opacity: 1;
+                  }
+                  .form-control:-ms-input-placeholder {
+                    color: #999;
+                  }
+                  .form-control::-webkit-input-placeholder {
+                    color: #999;
+                  }
+                  .form-control::-ms-expand {
+                    background-color: transparent;
+                    border: 0;
+                  }
 
-              .form-control:focus {
-                border-color: #c53030;
-                outline: 0;
-                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-                  0 0 8px rgba(233, 102, 102, 0.6);
-                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-                  0 0 8px rgba(233, 102, 102, 0.6);
-              }
-              .form-control::-moz-placeholder {
-                color: #999;
-                opacity: 1;
-              }
-              .form-control:-ms-input-placeholder {
-                color: #999;
-              }
-              .form-control::-webkit-input-placeholder {
-                color: #999;
-              }
-              .form-control::-ms-expand {
-                background-color: transparent;
-                border: 0;
-              }
+                  .button:hover {
+                    box-shadow: 0 0 0 3px rgba(197, 48, 48, 0.1);
+                  }
 
-              .button:hover {
-                box-shadow: 0 0 0 3px rgba(197, 48, 48, 0.1);
-              }
-
-              .button:active {
-                background: #c53030;
-                color: white;
-              }
-            `}
-          </style>
-        </Modal>
+                  .button:active {
+                    background: #c53030;
+                    color: white;
+                  }
+                `}
+              </style>
+            </Modal>
           ) : null}
           {dropdown ? (
             dropdown.data && dropdown.data.length > 1 ? (
               <div>
-                <div className="flex items-center float-right " style={{ marginLeft: '41rem', marginTop: '10px' }}>
-                  <div className="pr-2 text-sm">{t('select') +' '+ t('state')}</div>
+                <div
+                  className="flex items-center float-right "
+                  style={{ marginLeft: '41rem', marginTop: '10px' }}
+                >
+                  <div className="pr-2 text-sm">
+                    {t('select') + ' ' + t('state')}
+                  </div>
                   <div
                     className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
                     onClick={() => {
@@ -563,6 +579,17 @@ setSelected({language: '',state: '',text: ''})
                 <Media greaterThan="xs" className="w-full flex space-x-2">
                   <MainArticles list={listItems[0].catalog_list_items} />
                 </Media>
+                {listItems[0].catalog_list_items.length > 3
+                  ? listItems[0].catalog_list_items
+                      .slice(3)
+                      .map((article, index) => (
+                        <RectangleCard
+                          key={article.content_id + index}
+                          article={article}
+                          className="rectangle-card bg-white mt-1 md:mt-2 md:w-1/2 rounded-md"
+                        />
+                      ))
+                  : null}
                 {listItems.slice(1).map((subList, ind) => {
                   return renderLayout(subList, ind);
                 })}
