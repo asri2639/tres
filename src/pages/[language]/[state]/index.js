@@ -48,6 +48,10 @@ const state = ({ data, payload, pageType }) => {
       <Head>
         <title>{data.meta_tag_title}</title>
         <link rel="canonical" href={canonicalUrl}></link>
+        {pathname === '/english/national' ? (
+          <link rel="alternate" href={canonicalUrl}></link>
+        ) : null}
+
         {ampExists ? <link rel="amphtml" href={ampUrl}></link> : null}
         <meta name="fbPages" property="fb:pages" content={fbContentId}></meta>
       </Head>
