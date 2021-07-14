@@ -25,12 +25,12 @@ import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
 const PageListing = ({ children, data, payload, dropdown }) => {
-  const api = API(APIEnum.CatalogList);
+  const api = API(APIEnum.CatalogList, APIEnum.Listing);
   const router = useRouter();
   const isRTL = useContext(RTLContext);
   const { t, appLanguage } = useTranslator();
   const [showStateModal, setShowStateModal] = useState(false);
-  let totalCalls = Math.ceil(data.total_items_count / 8);
+  const [totalCalls, setTotalCalls] = useState( Math.ceil(data.total_items_count / 8));
 
   const reArrangeData = (data) => {
     /*  let extra = [];
@@ -68,6 +68,8 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [callsDone, setCallsDone] = useState(1);
+  const [listId, setListId] = useState(null);
+  const [desktopUrl, setDesktopUrl] = useState(null);
   const [filteredRHS, setFilteredRHS] = useState([]);
   const adsMap = [];
   const [firstSet, setFirstSet] = useState([]);
@@ -160,7 +162,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   }, [adData]);
 
   async function fetchMoreListItems() {
-    if (payload && callsDone <= totalCalls) {
+    if (payload && callsDone <= totalCalls && callsDone < 3) {
       const requestPayload = {
         ...payload,
         query: {
@@ -202,6 +204,109 @@ const PageListing = ({ children, data, payload, dropdown }) => {
 
         setCallsDone((callsDone) => callsDone + 1);
       }
+    } else if (payload && callsDone <= totalCalls) {
+      if (desktopUrl) {
+        const requestPayload = {
+          ...payload,
+          params: {
+            ...payload.params,
+            key: desktopUrl,
+          },
+          query: {
+            ...payload.query,
+            page_size:16,
+            page: callsDone, // since page index startsfrom 0
+          },
+        };
+
+        const listingResp = await api.CatalogList.getListing(requestPayload);
+
+          setListItems((prevState) => {
+            return prevState.concat(listingResp.data.data);
+          });
+            setCallsDone((callsDone) => callsDone + 1);
+      } else {
+        const response = await api.Listing.getListingApiKey({
+          query: {
+            app: 'web',
+            url: window.location.pathname,
+          },
+        });
+        const result = response.data;
+        const desktoprequestPayload = {
+          ...payload,
+          params: {
+            ...payload.params,
+            key: result.home_link,
+          },
+        };
+        const weblistingResp = await api.CatalogList.getListing(desktoprequestPayload);
+
+        let id = undefined;
+        let totalDesktopdata = undefined
+        loop1: for (
+          var i = 0;
+          i < weblistingResp.data.data.catalog_list_items.length;
+          i++
+        ) {
+          loop2: for (
+            var j = 0;
+            j <
+            weblistingResp.data.data.catalog_list_items[i].catalog_list_items
+              .length;
+            j++
+          ) {
+            if (
+              weblistingResp.data.data.catalog_list_items[i].catalog_list_items[j]
+                .catalog_list_items
+            ) {
+              loop3: for (
+                var k = 0;
+                k <
+                weblistingResp.data.data.catalog_list_items[i].catalog_list_items[
+                  j
+                ].catalog_list_items.length;
+                k++
+              ) {
+                if (
+                  weblistingResp.data.data.catalog_list_items[i]
+                    .catalog_list_items[j].catalog_list_items[k].layout_type ===
+                  'list_content_pagination'
+                ) {
+                  id =
+                    weblistingResp.data.data.catalog_list_items[i]
+                      .catalog_list_items[j].catalog_list_items[k].list_id;
+                      totalDesktopdata = weblistingResp.data.data.catalog_list_items[i]
+                        .catalog_list_items[j].catalog_list_items[k].total_items_count;
+                  break loop1;
+                }
+              }
+            }
+          }
+        }
+        if(id){
+        setTotalCalls(Math.ceil(totalDesktopdata / 16))
+        const requestPayload = {
+          ...payload,
+          params: {
+            ...payload.params,
+            key: id,
+          },
+          query: {
+            ...payload.query,
+            page_size:16,
+            page: callsDone, // since page index startsfrom 0
+          },
+        };
+console.log(listItems);
+        const listingResp = await api.CatalogList.getListing(requestPayload);
+        setDesktopUrl(id);
+          setListItems((prevState) => {
+            return prevState.concat(listingResp.data.data);
+          });
+            setCallsDone((callsDone) => callsDone + 1);
+          }
+      }
     }
 
     setIsFetching(false);
@@ -212,6 +317,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
     switch (catalog.layout_type) {
       case 'staggered_group':
       case 'news_card_listing':
+      case 'list_content_pagination':
       case 'news_listing':
         const len = catalog.catalog_list_items.length;
         const items = catalog.catalog_list_items;
