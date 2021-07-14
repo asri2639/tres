@@ -272,7 +272,9 @@ export default function Article({
           );
           if (!el.querySelector('#v-etvbharat')) {
             const content = el.querySelector('.actual-content');
-            content.innerHTML = content.innerHTML + adScript;
+            var div = document.createElement('div');
+            div.innerHTML = adScript;
+            content.appendChild(div);
           }
         }
       }
