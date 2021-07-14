@@ -32,6 +32,16 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   const [showStateModal, setShowStateModal] = useState(false);
   const [totalCalls, setTotalCalls] = useState( Math.ceil(data.total_items_count / 8));
 
+  const totalItemsCount = (data) => {
+    let itemsCount = 0;
+
+    data.catalog_list_items.map((subList, ind) => {
+      
+      itemsCount =  Math.ceil(itemsCount + subList.catalog_list_items.length);
+
+    })
+    return itemsCount;
+  }
   const reArrangeData = (data) => {
     /*  let extra = [];
     return data.catalog_list_items.map((v, i) => {
@@ -73,6 +83,8 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   const [filteredRHS, setFilteredRHS] = useState([]);
   const adsMap = [];
   const [firstSet, setFirstSet] = useState([]);
+
+  const [totalArticleCount, setTotalArticleCount] = useState(totalItemsCount(data));
 
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId, language] = args;
@@ -162,6 +174,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   }, [adData]);
 
   async function fetchMoreListItems() {
+
     if (payload && callsDone <= totalCalls && callsDone < 3) {
       const requestPayload = {
         ...payload,
@@ -198,6 +211,8 @@ const PageListing = ({ children, data, payload, dropdown }) => {
           }
         }
 
+        let nextPageArticlesCount = totalItemsCount(listingResp.data.data);
+        setTotalArticleCount((totalArticleCount) => totalArticleCount + nextPageArticlesCount);
         setListItems((prevState) => {
           return prevState.concat(items);
         });
@@ -205,6 +220,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
         setCallsDone((callsDone) => callsDone + 1);
       }
     } else if (payload && callsDone <= totalCalls) {
+      alert(totalArticleCount);
       if (desktopUrl) {
         const requestPayload = {
           ...payload,
@@ -215,7 +231,9 @@ const PageListing = ({ children, data, payload, dropdown }) => {
           query: {
             ...payload.query,
             page_size:16,
-            page: callsDone, // since page index startsfrom 0
+            pagination_url: window.location.pathname,
+            page: callsDone,
+            total_mobile_article_count:totalArticleCount,
           },
         };
 
@@ -249,6 +267,15 @@ const PageListing = ({ children, data, payload, dropdown }) => {
           i < weblistingResp.data.data.catalog_list_items.length;
           i++
         ) {
+          if (
+            weblistingResp.data.data.catalog_list_items[i].layout_type ===
+            'list_content_pagination'
+          ) {
+            id =
+              weblistingResp.data.data.catalog_list_items[i].list_id;
+                totalDesktopdata = weblistingResp.data.data.catalog_list_items[i].total_items_count;
+            break loop1;
+          }
           loop2: for (
             var j = 0;
             j <
@@ -256,6 +283,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
               .length;
             j++
           ) {
+
             if (
               weblistingResp.data.data.catalog_list_items[i].catalog_list_items[j]
                 .catalog_list_items
@@ -295,10 +323,12 @@ const PageListing = ({ children, data, payload, dropdown }) => {
           query: {
             ...payload.query,
             page_size:16,
-            page: callsDone, // since page index startsfrom 0
+            pagination_url: window.location.pathname,
+            page: callsDone,
+            total_mobile_article_count:totalArticleCount,
           },
         };
-console.log(listItems);
+
         const listingResp = await api.CatalogList.getListing(requestPayload);
         setDesktopUrl(id);
           setListItems((prevState) => {
@@ -314,6 +344,7 @@ console.log(listItems);
 
   function renderLayout(catalog, ind) {
     let returnValue = null;
+
     switch (catalog.layout_type) {
       case 'staggered_group':
       case 'news_card_listing':
