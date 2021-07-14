@@ -90,15 +90,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
             type="text/javascript"
             src="//cdn.ergadx.com/js/889/ads.js"
           ></script>
-        ) : (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `(function(v,d,o,ai){ai=d.createElement('script');
-        ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-etvbharat/vdo.ai.js');
-`,
-            }}
-          ></script>
-        )}
+        ) : null}
 
         <link
           rel="preload"
@@ -222,3 +214,12 @@ App.getInitialProps = async ({ Component, ctx }) => {
 };
 
 export default App;
+
+
+{/* <script
+dangerouslySetInnerHTML={{
+  __html: `(function(v,d,o,ai){ai=d.createElement('script');
+ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-etvbharat/vdo.ai.js');
+`,
+}}
+></script> */}

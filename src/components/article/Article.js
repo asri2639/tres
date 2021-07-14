@@ -247,7 +247,9 @@ export default function Article({
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (contentRef.current) {
-        const adScript = `<div id = "v-etvbharat"></div>`;
+        const adScript = `<div id = "v-etvbharat"></div><script>(function(v,d,o,ai){ai=d.createElement('script');
+        ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-etvbharat/vdo.ai.js');
+        </script>`;
         const splitUrl = location.pathname.split('/');
         const state = splitUrl[2].toLowerCase();
         const language = splitUrl[1].toLowerCase();
