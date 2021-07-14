@@ -244,6 +244,41 @@ export default function Article({
     };
   }, [inView, contentId, contentRef]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (contentRef.current) {
+        const adScript = `<div id = "v-etvbharat"></div>
+        <script>(function(v,d,o,ai){ai=d.createElement('script');ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-etvbharat/vdo.ai.js');</script>`;
+        const splitUrl = location.pathname.split('/');
+        const state = splitUrl[2].toLowerCase();
+        const language = splitUrl[1].toLowerCase();
+        if (
+          [
+            'karnataka',
+            'telangana',
+            'tamil-nadu',
+            'rajasthan',
+            'uttar-pradesh',
+            'uttarakhand',
+            'madhya-pradesh',
+            'punjab',
+            'odisha',
+            'kerala',
+          ].indexOf(state) >= 0 ||
+          language === 'urdu'
+        ) {
+          const el = document.querySelector(
+            `.article[data-content-id="${contentId}"]`
+          );
+          if (!el.querySelector('#v-etvbharat')) {
+            const content = el.querySelector('.actual-content');
+            content.innerHTML = content.innerHTML + adScript;
+          }
+        }
+      }
+    }
+  }, [contentRef]);
+
   const thumbnail = thumbnailExtractor(
     data.thumbnails,
     '3_2',
