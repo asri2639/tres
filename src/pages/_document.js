@@ -69,12 +69,6 @@ export default class ETVDocument extends Document {
                 }}
               ></script>
               <script
-                async
-                type="text/javascript"
-                src="//cdn.ergadx.com/js/889/ads.js"
-              ></script>
-
-              <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
                   __html: `{

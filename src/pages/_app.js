@@ -25,6 +25,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const [isTransitioning, setIsTransitioning] = useState(false);
   const language = router.query.language || 'english';
+  const state = router.query.state.toLowerCase();
 
   useTranslator({ init: true });
 
@@ -71,6 +72,33 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="bingbots" content="all" />
         <meta name="robots" content="all" />
         <meta name="theme-color" content="#07254c" />
+
+        {[
+          'karnataka',
+          'telangana',
+          'tamil-nadu',
+          'rajasthan',
+          'uttar-pradesh',
+          'uttarakhand',
+          'madhya-pradesh',
+          'punjab',
+          'odisha',
+          'kerala',
+        ].indexOf(state) === -1 && language !== 'urdu' ? (
+          <script
+            async
+            type="text/javascript"
+            src="//cdn.ergadx.com/js/889/ads.js"
+          ></script>
+        ) : (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(v,d,o,ai){ai=d.createElement('script');
+        ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-etvbharat/vdo.ai.js');
+`,
+            }}
+          ></script>
+        )}
 
         <link
           rel="preload"
