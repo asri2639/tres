@@ -220,7 +220,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
         setCallsDone((callsDone) => callsDone + 1);
       }
     } else if (payload && callsDone <= totalCalls) {
-      alert(totalArticleCount);
+     
       if (desktopUrl) {
         const requestPayload = {
           ...payload,
