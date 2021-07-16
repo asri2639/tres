@@ -38,7 +38,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
     latestdata.map((subList, ind) => {
       if(subList.layout_type !== 'catalog_wall_menu'){
         subList.catalog_list_items.map((child, dnd) => {
-        //  console.log('layout'+ ' -- '+subList.list_id+ '----'+ child.title);
+        
         })
           itemsCount =  itemsCount + subList.catalog_list_items.length;
       }
@@ -185,7 +185,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
       if(callsDone === 1){
 
         let initialArticleCount = totalItemsCount(reArrangeData(data));
-        alert(initialArticleCount);
+
         setTotalArticleCount((totalArticleCount) => totalArticleCount + initialArticleCount);
       }
       const requestPayload = {
@@ -197,12 +197,13 @@ const PageListing = ({ children, data, payload, dropdown }) => {
       };
 
       const listingResp = await api.CatalogList.getListing(requestPayload);
-      console.log(callsDone,' ----- ');
-      console.log(listingResp);
+
+
+
       if (listingResp.data) {
         const data = listingResp.data.data;
         let items = reArrangeData(data);
-
+let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
         if (isDesktop) {
           let first = [...firstSet];
           let result = [];
@@ -231,8 +232,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
         });
 
         setCallsDone((callsDone) => callsDone + 1);
-        let nextPageArticlesCount = totalItemsCount(items);
-alert(nextPageArticlesCount);
+
         setTotalArticleCount((totalArticleCount) => totalArticleCount + nextPageArticlesCount);
 
       }
