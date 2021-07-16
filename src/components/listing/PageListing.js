@@ -32,14 +32,17 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   const [showStateModal, setShowStateModal] = useState(false);
   const [totalCalls, setTotalCalls] = useState( Math.ceil(data.total_items_count / 8));
 
-  const totalItemsCount = (data) => {
+  const totalItemsCount = (latestdata) => {
     let itemsCount = 0;
+    console.log('called 1-',totalArticleCount + ' local '+ itemsCount );
+    latestdata.catalog_list_items.map((subList, ind) => {
+      if(subList.layout_type !== 'catalog_wall_menu')
 
-    data.catalog_list_items.map((subList, ind) => {
-      
-      itemsCount =  Math.ceil(itemsCount + subList.catalog_list_items.length);
+      itemsCount =  itemsCount + subList.catalog_list_items.length;
 
     })
+
+console.log('called 2-',totalArticleCount + ' local '+ itemsCount );
     return itemsCount;
   }
   const reArrangeData = (data) => {
@@ -84,7 +87,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   const adsMap = [];
   const [firstSet, setFirstSet] = useState([]);
 
-  const [totalArticleCount, setTotalArticleCount] = useState(totalItemsCount(data));
+  const [totalArticleCount, setTotalArticleCount] = useState(0);
 
   const relatedArticlesFetcher = (...args) => {
     const [apiEnum, methodName, contentId, language] = args;
@@ -175,7 +178,11 @@ const PageListing = ({ children, data, payload, dropdown }) => {
 
   async function fetchMoreListItems() {
 
-    if (payload && callsDone <= totalCalls && callsDone < 3) {
+    if (payload && callsDone <= totalCalls && totalArticleCount < 100) {
+      if(callsDone === 1){
+        let initialArticleCount = totalItemsCount(data);
+        setTotalArticleCount((totalArticleCount) => totalArticleCount + initialArticleCount);
+      }
       const requestPayload = {
         ...payload,
         query: {
@@ -212,15 +219,17 @@ const PageListing = ({ children, data, payload, dropdown }) => {
         }
 
         let nextPageArticlesCount = totalItemsCount(listingResp.data.data);
+
         setTotalArticleCount((totalArticleCount) => totalArticleCount + nextPageArticlesCount);
         setListItems((prevState) => {
           return prevState.concat(items);
         });
 
         setCallsDone((callsDone) => callsDone + 1);
+
       }
     } else if (payload && callsDone <= totalCalls) {
-     
+
       if (desktopUrl) {
         const requestPayload = {
           ...payload,
