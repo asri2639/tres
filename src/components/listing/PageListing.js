@@ -38,7 +38,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
     latestdata.map((subList, ind) => {
       if(subList.layout_type !== 'catalog_wall_menu'){
         subList.catalog_list_items.map((child, dnd) => {
-        
+
         })
           itemsCount =  itemsCount + subList.catalog_list_items.length;
       }
@@ -484,6 +484,7 @@ let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
             <ListingStateSelectModal
               data={dropdown.data}
               state={router.query.state}
+              type={dropdown.type}
               onClose={() => {
                 setShowStateModal(false);
               }}
@@ -494,15 +495,20 @@ let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
                   let url = '';
 
                   if (router.query.language === 'english') {
-                    url = '/english/national/state';
+                    url = '/english/national/'+dropdown.type;
                     router.push(url + '/' + district.friendly_id);
                   } else {
-                    url =
-                      '/' +
-                      router.query.language +
-                      '/' +
-                      district.friendly_id +
-                      '/state';
+                    if(dropdown.type === 'state'){
+                      url =
+                        '/' +
+                        router.query.language +
+                        '/' +
+                        selected.state +
+                        '/state';
+                    }else{
+                      url = dropdown.url+'/'+district.friendly_id;
+                    }
+
                     router.push(url);
                   }
                 }
@@ -555,7 +561,7 @@ let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
           ) : null}
           {showStateModal ? (
             <Modal
-              title={'change_state'}
+              title={'change_'+dropdown.type}
               open={!!showStateModal}
               isMobile={false}
               onClose={() => {
@@ -565,7 +571,7 @@ let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
               height={null}
             >
               <div className="px-6 py-4 flex justify-around items-center h-24">
-                <div className="text-md font-medium">{t('state')}</div>
+                <div className="text-md font-medium">{t(dropdown.type)}</div>
                 <div className="w-40">
                   <select
                     value={selected.state}
@@ -577,7 +583,7 @@ let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
                     }}
                     className="form-control"
                   >
-                    <option value="select">{t('select_state')}</option>
+                    <option value="select">{t('select_'+dropdown.type)}</option>
                     {dropdown.data.map((v) => {
                       return (
                         <option key={v.state} value={v.friendly_id}>
@@ -609,15 +615,20 @@ let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
                       let url = '';
 
                       if (router.query.language === 'english') {
-                        url = '/english/national/state';
+                        url = '/english/national/'+dropdown.type;
                         router.push(url + '/' + selected.state);
                       } else {
-                        url =
-                          '/' +
-                          router.query.language +
-                          '/' +
-                          selected.state +
-                          '/state';
+                        if(dropdown.type === 'state'){
+                          url =
+                            '/' +
+                            router.query.language +
+                            '/' +
+                            selected.state +
+                            '/state';
+                        }else{
+                          url = dropdown.url+'/'+district.friendly_id;
+                        }
+
                         router.push(url);
                       }
                     }
@@ -695,7 +706,7 @@ let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
                   style={{ marginLeft: '41rem', marginTop: '10px' }}
                 >
                   <div className="pr-2 text-sm">
-                    {t('select') + ' ' + t('state')}
+                    {t('select') + ' ' + t(dropdown.type)}
                   </div>
                   <div
                     className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"

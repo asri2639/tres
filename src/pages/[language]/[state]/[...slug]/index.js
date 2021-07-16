@@ -298,10 +298,9 @@ const slug = ({
           ></ListContainer>
         );
       case 'navlisting':
-         <Head>
-              <title>{data.meta_tag_title ? data.meta_tag_title : '' }</title>
-          
-            </Head>
+        <Head>
+          <title>{data.meta_tag_title ? data.meta_tag_title : ''}</title>
+        </Head>;
         return (
           <PageListing
             key={canonicalUrl}
@@ -416,7 +415,6 @@ const slug = ({
 };
 
 slug.getInitialProps = async ({ query, req, res, ...args }) => {
-
   let language = 'en',
     state = 'na',
     params = null,
@@ -563,15 +561,17 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   } else {
     const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
     if (
-      ( (url.includes('state') && language === 'en') ||
-	  (url.substring(url.length - 'state'.length) == 'state') ||
-        url.includes('bharat') ||
-		url.includes('crime') ||
-		url.includes('video') ||
-		url.includes('gallery') ||
-        (url.substring(url.length - 'sitara'.length) == 'sitara') ||
-        url.includes('film-and-tv') ||
-        url.includes('international')) 
+      (url.includes('state') && language === 'en') ||
+      url.substring(url.length - 'state'.length) == 'state' ||
+      url.includes('bharat') ||
+      url.includes('crime') ||
+      url.includes('video') ||
+      url.includes('gallery') ||
+      url.includes('city') ||
+      url.includes('district') ||
+      url.substring(url.length - 'sitara'.length) == 'sitara' ||
+      url.includes('film-and-tv') ||
+      url.includes('international')
     ) {
       const url = args.asPath;
       const response = await api.Listing.getListingApiKey({
@@ -587,15 +587,18 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         data: [],
       };
       let dropDownData = undefined;
-      if (url.includes('state')) {
+      if (
+        (url.includes('state') || url.includes('city') || url.includes('district')) &&
+        !url.includes('video')
+      ) {
         let otherStates = '';
         if (url.includes('english')) {
           otherStates = 'yes';
         }
+        const cityParam = url.includes('city')
+          ? urlSplit[2] + '/cities'
+          : urlSplit[2] + '/districts';
         const statePayload = {
-          params: {
-            state: state,
-          },
           query: {
             response: 'r2',
             item_languages: language,
@@ -603,50 +606,100 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             other_states: otherStates,
           },
         };
+        const cityDistrictPayload = {
+          params: {
+            key: cityParam,
+          },
+          query: {
+            response: 'r2',
+            item_languages: language,
+            region: 'IN',
+          },
+        };
 
-        const data = cacheData.get(language + urlSplit[2]);
-        if (data) {
-          dropDownData = data;
-        } else {
-          const response = await trackPromise(
-            api.Catalog.getListingPageSates(statePayload)
-          );
-          dropDownData = response.data.data.items;
-          if (dropDownData.length > 0) {
-            cacheData.put(
-              language + urlSplit[2],
-              dropDownData,
-              5 * 1000 * 60 * 60
+        if (url.includes('state')) {
+          const data = cacheData.get(language + url[2]);
+          finalDataObj.type = 'state';
+          if (data) {
+            dropDownData = data;
+          } else {
+            const response = await trackPromise(
+              api.Catalog.getListingPageSates(statePayload)
             );
+            dropDownData = response.data.data.items;
+            if (dropDownData.length > 0) {
+              cacheData.put(
+                language + urlSplit[2],
+                dropDownData,
+                5 * 1000 * 60 * 60
+              );
+            }
+          }
+        } else {
+          let type = '';
+		  let finalurl = ''
+          if (url.includes('city')) {
+            type = 'city';
+			if(url.substring(url.length - 'city'.length) !== 'city'){
+				finalurl = url.substr(0, url.lastIndexOf("/"));
+			}else{
+				finalurl = url;
+			}
+          } else {
+            type = 'district';
+			if(url.substring(url.length - 'district'.length) !== 'district'){
+				finalurl = url.substr(0, url.lastIndexOf("/"));
+			}else{
+				finalurl = url;
+			}
+          }
+		  
+          finalDataObj.type = type;
+		  finalDataObj.url = finalurl;
+          const data = cacheData.get(language + url[2] + type);
+          
+          if (data) {
+            dropDownData = data;
+          } else {
+            const response = await trackPromise(
+              api.Catalog.getCityDistrictData(cityDistrictPayload)
+            );
+            dropDownData = response.data.data.items;
+            if (dropDownData.length > 0) {
+              cacheData.put(
+                language + url[2] + type,
+                dropDownData,
+                5 * 1000 * 60 * 60
+              );
+            }
           }
         }
         let selectedValue = '';
 
         if (language == 'en') {
-          if (url.substring(url.length - 'state'.length) == 'state') {
-            selectedValue = 'Delhi';
-          } else {
-            let titleobj = dropDownData.filter(
-              (item) => urlSplit[4] == item.friendly_id
-            );
-            console.log('', titleobj[0].ml_title[0].text);
+          let titleobj = dropDownData.filter(
+            (item) => urlSplit[4] == item.friendly_id
+          );
+          if (titleobj.length > 0) {
             selectedValue = titleobj[0].ml_title[0].text;
+          } else {
+            selectedValue = dropDownData[0].ml_title[0].text;
           }
         } else {
           let titleobj = dropDownData.filter(
-            (item) => urlSplit[2] == item.friendly_id
+            (item) => urlSplit[4] == item.friendly_id
           );
-          selectedValue = titleobj[0].ml_title[0].text;
+
+          if (titleobj.length > 0) {
+            selectedValue = titleobj[0].ml_title[0].text;
+          } else {
+            selectedValue = dropDownData[0].ml_title[0].text;
+          }
         }
         finalDataObj.data = dropDownData;
         finalDataObj.title = selectedValue;
       }
 
-      const redirectUrl = `${
-        publicRuntimeConfig.APP_ENV === 'staging'
-          ? 'https://staging.etvbharat.com'
-          : 'https://www.etvbharat.com'
-      }${url}`;
       const params = {
         collective_ads_count: 0,
         page: 0,
@@ -665,6 +718,20 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             finalQueryParamObject,
             result.query_params[i]
           );
+        }
+
+        if (
+          url.includes('city') &&
+          Object.keys(finalQueryParamObject).length === 0
+        ) {
+          finalQueryParamObject.dynamic_city = dropDownData[0].friendly_id;
+        }
+        if (
+          url.includes('district') &&
+          Object.keys(finalQueryParamObject).length === 0
+        ) {
+         
+          finalQueryParamObject.dynamic_district = dropDownData[0].friendly_id;
         }
         if (
           url.includes('state') &&
@@ -697,7 +764,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           data: '',
         };
       }
-    }  else {
+    } else {
       const redirectUrl = `${
         publicRuntimeConfig.APP_ENV === 'staging'
           ? 'https://staging.etvbharat.com'

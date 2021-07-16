@@ -15,7 +15,15 @@ export default function Catalog(inst) {
     },
     getListingPageSates({ params, query, config } = new APIRequest()) {
       return inst.get(
-        `${controller}/city-state/states?${new URLSearchParams(
+        `${controller}/items/india/states?${new URLSearchParams(
+          query
+        )}`,
+        config
+      );
+    },
+    getCityDistrictData({params, query, config } = new APIRequest()){
+      return inst.get(
+        `${controller}/city-state/items/india/states/${params.key}?${new URLSearchParams(
           query
         )}`,
         config
