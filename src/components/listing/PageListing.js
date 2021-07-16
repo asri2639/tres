@@ -34,15 +34,13 @@ const PageListing = ({ children, data, payload, dropdown }) => {
 
   const totalItemsCount = (latestdata) => {
     let itemsCount = 0;
-    console.log('called 1-',totalArticleCount + ' local '+ itemsCount );
+
     latestdata.catalog_list_items.map((subList, ind) => {
       if(subList.layout_type !== 'catalog_wall_menu')
 
       itemsCount =  itemsCount + subList.catalog_list_items.length;
 
     })
-
-console.log('called 2-',totalArticleCount + ' local '+ itemsCount );
     return itemsCount;
   }
   const reArrangeData = (data) => {
