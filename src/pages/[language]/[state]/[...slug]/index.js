@@ -49,6 +49,16 @@ const { appLanguage } = useTranslator();
     const match = id.match(/(\d+)/);
     ampExists = +match[0].slice(0, 12) >= 202102120000;
   }
+  let readwhere = false;
+
+  const splitPath = router.asPath.split('/');
+  const state = splitPath[2];
+  if (
+    state === 'uttar-pradesh' ||
+    (state === 'national' && splitPath[1] !== 'urdu')
+  ) {
+    readwhere = true;
+  }
 
   // const ampExists = false; // prod enabling amp
 
@@ -358,7 +368,7 @@ const { appLanguage } = useTranslator();
             <Head>
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
-              {ampExists /* && data.is_amp */ ? (
+              {ampExists && (data.is_amp || readwhere) ? (
                 <link rel="amphtml" href={headerObj.ampUrl}></link>
               ) : null}
               <meta
@@ -450,7 +460,6 @@ const { appLanguage } = useTranslator();
 };
 
 slug.getInitialProps = async ({ query, req, res, ...args }) => {
-
   let language = 'en',
     state = 'na',
     params = null,
