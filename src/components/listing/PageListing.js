@@ -626,7 +626,7 @@ let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
                             selected.state +
                             '/state';
                         }else{
-                          url = dropdown.url+'/'+district.friendly_id;
+                          url = dropdown.url+'/'+selected.state;
                         }
 
                         router.push(url);
