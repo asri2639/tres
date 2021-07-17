@@ -47,7 +47,7 @@ const BottomRelatedBar = ({ data }) => {
     }
   };
 
-  return (
+  return visible.length > 0 ? (
     <div className="bottom-one flex shadow-t bg-white z-10 h-full">
       <div
         className={`px-1 pt-2 pb-1 border-t ${
@@ -60,7 +60,6 @@ const BottomRelatedBar = ({ data }) => {
         <div className={`${bottom['left-icon']} h-full`}></div>
       </div>
       {visible.map((rel, ind) => {
-        const splitUrl = rel.web_url.split('/');
         const thumbnail = thumbnailExtractor(
           rel.thumbnails,
           '3_2',
@@ -110,7 +109,7 @@ const BottomRelatedBar = ({ data }) => {
         <div className={`${bottom['right-icon']} h-full`}></div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default BottomRelatedBar;
