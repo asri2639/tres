@@ -23,10 +23,12 @@ import MainArticles from './MainArticles';
 import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
+
 const ListContainer = ({ children, data, payload, dropdown }) => {
   const api = API(APIEnum.CatalogList);
   const router = useRouter();
   const isRTL = useContext(RTLContext);
+
   const { t, appLanguage } = useTranslator();
   const [showStateModal, setShowStateModal] = useState(false);
   let totalCalls = Math.ceil(data.total_items_count / 8);

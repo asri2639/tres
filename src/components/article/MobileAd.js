@@ -1,8 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { TransitionContext } from '@pages/_app';
+import { AMPContext, TransitionContext } from '@pages/_app';
 
 const MobileAd = ({ adData, className, refresh }) => {
   const isTransitioning = useContext(TransitionContext);
+  const isAMP = useContext(AMPContext);
 
   const [isDesktop, setIsDesktop] = useState(null);
 
@@ -89,15 +90,27 @@ const MobileAd = ({ adData, className, refresh }) => {
       className={className}
     >
       {adData ? (
-        <div
-          ref={adEl}
-          data-ad-unit={adData.ad_unit}
-          id={adData.gpt_id}
-          style={{
-            width: width ? width + 'px' : 'auto',
-            height: height ? height + 'px' : 'auto',
-          }}
-        ></div>
+        isAMP ? (
+          <amp-ad
+            width="300"
+            height="250"
+            type="doubleclick"
+            data-slot={adData.gpt_id}
+          >
+            <div placeholder></div>
+            <div fallback></div>
+          </amp-ad>
+        ) : (
+          <div
+            ref={adEl}
+            data-ad-unit={adData.ad_unit}
+            id={adData.gpt_id}
+            style={{
+              width: width ? width + 'px' : 'auto',
+              height: height ? height + 'px' : 'auto',
+            }}
+          ></div>
+        )
       ) : null}
     </div>
   );

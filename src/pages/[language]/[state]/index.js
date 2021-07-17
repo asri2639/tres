@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import ListContainer from '@components/listing/ListContainer';
@@ -13,8 +13,9 @@ import {
 } from '@utils/Helpers';
 import { NextSeo } from 'next-seo';
 import useTranslator from '@hooks/useTranslator';
+import { AMPContext } from '@pages/_app';
 
-const state = ({ data, payload, pageType }) => {
+const state = ({ data, payload, pageType, isAmp }) => {
   const router = useRouter();
 
   const { appLanguage } = useTranslator();
@@ -98,7 +99,8 @@ const state = ({ data, payload, pageType }) => {
 
 state.getInitialProps = async ({ query, req, res, ...args }) => {
   const api = API(APIEnum.Listing, APIEnum.CatalogList);
-  const url = args.asPath;
+  const url = args.asPath.split('?')[0];
+  const isAmp = query.amp === '1';
 
   const response = await api.Listing.getListingApiKey({
     query: {
@@ -108,7 +110,6 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   });
 
   const result = response.data;
-
   const urlSplit = url.split('/');
   const language = languageMap[urlSplit[1]];
   const state = stateCodeConverter(urlSplit[2]);
@@ -129,7 +130,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       query: {
         collective_ads_count: 0,
         page: 0,
-        page_size: 8,
+        page_size: isAmp ? 40 : 8,
         version: 'v2',
         response: 'r2',
         item_languages: language,
@@ -145,6 +146,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       pageType: 'listing',
       data: data,
       payload: requestPayload,
+      isAmp: isAmp,
     };
   } else {
     return {

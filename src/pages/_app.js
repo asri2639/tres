@@ -157,7 +157,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 }
 
 App.getInitialProps = async ({ Component, ctx }) => {
-  const language = ctx.asPath.split('/')[1];
+  const language = ctx.asPath.split('?')[0].split('/')[1];
   if (ctx.asPath === '/' || !languageMap[language]) {
     if (process.browser) {
       Router.push('/english/national');
@@ -201,18 +201,24 @@ App.getInitialProps = async ({ Component, ctx }) => {
   appConfig = result.data.data;
   applicationConfig.value = appConfig;
   // }
-
-  const pageProps = await Component.getInitialProps(ctx);
-  if (pageProps.pageType === 'redirect') {
-    const redirectUrl = decodeURI(
-      pageProps.data.indexOf('.woff') === -1 ? pageProps.data : ''
-    );
-    if (process.browser) {
-      location.href = redirectUrl;
-    } else {
-      // ctx.res.writeHead(302, { Location: decodeURI(pageProps.data) }).end();
+  let pageProps;
+  try {
+    pageProps = await Component.getInitialProps(ctx);
+    if (pageProps.pageType === 'redirect') {
+      const redirectUrl = decodeURI(
+        pageProps.data.indexOf('.woff') === -1 ? pageProps.data : ''
+      );
+      if (process.browser) {
+        location.href = redirectUrl;
+      } else {
+        // ctx.res.writeHead(302, { Location: decodeURI(pageProps.data) }).end();
+      }
     }
+  } catch (e) {
+    console.log(url);
+    console.log(e);
   }
+
   return {
     pageProps,
     data: '',

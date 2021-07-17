@@ -87,7 +87,7 @@ const MobileNextArticle = ({
       ) : null}
 
       {children}
-    {/*   <div className="flex justify-end">
+      {/*   <div className="flex justify-end">
         {!isAMP ? (
           <div
             className="button px-4 py-2 m-3 border-2 border-red-700 text-red-700 rounded-md cursor-pointer focus:text-white focus:bg-red-700"
@@ -107,7 +107,7 @@ const MobileNextArticle = ({
         </div>
       ) : null}
 
-      {isAMP && related && related.length > 0 && false ? (
+      {isAMP && related && related.length > 0 ? (
         <amp-next-page>
           <script
             type="application/json"
