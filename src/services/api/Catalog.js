@@ -15,7 +15,7 @@ export default function Catalog(inst) {
     },
     getListingPageSates({ params, query, config } = new APIRequest()) {
       return inst.get(
-        `${controller}/items/india/states?${new URLSearchParams(
+        `${controller}/city-state/states?${new URLSearchParams(
           query
         )}`,
         config
