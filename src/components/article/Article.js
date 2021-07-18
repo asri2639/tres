@@ -245,7 +245,7 @@ export default function Article({
   }, [inView, contentId, contentRef]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && !isAMP) {
       if (contentRef.current) {
         const adScript = `<div id = "v-etvbharat"></div><script></script>`;
         const splitUrl = location.pathname.split('/');
@@ -440,71 +440,7 @@ export default function Article({
                   </Media>
                 </MediaContextProvider>
               ) : null}
-              <InView
-                as="div"
-                className="pseudo quarter"
-                triggerOnce={true}
-                onChange={async (inView, entry) => {
-                  if (inView) {
-                    GoogleTagManager.articleViewScroll(
-                      data,
-                      { newsArticle: true },
-                      25
-                    );
-                  }
-                }}
-              >
-                <span></span>
-              </InView>
-              <InView
-                as="div"
-                className="pseudo half"
-                triggerOnce={true}
-                onChange={(inView, entry) => {
-                  if (inView) {
-                    GoogleTagManager.articleViewScroll(
-                      data,
-                      { newsArticle: true },
-                      50
-                    );
-                  }
-                }}
-              >
-                <span></span>
-              </InView>
-              <InView
-                as="div"
-                className="pseudo three-quarter"
-                triggerOnce={true}
-                onChange={(inView, entry) => {
-                  if (inView) {
-                    GoogleTagManager.articleViewScroll(
-                      data,
-                      { newsArticle: true },
-                      75
-                    );
-                  }
-                }}
-              >
-                <span></span>
-              </InView>
-              <InView
-                as="div"
-                className="pseudo full"
-                triggerOnce={true}
-                onChange={(inView, entry) => {
-                  if (inView) {
-                    GoogleTagManager.articleViewScroll(
-                      data,
-                      { newsArticle: true },
-                      100
-                    );
-                  }
-                }}
-              >
-                <span></span>
-              </InView>
-              {ads ? (
+            {ads ? (
                 <div className="pt-3">
                   <MobileAd
                     key={'art' + (index * 2 + 2)}
