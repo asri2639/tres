@@ -73,24 +73,24 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="robots" content="all" />
         <meta name="theme-color" content="#07254c" />
 
-        {[
-          'karnataka',
-          'telangana',
-          'tamil-nadu',
-          'rajasthan',
-          'uttar-pradesh',
-          'uttarakhand',
-          'madhya-pradesh',
-          'punjab',
-          'odisha',
-          'kerala',
-        ].indexOf(state) === -1 && language !== 'urdu' ? (
+        {isAMP ? null : [
+            'karnataka',
+            'telangana',
+            'tamil-nadu',
+            'rajasthan',
+            'uttar-pradesh',
+            'uttarakhand',
+            'madhya-pradesh',
+            'punjab',
+            'odisha',
+            'kerala',
+          ].indexOf(state) === -1 && language !== 'urdu' ? (
           <script
             async
             type="text/javascript"
             src="//cdn.ergadx.com/js/889/ads.js"
           ></script>
-        ) : !isAMP ? (
+        ) : (
           <script
             dangerouslySetInnerHTML={{
               __html: `(function(v,d,o,ai){ai=d.createElement('script');
@@ -98,29 +98,13 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 `,
             }}
           ></script>
-        ) : null}
+        )}
 
-        <link
-          rel="preload"
-          href="/assets/fonts/English/english.woff2"
-          as="font"
-          type="font/woff2"
-          crossorigin
-          crossOrigin
-        />
-        <link
-          rel="preload"
-          href="/assets/fonts/English/english.woff"
-          as="font"
-          type="font/woff2"
-          crossorigin
-          crossOrigin
-        />
-        {langName !== 'english' ? (
+        {!isAMP ? (
           <>
             <link
               rel="preload"
-              href={`/assets/fonts/${langCap}/${langName}.woff2`}
+              href="/assets/fonts/English/english.woff2"
               as="font"
               type="font/woff2"
               crossorigin
@@ -128,12 +112,32 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
             />
             <link
               rel="preload"
-              href={`/assets/fonts/${langCap}/${langName}.woff`}
+              href="/assets/fonts/English/english.woff"
               as="font"
               type="font/woff2"
               crossorigin
               crossOrigin
             />
+            {langName !== 'english' ? (
+              <>
+                <link
+                  rel="preload"
+                  href={`/assets/fonts/${langCap}/${langName}.woff2`}
+                  as="font"
+                  type="font/woff2"
+                  crossorigin
+                  crossOrigin
+                />
+                <link
+                  rel="preload"
+                  href={`/assets/fonts/${langCap}/${langName}.woff`}
+                  as="font"
+                  type="font/woff2"
+                  crossorigin
+                  crossOrigin
+                />
+              </>
+            ) : null}
           </>
         ) : null}
       </Head>

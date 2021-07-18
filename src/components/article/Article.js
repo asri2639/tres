@@ -103,6 +103,7 @@ export default function Article({
     }
 
     if (typeof window !== 'undefined' && !isAMP) {
+      console.log('inside non-amp!!!!');
       const isDesktop = window.innerWidth >= 768;
       const divStyle = isDesktop
         ? `width: 728px; height: 90px;`
@@ -440,7 +441,7 @@ export default function Article({
                   </Media>
                 </MediaContextProvider>
               ) : null}
-            {ads ? (
+              {ads ? (
                 <div className="pt-3">
                   <MobileAd
                     key={'art' + (index * 2 + 2)}
