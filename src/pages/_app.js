@@ -26,7 +26,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const language = router.query.language || 'english';
   const state = router.query.state.toLowerCase();
-
+  const isAMP = router.query.amp === '1';
   useTranslator({ init: true });
 
   useEffect(() => {
@@ -90,7 +90,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
             type="text/javascript"
             src="//cdn.ergadx.com/js/889/ads.js"
           ></script>
-        ) : (
+        ) : !isAMP ? (
           <script
             dangerouslySetInnerHTML={{
               __html: `(function(v,d,o,ai){ai=d.createElement('script');
@@ -98,7 +98,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 `,
             }}
           ></script>
-        )}
+        ) : null}
 
         <link
           rel="preload"
@@ -139,7 +139,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
       </Head>
 
       {accessToken.web.length && accessToken.mobile.length ? (
-        <AMPContext.Provider value={router.query.amp === '1' ? true : false}>
+        <AMPContext.Provider value={isAMP}>
           <TransitionContext.Provider value={isTransitioning}>
             {/*   {isTransitioning ? <GlobalSpinner /> : null} */}
             <Layout
@@ -215,7 +215,6 @@ App.getInitialProps = async ({ Component, ctx }) => {
       }
     }
   } catch (e) {
-    console.log(url);
     console.log(e);
   }
 
