@@ -107,7 +107,7 @@ const MobileNextArticle = ({
         </div>
       ) : null}
 
-      {isAMP && related && related.length > 0 ? (
+      {isAMP && related && related.length > 0 && false ? (
         <amp-next-page>
           <script
             type="application/json"
