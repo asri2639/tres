@@ -571,7 +571,13 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       url.includes('district') ||
       url.substring(url.length - 'sitara'.length) == 'sitara' ||
       url.includes('film-and-tv') ||
-      url.includes('international')
+      url.includes('international') ||
+      url.includes('business') ||
+      url.includes('champion') ||
+      url.includes('science-and-technology') ||
+      url.includes('sukhibhava') ||
+      url.includes('opinion')
+
     ) {
       const url = args.asPath;
       const response = await api.Listing.getListingApiKey({
@@ -653,11 +659,11 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 				finalurl = url;
 			}
           }
-		  
+
           finalDataObj.type = type;
 		  finalDataObj.url = finalurl;
           const data = cacheData.get(language + url[2] + type);
-          
+
           if (data) {
             dropDownData = data;
           } else {
@@ -730,7 +736,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           url.includes('district') &&
           Object.keys(finalQueryParamObject).length === 0
         ) {
-         
+
           finalQueryParamObject.dynamic_district = dropDownData[0].friendly_id;
         }
         if (
