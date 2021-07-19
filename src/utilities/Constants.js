@@ -6,11 +6,9 @@ const env = publicRuntimeConfig.APP_ENV;
 const prd_test = publicRuntimeConfig.TEST === 'test';
 
 const baseURL =
-  env === 'production' && !prd_test
+  env === 'production'
     ? 'https://prod.api.etvbharat.com'
-    : env === 'development' || prd_test
-    ? 'http://localhost:3000/api'
-    : 'https://prod.api.etvbharat.com';
+    :'http://15.207.68.182:8080/';
 
 export const domainUrl =
   env === 'production' && !prd_test
