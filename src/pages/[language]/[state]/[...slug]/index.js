@@ -689,7 +689,12 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           if (titleobj.length > 0) {
             selectedValue = titleobj[0].ml_title[0].text;
           } else {
-            selectedValue = 'Delhi';
+            if(url.includes('state')){
+              selectedValue = 'Delhi';
+            }else{
+              selectedValue = dropDownData[0].ml_title[0].text;
+            }
+
           }
         } else {
           let titleobj = dropDownData.filter(
