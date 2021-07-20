@@ -8,7 +8,7 @@ const prd_test = publicRuntimeConfig.TEST === 'test';
 const baseURL =
   env === 'production'
     ? 'https://prod.api.etvbharat.com'
-    :'https://prod.api.etvbharat.com';
+    :'https://curator.api.etvbharat.com';
 
 export const domainUrl =
   env === 'production' && !prd_test
