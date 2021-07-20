@@ -294,10 +294,10 @@ const getAds = (config) =>
   rubiconproject.com, 17960, RESELLER, 0bfd66d529a55807
   indexexchange.com, 192787, RESELLER
   indexexchange.com, 192769, RESELLER
-  vdopia.com,Â 15364, DIRECT, 49a66ce31a704197 #video
-  chocolateplatform.com,Â 15364, DIRECT, 49a66ce31a704197 #video
-  vdopia.com,Â 15364, DIRECT, 49a66ce31a704197 #banner
-  chocolateplatform.com,Â 15364, DIRECT, 49a66ce31a704197 #banner
+  vdopia.com,Ã‚ 15364, DIRECT, 49a66ce31a704197 #video
+  chocolateplatform.com,Ã‚ 15364, DIRECT, 49a66ce31a704197 #video
+  vdopia.com,Ã‚ 15364, DIRECT, 49a66ce31a704197 #banner
+  chocolateplatform.com,Ã‚ 15364, DIRECT, 49a66ce31a704197 #banner
   mobfox.com,4459, DIRECT, 5529a3d1f59865be
   mobfox.com,4459, RESELLER, 5529a3d1f59865be
   appnexus.com,2637,RESELLER,f5ab79cb980f11d1
@@ -510,6 +510,7 @@ const getAds = (config) =>
   #<!VDO.AI>
   vdo.ai, 2190, DIRECT
   atlas5.co, 2190, DIRECT
+  walletcircle.co, 2190, DIRECT
   google.com, pub-2403018226404213, DIRECT, f08c47fec0942fa0
   google.com, pub-7094677798399606, RESELLER, f08c47fec0942fa0
   appnexus.com, 8148, RESELLER, f5ab79cb980f11d1
