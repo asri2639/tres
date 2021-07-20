@@ -32,7 +32,12 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   const [showStateModal, setShowStateModal] = useState(false);
   const [totalCalls, setTotalCalls] = useState( Math.ceil(data.total_items_count / 8));
   const [paginationCount, setPaginationCount] = useState(0);
-
+  router.onRouteChangeComplete = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+    });
+  };
   const totalItemsCount = (latestdata) => {
     let itemsCount = 0;
 
@@ -409,13 +414,12 @@ if(callsDone === 1){
         break;
 
       case 'catalog_wall_menu':
-        /* return catalog.catalog_list_items.length > 0 ? (
+         returnValue = catalog.catalog_list_items.length > 0 ? (
           <CatalogWall
             key={catalog.friendly_id + ind}
             data={catalog.catalog_list_items}
           />
-        ) : null; */
-        returnValue = null;
+        ) : null;
         break;
       case 'staggered_grid_seeall':
       case 'slider_seeall':
