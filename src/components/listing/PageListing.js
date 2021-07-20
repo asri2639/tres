@@ -31,6 +31,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   const { t, appLanguage } = useTranslator();
   const [showStateModal, setShowStateModal] = useState(false);
   const [totalCalls, setTotalCalls] = useState( Math.ceil(data.total_items_count / 8));
+  const [paginationCount, setPaginationCount] = useState(0);
 
   const totalItemsCount = (latestdata) => {
     let itemsCount = 0;
@@ -181,7 +182,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
 
   async function fetchMoreListItems() {
 
-    if (payload && callsDone <= totalCalls && totalArticleCount < 100) {
+    if (payload && callsDone <= totalCalls && totalArticleCount + paginationCount < 100) {
       if(callsDone === 1){
 
         let initialArticleCount = totalItemsCount(reArrangeData(data));
@@ -204,6 +205,9 @@ const PageListing = ({ children, data, payload, dropdown }) => {
         const data = listingResp.data.data;
         let items = reArrangeData(data);
 let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
+if(callsDone === 1){
+  setPaginationCount(nextPageArticlesCount);
+}
         if (isDesktop) {
           let first = [...firstSet];
           let result = [];
