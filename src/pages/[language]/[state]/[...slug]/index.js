@@ -569,14 +569,15 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       url.includes('gallery') ||
       url.includes('city') ||
       url.includes('district') ||
-      url.substring(url.length - 'sitara'.length) == 'sitara' ||
+    url.includes('sitara') ||
       url.includes('film-and-tv') ||
       url.includes('international') ||
       url.includes('business') ||
       url.includes('champion') ||
       url.includes('science-and-technology') ||
       url.includes('sukhibhava') ||
-      url.includes('opinion')
+      url.includes('opinion') ||
+        url.includes('sports')
 
     ) {
       const url = args.asPath;

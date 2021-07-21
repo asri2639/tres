@@ -43,7 +43,7 @@ export default function DesktopSubMenu({ category }) {
         [
           'CatalogList',
           'getSubMenuDetails',
-          JSON.stringify({ key: category.menu_link }),
+          JSON.stringify({ key: category.home_link }),
         ],
         catalogFetcher,
         { dedupingInterval: 5 * 60 * 1000 }
@@ -54,7 +54,7 @@ export default function DesktopSubMenu({ category }) {
   return (
     <>
       {response && response.data && response.data.catalog_list_items
-        ? response.data.catalog_list_items.slice(0, 3).map((item) => {
+        ? response.data.catalog_list_items[0].catalog_list_items.slice(0, 3).map((item) => {
             const splitUrl = item.web_url ? item.web_url.split('/') : [];
             const thumbnail = thumbnailExtractor(
               item.thumbnails,

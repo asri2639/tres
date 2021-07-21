@@ -130,11 +130,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
             : convertedState;
         const headerResp = await api.CatalogList.getMenuDetails({
           params: {
-            suffix: isDesktop
-              ? appConfig.params_hash2.config_params[
-                  isDesktop ? 'web_lists' : 'msite_lists'
-                ][convertedState][isDesktop ? 'tabs' : 'left-menu']
-              : `msite-new-left-menu${state !== 'national' ? '-' + state : ''}`,
+            suffix:  `msite-new-left-menu${state !== 'national' ? '-' + state : ''}`,
           },
 
           isSSR: !isDesktop,
@@ -229,11 +225,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
         language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
-          suffix: isDesktop
-            ? appConfig.params_hash2.config_params[
-                isDesktop ? 'web_lists' : 'msite_lists'
-              ][convertedState][isDesktop ? 'tabs' : 'left-menu']
-            : `msite-new-left-menu${state !== 'national' ? '-' + state : ''}`,
+          suffix: `msite-new-left-menu${state !== 'national' ? '-' + state : ''}`,
         },
         query: {
           region: country,
