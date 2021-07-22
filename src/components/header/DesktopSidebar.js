@@ -145,7 +145,7 @@ export default function DesktopSidebar({ data, onClose, isMobile = false }) {
           right: 0;
           bottom: 0;
           left: 0;
-          z-index: 100;
+          z-index: 1003;
         }
 
         .st-menu {
