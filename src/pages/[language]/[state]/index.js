@@ -28,10 +28,10 @@ const state = ({ data, payload, pageType }) => {
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
 
-  const canonicalUrl = `https://react.etvbharat.com${
+  const canonicalUrl = `https://www.etvbharat.com${
     new URL(`http:localhost:3000${router.asPath}`).pathname
   }`;
-  const ampUrl = getAmpUrl(canonicalUrl, true);
+  const ampUrl = getAmpUrl(canonwww.etvbharat.com
   let ampExists = false;
 
   const splitPath = router.asPath.split('/');
@@ -70,7 +70,7 @@ const state = ({ data, payload, pageType }) => {
           description: data.meta_tag_description,
           images: [
             {
-              url: `https://react.etvbharat.com/assets/logos/${appLanguage.name}.png`,
+              url: `https://www.etvbharat.com/assets/logos/${appLanguage.name}.png`,
               width: 200,
               height: 200,
               alt: 'ETV Bharat News',

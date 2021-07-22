@@ -276,7 +276,7 @@ const Video = ({
                     width="16"
                     height="9"
                     src={iframeSource}
-                    poster="https://react.etvbharat.com/assets/images/placeholder.png"
+                    poster="https://www.etvbharat.com/assets/images/placeholder.png"
                   ></amp-video-iframe>
                 ) : (
                   <iframe src={iframeSource}></iframe>

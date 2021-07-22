@@ -82,23 +82,23 @@ const { appLanguage } = useTranslator();
     }
 
     if (stateName) {
-      canonicalUrl = `https://react.etvbharat.com${[
+      canonicalUrl = `https://www.etvbharat.com${[
         ...splitPath.slice(0, 2),
         stateName,
         ...splitPath.slice(3),
       ].join('/')}`;
     } else {
-      canonicalUrl = `https://react.etvbharat.com${
+      canonicalUrl = `https://www.etvbharat.com${
         new URL(`http:localhost:3000${router.asPath}`).pathname
       }`;
     }
-
+www.etvbharat.com
     if (
       pageType === 'gallery' ||
       pageType === 'video' ||
       pageType === 'article'
     ) {
-      ampUrl = `https://react.etvbharat.com/amp${
+      ampUrl = `https://www.etvbharat.com/amp${
         new URL(`http:localhost:3000${router.asPath}`).pathname
       }`;
     }
@@ -410,7 +410,7 @@ const { appLanguage } = useTranslator();
  "@type": "NewsArticle",
  "mainEntityOfPage": {
  "@type": "WebPage",
- "@id": "https://react.etvbharat.com/${headerObj.url}"
+ "@id": "https://www.etvbharat.com/${headerObj.url}"
  },
  "headline": "${headerObj.headline}",
  "description": "${headerObj.description.replace(/\"/gi, '\\"')}",

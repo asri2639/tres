@@ -38,7 +38,7 @@ export default function Catalog(inst) {
         .then((resp) => resp.json())
         .catch((e) => {
           /*  return fetch(
-          `https://react.etvbharat.com/assets/appConfig.json`
+          `https://www.etvbharat.com/assets/appConfig.json`
         ).then((resp) => resp.json()); */
         });
     },
@@ -54,7 +54,7 @@ export default function Catalog(inst) {
         .then((resp) => resp.json())
         .catch((e) => {
           /*  return fetch(
-            `https://react.etvbharat.com/assets/appConfig.json`
+            `https://www.etvbharat.com/assets/appConfig.json`
           ).then((resp) => resp.json()); */
         });
     },

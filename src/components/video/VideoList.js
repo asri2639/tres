@@ -75,7 +75,7 @@ export const constructPlaybackUrl = (
   );
 
   if (thumbnail.url.indexOf('/placeholder.png') > 0) {
-    thumbnail.url = 'https://react.etvbharat.com/assets/images/newstime.png';
+    thumbnail.url = 'https://www.etvbharat.com/assets/images/newstime.png';
   }
 
   var s,
