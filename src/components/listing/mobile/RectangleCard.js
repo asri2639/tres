@@ -15,7 +15,7 @@ const RectangleCard = ({ data, article, className }) => {
     router.query.state
   );
 
-  const splitUrl = article.web_url.split('/');
+
   const thumbnail = thumbnailExtractor(article.thumbnails, '3_2', 's2b', null);
 
   return (

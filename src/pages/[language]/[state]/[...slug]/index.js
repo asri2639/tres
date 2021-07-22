@@ -15,7 +15,7 @@ import {
 import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
-
+import useTranslator from '@hooks/useTranslator';
 import ArticleList from '@components/article/ArticleList';
 import VideoList from '@components/video/VideoList';
 import GalleryList from '@components/gallery/GalleryList';
@@ -32,7 +32,7 @@ const slug = ({
   dropDownData,
 }) => {
   const router = useRouter();
-
+const { appLanguage } = useTranslator();
   let canonicalUrl = '',
     ampUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
@@ -298,16 +298,50 @@ const slug = ({
           ></ListContainer>
         );
       case 'navlisting':
-        <Head>
-          <title>{data.meta_tag_title ? data.meta_tag_title : ''}</title>
-        </Head>;
-        return (
+
+        return (<>
+          <Head>
+              <title>{data.meta_tag_title}</title>
+          </Head>;
+          <NextSeo
+            title={data.meta_tag_title}
+            description={data.meta_tag_description}
+            additionalMetaTags={[
+              {
+                name: 'keywords',
+                content: data.meta_tag_keywords
+                  ? data.meta_tag_keywords.join(', ')
+                  : '',
+              },
+            ]}
+            openGraph={{
+              site_name: 'ETV Bharat News',
+              url: `https://www.etvbharat.com/${router.asPath.slice(1)}`,
+              type: 'article',
+              title: data.meta_tag_title,
+              description: data.meta_tag_description,
+              images: [
+                {
+                  url: `https://react.etvbharat.com/assets/logos/${appLanguage.name}.png`,
+                  width: 200,
+                  height: 200,
+                  alt: 'ETV Bharat News',
+                },
+              ],
+            }}
+            twitter={{
+              handle: '@etvbharat',
+              site: '@etvbharat',
+              cardType: 'summary_large_image',
+            }}
+          />
           <PageListing
             key={canonicalUrl}
             data={data}
             payload={payload}
             dropdown={dropDownData}
           ></PageListing>
+          </>
         );
       case 'search':
         return <ListContainer data={data} payload={payload}></ListContainer>;
