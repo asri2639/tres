@@ -303,7 +303,7 @@ const { appLanguage } = useTranslator();
           <Head>
               <title>{data.meta_tag_title !== '' && !data.meta_tag_title.includes('canonical tag') ? data.meta_tag_title : 'ETV Bharat'}</title>
           </Head>
-        
+
           <NextSeo
             title={data.meta_tag_title !== '' && !data.meta_tag_title.includes('canonical tag') ? data.meta_tag_title : 'ETV Bharat' }
             description={data.meta_tag_description}
@@ -323,7 +323,7 @@ const { appLanguage } = useTranslator();
               description: data.meta_tag_description,
               images: [
                 {
-                  url: `https://react.etvbharat.com/assets/logos/${appLanguage.name}.png`,
+                  url: `https://www.etvbharat.com/assets/logos/${appLanguage.name}.png`,
                   width: 200,
                   height: 200,
                   alt: 'ETV Bharat News',
@@ -814,8 +814,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     } else {
       const redirectUrl = `${
         publicRuntimeConfig.APP_ENV === 'staging'
-          ? 'https://staging.etvbharat.com'
-          : 'https://www.etvbharat.com'
+          ? 'https://old.etvbharat.com'
+          : 'https://old.etvbharat.com'
       }${url}`;
       return {
         pageType: 'redirect',
