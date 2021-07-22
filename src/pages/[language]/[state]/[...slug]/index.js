@@ -92,7 +92,6 @@ const { appLanguage } = useTranslator();
         new URL(`http:localhost:3000${router.asPath}`).pathname
       }`;
     }
-www.etvbharat.com
     if (
       pageType === 'gallery' ||
       pageType === 'video' ||
