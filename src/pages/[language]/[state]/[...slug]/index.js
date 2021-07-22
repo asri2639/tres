@@ -302,7 +302,7 @@ const { appLanguage } = useTranslator();
         return (<>
           <Head>
               <title>{data.meta_tag_title !== '' && !data.meta_tag_title.includes('canonical tag') ? data.meta_tag_title : 'ETV Bharat'}</title>
-          </Head>;
+          </Head>
         
           <NextSeo
             title={data.meta_tag_title !== '' && !data.meta_tag_title.includes('canonical tag') ? data.meta_tag_title : 'ETV Bharat' }

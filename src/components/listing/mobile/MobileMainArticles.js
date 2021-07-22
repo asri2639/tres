@@ -28,9 +28,6 @@ const MobileMainArticles = ({ list, className, dropdown }) => {
 
   return (
     <>
-
-
-
       <LargeSquareCard
         className="w-full bg-white mb-2"
         article={list[0]}

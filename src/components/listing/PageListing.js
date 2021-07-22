@@ -30,7 +30,9 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   const isRTL = useContext(RTLContext);
   const { t, appLanguage } = useTranslator();
   const [showStateModal, setShowStateModal] = useState(false);
-  const [totalCalls, setTotalCalls] = useState( Math.ceil(data.total_items_count / 8));
+  const [totalCalls, setTotalCalls] = useState(
+    Math.ceil(data.total_items_count / 8)
+  );
   const [paginationCount, setPaginationCount] = useState(0);
   router.onRouteChangeComplete = () => {
     window.scroll({
@@ -42,18 +44,13 @@ const PageListing = ({ children, data, payload, dropdown }) => {
     let itemsCount = 0;
 
     latestdata.map((subList, ind) => {
-      if(subList.layout_type !== 'catalog_wall_menu'){
-        subList.catalog_list_items.map((child, dnd) => {
-
-        })
-          itemsCount =  itemsCount + subList.catalog_list_items.length;
+      if (subList.layout_type !== 'catalog_wall_menu') {
+        subList.catalog_list_items.map((child, dnd) => {});
+        itemsCount = itemsCount + subList.catalog_list_items.length;
       }
-
-
-
-    })
+    });
     return itemsCount;
-  }
+  };
   const reArrangeData = (data) => {
     /*  let extra = [];
     return data.catalog_list_items.map((v, i) => {
@@ -186,13 +183,17 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   }, [adData]);
 
   async function fetchMoreListItems() {
-
-    if (payload && callsDone <= totalCalls && totalArticleCount + paginationCount < 100) {
-      if(callsDone === 1){
-
+    if (
+      payload &&
+      callsDone <= totalCalls &&
+      totalArticleCount + paginationCount < 100
+    ) {
+      if (callsDone === 1) {
         let initialArticleCount = totalItemsCount(reArrangeData(data));
 
-        setTotalArticleCount((totalArticleCount) => totalArticleCount + initialArticleCount);
+        setTotalArticleCount(
+          (totalArticleCount) => totalArticleCount + initialArticleCount
+        );
       }
       const requestPayload = {
         ...payload,
@@ -204,15 +205,13 @@ const PageListing = ({ children, data, payload, dropdown }) => {
 
       const listingResp = await api.CatalogList.getListing(requestPayload);
 
-
-
       if (listingResp.data) {
         const data = listingResp.data.data;
         let items = reArrangeData(data);
-let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
-if(callsDone === 1){
-  setPaginationCount(nextPageArticlesCount);
-}
+        let nextPageArticlesCount = totalItemsCount(reArrangeData(data));
+        if (callsDone === 1) {
+          setPaginationCount(nextPageArticlesCount);
+        }
         if (isDesktop) {
           let first = [...firstSet];
           let result = [];
@@ -235,18 +234,17 @@ if(callsDone === 1){
           }
         }
 
-
         setListItems((prevState) => {
           return prevState.concat(items);
         });
 
         setCallsDone((callsDone) => callsDone + 1);
 
-        setTotalArticleCount((totalArticleCount) => totalArticleCount + nextPageArticlesCount);
-
+        setTotalArticleCount(
+          (totalArticleCount) => totalArticleCount + nextPageArticlesCount
+        );
       }
     } else if (payload && callsDone <= totalCalls) {
-
       if (desktopUrl) {
         const requestPayload = {
           ...payload,
@@ -256,19 +254,19 @@ if(callsDone === 1){
           },
           query: {
             ...payload.query,
-            page_size:16,
+            page_size: 16,
             pagination_url: window.location.pathname,
             page: callsDone,
-            total_mobile_article_count:totalArticleCount,
+            total_mobile_article_count: totalArticleCount,
           },
         };
 
         const listingResp = await api.CatalogList.getListing(requestPayload);
 
-          setListItems((prevState) => {
-            return prevState.concat(listingResp.data.data);
-          });
-            setCallsDone((callsDone) => callsDone + 1);
+        setListItems((prevState) => {
+          return prevState.concat(listingResp.data.data);
+        });
+        setCallsDone((callsDone) => callsDone + 1);
       } else {
         const response = await api.Listing.getListingApiKey({
           query: {
@@ -284,10 +282,12 @@ if(callsDone === 1){
             key: result.home_link,
           },
         };
-        const weblistingResp = await api.CatalogList.getListing(desktoprequestPayload);
+        const weblistingResp = await api.CatalogList.getListing(
+          desktoprequestPayload
+        );
 
         let id = undefined;
-        let totalDesktopdata = undefined
+        let totalDesktopdata = undefined;
         loop1: for (
           var i = 0;
           i < weblistingResp.data.data.catalog_list_items.length;
@@ -297,9 +297,9 @@ if(callsDone === 1){
             weblistingResp.data.data.catalog_list_items[i].layout_type ===
             'list_content_pagination'
           ) {
-            id =
-              weblistingResp.data.data.catalog_list_items[i].list_id;
-                totalDesktopdata = weblistingResp.data.data.catalog_list_items[i].total_items_count;
+            id = weblistingResp.data.data.catalog_list_items[i].list_id;
+            totalDesktopdata =
+              weblistingResp.data.data.catalog_list_items[i].total_items_count;
             break loop1;
           }
           loop2: for (
@@ -309,17 +309,16 @@ if(callsDone === 1){
               .length;
             j++
           ) {
-
             if (
-              weblistingResp.data.data.catalog_list_items[i].catalog_list_items[j]
-                .catalog_list_items
+              weblistingResp.data.data.catalog_list_items[i].catalog_list_items[
+                j
+              ].catalog_list_items
             ) {
               loop3: for (
                 var k = 0;
                 k <
-                weblistingResp.data.data.catalog_list_items[i].catalog_list_items[
-                  j
-                ].catalog_list_items.length;
+                weblistingResp.data.data.catalog_list_items[i]
+                  .catalog_list_items[j].catalog_list_items.length;
                 k++
               ) {
                 if (
@@ -330,38 +329,40 @@ if(callsDone === 1){
                   id =
                     weblistingResp.data.data.catalog_list_items[i]
                       .catalog_list_items[j].catalog_list_items[k].list_id;
-                      totalDesktopdata = weblistingResp.data.data.catalog_list_items[i]
-                        .catalog_list_items[j].catalog_list_items[k].total_items_count;
+                  totalDesktopdata =
+                    weblistingResp.data.data.catalog_list_items[i]
+                      .catalog_list_items[j].catalog_list_items[k]
+                      .total_items_count;
                   break loop1;
                 }
               }
             }
           }
         }
-        if(id){
-        setTotalCalls(Math.ceil(totalDesktopdata / 16))
-        const requestPayload = {
-          ...payload,
-          params: {
-            ...payload.params,
-            key: id,
-          },
-          query: {
-            ...payload.query,
-            page_size:16,
-            pagination_url: window.location.pathname,
-            page: callsDone,
-            total_mobile_article_count:totalArticleCount,
-          },
-        };
+        if (id) {
+          setTotalCalls(Math.ceil(totalDesktopdata / 16));
+          const requestPayload = {
+            ...payload,
+            params: {
+              ...payload.params,
+              key: id,
+            },
+            query: {
+              ...payload.query,
+              page_size: 16,
+              pagination_url: window.location.pathname,
+              page: callsDone,
+              total_mobile_article_count: totalArticleCount,
+            },
+          };
 
-        const listingResp = await api.CatalogList.getListing(requestPayload);
-        setDesktopUrl(id);
+          const listingResp = await api.CatalogList.getListing(requestPayload);
+          setDesktopUrl(id);
           setListItems((prevState) => {
             return prevState.concat(listingResp.data.data);
           });
-            setCallsDone((callsDone) => callsDone + 1);
-          }
+          setCallsDone((callsDone) => callsDone + 1);
+        }
       }
     }
 
@@ -414,12 +415,13 @@ if(callsDone === 1){
         break;
 
       case 'catalog_wall_menu':
-         returnValue = catalog.catalog_list_items.length > 0 ? (
-          <CatalogWall
-            key={catalog.friendly_id + ind}
-            data={catalog.catalog_list_items}
-          />
-        ) : null;
+        returnValue =
+          catalog.catalog_list_items.length > 0 ? (
+            <CatalogWall
+              key={catalog.friendly_id + ind}
+              data={catalog.catalog_list_items}
+            />
+          ) : null;
         break;
       case 'staggered_grid_seeall':
       case 'slider_seeall':
@@ -457,17 +459,12 @@ if(callsDone === 1){
 
   return (
     <>
-      {/*    <div className="w-full mb-3 lg:container lg:mx-auto ">
-        <MainArticle
-          className="md:w-8/12 "
-          article={listItems[0].catalog_list_items[0]}
-        />
-        <div className="md:w-4/12 "></div>
-      </div> */}
       <MediaContextProvider>
         <Media at="xs" className="w-full mt-2">
           {listItems[0].layout_type == 'featured_topnews_seeall' ||
-          ('featured_staggered_grid' && listItems[0].url != '') ? (
+          listItems[0].layout_type == 'slider_seeall' ||
+          listItems[0].layout_type == 'featured_staggered_grid' ||
+          listItems[0].layout_type == 'news_card_listing'  ? (
             <div>
               <div className="flex items-center font-extrabold float-left ml-3.5">
                 {listItems[0].ml_title[0].text}
@@ -488,6 +485,7 @@ if(callsDone === 1){
               </div>
             </div>
           ) : null}
+
           {showStateModal ? (
             <ListingStateSelectModal
               data={dropdown.data}
@@ -503,18 +501,18 @@ if(callsDone === 1){
                   let url = '';
 
                   if (router.query.language === 'english') {
-                    url = '/english/national/'+dropdown.type;
+                    url = '/english/national/' + dropdown.type;
                     router.push(url + '/' + district.friendly_id);
                   } else {
-                    if(dropdown.type === 'state'){
+                    if (dropdown.type === 'state') {
                       url =
                         '/' +
                         router.query.language +
                         '/' +
                         selected.state +
                         '/state';
-                    }else{
-                      url = dropdown.url+'/'+district.friendly_id;
+                    } else {
+                      url = dropdown.url + '/' + district.friendly_id;
                     }
 
                     router.push(url);
@@ -569,7 +567,7 @@ if(callsDone === 1){
           ) : null}
           {showStateModal ? (
             <Modal
-              title={'change_'+dropdown.type}
+              title={'change_' + dropdown.type}
               open={!!showStateModal}
               isMobile={false}
               onClose={() => {
@@ -591,7 +589,9 @@ if(callsDone === 1){
                     }}
                     className="form-control"
                   >
-                    <option value="select">{t('select_'+dropdown.type)}</option>
+                    <option value="select">
+                      {t('select_' + dropdown.type)}
+                    </option>
                     {dropdown.data.map((v) => {
                       return (
                         <option key={v.state} value={v.friendly_id}>
@@ -623,18 +623,18 @@ if(callsDone === 1){
                       let url = '';
 
                       if (router.query.language === 'english') {
-                        url = '/english/national/'+dropdown.type;
+                        url = '/english/national/' + dropdown.type;
                         router.push(url + '/' + selected.state);
                       } else {
-                        if(dropdown.type === 'state'){
+                        if (dropdown.type === 'state') {
                           url =
                             '/' +
                             router.query.language +
                             '/' +
                             selected.state +
                             '/state';
-                        }else{
-                          url = dropdown.url+'/'+selected.state;
+                        } else {
+                          url = dropdown.url + '/' + selected.state;
                         }
 
                         router.push(url);

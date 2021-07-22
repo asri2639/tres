@@ -7,15 +7,15 @@ const prd_test = publicRuntimeConfig.TEST === 'test';
 
 const baseURL =
   env === 'production'
-    ? 'https://prod.api.etvbharat.com'
-    :'https://prod.api.etvbharat.com';
+    ? 'https://origin.prod.api.etvbharat.com'
+    :'https://origin.prod.api.etvbharat.com';
 
 export const domainUrl =
   env === 'production' && !prd_test
-    ? 'https://react.etvbharat.com'
+    ? 'https://www.etvbharat.com'
     : env === 'development' || prd_test
     ? 'http://localhost:3000'
-    : 'https://react.staging.etvbharat.com';
+    : 'https://staging.etvbharat.com';
 
 const mAuthToken = 'kmAJAH4RTtqHjgoauC4o';
 const authToken = 'xBUKcKnXfngfrqGoF93y';
