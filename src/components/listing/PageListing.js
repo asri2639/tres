@@ -544,7 +544,9 @@ const PageListing = ({ children, data, payload, dropdown }) => {
         </Media>
         <Media greaterThan="xs" className="w-full flex space-x-2">
           {listItems[0].layout_type == 'featured_topnews_seeall' ||
-          ('featured_staggered_grid' && listItems[0].url != '') ? (
+          listItems[0].layout_type == 'slider_seeall' ||
+          listItems[0].layout_type == 'featured_staggered_grid' ||
+          listItems[0].layout_type == 'news_card_listing' ? (
             <div style={{ width: '63%', marginLeft: '25px', marginTop: '7px' }}>
               <div className="flex items-center font-extrabold float-left ml-3.5">
                 {listItems[0].ml_title[0].text}
