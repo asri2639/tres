@@ -31,7 +31,7 @@ const state = ({ data, payload, pageType }) => {
   const canonicalUrl = `https://www.etvbharat.com${
     new URL(`http:localhost:3000${router.asPath}`).pathname
   }`;
-  const ampUrl = getAmpUrl(canonwww.etvbharat.com
+  const ampUrl = getAmpUrl(canonicalUrl, true);
   let ampExists = false;
 
   const splitPath = router.asPath.split('/');
@@ -70,7 +70,7 @@ const state = ({ data, payload, pageType }) => {
           description: data.meta_tag_description,
           images: [
             {
-              url: `https://www.etvbharat.com/assets/logos/${appLanguage.name}.png`,
+              url: `https://react.etvbharat.com/assets/logos/${appLanguage.name}.png`,
               width: 200,
               height: 200,
               alt: 'ETV Bharat News',
