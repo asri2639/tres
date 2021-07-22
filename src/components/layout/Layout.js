@@ -120,6 +120,8 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
         }
       }
 
+      doCall = null;
+
       if (doCall) {
         window.appConfig = appConfig;
 
@@ -130,7 +132,9 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
             : convertedState;
         const headerResp = await api.CatalogList.getMenuDetails({
           params: {
-            suffix:  `msite-new-left-menu${state !== 'national' ? '-' + state : ''}`,
+            suffix: `msite-new-left-menu${
+              state !== 'national' ? '-' + state : ''
+            }`,
           },
 
           isSSR: !isDesktop,
@@ -174,7 +178,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
             region: country,
             response: 'r2',
             item_languages: language,
-           // env: 'staging',
+            // env: 'staging',
           },
         });
         const requiredData = result.data.data.params_hash2.footer;
@@ -225,7 +229,9 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
         language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
-          suffix: `msite-new-left-menu${state !== 'national' ? '-' + state : ''}`,
+          suffix: `msite-new-left-menu${
+            state !== 'national' ? '-' + state : ''
+          }`,
         },
         query: {
           region: country,
@@ -233,16 +239,16 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
           item_languages: language,
           portal_state: stateCodeConverter(state),
           only_items: 'catalog_list',
-         // env: 'staging',
+          // env: 'staging',
         },
-        isSSR: !isDesktop,
+        isSSR: true,
       });
-      if (isDesktop) {
-        menu.desktop = headerResp.data.data.catalog_list_items;
-      } else {
-        menu.mobile = headerResp.data.data.catalog_list_items;
-      }
-      if (!isDesktop && !menu.desktop.length) {
+      // if (isDesktop) {
+      menu.desktop = headerResp.data.data.catalog_list_items;
+      // } else {
+      menu.mobile = headerResp.data.data.catalog_list_items;
+      // }
+      /*  if (!isDesktop && !menu.desktop.length) {
         const resp = await api.CatalogList.getMenuDetails({
           params: {
             suffix:
@@ -261,7 +267,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
         });
         menu.desktop = resp.data.data.catalog_list_items;
       }
-
+ */
       setData((data) => ({
         ...data,
         header: {
