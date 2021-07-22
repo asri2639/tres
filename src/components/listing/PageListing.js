@@ -30,6 +30,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   const isRTL = useContext(RTLContext);
   const { t, appLanguage } = useTranslator();
   const [showStateModal, setShowStateModal] = useState(false);
+  const [desktopCall, setDesktopCall] = useState(true);
   const [totalCalls, setTotalCalls] = useState(
     Math.ceil(data.total_items_count / 8)
   );
@@ -186,7 +187,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
     if (
       payload &&
       callsDone <= totalCalls &&
-      totalArticleCount + paginationCount < 100
+      totalArticleCount + paginationCount < 100 && desktopCall
     ) {
       if (callsDone === 1) {
         let initialArticleCount = totalItemsCount(reArrangeData(data));
@@ -244,7 +245,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
           (totalArticleCount) => totalArticleCount + nextPageArticlesCount
         );
       }
-    } else if (payload && callsDone <= totalCalls) {
+    } else if (payload && callsDone <= totalCalls && desktopCall) {
       if (desktopUrl) {
         const requestPayload = {
           ...payload,
@@ -338,6 +339,9 @@ const PageListing = ({ children, data, payload, dropdown }) => {
               }
             }
           }
+        }
+        if(!id){
+            setDesktopCall(false);
         }
         if (id) {
           setTotalCalls(Math.ceil(totalDesktopdata / 16));
