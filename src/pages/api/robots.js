@@ -14,18 +14,18 @@ Disallow:/ads/
 Disallow:/dfpads
 Disallow:/etvbharat_staging
 Disallow:/react_etvbharat_staging
-Disallow:/etvbharat_staging
 Disallow:/gallery-ads
 Disallow:/home-page-ad-units
 Disallow:/in-article-ads
 Disallow:/banner-near-logo
 Disallow:/tamara-hospital
 Disallow:/1754*
+Disallow:/*%
 
 # Sitemap Files
-Sitemap: https://www.etvbharat.com/sitemap.xml
-Sitemap: https://www.etvbharat.com/latest_news_sitemap.xml
-`;
+Sitemap: https://old.etvbharat.com/googlenewssitemap.xml
+Sitemap: https://old.etvbharat.com/sitemap.xml
+Sitemap: https://old.etvbharat.com/category-sitemap.xml`;
 
 /* class Sitemap extends React.Component {
   static async getInitialProps({ res }) {
