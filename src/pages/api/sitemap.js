@@ -9,7 +9,6 @@ export default async function sitemapFunc(req, res) {
     fetch('https://old.etvbharat.com' + url)
       .then((res) => res.text())
       .then((data) => {
-        console.log(data);
         res.write(data);
         res.end();
       });
