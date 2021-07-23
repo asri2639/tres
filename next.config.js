@@ -34,6 +34,14 @@ module.exports = {
         source: '/ads.txt',
         destination: '/api/ads',
       },
+      {
+        source: '/sitemap.xml',
+        destination: '/api/sitemap'
+      },
+      {
+        source: '/:slug*/:slug.xml',
+        destination: '/api/sitemap'
+      }
     ];
   },
 
