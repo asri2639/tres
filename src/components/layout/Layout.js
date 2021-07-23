@@ -130,10 +130,11 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
           language === 'ur' && convertedState !== 'jk'
             ? 'urdu'
             : convertedState;
+        const urlSuffix = language == 'ur' ? '-urdu' : '';
         const headerResp = await api.CatalogList.getMenuDetails({
           params: {
             suffix: `msite-new-left-menu${
-              state !== 'national' ? '-' + state : ''
+              state !== 'national' ? '-' + state : urlSuffix
             }`,
           },
 
@@ -227,10 +228,11 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
       let convertedState = configStateCodeConverter(state);
       convertedState =
         language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
+          const urlSuffix = language == 'ur' ? '-urdu' : '';
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
           suffix: `msite-new-left-menu${
-            state !== 'national' ? '-' + state : ''
+            state !== 'national' ? '-' + state : urlSuffix
           }`,
         },
         query: {

@@ -301,6 +301,7 @@ const { appLanguage } = useTranslator();
         return (<>
           <Head>
               <title>{data.meta_tag_title !== '' && !data.meta_tag_title.includes('canonical tag') ? data.meta_tag_title : 'ETV Bharat'}</title>
+              <link rel="canonical" href={canonicalUrl}></link>
           </Head>
 
           <NextSeo
