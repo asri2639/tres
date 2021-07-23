@@ -29,9 +29,8 @@ const state = ({ data, payload, pageType, isAmp }) => {
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
 
-  const canonicalUrl = `https://www.etvbharat.com${
-    new URL(`http:localhost:3000${router.asPath}`).pathname
-  }`;
+  const pathname = new URL(`http:localhost:3000${router.asPath}`).pathname;
+  const canonicalUrl = `https://www.etvbharat.com${pathname}`;
   const ampUrl = getAmpUrl(canonicalUrl, true);
   let ampExists = false;
 

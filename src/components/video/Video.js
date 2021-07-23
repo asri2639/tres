@@ -268,7 +268,7 @@ const Video = ({
               </MediaContextProvider>
             </div>
 
-            <div className={`${video.player}`}>
+            <div className={`${video.player} z-0`}>
               {iframeSource ? (
                 isAMP ? (
                   <amp-video-iframe
