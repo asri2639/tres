@@ -20,7 +20,7 @@ const useInfiniteScroll = (callback) => {
     if (window.innerWidth < 769) {
       offsetHeight -= 350;
     }
-    if (window.innerHeight + window.pageYOffset < offsetHeight || isFetching)
+    if (window.innerHeight + window.pageYOffset < offsetHeight-500 || isFetching)
       return;
     setIsFetching(true);
   }
