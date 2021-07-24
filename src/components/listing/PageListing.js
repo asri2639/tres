@@ -35,12 +35,6 @@ const PageListing = ({ children, data, payload, dropdown }) => {
     Math.ceil(data.total_items_count / 8)
   );
   const [paginationCount, setPaginationCount] = useState(0);
-  router.onRouteChangeComplete = () => {
-    window.scroll({
-      top: 0,
-      left: 0,
-    });
-  };
   const totalItemsCount = (latestdata) => {
     let itemsCount = 0;
 
@@ -159,6 +153,9 @@ const PageListing = ({ children, data, payload, dropdown }) => {
         } */
         setIsDesktop(true);
       }, 10);
+      if(callsDone === 1){
+        fetchMoreListItems();
+      }
       document.addEventListener('load', () => {
         setTimeout(() => {
           // googletag.pubads().refresh();
