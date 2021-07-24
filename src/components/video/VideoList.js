@@ -254,13 +254,6 @@ const VideoList = ({ videoData, appConfig }) => {
   );
   // Set videos from videoData
   useEffect(() => {
-    if (videoData) {
-      if (videoData.error) {
-        // Handle error
-      } else {
-        setVideos(videoData.videos);
-      }
-    }
     if (data) {
       stopLoading();
       setMobileAds(data.bf_af_ads ? data.bf_af_ads[0] : []);
@@ -295,6 +288,14 @@ const VideoList = ({ videoData, appConfig }) => {
         isAMP
       );
       setVideos((videos) => [...videos]);
+    } else {
+      if (videoData) {
+        if (videoData.error) {
+          // Handle error
+        } else {
+          setVideos(videoData.videos);
+        }
+      }
     }
   }, [videoData, data, adData, smartUrls]);
 

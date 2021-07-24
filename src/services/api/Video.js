@@ -51,7 +51,6 @@ export default function Video(inst) {
       } else {
         const promise = new Promise(function (resolve, reject) {
           const url = new URL(params.play_url);
-
           const apiUrl =
             `https://prod.suv.etvbharat.com/v2/smart_urls/` +
             (env === 'staging'
