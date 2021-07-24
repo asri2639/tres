@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import header from './Header.module.scss';
 import NavLink from '@components/common/NavLink';
 import GoogleTagManager from '@utils/GoogleTagManager';
+import { RTLContext } from '@components/layout/Layout';
 
 export default function DesktopSidebar({ data, onClose, isMobile = false }) {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
+  const isRTL = useContext(RTLContext);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -64,7 +66,11 @@ export default function DesktopSidebar({ data, onClose, isMobile = false }) {
           {items.map((item, index) => {
             return (
               <div key={item.list_id} className="w-full">
-                <div className="flex items-center flex-wrap justify-between h-12 pl-8 pr-6 hover:bg-gray-300">
+                <div
+                  className={`flex items-center flex-wrap justify-between h-12 pl-8 pr-6 hover:bg-gray-300 ${
+                    isRTL ? 'flex-row-reverse rtl' : ''
+                  }`}
+                >
                   <NavLink
                     href={item.url}
                     as={item.url}
@@ -110,7 +116,9 @@ export default function DesktopSidebar({ data, onClose, isMobile = false }) {
                       return (
                         <NavLink
                           key={subitem.list_id}
-                          className="pl-10 h-8 flex items-center text-sm font-normal hover:bg-gray-300"
+                          className={`pl-10 h-8 flex items-center text-sm font-normal hover:bg-gray-300  ${
+                            isRTL ? 'flex-row-reverse rtl' : ''
+                          }`}
                           href={subitem.url}
                           as={subitem.url}
                           passHref
