@@ -79,11 +79,15 @@ export default function DesktopSidebar({ data, onClose, isMobile = false }) {
                       GoogleTagManager.menuClick(item, 'sidemenu');
                     }}
                   >
-                    <div className="flex items-center">
+                    <div
+                      className={`flex items-center ${
+                        isRTL ? 'flex-row-reverse rtl' : ''
+                      }`}
+                    >
                       <span
                         className={`${header[item.icon]} ${
                           header['sidebar-icon']
-                        } mr-2`}
+                        } ${isRTL ? 'ml-2' : 'mr-2'}`}
                       ></span>
                       <span className="font-bold">
                         {' '}
