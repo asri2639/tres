@@ -23,9 +23,9 @@ Disallow:/1754*
 Disallow:/*%
 
 # Sitemap Files
-Sitemap: https://old.etvbharat.com/googlenewssitemap.xml
-Sitemap: https://old.etvbharat.com/sitemap.xml
-Sitemap: https://old.etvbharat.com/category-sitemap.xml`;
+Sitemap: https://www.etvbharat.com/googlenewssitemap.xml
+Sitemap: https://www.etvbharat.com/sitemap.xml
+Sitemap: https://www.etvbharat.com/category-sitemap.xml`;
 
 /* class Sitemap extends React.Component {
   static async getInitialProps({ res }) {
