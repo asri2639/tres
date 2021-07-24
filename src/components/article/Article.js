@@ -1,6 +1,5 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { useInView, InView } from 'react-intersection-observer';
-// import { InView } from 'react-intersection-observer';
+import { useInView } from 'react-intersection-observer';
 import AdContainer from '@components/article/AdContainer';
 import { dateFormatter, thumbnailExtractor } from '@utils/Helpers';
 import { Media, MediaContextProvider } from '@media';

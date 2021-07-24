@@ -10,6 +10,7 @@ import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
 import { AMPContext } from '@pages/_app';
 import BBCHeader from '@components/common/BBCHeader';
+import AdContainer from '@components/article/AdContainer';
 
 const Video = ({
   contentId,
@@ -134,7 +135,6 @@ const Video = ({
           const el = document.querySelector(
             `[data-content-id="${contentId}"] .EtvadsSection`
           );
-          console.log(3);
           if (el && el.querySelector('#adsContainer')) {
             // document.body.appendChild(s);
             el.innerHTML = adHTML;
@@ -386,7 +386,9 @@ const Video = ({
             related={related}
             showBbc={!!source}
           ></MobileNextArticle>
-        </Media>
+        </Media>*/}
+
+      <MediaContextProvider>
         {isAMP ? null : (
           <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
             <div className="w-full items-center space-y-6 pt-4 pb-4">
@@ -394,7 +396,7 @@ const Video = ({
             </div>
           </Media>
         )}
-      </MediaContextProvider> */}
+      </MediaContextProvider>
     </div>
   );
 };
