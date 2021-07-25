@@ -8,6 +8,7 @@ import GoogleTagManager from '@utils/GoogleTagManager';
 import { AMPContext } from '@pages/_app';
 import { languageMap } from '@utils/Constants';
 import useTranslator from '@hooks/useTranslator';
+import { RTLContext } from '@components/layout/Layout';
 
 const country = 'IN';
 
@@ -17,6 +18,7 @@ export default function MobileHeader({ data, className }) {
   const language = router.query.language || 'english';
   const [stateData, setStateData] = useState(null);
   const { t, appLanguage } = useTranslator();
+  const isRTL = useContext(RTLContext);
 
   const [openStateModal, setOpenStateModal] = useState([]);
 
@@ -40,7 +42,9 @@ export default function MobileHeader({ data, className }) {
         <a
           key={language}
           href={`https://m.etvbharat.com/${language}/national`}
-          className="flex-1 flex flex-col justify-center items-center cursor-pointer"
+          className={`flex-1 flex flex-col justify-center items-center cursor-pointer ${
+            isRTL ? 'flex-row-reverse rtl' : ''
+          }`}
         >
           <div className={`language-icon ${language}`}></div>
           <div className="text-white text-xs">
@@ -54,7 +58,9 @@ export default function MobileHeader({ data, className }) {
           <a
             key={language}
             href={`https://m.etvbharat.com/${language}/national`}
-            className="flex-1 flex flex-col justify-center items-center cursor-pointer"
+            className={`flex-1 flex flex-col justify-center items-center cursor-pointer ${
+              isRTL ? 'flex-row-reverse rtl' : ''
+            }`}
           >
             <div className={`language-icon ${language}`}></div>
             <div className="text-white text-xs">
@@ -81,7 +87,11 @@ export default function MobileHeader({ data, className }) {
                   className="p-3 pb-4 rounded-md"
                   style={{ background: '#f0f0f0' }}
                 >
-                  <div className="flex justify-between pb-4">
+                  <div
+                    className={`flex justify-between pb-4 ${
+                      isRTL ? 'flex-row-reverse rtl' : ''
+                    }`}
+                  >
                     <div
                       className="text-gray-700 text-md pl-2"
                       style={{ fontSize: '1rem' }}
@@ -101,7 +111,11 @@ export default function MobileHeader({ data, className }) {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap w-full px-3 text-sm mx-auto">
+                  <div
+                    className={`flex flex-wrap w-full px-3 text-sm mx-auto ${
+                      isRTL ? 'flex-row-reverse rtl' : ''
+                    }`}
+                  >
                     {states.map((v) => {
                       return (
                         <a
@@ -128,7 +142,9 @@ export default function MobileHeader({ data, className }) {
               role="button"
               tabIndex={0}
               on={`tap:my-lightbox-${language}`}
-              className="flex-1 flex flex-col justify-center items-center cursor-pointer"
+              className={`flex-1 flex flex-col justify-center items-center cursor-pointer ${
+                isRTL ? 'flex-row-reverse rtl' : ''
+              }`}
             >
               <div className={`language-icon ${language}`}></div>
               <div className="text-white text-xs">
@@ -175,7 +191,11 @@ export default function MobileHeader({ data, className }) {
         >
           <>
             <div className="p-4 rounded-md" style={{ background: '#f0f0f0' }}>
-              <div className="flex justify-between pl-3 pb-4">
+              <div
+                className={`flex justify-between pl-3 pb-4 ${
+                  isRTL ? 'flex-row-reverse rtl' : ''
+                }`}
+              >
                 <div className="text-gray-700 text-md pl-2">Select State</div>
                 <div>
                   <button
@@ -188,7 +208,11 @@ export default function MobileHeader({ data, className }) {
                 </div>
               </div>
 
-              <div className="flex flex-wrap w-64 mx-auto px-2">
+              <div
+                className={`flex flex-wrap w-64 mx-auto px-2 ${
+                  isRTL ? 'flex-row-reverse rtl' : ''
+                }`}
+              >
                 {openStateModal.map((v) => {
                   return (
                     <div
@@ -217,7 +241,11 @@ export default function MobileHeader({ data, className }) {
         className={`${className} ${header['mobile-header']} block md:hidden bg-mhbg`}
       >
         <div
-          className={`${header['logo-container']} flex justify-start bg-white px-2 py-1 self-center border-b`}
+          className={`${
+            header['logo-container']
+          } flex justify-start bg-white px-2 py-1 self-center border-b ${
+            isRTL ? 'flex-row-reverse rtl' : ''
+          }`}
         >
           <NavLink
             href={{
@@ -235,7 +263,11 @@ export default function MobileHeader({ data, className }) {
               style={{ transform: `translate(-24px, -19px) scale(0.6)` }}
             ></div>
           </NavLink>
-          <div className="flex items-center">
+          <div
+            className={`flex items-center ${
+              isRTL ? 'flex-row-reverse rtl' : ''
+            }`}
+          >
             {stateData ? (
               <div className="text-sm">
                 <div className="border-b border-red-700">
@@ -253,8 +285,16 @@ export default function MobileHeader({ data, className }) {
         </div>
 
         <div className="bg-mhbg h-53px px-3 font-english border-b border-white">
-          <div className="bg-mhbg flex justify-between items-center py-1 overflow-x-auto">
-            <div className="flex space-x-6">
+          <div
+            className={`bg-mhbg flex justify-between items-center py-1 overflow-x-auto ${
+              isRTL ? 'flex-row-reverse rtl' : ''
+            }`}
+          >
+            <div
+              className={`flex space-x-6 ${
+                isRTL ? 'flex-row-reverse rtl' : ''
+              }`}
+            >
               {data.languages
                 ? Object.entries(data.languages).map(([language, states]) => {
                     return isAMP ? (
@@ -283,7 +323,11 @@ export default function MobileHeader({ data, className }) {
         next-page-hide="1"
         onMouseLeave={containerOut}
       >
-        <div className="bg-mhbg h-7 lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ">
+        <div
+          className={`bg-mhbg h-7 lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ${
+            isRTL ? 'flex-row-reverse rtl' : ''
+          }`}
+        >
           {data.menu && data.menu.mobile
             ? data.menu.mobile.map((item) => {
                 return (

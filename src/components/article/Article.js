@@ -249,8 +249,8 @@ export default function Article({
       if (contentRef.current) {
         const adScript = `<div id = "v-etvbharat"></div><script></script>`;
         const splitUrl = location.pathname.split('/');
-        const state = splitUrl[2].toLowerCase();
-        const language = splitUrl[1].toLowerCase();
+        const state = splitUrl[2] ? splitUrl[2].toLowerCase() : 'national';
+        const language = splitUrl[1] ? splitUrl[1].toLowerCase(): 'english';
         if (
           [
             'karnataka',
