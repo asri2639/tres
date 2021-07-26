@@ -17,8 +17,7 @@ import Video from '@components/video/Video';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import VideoAPI from '@services/api/Video';
-import { MenuContext } from '@components/layout/Layout';
-import { applicationConfig, languageMap } from '@utils/Constants';
+import { languageMap } from '@utils/Constants';
 import { AMPContext } from '@pages/_app';
 
 export const smartUrlFetcher = (...args) => {
@@ -255,13 +254,6 @@ const VideoList = ({ videoData, appConfig }) => {
   );
   // Set videos from videoData
   useEffect(() => {
-    if (videoData) {
-      if (videoData.error) {
-        // Handle error
-      } else {
-        setVideos(videoData.videos);
-      }
-    }
     if (data) {
       stopLoading();
       setMobileAds(data.bf_af_ads ? data.bf_af_ads[0] : []);
@@ -275,15 +267,16 @@ const VideoList = ({ videoData, appConfig }) => {
     );
     if (adData) {
       if (video) {
-        setRhs(
-          adData.catalog_list_items.slice(1).filter((v) => {
-            return (
-              v.layout_type.indexOf('ad_unit') >= 0 ||
-              (v.layout_type.indexOf('ad_unit') === -1 &&
-                v.catalog_list_items.length > 0)
-            );
-          })
-        );
+        const data = adData.catalog_list_items.slice(1).filter((v) => {
+          return (
+            v.layout_type.indexOf('ad_unit') >= 0 ||
+            (v.layout_type.indexOf('ad_unit') === -1 &&
+              v.catalog_list_items.length > 0)
+          );
+        });
+        if (data && data.length === 2) {
+          setRhs(data[1].catalog_list_items);
+        }
         video.desktop = adData.catalog_list_items[0].catalog_list_items[0];
       }
     }
@@ -295,6 +288,14 @@ const VideoList = ({ videoData, appConfig }) => {
         isAMP
       );
       setVideos((videos) => [...videos]);
+    } else {
+      if (videoData) {
+        if (videoData.error) {
+          // Handle error
+        } else {
+          setVideos(videoData.videos);
+        }
+      }
     }
   }, [videoData, data, adData, smartUrls]);
 

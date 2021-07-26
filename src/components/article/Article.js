@@ -1,6 +1,5 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { useInView, InView } from 'react-intersection-observer';
-// import { InView } from 'react-intersection-observer';
+import { useInView } from 'react-intersection-observer';
 import AdContainer from '@components/article/AdContainer';
 import { dateFormatter, thumbnailExtractor } from '@utils/Helpers';
 import { Media, MediaContextProvider } from '@media';
@@ -250,8 +249,8 @@ export default function Article({
       if (contentRef.current) {
         const adScript = `<div id = "v-etvbharat"></div><script></script>`;
         const splitUrl = location.pathname.split('/');
-        const state = splitUrl[2].toLowerCase();
-        const language = splitUrl[1].toLowerCase();
+        const state = splitUrl[2] ? splitUrl[2].toLowerCase() : 'national';
+        const language = splitUrl[1] ? splitUrl[1].toLowerCase(): 'english';
         if (
           [
             'karnataka',

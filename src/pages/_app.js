@@ -25,7 +25,9 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
   const router = useRouter();
   const [isTransitioning, setIsTransitioning] = useState(false);
   const language = router.query.language || 'english';
-  const state = router.query.state.toLowerCase();
+  const state = router.query.state
+    ? router.query.state.toLowerCase()
+    : 'national';
   const isAMP = router.query.amp === '1';
   useTranslator({ init: true });
 
@@ -107,16 +109,14 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
               href="/assets/fonts/English/english.woff2"
               as="font"
               type="font/woff2"
-              crossorigin
-              crossOrigin
+              crossOrigin={"anonymous"}
             />
             <link
               rel="preload"
               href="/assets/fonts/English/english.woff"
               as="font"
               type="font/woff2"
-              crossorigin
-              crossOrigin
+              crossOrigin={"anonymous"}
             />
             {langName !== 'english' ? (
               <>
@@ -125,17 +125,15 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                   href={`/assets/fonts/${langCap}/${langName}.woff2`}
                   as="font"
                   type="font/woff2"
-                  crossorigin
-                  crossOrigin
-                />
+                  crossOrigin={"anonymous"}
+                  />
                 <link
                   rel="preload"
                   href={`/assets/fonts/${langCap}/${langName}.woff`}
                   as="font"
                   type="font/woff2"
-                  crossorigin
-                  crossOrigin
-                />
+                  crossOrigin={"anonymous"}
+                  />
               </>
             ) : null}
           </>

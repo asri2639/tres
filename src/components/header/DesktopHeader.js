@@ -56,7 +56,7 @@ const DesktopHeader = ({ className, data }) => {
     if (language === 'english') {
       goToLanguageListing(language, [`/national`, `/${language}/national`]);
     } else {
-      if (states.length === 1) {
+      if (states.length === 1 && states[0].state) {
         const state = states[0].state.toLowerCase();
         goToLanguageListing(language, [`/${state}`, `/${language}/${state}`]);
       } else {

@@ -76,7 +76,7 @@ export default class ETVDocument extends Document {
                     "@type": "NewsMediaOrganization",
                     "name": "ETV Bharat",
                     "url": "https://www.etvbharat.com",
-                    "logo": "https://www.etvbharat.com/src/assets/images/etvlogo/english.png",
+                    "logo": "https://www.etvbharat.com/assets/images/etvlogo/english.png",
                     "sameAs": "https://www.facebook.com/ETVBharatEnglish/"
                 }`,
                 }}

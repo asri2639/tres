@@ -439,7 +439,7 @@ const { appLanguage } = useTranslator();
  "name": "ETV Bharat",
  "logo": {
  "@type": "ImageObject",
- "url": "https://www.etvbharat.com/src/assets/images/etvlogo/${(
+ "url": "https://www.etvbharat.com/assets/images/etvlogo/${(
    headerObj.url.split('/')[0] + ''
  ).toLowerCase()}.png",
  "width": 82,

@@ -45,8 +45,6 @@ section.content {
   top: 50px;
   bottom: 200px;
 }
-.ad-content {
-}
 
 .actual-content {
   min-height: 100vh;
@@ -117,7 +115,7 @@ section.content {
 
 @media (min-width: 768px) {
   section.content {
-  /*  padding-bottom: 400px;*/
+    padding-bottom: 300px;
   }
 
   .actual-content {
@@ -384,10 +382,6 @@ button:focus {
 .can-expand:focus {
   outline: none;
 }
-#newsroom-bodyText .EtvadsSection {
-  // display: none;
-}
-
 .amp-social-share {
   border-radius: 50%;
   &:focus {
@@ -398,7 +392,9 @@ button:focus {
   bottom: -400px;
 }
 .desktop-footer {
-  bottom: -400px;
+  background: white;
+  margin-bottom: 0;
+  padding: 12px 0 16px 0;
 }
 
 .right-side-container {
@@ -527,7 +523,7 @@ button:focus {
 }
 
 .sk-cube-grid .sk-cube {
-  background-image: url(https://www.etvbharat.com/src/assets/images/etvlogo/english.png);
+  background-image: url(/assets/images/etvlogo/english.png);
   background-size: 85px 85px;
   width: 33%;
   height: 33%;
