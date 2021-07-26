@@ -50,6 +50,8 @@ const Thumbnail = ({
       loading={lazy === undefined || lazy === true ? 'lazy' : ''}
       className="breaking_news"
       alt="Breaking News"
+      height="100%"
+      width="auto"
       src="/assets/images/placeholder.png"
       data-src="/assets/images/breakingplate.jpg"
       src={`/assets/images/${
@@ -62,6 +64,8 @@ const Thumbnail = ({
         ref={imgEl}
         loading={lazy === undefined || lazy === true ? 'lazy' : ''}
         data-src={state.src}
+        height="100%"
+        width="auto"
         src={
           lazy === undefined || lazy === true
             ? '/assets/images/placeholder.png'
