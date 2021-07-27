@@ -1,4 +1,4 @@
-{
+export default {
     "top_news": "Telugu News",
     "Identifier iOS": "Telugu",
     "home_toolbar_title": "హోమ్",

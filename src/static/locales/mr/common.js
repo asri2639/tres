@@ -1,4 +1,4 @@
-{
+export default {
     "Identifier iOS": "Marathi",
     "home_toolbar_title": "होम",
     "select_language": "भाषा निवडा",

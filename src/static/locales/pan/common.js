@@ -1,4 +1,4 @@
-{
+export default {
     "Identifier iOS": "Punjabi",
     "home_toolbar_title": "ਹੋਮ",
     "select_language": "ਭਾਸ਼ਾ ਚੁਣੋ ",

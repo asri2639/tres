@@ -14,14 +14,11 @@ const useTranslator = (options = { init: false }) => {
   const fetchTranslationData = (language) => {
     if (!oLanguage || oLanguage !== language || !translations) {
       document.documentElement.lang = languageMap[language];
-      fetch(
-        domainUrl +
-          '/assets/locales/' +
-          document.documentElement.lang +
-          '/common.json'
+      import(
+        '../static/locales/' + document.documentElement.lang + '/common.js'
       )
-        .then((res) => res.json())
-        .then((data) => {
+        .then((res) => {
+          const data = res.default;
           setAppLanguage((prevState) => ({
             ...prevState,
             code: languageMap[language],

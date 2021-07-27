@@ -1,4 +1,4 @@
-{
+export default {
     "Identifier iOS": "Odia",
     "home_toolbar_title": "ହୋମ",
     "select_language": " ଭାଷା ଚୟନ",

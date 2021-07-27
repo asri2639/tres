@@ -1,4 +1,4 @@
-{
+export default {
     "Identifier iOS": "Hindi",
     "home_toolbar_title": "होम",
     "select_language": "भाषा चुनें ",

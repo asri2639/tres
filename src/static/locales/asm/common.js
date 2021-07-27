@@ -1,4 +1,4 @@
-{
+export default {
     "Identifier iOS": "Assamese",
     "home_toolbar_title": "হ'ম",
     "select_language": "ভাষা বাছনি কৰক",

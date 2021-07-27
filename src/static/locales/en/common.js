@@ -1,4 +1,4 @@
-{
+export default {
     "top_news": "English News",
 
     "Identifier iOS": "English",

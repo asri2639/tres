@@ -1,4 +1,4 @@
-{
+export default {
     "Identifier iOS": "Gujarathi",
     "home_toolbar_title": "હોમ",
     "select_language": "ભાષા પસંદ કરો",

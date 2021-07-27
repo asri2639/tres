@@ -1,6 +1,5 @@
 import { APIRequest } from '@interfaces/API';
 import { domainUrl } from '@utils/Constants';
-import axios from 'axios';
 
 const controller = '/catalogs';
 
@@ -33,16 +32,14 @@ export default function Catalog(inst) {
         `${controller}/message/items/footer-api?${new URLSearchParams(query)}`,
         config
       ); */
-      return axios
-        .get('/assets/footer.json', {
-          baseURL: domainUrl,
-        })
-        .then((res) => {
-          console.log(res.data);
-          return res.data;
-        })
-        .catch((err) => {
-          console.log(err);
+      return import('../../static/footer').then((r) => r.default);
+
+      return fetch(`${domainUrl}/assets/footer.json`)
+        .then((resp) => resp.json())
+        .catch((e) => {
+          /*  return fetch(
+          `https://www.etvbharat.com/assets/appConfig.json`
+        ).then((resp) => resp.json()); */
         });
     },
     getAppConfig({ params, query, ...config }) {
@@ -53,16 +50,16 @@ export default function Catalog(inst) {
         config
       ); */
 
-      return axios
-        .get('/assets/appConfig.json', {
-          baseURL: domainUrl,
-        })
-        .then((res) => {
-          console.log(res.data);
-          return res.data;
-        })
-        .catch((err) => {
-          console.log(err);
+      return import('../../static/appConfig')
+        .then((r) => r.default)
+        .catch((e) => {});
+
+      return fetch(`${domainUrl}/assets/appConfig.json`)
+        .then((resp) => resp.json())
+        .catch((e) => {
+          /*  return fetch(
+            `https://www.etvbharat.com/assets/appConfig.json`
+          ).then((resp) => resp.json()); */
         });
     },
     getPageAds({ params, query, config } = new APIRequest()) {

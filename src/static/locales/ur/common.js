@@ -1,4 +1,4 @@
-{
+export default {
     "Identifier iOS": "Urdu",
     "home_toolbar_title": "ہوم",
     "select_language": "زبان کا انتخاب کریں ",

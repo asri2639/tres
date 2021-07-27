@@ -1,4 +1,4 @@
-{
+export default {
     "Identifier iOS": "Kannada",
     "home_toolbar_title": "ಹೋಮ್",
     "select_language": "ಭಾಷೆ ಆಯ್ಕೆ",
