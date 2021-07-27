@@ -14,7 +14,7 @@ const baseURL =
 
 export const domainUrl =
   env === 'production' && !prd_test
-    ? 'http://localhost:3000'
+    ? 'https://react2.etvbharat.com'
     : env === 'development' || prd_test
     ? 'http://localhost:3000'
     : 'https://staging.etvbharat.com';
