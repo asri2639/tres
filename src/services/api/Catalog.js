@@ -53,6 +53,7 @@ export default function Catalog(inst) {
       return fetch(`${domainUrl}/assets/appConfig.json`)
         .then((resp) => resp.json())
         .catch((e) => {
+          console.log(e)
           /*  return fetch(
             `https://www.etvbharat.com/assets/appConfig.json`
           ).then((resp) => resp.json()); */

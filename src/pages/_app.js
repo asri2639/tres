@@ -109,14 +109,14 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
               href="/assets/fonts/English/english.woff2"
               as="font"
               type="font/woff2"
-              crossOrigin={"anonymous"}
+              crossOrigin={'anonymous'}
             />
             <link
               rel="preload"
               href="/assets/fonts/English/english.woff"
               as="font"
               type="font/woff2"
-              crossOrigin={"anonymous"}
+              crossOrigin={'anonymous'}
             />
             {langName !== 'english' ? (
               <>
@@ -125,15 +125,15 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
                   href={`/assets/fonts/${langCap}/${langName}.woff2`}
                   as="font"
                   type="font/woff2"
-                  crossOrigin={"anonymous"}
-                  />
+                  crossOrigin={'anonymous'}
+                />
                 <link
                   rel="preload"
                   href={`/assets/fonts/${langCap}/${langName}.woff`}
                   as="font"
                   type="font/woff2"
-                  crossOrigin={"anonymous"}
-                  />
+                  crossOrigin={'anonymous'}
+                />
               </>
             ) : null}
           </>
@@ -200,6 +200,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
     isSSR: true,
   });
 
+  console.log(result);
   appConfig = result.data.data;
   applicationConfig.value = appConfig;
   // }
