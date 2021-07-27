@@ -1,5 +1,6 @@
 import { APIRequest } from '@interfaces/API';
 import { domainUrl } from '@utils/Constants';
+import axios from 'axios';
 
 const controller = '/catalogs';
 
@@ -15,17 +16,15 @@ export default function Catalog(inst) {
     },
     getListingPageSates({ params, query, config } = new APIRequest()) {
       return inst.get(
-        `${controller}/city-state/states?${new URLSearchParams(
-          query
-        )}`,
+        `${controller}/city-state/states?${new URLSearchParams(query)}`,
         config
       );
     },
-    getCityDistrictData({params, query, config } = new APIRequest()){
+    getCityDistrictData({ params, query, config } = new APIRequest()) {
       return inst.get(
-        `${controller}/city-state/items/india/states/${params.key}?${new URLSearchParams(
-          query
-        )}`,
+        `${controller}/city-state/items/india/states/${
+          params.key
+        }?${new URLSearchParams(query)}`,
         config
       );
     },
@@ -34,12 +33,16 @@ export default function Catalog(inst) {
         `${controller}/message/items/footer-api?${new URLSearchParams(query)}`,
         config
       ); */
-      return fetch(`${domainUrl}/api/read/footer.json`)
-        .then((resp) => resp.json())
-        .catch((e) => {
-          /*  return fetch(
-          `https://www.etvbharat.com/assets/appConfig.json`
-        ).then((resp) => resp.json()); */
+      return axios
+        .get('/assets/footer.json', {
+          baseURL: domainUrl,
+        })
+        .then((res) => {
+          console.log(res.data);
+          return res.data;
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
     getAppConfig({ params, query, ...config }) {
@@ -50,15 +53,16 @@ export default function Catalog(inst) {
         config
       ); */
 
-   
-
-      return fetch(`${domainUrl}/api/read/appConfig.json`)
-        .then((resp) => resp.json())
-        .catch((e) => {
-          console.log(e)
-          /*  return fetch(
-            `https://www.etvbharat.com/assets/appConfig.json`
-          ).then((resp) => resp.json()); */
+      return axios
+        .get('/assets/appConfig.json', {
+          baseURL: domainUrl,
+        })
+        .then((res) => {
+          console.log(res.data);
+          return res.data;
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
     getPageAds({ params, query, config } = new APIRequest()) {
