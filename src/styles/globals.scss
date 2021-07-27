@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  position: relative;
 }
 
 .rtl {
@@ -123,6 +124,7 @@ section.content {
   }
   .article-list {
     padding-top: 16px;
+    min-height: 80vh;
   }
 
   .bbc-tag {
@@ -395,6 +397,7 @@ button:focus {
   background: white;
   margin-bottom: 0;
   padding: 12px 0 16px 0;
+  height: 340px;
 }
 
 .right-side-container {
