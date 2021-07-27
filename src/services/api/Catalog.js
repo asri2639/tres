@@ -50,7 +50,9 @@ export default function Catalog(inst) {
         config
       ); */
 
-      return fetch(`${domainUrl}/assets/appConfig.json`)
+   
+
+      return fetch(`${domainUrl}/api/read/appConfig.json`)
         .then((resp) => resp.json())
         .catch((e) => {
           console.log(e)
