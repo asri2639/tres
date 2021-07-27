@@ -34,7 +34,7 @@ export default function Catalog(inst) {
         `${controller}/message/items/footer-api?${new URLSearchParams(query)}`,
         config
       ); */
-      return fetch(`${domainUrl}/assets/footer.json`)
+      return fetch(`${domainUrl}/api/read/footer.json`)
         .then((resp) => resp.json())
         .catch((e) => {
           /*  return fetch(

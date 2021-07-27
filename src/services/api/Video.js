@@ -20,7 +20,7 @@ export default function Video(inst) {
           const url = new URL(params.play_url);
 
           const apiUrl =
-            `http://localhost:3000/api/v2/smart_urls/` +
+            `http://localhost:3000/apis/v2/smart_urls/` +
             (env === 'staging'
               ? `${
                   url.pathname.split('/').slice(-1)[0]
@@ -87,7 +87,7 @@ export default function Video(inst) {
       if (env === 'development' || !!publicRuntimeConfig.TEST) {
         const promise = new Promise(function (resolve, reject) {
           const url = new URL(params.url);
-          const apiUrl = `http://localhost:3000/api${
+          const apiUrl = `http://localhost:3000/apis${
             url.pathname + url.search
           }`;
           let xhr = new XMLHttpRequest();

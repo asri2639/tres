@@ -9,7 +9,7 @@ const baseURL =
   env === 'production'
     ? 'https://prod.api.etvbharat.com'
     :env === 'development' || prd_test
-    ? 'http://localhost:3000/api'
+    ? 'http://localhost:3000/apis'
     : 'https://prod.api.etvbharat.com';
 
 export const domainUrl =

@@ -18,9 +18,9 @@ const shouldCompress = (req, res) => {
 };
 
 const devProxy = {
-  '/api/v2': {
+  '/apis/v2': {
     target: 'https://prod.suv.etvbharat.com/',
-    pathRewrite: { '^/api/v2': '/v2' },
+    pathRewrite: { '^/apis/v2': '/v2' },
     changeOrigin: true,
     router: {
       // when request.headers.host == 'dev.localhost:3000',
@@ -28,9 +28,9 @@ const devProxy = {
       'http://localhost:3000': 'https://www.etvbharat.com',
     },
   },
-  '/api': {
+  '/apis': {
     target: 'https://prod.api.etvbharat.com/',
-    pathRewrite: { '^/api': '/' },
+    pathRewrite: { '^/apis': '/' },
     changeOrigin: true,
     router: {
       // when request.headers.host == 'dev.localhost:3000',
