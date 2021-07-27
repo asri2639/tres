@@ -104,9 +104,9 @@ const getAds = (config) =>
   
   yahoo.com, 57740, DIRECT, e1a5b5b6e3255540 #SSP
   yahoo.com, 57740, RESELLER, e1a5b5b6e3255540 #SSP
-  indexexchange.com , 175407, RESELLER, 50b1c356f2c5c8fc  #SSP O&O, 3P
+  indexexchange.com , 175407, RESELLER, 50b1c356f2c5c8fc#SSP O&O, 3P
   pubmatic.com, 156107, RESELLER, 5d62403b186f2ace # Display
-  pubmatic.com, 156107, RESELLER, 5d62403b186f2ace  #Display
+  pubmatic.com, 156107, RESELLER, 5d62403b186f2ace#Display
   appnexus.com, 3292, RESELLER
   lemmatechnologies.com, 465, RESELLER, 7829010c5bebd1fb #LEMMA
   
@@ -119,7 +119,7 @@ const getAds = (config) =>
   # 33Across
   33across.com, 0015a00002fO3V4AAK, DIRECT, bbea06d9c4d2853c #33Across #hb #tag
   appnexus.com, 10239, RESELLER, f5ab79cb980f11d1 #33Across #hb #tag #viewable
-  yahoo.com, 57289, RESELLER,  e1a5b5b6e3255540 #33Across #hb #tag
+  yahoo.com, 57289, RESELLER,e1a5b5b6e3255540 #33Across #hb #tag
   rubiconproject.com, 16414, RESELLER, 0bfd66d529a55807 #33Across #hb #tag
   openx.com, 537120563, RESELLER, 6a698e2ec38604c6 #33Across #hb #tag
   indexexchange.com, 191973, RESELLER, 50b1c356f2c5c8fc #33Across #hb #tag #viewable
@@ -294,10 +294,10 @@ const getAds = (config) =>
   rubiconproject.com, 17960, RESELLER, 0bfd66d529a55807
   indexexchange.com, 192787, RESELLER
   indexexchange.com, 192769, RESELLER
-  vdopia.com,Ã‚ 15364, DIRECT, 49a66ce31a704197 #video
-  chocolateplatform.com,Ã‚ 15364, DIRECT, 49a66ce31a704197 #video
-  vdopia.com,Ã‚ 15364, DIRECT, 49a66ce31a704197 #banner
-  chocolateplatform.com,Ã‚ 15364, DIRECT, 49a66ce31a704197 #banner
+  vdopia.com,Ãƒâ€š 15364, DIRECT, 49a66ce31a704197 #video
+  chocolateplatform.com,Ãƒâ€š 15364, DIRECT, 49a66ce31a704197 #video
+  vdopia.com,Ãƒâ€š 15364, DIRECT, 49a66ce31a704197 #banner
+  chocolateplatform.com,Ãƒâ€š 15364, DIRECT, 49a66ce31a704197 #banner
   mobfox.com,4459, DIRECT, 5529a3d1f59865be
   mobfox.com,4459, RESELLER, 5529a3d1f59865be
   appnexus.com,2637,RESELLER,f5ab79cb980f11d1
@@ -506,7 +506,7 @@ const getAds = (config) =>
   axonix.com, 57264, RESELLER
   admanmedia.com, 43, RESELLER
   #<!StreamLyn>
-
+  
   #<!VDO.AI>
   vdo.ai, 2190, DIRECT
   atlas5.co, 2190, DIRECT
@@ -594,7 +594,72 @@ const getAds = (config) =>
   sonobi.com, a5a1f04c15, DIRECT, d1a215d9eb5aee9e
   rubiconproject.com, 23580, DIRECT, 0bfd66d529a55807
   rubiconproject.com, 23582, DIRECT, 0bfd66d529a55807
-  #<!VDO.AI>`;
+  synacor.com, 82275, RESELLER, e108f11b2cdf7d5b
+  video.unrulymedia.com, 905992537, RESELLER, a670c89d4a324e47
+  rhythmone.com, 905992537, RESELLER, a670c89d4a324e47
+  aralego.com, par-488A3E6BD8D997D0ED8B3BD34D8BA4B, RESELLER
+  ucfunnel.com, par-488A3E6BD8D997D0ED8B3BD34D8BA4B, RESELLER
+  appnexus.com, 9316, RESELLER, f5ab79cb980f11d1
+  advertising.com, 19623, RESELLER
+  openx.com, 540401713, RESELLER, 6a698e2ec38604c6
+  onetag.com, 572a470226457b8, RESELLER
+  pubmatic.com, 156344, RESELLER, 5d62403b186f2ace
+  yahoo.com, 55317, RESELLER
+  conversantmedia.com, 20923, RESELLER
+  advertising.com, 8603, RESELLER
+  33across.com, 0014000001aXjnGAAS, RESELLER, bbea06d9c4d2853c
+  districtm.io, 101769, RESELLER, 3fd707be9c4527c3
+  improvedigital.com, 1669, RESELLER
+  themediagrid.com, P5JONV, RESELLER, 35d5010d7789b49d
+  spotx.tv, 94794, RESELLER, 7842df1d2fe2db34
+  spotxchange.com, 94794, RESELLER, 7842df1d2fe2db34
+  pubnx.com, 337-1, RESELLER, 8728b7e97e589da4
+  openx.com, 541072983, RESELLER, 6a698e2ec38604c6
+  sovrn.com, 276595, DIRECT, fafdf38b16bf6b2b
+  lijit.com, 276595, DIRECT, fafdf38b16bf6b2b
+  lijit.com, 276595-eb, DIRECT, fafdf38b16bf6b2b
+  appnexus.com, 1360, RESELLER, f5ab79cb980f11d1
+  gumgum.com, 11645, RESELLER, ffdef49475d318a9
+  openx.com, 538959099, RESELLER, 6a698e2ec38604c6
+  pubmatic.com, 137711, RESELLER, 5d62403b186f2ace
+  pubmatic.com, 156212, RESELLER, 5d62403b186f2ace
+  rubiconproject.com, 17960, RESELLER, 0bfd66d529a55807
+  onetag.com, 62e564782c44a66, DIRECT
+  advertising.com, 28246, RESELLER
+  rubiconproject.com, 11006, RESELLER, 0bfd66d529a55807
+  google.com, pub-3769010358500643, RESELLER, f08c47fec0942fa0
+  freewheel.tv, 20393, RESELLER
+  freewheel.tv, 24377, RESELLER
+  yahoo.com, 58905, RESELLER, e1a5b5b6e3255540
+  aol.com, 58905, RESELLER, e1a5b5b6e3255540
+  appnexus.com, 12495, RESELLER
+  sovrn.com, 276595, DIRECT, fafdf38b16bf6b2b
+  lijit.com, 276595, DIRECT, fafdf38b16bf6b2b
+  lijit.com, 276595-eb, DIRECT, fafdf38b16bf6b2b
+  yieldmo.com, 2651367909216952967, DIRECT
+  contextweb.com, 561118, RESELLER, 89ff185a4c4e857c
+  rubiconproject.com, 17070, RESELLER, 0bfd66d529a55807
+  pubnative.net, 1007286, RESELLER, d641df8625486a7b
+  admanmedia.com, 746, RESELLER
+  conversantmedia.com, 100270, RESELLER, 03113cd04947736d
+  rhythmone.com, 3463482822,RESELLER,a670c89d4a324e47
+  pubmatic.com, 160350, RESELLER, 5d62403b186f2ace
+  openx.com, 544021216, RESELLER, 6a698e2ec38604c6
+  video.unrulymedia.com, 4163070607, DIRECT
+  rhythmone.com, 4163070607, DIRECT, a670c89d4a324e47
+  indexexchange.com, 182257, RESELLER
+  appnexus.com, 6849, RESELLER
+  rubiconproject.com, 15268, RESELLER
+  spotxchange.com, 285547, RESELLER, 7842df1d2fe2db34
+  spotx.tv, 285547, RESELLER, 7842df1d2fe2db34
+  pubmatic.com, 159277, RESELLER, 5d62403b186f2ace
+  advertising.com, 28605, RESELLER
+  improvedigital.com, 1699, RESELLER
+  sonobi.com, a5a1f04c15, DIRECT, d1a215d9eb5aee9e
+  rubiconproject.com, 23582, DIRECT, 0bfd66d529a55807
+  
+  #<!VDO.AI>
+  `;
 
 export default (req, res) => {
   const { publicRuntimeConfig } = getConfig();
