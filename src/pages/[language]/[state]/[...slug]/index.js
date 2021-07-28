@@ -32,7 +32,7 @@ const slug = ({
   dropDownData,
 }) => {
   const router = useRouter();
-const { appLanguage } = useTranslator();
+  const { appLanguage } = useTranslator();
   let canonicalUrl = '',
     ampUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
@@ -307,51 +307,61 @@ const { appLanguage } = useTranslator();
           ></ListContainer>
         );
       case 'navlisting':
-
-        return (<>
-          <Head>
-              <title>{data.meta_tag_title !== '' && !data.meta_tag_title.includes('canonical tag') ? data.meta_tag_title : 'ETV Bharat'}</title>
+        return (
+          <>
+            <Head>
+              <title>
+                {data.meta_tag_title !== '' &&
+                !data.meta_tag_title.includes('canonical tag')
+                  ? data.meta_tag_title
+                  : 'ETV Bharat'}
+              </title>
               <link rel="canonical" href={canonicalUrl}></link>
-          </Head>
+            </Head>
 
-          <NextSeo
-            title={data.meta_tag_title !== '' && !data.meta_tag_title.includes('canonical tag') ? data.meta_tag_title : 'ETV Bharat' }
-            description={data.meta_tag_description}
-            additionalMetaTags={[
-              {
-                name: 'keywords',
-                content: data.meta_tag_keywords
-                  ? data.meta_tag_keywords.join(', ')
-                  : '',
-              },
-            ]}
-            openGraph={{
-              site_name: 'ETV Bharat News',
-              url: `https://www.etvbharat.com/${router.asPath.slice(1)}`,
-              type: 'article',
-              title: data.meta_tag_title,
-              description: data.meta_tag_description,
-              images: [
+            <NextSeo
+              title={
+                data.meta_tag_title !== '' &&
+                !data.meta_tag_title.includes('canonical tag')
+                  ? data.meta_tag_title
+                  : 'ETV Bharat'
+              }
+              description={data.meta_tag_description}
+              additionalMetaTags={[
                 {
-                  url: `https://www.etvbharat.com/assets/logos/${appLanguage.name}.png`,
-                  width: 200,
-                  height: 200,
-                  alt: 'ETV Bharat News',
+                  name: 'keywords',
+                  content: data.meta_tag_keywords
+                    ? data.meta_tag_keywords.join(', ')
+                    : '',
                 },
-              ],
-            }}
-            twitter={{
-              handle: '@etvbharat',
-              site: '@etvbharat',
-              cardType: 'summary_large_image',
-            }}
-          />
-          <PageListing
-            key={canonicalUrl}
-            data={data}
-            payload={payload}
-            dropdown={dropDownData}
-          ></PageListing>
+              ]}
+              openGraph={{
+                site_name: 'ETV Bharat News',
+                url: `https://www.etvbharat.com/${router.asPath.slice(1)}`,
+                type: 'article',
+                title: data.meta_tag_title,
+                description: data.meta_tag_description,
+                images: [
+                  {
+                    url: `https://www.etvbharat.com/assets/logos/${appLanguage.name}.png`,
+                    width: 200,
+                    height: 200,
+                    alt: 'ETV Bharat News',
+                  },
+                ],
+              }}
+              twitter={{
+                handle: '@etvbharat',
+                site: '@etvbharat',
+                cardType: 'summary_large_image',
+              }}
+            />
+            <PageListing
+              key={canonicalUrl}
+              data={data}
+              payload={payload}
+              dropdown={dropDownData}
+            ></PageListing>
           </>
         );
       case 'search':
@@ -614,7 +624,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       url.includes('gallery') ||
       url.includes('city') ||
       url.includes('district') ||
-    url.includes('sitara') ||
+      url.includes('sitara') ||
       url.includes('film-and-tv') ||
       url.includes('international') ||
       url.includes('business') ||
@@ -622,8 +632,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       url.includes('science-and-technology') ||
       url.includes('sukhibhava') ||
       url.includes('opinion') ||
-        url.includes('sports')
-
+      url.includes('sports')
     ) {
       const url = args.asPath;
       const response = await api.Listing.getListingApiKey({
@@ -640,11 +649,16 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       };
       let dropDownData = undefined;
       if (
-        (url.includes('state') || url.includes('city') || url.includes('district')) &&
+        (url.includes('state') ||
+          url.includes('city') ||
+          url.includes('district')) &&
         !url.includes('video')
       ) {
         let otherStates = '';
-        if (url.includes('english')) {
+        if (
+          url.includes('english') ||
+          (query.language === 'urdu' && query.state === 'national')
+        ) {
           otherStates = 'yes';
         }
         const cityParam = url.includes('city')
@@ -658,6 +672,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             other_states: otherStates,
           },
         };
+
         const cityDistrictPayload = {
           params: {
             key: cityParam,
@@ -676,7 +691,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             dropDownData = data;
           } else {
             const response = await trackPromise(
-              api.Catalog.getListingPageSates(statePayload)
+              api.Catalog.getListingPageStates(statePayload)
             );
             dropDownData = response.data.data.items;
             if (dropDownData.length > 0) {
@@ -689,25 +704,25 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           }
         } else {
           let type = '';
-		  let finalurl = ''
+          let finalurl = '';
           if (url.includes('city')) {
             type = 'city';
-			if(url.substring(url.length - 'city'.length) !== 'city'){
-				finalurl = url.substr(0, url.lastIndexOf("/"));
-			}else{
-				finalurl = url;
-			}
+            if (url.substring(url.length - 'city'.length) !== 'city') {
+              finalurl = url.substr(0, url.lastIndexOf('/'));
+            } else {
+              finalurl = url;
+            }
           } else {
             type = 'district';
-			if(url.substring(url.length - 'district'.length) !== 'district'){
-				finalurl = url.substr(0, url.lastIndexOf("/"));
-			}else{
-				finalurl = url;
-			}
+            if (url.substring(url.length - 'district'.length) !== 'district') {
+              finalurl = url.substr(0, url.lastIndexOf('/'));
+            } else {
+              finalurl = url;
+            }
           }
 
           finalDataObj.type = type;
-		  finalDataObj.url = finalurl;
+          finalDataObj.url = finalurl;
           const data = cacheData.get(language + url[2] + type);
 
           if (data) {
@@ -735,12 +750,11 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           if (titleobj.length > 0) {
             selectedValue = titleobj[0].ml_title[0].text;
           } else {
-            if(url.includes('state')){
+            if (url.includes('state')) {
               selectedValue = 'Delhi';
-            }else{
+            } else {
               selectedValue = dropDownData[0].ml_title[0].text;
             }
-
           }
         } else {
           let titleobj = dropDownData.filter(
@@ -787,7 +801,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           url.includes('district') &&
           Object.keys(finalQueryParamObject).length === 0
         ) {
-
           finalQueryParamObject.dynamic_district = dropDownData[0].friendly_id;
         }
         if (
