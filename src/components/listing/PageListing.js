@@ -460,7 +460,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
   }
 
   return (
-    <>
+    <React.Fragment>
       <MediaContextProvider>
         <Media at="xs" className="w-full mt-2">
           {listItems[0].layout_type == 'featured_topnews_seeall' ||
@@ -602,7 +602,10 @@ const PageListing = ({ children, data, payload, dropdown }) => {
                     </option>
                     {dropdown.data.map((v) => {
                       return (
-                        <option key={v.state} value={v.friendly_id}>
+                        <option
+                          key={v.state + v.friendly_id}
+                          value={v.friendly_id}
+                        >
                           {v.ml_title[0].text}
                         </option>
                       );
@@ -718,26 +721,32 @@ const PageListing = ({ children, data, payload, dropdown }) => {
               </style>
             </Modal>
           ) : null}
+
           {dropdown ? (
             dropdown.data && dropdown.data.length > 1 ? (
-              <div>
-                <div
-                  className="flex items-center float-right "
-                  style={{ marginLeft: '41rem', marginTop: '10px' }}
-                >
-                  <div className="pr-2 text-sm">
-                    {t('select') + ' ' + t(dropdown.type)}
-                  </div>
-                  <div
-                    className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
-                    onClick={() => {
-                      setShowStateModal(true);
-                    }}
-                  >
-                    <div className="text-center" style={{ minWidth: '100px' }}>
-                      {dropdown.title}
+              <div className="lg:container lg:mx-auto mt-3">
+                <div className="md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row-reverse">
+                  <div className="pr-2 text-sm flex">
+                    <span className="pr-2">
+                      {t('select') + ' ' + t(dropdown.type)}
+                    </span>
+                    <div
+                      className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
+                      onClick={() => {
+                        setShowStateModal(true);
+                      }}
+                    >
+                      <div
+                        className="text-center"
+                        style={{ minWidth: '100px' }}
+                      >
+                        {dropdown.title}
+                      </div>
+                      <span className="pl-1 caret text-gray-700 ">
+                        {' '}
+                        &#9660;
+                      </span>
                     </div>
-                    <span className="pl-1 caret text-gray-700 "> &#9660;</span>
                   </div>
                 </div>
               </div>
@@ -769,6 +778,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
                       .slice(3)
                       .map((article, index) => (
                         <RectangleCard
+                          keyProp={article.content_id + index}
                           key={article.content_id + index}
                           article={article}
                           className="rectangle-card bg-white mt-1 md:mt-2 md:w-1/2 rounded-md"
@@ -802,7 +812,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
           </Media>
         </MediaContextProvider>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 

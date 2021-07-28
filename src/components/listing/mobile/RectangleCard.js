@@ -6,7 +6,7 @@ import { linkInfoGenerator, thumbnailExtractor } from '@utils/Helpers';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
-const RectangleCard = ({ data, article, className }) => {
+const RectangleCard = ({ data, article, className,keyProp }) => {
   const isRTL = useContext(RTLContext);
 
   const router = useRouter();
@@ -20,7 +20,7 @@ const RectangleCard = ({ data, article, className }) => {
 
   return (
     <NavLink
-      key={article.friendly_id}
+      key={keyProp}
       className={`flex  justify-between px-1 pt-2 pb-1 cursor-pointer border shadow ${
         isRTL ? 'rtl' : ''
       } ${className}`}

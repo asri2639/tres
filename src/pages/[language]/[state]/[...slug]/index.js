@@ -743,30 +743,23 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         }
         let selectedValue = '';
 
-        if (language == 'en') {
-          let titleobj = dropDownData.filter(
-            (item) => urlSplit[4] == item.friendly_id
-          );
-          if (titleobj.length > 0) {
-            selectedValue = titleobj[0].ml_title[0].text;
-          } else {
-            if (url.includes('state')) {
-              selectedValue = 'Delhi';
-            } else {
-              selectedValue = dropDownData[0].ml_title[0].text;
-            }
-          }
-        } else {
-          let titleobj = dropDownData.filter(
-            (item) => urlSplit[4] == item.friendly_id
-          );
+        const state = urlSplit[4] || urlSplit[2];
+        const titleobj = dropDownData.filter(
+          (item) => state == item.friendly_id
+        );
 
-          if (titleobj.length > 0) {
-            selectedValue = titleobj[0].ml_title[0].text;
-          } else {
-            selectedValue = dropDownData[0].ml_title[0].text;
+        if (titleobj.length > 0) {
+          selectedValue = titleobj[0].ml_title[0].text;
+        } else {
+          selectedValue = dropDownData[0].ml_title[0].text;
+        }
+
+        if (language == 'en' && !selectedValue) {
+          if (url.includes('state')) {
+            selectedValue = 'Delhi';
           }
         }
+
         finalDataObj.data = dropDownData;
         finalDataObj.title = selectedValue;
       }

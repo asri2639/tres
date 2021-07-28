@@ -200,7 +200,6 @@ App.getInitialProps = async ({ Component, ctx }) => {
     isSSR: true,
   });
 
-  console.log(result);
   appConfig = result.data.data;
   applicationConfig.value = appConfig;
   // }
