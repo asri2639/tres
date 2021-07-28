@@ -153,7 +153,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
         } */
         setIsDesktop(true);
       }, 10);
-      if(callsDone === 1){
+      if (callsDone === 1) {
         fetchMoreListItems();
       }
       document.addEventListener('load', () => {
@@ -184,7 +184,8 @@ const PageListing = ({ children, data, payload, dropdown }) => {
     if (
       payload &&
       callsDone <= totalCalls &&
-      totalArticleCount + paginationCount < 100 && desktopCall
+      totalArticleCount + paginationCount < 100 &&
+      desktopCall
     ) {
       if (callsDone === 1) {
         let initialArticleCount = totalItemsCount(reArrangeData(data));
@@ -337,8 +338,8 @@ const PageListing = ({ children, data, payload, dropdown }) => {
             }
           }
         }
-        if(!id){
-            setDesktopCall(false);
+        if (!id) {
+          setDesktopCall(false);
         }
         if (id) {
           setTotalCalls(Math.ceil(totalDesktopdata / 16));
@@ -465,7 +466,7 @@ const PageListing = ({ children, data, payload, dropdown }) => {
           {listItems[0].layout_type == 'featured_topnews_seeall' ||
           listItems[0].layout_type == 'slider_seeall' ||
           listItems[0].layout_type == 'featured_staggered_grid' ||
-          listItems[0].layout_type == 'news_card_listing'  ? (
+          listItems[0].layout_type == 'news_card_listing' ? (
             <div>
               <div className="flex items-center font-extrabold float-left ml-3.5">
                 {listItems[0].ml_title[0].text}
@@ -501,7 +502,11 @@ const PageListing = ({ children, data, payload, dropdown }) => {
                 if (dropdown.title !== district.ml_title[0].text) {
                   let url = '';
 
-                  if (router.query.language === 'english') {
+                  if (
+                    router.query.language === 'english' ||
+                    (router.query.language === 'urdu' &&
+                      router.query.state === 'national')
+                  ) {
                     url = '/english/national/' + dropdown.type;
                     router.push(url + '/' + district.friendly_id);
                   } else {
@@ -625,8 +630,12 @@ const PageListing = ({ children, data, payload, dropdown }) => {
                     if (dropdown.title !== selected.text) {
                       let url = '';
 
-                      if (router.query.language === 'english') {
-                        url = '/english/national/' + dropdown.type;
+                      if (
+                        router.query.language === 'english' ||
+                        (router.query.language === 'urdu' &&
+                          router.query.state === 'national')
+                      ) {
+                        url = `/${router.query.language}/national/${dropdown.type}`;
                         router.push(url + '/' + selected.state);
                       } else {
                         if (dropdown.type === 'state') {
