@@ -11,19 +11,29 @@ import CatalogWall from './mobile/CatalogWall';
 import SeeAll from './mobile/SeeAll';
 import SliderSeeAll from './mobile/SliderSeeAll';
 import GoogleTagManager from '@utils/GoogleTagManager';
-import Modal from '@components/modal/Modal';
 import Loading from './mobile/Loading';
 import { stateCodeConverter } from '@utils/Helpers';
-import ListingStateSelectModal from '@components/common/ListingStateSelectModal';
-import { I18nContext } from 'react-i18next';
+import dynamic from 'next/dynamic';
 import useSWR from 'swr';
 import React from 'react';
 import Sticky from 'wil-react-sticky';
 import { useRouter } from 'next/router';
 import MainArticles from './MainArticles';
-import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
+const options = {
+  loading: () => <p>Loading...</p>,
+};
+const MobileMainArticles = dynamic(
+  () => import('./mobile/MobileMainArticles'),
+  options
+);
+const Modal = dynamic(() => import('@components/modal/Modal'), options);
+const ListingStateSelectModal = dynamic(
+  () => import('@components/common/ListingStateSelectModal'),
+  options
+);
+
 const PageListing = ({ children, data, payload, dropdown }) => {
   const api = API(APIEnum.CatalogList, APIEnum.Listing);
   const router = useRouter();
@@ -515,11 +525,13 @@ const PageListing = ({ children, data, payload, dropdown }) => {
                         '/' +
                         router.query.language +
                         '/' +
-                        selected.state +
+                        district.friendly_id +
                         '/state';
                     } else {
                       url = dropdown.url + '/' + district.friendly_id;
                     }
+
+                    console.log(url);
 
                     router.push(url);
                   }
