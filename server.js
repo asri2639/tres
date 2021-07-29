@@ -59,7 +59,8 @@ app
   .then(() => {
     server = express();
 
-    app.use(frameguard({ action: 'SAMEORIGIN' }));
+    server.use(frameguard({ action: 'SAMEORIGIN' }));
+
     server.use(compression({ filter: shouldCompress }));
 
     // Set up the proxy.

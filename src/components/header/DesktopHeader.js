@@ -130,10 +130,7 @@ const DesktopHeader = ({ className, data }) => {
                 className="mx-auto hidden lg:block"
                 width={755}
                 height={110}
-                src={
-                  'https://www.etvbharat.com' +
-                  new URL(resp.data.data.ad_list[0].ad_Url).pathname
-                }
+                src={new URL(resp.data.data.ad_list[0].ad_Url).pathname}
               />
             );
           }
