@@ -81,9 +81,7 @@ const DesktopHeader = ({ className, data }) => {
       toggleSearchBox(false);
       GoogleTagManager.searchItem(searchInput);
       router.push(
-        `/${language}/${router.query.state}/search/${decodeURI(
-          searchInput
-        )}`
+        `/${language}/${router.query.state}/search/${decodeURI(searchInput)}`
       );
     };
     if (e) {
@@ -132,7 +130,10 @@ const DesktopHeader = ({ className, data }) => {
                 className="mx-auto hidden lg:block"
                 width={755}
                 height={110}
-                src={new URL(resp.data.data.ad_list[0].ad_Url).pathname}
+                src={
+                  'https://www.etvbharat.com' +
+                  new URL(resp.data.data.ad_list[0].ad_Url).pathname
+                }
               />
             );
           }
