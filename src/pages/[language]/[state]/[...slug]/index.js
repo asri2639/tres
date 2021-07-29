@@ -266,7 +266,7 @@ const slug = ({
           description:
             main.short_description || main.description || main.display_title,
           keywords: keywords ? keywords.join(', ') : '',
-          url: `https://www.etvbharat.com/${router.asPath.slice(1)}`,
+          url: `${router.asPath.slice(1)}`,
           contentType: main.content_type,
           images: [
             {
