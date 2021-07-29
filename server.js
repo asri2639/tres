@@ -6,6 +6,7 @@ const he = require('he');
 const path = require('path');
 const fs = require('fs');
 const compression = require('compression');
+const frameguard = require('frameguard');
 
 const shouldCompress = (req, res) => {
   // don't compress responses asking explicitly not
@@ -58,6 +59,7 @@ app
   .then(() => {
     server = express();
 
+    app.use(frameguard({ action: 'SAMEORIGIN' }));
     server.use(compression({ filter: shouldCompress }));
 
     // Set up the proxy.

@@ -23,6 +23,7 @@
     "compression": "^1.7.4",
     "dom-parser": "^0.1.6",
     "express": "^4.17.1",
+    "frameguard": "^4.0.0",
     "he": "^1.2.0",
     "js-service-wrapper": "^1.1.4",
     "memory-cache": "^0.2.0",
