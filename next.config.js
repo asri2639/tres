@@ -15,6 +15,13 @@ const localeSubpaths = {
   te: 'telugu',
   ta: 'tamil',
 };
+
+const securityHeaders = [
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN',
+  },
+];
 module.exports = {
   distDir: 'dist',
   // rewrites: async () => nextI18NextRewrites(localeSubpaths),
@@ -36,8 +43,8 @@ module.exports = {
       },
       {
         source: '/:slug*/:slug.xml',
-        destination: '/api/sitemap'
-      }
+        destination: '/api/sitemap',
+      },
     ];
   },
 
@@ -51,5 +58,15 @@ module.exports = {
   generateBuildId: async () => {
     const date = new Date();
     return date.toISOString().slice(0, 16);
+  },
+
+  async headers() {
+    return [
+      {
+        // Apply these headers to all routes in your application.
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ];
   },
 };
