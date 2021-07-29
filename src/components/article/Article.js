@@ -378,6 +378,7 @@ export default function Article({
                     thumbnail={thumbnail}
                     className={'md:rounded-lg w-full'}
                     type={data.media_type}
+                    lazy={false}
                   />
                 </div>
                 <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
