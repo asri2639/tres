@@ -387,6 +387,10 @@ const slug = ({
                 content={headerObj.fbContentId}
               ></meta>
               <link rel="preload" as="image" href={headerObj.thumbnail.url} />
+              <meta
+                property="og:image:secure_url"
+                content={headerObj.thumbnail.url}
+              />
             </Head>
             <NextSeo
               title={headerObj.title}
