@@ -74,7 +74,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="bingbots" content="all" />
         <meta name="robots" content="all" />
         <meta name="theme-color" content="#07254c" />
-
+        <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
         {isAMP ? null : [
             'karnataka',
             'telangana',
