@@ -294,10 +294,10 @@ const getAds = (config) =>
   rubiconproject.com, 17960, RESELLER, 0bfd66d529a55807
   indexexchange.com, 192787, RESELLER
   indexexchange.com, 192769, RESELLER
-  vdopia.com,Ãƒâ€š 15364, DIRECT, 49a66ce31a704197 #video
-  chocolateplatform.com,Ãƒâ€š 15364, DIRECT, 49a66ce31a704197 #video
-  vdopia.com,Ãƒâ€š 15364, DIRECT, 49a66ce31a704197 #banner
-  chocolateplatform.com,Ãƒâ€š 15364, DIRECT, 49a66ce31a704197 #banner
+  vdopia.com,ÃƒÆ’Ã¢â‚¬Å¡ 15364, DIRECT, 49a66ce31a704197 #video
+  chocolateplatform.com,ÃƒÆ’Ã¢â‚¬Å¡ 15364, DIRECT, 49a66ce31a704197 #video
+  vdopia.com,ÃƒÆ’Ã¢â‚¬Å¡ 15364, DIRECT, 49a66ce31a704197 #banner
+  chocolateplatform.com,ÃƒÆ’Ã¢â‚¬Å¡ 15364, DIRECT, 49a66ce31a704197 #banner
   mobfox.com,4459, DIRECT, 5529a3d1f59865be
   mobfox.com,4459, RESELLER, 5529a3d1f59865be
   appnexus.com,2637,RESELLER,f5ab79cb980f11d1
@@ -505,6 +505,12 @@ const getAds = (config) =>
   adyoulike.com, b4bf4fdd9b0b915f746f6747ff432bde, RESELLER
   axonix.com, 57264, RESELLER
   admanmedia.com, 43, RESELLER
+  bidsxchange.com, 610, DIRECT
+  smartadserver.com, 4012, RESELLER 
+  smartadserver.com, 4016, RESELLER 
+  smartadserver.com, 4071, RESELLER 
+  smartadserver.com, 4073, RESELLER 
+  smartadserver.com, 4074, RESELLER 
   #<!StreamLyn>
   
   #<!VDO.AI>
