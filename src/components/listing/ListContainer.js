@@ -324,10 +324,7 @@ const ListContainer = ({ children, data, payload }) => {
             {listItems && listItems.length > 0 ? (
               <>
                 <Media at="xs" className="w-full">
-                  <MobileMainArticles
-                    list={listItems[0].catalog_list_items}
-                    dropdown={dropdown}
-                  />
+                  <MobileMainArticles list={listItems[0].catalog_list_items} />
                 </Media>
                 <Media greaterThan="xs" className="w-full flex space-x-2">
                   <MainArticles list={listItems[0].catalog_list_items} />
