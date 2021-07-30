@@ -73,7 +73,6 @@ app
 
     // Default catch-all handler to allow Next.js to handle all other routes
     server.all('*', (req, res) => {
-      console.log(req.url.startsWith('/amp/'));
       if (req.url.startsWith('/amp/')) {
         const id = req.url.split('/').slice(-1)[0];
         const state = stateCodeConverter(req.url.split('/')[3]);
