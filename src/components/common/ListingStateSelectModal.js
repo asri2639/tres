@@ -8,6 +8,7 @@ const ListingStateSelectModal = ({
   onClose,
   onStateSelect,
   type,
+  on,
 }) => {
   const [isShowing, setIsShowing] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -33,6 +34,7 @@ const ListingStateSelectModal = ({
       }}
       width={null}
       height={null}
+      on={on}
     >
       <>
         <div className="p-3 pb-4 rounded-md" style={{ background: '#f0f0f0' }}>

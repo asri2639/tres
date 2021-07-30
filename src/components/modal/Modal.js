@@ -2,7 +2,16 @@ import ClientOnlyPortal from '@components/modal/ClientOnlyPortal';
 import useTranslator from '@hooks/useTranslator';
 import { AMPContext } from '@pages/_app';
 
-const Modal = ({ open, title, onClose, children, isMobile, width, height }) => {
+const Modal = ({
+  open,
+  title,
+  onClose,
+  children,
+  isMobile,
+  width,
+  height,
+  on,
+}) => {
   const { t } = useTranslator();
   const isAMP = useContext(AMPContext);
 
@@ -10,7 +19,7 @@ const Modal = ({ open, title, onClose, children, isMobile, width, height }) => {
     <>
       {isAMP ? (
         <amp-lightbox
-          id="modal-lightbox"
+          id={on.split(':')[1]}
           layout="nodisplay"
           className="lightbox"
         >

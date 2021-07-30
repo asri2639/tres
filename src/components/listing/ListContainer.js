@@ -23,14 +23,16 @@ import MainArticles from './MainArticles';
 import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
+import { AMPContext } from '@pages/_app';
 
 const ListContainer = ({ children, data, payload, dropdown }) => {
   const api = API(APIEnum.CatalogList);
   const router = useRouter();
   const isRTL = useContext(RTLContext);
+  const isAMP = useContext(AMPContext);
 
   const { t, appLanguage } = useTranslator();
-  const [showStateModal, setShowStateModal] = useState(false);
+  const [showStateModal, setShowStateModal] = useState(isAMP);
   let totalCalls = Math.ceil(data.total_items_count / 8);
 
   const reArrangeData = (data) => {
@@ -314,10 +316,11 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
               </div>
             </div>
           ) : null}
-          {showStateModal ? (
+          {showStateModal || isAMP ? (
             <ListingStateSelectModal
               data={dropdown.data}
               state={router.query.state}
+              on={`tap:state-lightbox`}
               onClose={() => {
                 setShowStateModal(false);
               }}
