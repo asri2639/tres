@@ -76,7 +76,6 @@ app
       if (req.url.startsWith('/amp/')) {
         const id = req.url.split('/').slice(-1)[0];
         const state = stateCodeConverter(req.url.split('/')[3]);
-
         const re = new RegExp('(' + state + '|na)\\d+', 'gi');
         let url = '';
         let listing = false;
@@ -84,10 +83,11 @@ app
           url = `http://prod.api.etvbharat.com/amp/${id}?auth_token=fLd6UcV8zesqNpVRif8N`;
         } else {
           listing = true;
-          url = `https://prod.api.etvbharat.com/amp_listing_pages?url=${
+          url = `https://prod.api.etvbharat.com/amp_listing_pages?url=/${
             req.url.split('/amp/')[1]
-          }l&auth_token=kmAJAH4RTtqHjgoauC4o&access_token=woB1UukKSzZ5aduEUxwt`;
+          }&auth_token=kmAJAH4RTtqHjgoauC4o&access_token=woB1UukKSzZ5aduEUxwt`;
         }
+
         fetch(url, { headers: { 'Content-Type': 'application/json' } })
           .then((response) => {
             return response.json();
@@ -95,6 +95,10 @@ app
           .then(function (rest) {
             res.set('Content-Type', 'text/html');
             if (listing) {
+              console.log('-------------')
+              console.log(rest)
+              console.log('-------------')
+
               res.send(JSON.parse(rest.data).amp_html);
             } else {
               res.send(rest.data.amp);
