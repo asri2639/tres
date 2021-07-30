@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { AMPContext } from '@pages/_app';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 const Thumbnail = ({
   thumbnail,
@@ -9,6 +10,8 @@ const Thumbnail = ({
   lazy,
   styleObj,
 }) => {
+  const isAMP = useContext(AMPContext);
+
   const [state, setState] = useState({
     src: thumbnail.url,
     errored: false,
@@ -47,7 +50,7 @@ const Thumbnail = ({
   return (type === 'breaking_news' || type === 'news') && !state.src ? (
     <img
       ref={imgEl}
-      loading={lazy === undefined || lazy === true ? 'lazy' : ''}
+      loading={(lazy === undefined || lazy === true) && !isAMP ? 'lazy' : ''}
       className="breaking_news"
       alt="Breaking News"
       height="100%"
@@ -55,19 +58,21 @@ const Thumbnail = ({
       src="/assets/images/placeholder.png"
       data-src="/assets/images/breakingplate.jpg"
       src={`/assets/images/${
-        lazy === undefined || lazy === true ? 'placeholder' : 'breakingplate'
+        (lazy === undefined || lazy === true) && !isAMP
+          ? 'placeholder'
+          : 'breakingplate'
       }.png`}
     />
   ) : (
     <>
       <img
         ref={imgEl}
-        loading={lazy === undefined || lazy === true ? 'lazy' : ''}
+        loading={(lazy === undefined || lazy === true) && !isAMP ? 'lazy' : ''}
         data-src={state.src}
         height="100%"
         width="auto"
         src={
-          lazy === undefined || lazy === true
+          (lazy === undefined || lazy === true) && !isAMP
             ? '/assets/images/placeholder.png'
             : state.src
         }

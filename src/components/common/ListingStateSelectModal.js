@@ -1,8 +1,5 @@
 import Modal from '@components/modal/Modal';
 import { useEffect, useState } from 'react';
-import API from '@services/api/API';
-import APIEnum from '@services/api/APIEnum';
-import useSWR from 'swr';
 import useTranslator from '@hooks/useTranslator';
 
 const ListingStateSelectModal = ({

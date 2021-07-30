@@ -73,20 +73,33 @@ app
 
     // Default catch-all handler to allow Next.js to handle all other routes
     server.all('*', (req, res) => {
+      console.log(req.url.startsWith('/amp/'));
       if (req.url.startsWith('/amp/')) {
         const id = req.url.split('/').slice(-1)[0];
-        fetch(
-          env === 'staging'
-            ? `http://staging.api.etvbharat.com/amp/${id}?auth_token=xNppFXL5h4qhA7XsE4Nx`
-            : `http://prod.api.etvbharat.com/amp/${id}?auth_token=fLd6UcV8zesqNpVRif8N`,
-          { headers: { 'Content-Type': 'application/json' } }
-        )
+        const state = stateCodeConverter(req.url.split('/')[3]);
+
+        const re = new RegExp('(' + state + '|na)\\d+', 'gi');
+        let url = '';
+        let listing = false;
+        if (re.test(id)) {
+          url = `http://prod.api.etvbharat.com/amp/${id}?auth_token=fLd6UcV8zesqNpVRif8N`;
+        } else {
+          listing = true;
+          url = `https://prod.api.etvbharat.com/amp_listing_pages?url=${
+            req.url.split('/amp/')[1]
+          }l&auth_token=kmAJAH4RTtqHjgoauC4o&access_token=woB1UukKSzZ5aduEUxwt`;
+        }
+        fetch(url, { headers: { 'Content-Type': 'application/json' } })
           .then((response) => {
             return response.json();
           })
           .then(function (rest) {
             res.set('Content-Type', 'text/html');
-            res.send(rest.data.amp);
+            if (listing) {
+              res.send(JSON.parse(rest.data).amp_html);
+            } else {
+              res.send(rest.data.amp);
+            }
           })
           .catch((e) => {
             return handle(req, res);
@@ -107,3 +120,36 @@ app
     console.log('An error occurred, unable to start the server');
     console.log(err);
   });
+
+const stateCodeConverter = (e) => {
+  return {
+    assam: 'assam',
+    odisha: 'or',
+    punjab: 'pb',
+    rajasthan: 'rj',
+    sikkim: 'sk',
+    telangana: 'ts',
+    'uttar-pradesh': 'up',
+    'andhra-pradesh': 'ap',
+    'arunachal-pradesh': 'ar',
+    bihar: 'bh',
+    chhattisgarh: 'ct',
+    chandigarh: 'ch',
+    delhi: 'dl',
+    gujarat: 'gj',
+    haryana: 'haryana',
+    'himachal-pradesh': 'hp',
+    jharkhand: 'jh',
+    karnataka: 'ka',
+    'madhya-pradesh': 'mp',
+    maharastra: 'mh',
+    maharashtra: 'mh',
+    manipur: 'mn',
+    'west-bengal': 'wb',
+    national: 'na',
+    'jammu-and-kashmir': 'na',
+    'tamil-nadu': 'tamil-nadu',
+    kerala: 'kerala',
+    uttarakhand: 'uttarakhand',
+  }[e.toLowerCase()];
+};

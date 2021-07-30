@@ -1,12 +1,56 @@
 import ClientOnlyPortal from '@components/modal/ClientOnlyPortal';
 import useTranslator from '@hooks/useTranslator';
+import { AMPContext } from '@pages/_app';
 
 const Modal = ({ open, title, onClose, children, isMobile, width, height }) => {
   const { t } = useTranslator();
+  const isAMP = useContext(AMPContext);
 
   return (
     <>
-      {open && (
+      {isAMP ? (
+        <amp-lightbox
+          id="modal-lightbox"
+          layout="nodisplay"
+          className="lightbox"
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div
+              className="p-3 pb-4 rounded-md"
+              style={{ background: '#f0f0f0' }}
+            >
+              <div className="flex justify-between pb-4">
+                <div
+                  className="text-gray-700 text-md pl-2"
+                  style={{ fontSize: '1rem' }}
+                >
+                  {t(title) || ''}
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    role="button"
+                    tabIndex={0}
+                    className="font-semibold text-gray-500 hover:text-gray-900 text-md"
+                    on="tap:modal-lightbox.close"
+                  >
+                    &#10005;
+                  </button>
+                </div>
+              </div>
+            </div>
+            {children}
+          </div>
+        </amp-lightbox>
+      ) : null}
+
+      {!isAMP && open && (
         <ClientOnlyPortal selector="#modal">
           <div className="backdrop flex justify-center items-center">
             <div
