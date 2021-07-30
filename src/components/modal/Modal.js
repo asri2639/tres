@@ -20,7 +20,7 @@ const Modal = ({
     <>
       {isAMP ? (
         <amp-lightbox
-          id={on.split(':')[1]}
+          id={on ? on.split(':')[1] : '-'}
           layout="nodisplay"
           className="lightbox"
         >
@@ -48,7 +48,7 @@ const Modal = ({
                     role="button"
                     tabIndex={0}
                     className="font-semibold text-gray-500 hover:text-gray-900 text-md"
-                    on="tap:modal-lightbox.close"
+                    on={`tap:${on ? on.split(':')[1] : '-'}.close`}
                   >
                     &#10005;
                   </button>

@@ -384,7 +384,7 @@ const MobileFooter = ({ data, menu }) => {
                     role="button"
                     tabIndex={0}
                     onClick={() => {
-                      eventBus.dispatch('state-selector', {
+                      eventBus.emit('state-selector', {
                         show: true,
                       });
                     }}

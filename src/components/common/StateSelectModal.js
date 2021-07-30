@@ -54,6 +54,7 @@ const StateSelectModal = ({ data, callback, onClose }) => {
       onClose={() => {
         close();
       }}
+      on={`tap:state-lightbox`}
       width={null}
       height={null}
     >

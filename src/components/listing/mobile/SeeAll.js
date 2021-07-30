@@ -112,6 +112,12 @@ const SeeAll = ({ data, article, className }) => {
   );
 
   useEffect(() => {
+    if (isAMP) {
+      selectorModal(scope);
+    }
+  });
+
+  useEffect(() => {
     if (districtFetchedData && district) {
       setDisplayData(districtFetchedData);
     } else if (stateFetchedData && state) {
@@ -181,7 +187,7 @@ const SeeAll = ({ data, article, className }) => {
   const selectorModal = (scope) => {
     switch (scope.type) {
       case 'state':
-        eventBus.dispatch(`${scope.type}-selector`, {
+        eventBus.emit(`${scope.type}-selector`, {
           show: true,
           callback: (path) => {
             startLoading();
@@ -256,10 +262,10 @@ const SeeAll = ({ data, article, className }) => {
         {scope.dropdown ? (
           <div className="flex items-center ">
             <div className="pr-2 text-sm">{t(`${scope.text}`)}</div>
-            {isAMP && selectorModal(scope)}
+
             <div
               className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
-              on={`tap:${scope}-lightbox`}
+              on={`tap:${scope.type}-lightbox`}
               onClick={() => {
                 selectorModal(scope);
               }}

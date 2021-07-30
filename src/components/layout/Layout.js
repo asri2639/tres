@@ -100,8 +100,8 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
     });
 
     return () => {
-      eventBus.remove('state-selector');
-      eventBus.remove('district-selector');
+      eventBus.die('state-selector');
+      eventBus.die('district-selector');
     };
   });
 
@@ -228,7 +228,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
       let convertedState = configStateCodeConverter(state);
       convertedState =
         language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
-          const urlSuffix = language == 'ur' ? '-urdu' : '';
+      const urlSuffix = language == 'ur' ? '-urdu' : '';
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
           suffix: `msite-new-left-menu${
