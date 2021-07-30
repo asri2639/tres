@@ -13,8 +13,6 @@ import SliderSeeAll from './mobile/SliderSeeAll';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import Loading from './mobile/Loading';
 import { stateCodeConverter } from '@utils/Helpers';
-import ListingStateSelectModal from '@components/common/ListingStateSelectModal';
-import { I18nContext } from 'react-i18next';
 import useSWR from 'swr';
 import React from 'react';
 import Sticky from 'wil-react-sticky';
@@ -23,16 +21,13 @@ import MainArticles from './MainArticles';
 import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
-import { AMPContext } from '@pages/_app';
 
-const ListContainer = ({ children, data, payload, dropdown }) => {
+const ListContainer = ({ children, data, payload }) => {
   const api = API(APIEnum.CatalogList);
   const router = useRouter();
   const isRTL = useContext(RTLContext);
-  const isAMP = useContext(AMPContext);
 
   const { t, appLanguage } = useTranslator();
-  const [showStateModal, setShowStateModal] = useState(isAMP);
   let totalCalls = Math.ceil(data.total_items_count / 8);
 
   const reArrangeData = (data) => {
@@ -315,56 +310,6 @@ const ListContainer = ({ children, data, payload, dropdown }) => {
                 ) : null}
               </div>
             </div>
-          ) : null}
-          {showStateModal || isAMP ? (
-            <ListingStateSelectModal
-              data={dropdown.data}
-              state={router.query.state}
-              on={`tap:state-lightbox`}
-              onClose={() => {
-                setShowStateModal(false);
-              }}
-              onStateSelect={(district) => {
-                setShowStateModal(false);
-
-                if (dropdown.title !== district.ml_title[0].text) {
-                  let url = '';
-
-                  if (router.query.language === 'english') {
-                    url = '/english/national/state';
-                    router.push(url + '/' + district.friendly_id);
-                  } else {
-                    url =
-                      '/' +
-                      router.query.language +
-                      '/' +
-                      district.friendly_id +
-                      '/state';
-                    router.push(url);
-                  }
-                }
-              }}
-            />
-          ) : null}
-          {dropdown ? (
-            dropdown.data && dropdown.data.length > 1 ? (
-              <div>
-                <div className="flex items-center float-right mr-2.5">
-                  <div className="pr-2 text-sm">{t('select')}</div>
-                  <div
-                    className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
-                    onClick={() => {
-                      setShowStateModal(true);
-                    }}
-                  >
-                    <div className="text-center" style={{ minWidth: '100px' }}>
-                      {dropdown.title}
-                    </div>
-                    <span className="pl-1 caret text-gray-700 "> &#9660;</span>
-                  </div>
-                </div>
-              </div>
-            ) : null
           ) : null}
         </Media>
       </MediaContextProvider>

@@ -12,12 +12,15 @@ import useSWR, { mutate } from 'swr';
 import { RTLContext } from '@components/layout/Layout';
 import { MenuContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
+import { AMPContext } from '@pages/_app';
 
 const capitalize = (s) => {
   return s && s[0].toUpperCase() + s.slice(1);
 };
 const SeeAll = ({ data, article, className }) => {
   const isRTL = useContext(RTLContext);
+  const isAMP = useContext(AMPContext);
+
   const router = useRouter();
   const config = useContext(MenuContext);
   const { t, appLanguage } = useTranslator();
@@ -27,7 +30,7 @@ const SeeAll = ({ data, article, className }) => {
   const [district, setDistrict] = useState(null);
   const [state, setState] = useState(null);
 
-  const [showDistrictModal, setShowDistrictModal] = useState(false);
+  const [showDistrictModal, setShowDistrictModal] = useState(isAMP);
   const [loading, setLoading] = useState(false);
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
@@ -253,8 +256,10 @@ const SeeAll = ({ data, article, className }) => {
         {scope.dropdown ? (
           <div className="flex items-center ">
             <div className="pr-2 text-sm">{t(`${scope.text}`)}</div>
+            {isAMP && selectorModal(scope)}
             <div
               className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
+              on={`tap:${scope}-lightbox`}
               onClick={() => {
                 selectorModal(scope);
               }}
