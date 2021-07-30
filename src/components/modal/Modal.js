@@ -1,6 +1,7 @@
 import ClientOnlyPortal from '@components/modal/ClientOnlyPortal';
 import useTranslator from '@hooks/useTranslator';
 import { AMPContext } from '@pages/_app';
+import { useContext } from 'react';
 
 const Modal = ({
   open,
