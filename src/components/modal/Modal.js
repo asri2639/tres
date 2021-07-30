@@ -31,30 +31,6 @@ const Modal = ({
               alignItems: 'center',
             }}
           >
-            <div
-              className="p-3 pb-4 rounded-md"
-              style={{ background: '#f0f0f0' }}
-            >
-              <div className="flex justify-between pb-4">
-                <div
-                  className="text-gray-700 text-md pl-2"
-                  style={{ fontSize: '1rem' }}
-                >
-                  {t(title) || ''}
-                </div>
-                <div>
-                  <button
-                    type="button"
-                    role="button"
-                    tabIndex={0}
-                    className="font-semibold text-gray-500 hover:text-gray-900 text-md"
-                    on={`tap:${on ? on.split(':')[1] : '-'}.close`}
-                  >
-                    &#10005;
-                  </button>
-                </div>
-              </div>
-            </div>
             {children}
           </div>
         </amp-lightbox>

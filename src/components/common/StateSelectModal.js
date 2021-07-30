@@ -69,6 +69,7 @@ const StateSelectModal = ({ data, callback, onClose }) => {
                 onClick={() => {
                   close();
                 }}
+                on={`tap:state-lightbox.close`}
               >
                 &#10005;
               </button>

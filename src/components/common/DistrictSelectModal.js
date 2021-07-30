@@ -75,6 +75,7 @@ const DistrictSelectModal = ({ state, onClose, onDistrictSelect }) => {
                 onClick={() => {
                   close();
                 }}
+                on={`tap:state-lightbox.close`}
               >
                 &#10005;
               </button>

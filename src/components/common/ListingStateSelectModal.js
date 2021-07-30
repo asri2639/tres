@@ -49,6 +49,7 @@ const ListingStateSelectModal = ({
                 onClick={() => {
                   close();
                 }}
+                on={`${on}.close`}
               >
                 &#10005;
               </button>
