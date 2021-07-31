@@ -95,7 +95,7 @@ const MobileAd = ({ adData, className, refresh }) => {
             width="300"
             height="250"
             type="doubleclick"
-            data-slot={adData.gpt_id}
+            data-slot={adData.ad_unit}
           >
             <div placeholder></div>
             <div fallback></div>
