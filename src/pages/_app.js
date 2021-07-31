@@ -91,7 +91,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
             type="text/javascript"
             src="//cdn.ergadx.com/js/889/ads.js"
           ></script>
-        ) : (
+        ) : isAMP ? null : (
           <script
             dangerouslySetInnerHTML={{
               __html: `(function(v,d,o,ai){ai=d.createElement('script');
@@ -105,14 +105,14 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
           <>
             <link
               rel="preload"
-              href="/assets/fonts/English/english.woff2"
+              href="https://www.etvbharat.com/assets/fonts/English/english.woff2"
               as="font"
               type="font/woff2"
               crossOrigin={'anonymous'}
             />
             <link
               rel="preload"
-              href="/assets/fonts/English/english.woff"
+              href="https://www.etvbharat.com/assets/fonts/English/english.woff"
               as="font"
               type="font/woff2"
               crossOrigin={'anonymous'}
@@ -121,14 +121,14 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
               <>
                 <link
                   rel="preload"
-                  href={`/assets/fonts/${langCap}/${langName}.woff2`}
+                  href={`https://www.etvbharat.com/assets/fonts/${langCap}/${langName}.woff2`}
                   as="font"
                   type="font/woff2"
                   crossOrigin={'anonymous'}
                 />
                 <link
                   rel="preload"
-                  href={`/assets/fonts/${langCap}/${langName}.woff`}
+                  href={`https://www.etvbharat.com/assets/fonts/${langCap}/${langName}.woff`}
                   as="font"
                   type="font/woff2"
                   crossOrigin={'anonymous'}

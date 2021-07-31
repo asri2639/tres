@@ -95,10 +95,6 @@ app
           .then(function (rest) {
             res.set('Content-Type', 'text/html');
             if (listing) {
-              console.log('-------------')
-              console.log(rest)
-              console.log('-------------')
-
               res.send(JSON.parse(rest.data).amp_html);
             } else {
               res.send(rest.data.amp);
