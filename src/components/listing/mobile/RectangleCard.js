@@ -6,7 +6,7 @@ import { linkInfoGenerator, thumbnailExtractor } from '@utils/Helpers';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
-const RectangleCard = ({ data, article, className,keyProp }) => {
+const RectangleCard = ({ data, article, className, keyProp }) => {
   const isRTL = useContext(RTLContext);
 
   const router = useRouter();
@@ -14,7 +14,6 @@ const RectangleCard = ({ data, article, className,keyProp }) => {
     article ? article.web_url : data.url,
     router.query.state
   );
-
 
   const thumbnail = thumbnailExtractor(article.thumbnails, '3_2', 's2b', null);
 
@@ -46,6 +45,7 @@ const RectangleCard = ({ data, article, className,keyProp }) => {
           className={'w-full'}
           type={''}
           creditSize={'no-size'}
+          styleObj={{ minHeight: '65px' }}
         />
 
         {article.overlay_tag ? (

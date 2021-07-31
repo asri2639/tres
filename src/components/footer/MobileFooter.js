@@ -359,9 +359,9 @@ const MobileFooter = ({ data, menu }) => {
                                 return (
                                   <a
                                     key={v.state}
-                                    href={`https://www.etvbharat.com/amp/${
-                                      v.item_languages[0]
-                                    }/${
+                                    href={`https://www.etvbharat.com/${
+                                      v.state === 'uttar-pradesh' ? '' : 'amp'
+                                    }/${v.item_languages[0]}/${
                                       v.item_languages[0] === 'english'
                                         ? 'national'
                                         : v.state

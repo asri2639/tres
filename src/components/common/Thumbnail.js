@@ -62,6 +62,7 @@ const Thumbnail = ({
           ? 'placeholder'
           : 'breakingplate'
       }.png`}
+      style={styleObj}
     />
   ) : (
     <>
