@@ -39,7 +39,7 @@ const Thumbnail = ({
     }
   });
   const onError = () => {
-    if (!state.errored) {
+    if (!state.errored && !isAMP) {
       setState({
         src: '/assets/images/placeholder.png',
         errored: true,
