@@ -46,7 +46,7 @@ export default function AMPSidebar({ data }) {
                   }}
                 >
                   <a
-                    href={`https://m.etvbharat.com/${item.url.split('/')[1]}`}
+                    href={`https://www.etvbharat.com/${item.url.split('/')[1]}`}
                     style={{ display: 'flex', alignItems: 'center' }}
                   >
                     <span
@@ -69,7 +69,7 @@ export default function AMPSidebar({ data }) {
                       <a
                         key={subitem.list_id + ind}
                         className="pl-10 h-8 flex items-center text-sm font-normal hover:bg-gray-300"
-                        href={`https://m.etvbharat.com/${
+                        href={`https://www.etvbharat.com/${
                           subitem.url.split('/')[1]
                         }`}
                       >

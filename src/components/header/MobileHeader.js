@@ -41,7 +41,7 @@ export default function MobileHeader({ data, className }) {
       return (
         <a
           key={language}
-          href={`https://m.etvbharat.com/${language}/national`}
+          href={`https://www.etvbharat.com/${language}/national`}
           className={`flex-1 flex flex-col justify-center items-center cursor-pointer ${
             isRTL ? 'flex-row-reverse rtl' : ''
           }`}
@@ -57,7 +57,7 @@ export default function MobileHeader({ data, className }) {
         return (
           <a
             key={language}
-            href={`https://m.etvbharat.com/${language}/national`}
+            href={`https://www.etvbharat.com/${language}/national`}
             className={`flex-1 flex flex-col justify-center items-center cursor-pointer ${
               isRTL ? 'flex-row-reverse rtl' : ''
             }`}
