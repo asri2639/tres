@@ -6,7 +6,6 @@ import header from './Header.module.scss';
 import Modal from '@components/modal/Modal';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import { AMPContext } from '@pages/_app';
-import { languageMap } from '@utils/Constants';
 import useTranslator from '@hooks/useTranslator';
 import { RTLContext } from '@components/layout/Layout';
 
@@ -57,7 +56,7 @@ export default function MobileHeader({ data, className }) {
         return (
           <a
             key={language}
-            href={`https://www.etvbharat.com/${language}/national`}
+            href={`https://www.etvbharat.com/${language}/${states[0].state}`}
             className={`flex-1 flex flex-col justify-center items-center cursor-pointer ${
               isRTL ? 'flex-row-reverse rtl' : ''
             }`}
