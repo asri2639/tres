@@ -11,7 +11,7 @@ const Modal = ({
   isMobile,
   width,
   height,
-  on,
+  ampon,
 }) => {
   const { t } = useTranslator();
   const isAMP = useContext(AMPContext);
@@ -20,7 +20,7 @@ const Modal = ({
     <>
       {isAMP ? (
         <amp-lightbox
-          id={on ? on.split(':')[1] : '-'}
+          id={ampon ? ampon.split(':')[1] : '-'}
           layout="nodisplay"
           className="lightbox"
         >

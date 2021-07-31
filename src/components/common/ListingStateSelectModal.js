@@ -34,7 +34,7 @@ const ListingStateSelectModal = ({
       }}
       width={null}
       height={null}
-      on={on}
+      ampon={on}
     >
       <>
         <div className="p-3 pb-4 rounded-md" style={{ background: '#f0f0f0' }}>

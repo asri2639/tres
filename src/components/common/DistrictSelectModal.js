@@ -60,7 +60,7 @@ const DistrictSelectModal = ({ state, onClose, onDistrictSelect }) => {
       }}
       width={null}
       height={null}
-      on={`tap:district-lightbox`}
+      ampon={`tap:district-lightbox`}
     >
       <>
         <div className="p-3 pb-4 rounded-md" style={{ background: '#f0f0f0' }}>
