@@ -31,8 +31,8 @@ const state = ({ data, payload, pageType, isAmp }) => {
 
   const pathname = new URL(`http:localhost:3000${router.asPath}`).pathname;
   const canonicalUrl = `https://www.etvbharat.com${pathname}`;
-  let ampUrl = ''; //`https://www.etvbharat.com/amp${pathname}`;
-  let ampExists = false; //true
+  let ampUrl = `https://www.etvbharat.com/amp${pathname}`;
+  let ampExists = true;
 
   const splitPath = router.asPath.split('/');
   const state = splitPath[2];
