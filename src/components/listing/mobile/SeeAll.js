@@ -217,8 +217,7 @@ const SeeAll = ({ data, article, className }) => {
       : displayData.url;
 
     if (url.endsWith('/district')) {
-      url =
-        url.split('/district')[0] + '/state/' + displayData.dynamic_district;
+      url = url + '/' + displayData.dynamic_district;
     }
     return {
       text: t('see_all'),
@@ -235,6 +234,7 @@ const SeeAll = ({ data, article, className }) => {
           onClose={() => {
             setShowDistrictModal(false);
           }}
+          mainUrl={displayData ? displayData.url: ''}
           onDistrictSelect={(district) => {
             startLoading();
 

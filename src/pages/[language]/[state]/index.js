@@ -31,8 +31,8 @@ const state = ({ data, payload, pageType, isAmp }) => {
 
   const pathname = new URL(`http:localhost:3000${router.asPath}`).pathname;
   const canonicalUrl = `https://www.etvbharat.com${pathname}`;
-  const ampUrl = getAmpUrl(canonicalUrl, true);
-  let ampExists = false;
+  let ampUrl = ''; //`https://www.etvbharat.com/amp${pathname}`;
+  let ampExists = false; //true
 
   const splitPath = router.asPath.split('/');
   const state = splitPath[2];
@@ -41,6 +41,7 @@ const state = ({ data, payload, pageType, isAmp }) => {
     (state === 'national' && splitPath[1] !== 'urdu')
   ) {
     ampExists = true;
+    ampUrl = getAmpUrl(canonicalUrl, true);
   }
 
   return data ? (
@@ -53,6 +54,7 @@ const state = ({ data, payload, pageType, isAmp }) => {
         ) : null}
 
         {ampExists ? <link rel="amphtml" href={ampUrl}></link> : null}
+
         <meta name="fbPages" property="fb:pages" content={fbContentId}></meta>
       </Head>
       <NextSeo
