@@ -40,7 +40,7 @@ export default function MobileHeader({ data, className }) {
       return (
         <a
           key={language}
-          href={`https://www.etvbharat.com/amp/${language}/national`}
+          href={`https://www.etvbharat.com/${language}/national`}
           className={`flex-1 flex flex-col justify-center items-center cursor-pointer ${
             isRTL ? 'flex-row-reverse rtl' : ''
           }`}
@@ -56,7 +56,7 @@ export default function MobileHeader({ data, className }) {
         return (
           <a
             key={language}
-            href={`https://www.etvbharat.com/amp/${language}/${states[0].state}`}
+            href={`https://www.etvbharat.com/${language}/${states[0].state}`}
             className={`flex-1 flex flex-col justify-center items-center cursor-pointer ${
               isRTL ? 'flex-row-reverse rtl' : ''
             }`}
@@ -120,8 +120,8 @@ export default function MobileHeader({ data, className }) {
                         <a
                           key={v.state}
                           href={`https://www.etvbharat.com/${
-                            v.state === 'uttar-pradesh' ? '' : 'amp'
-                          }/${v.item_languages[0]}/${
+                            v.item_languages[0]
+                          }/${
                             v.item_languages[0] === 'english'
                               ? 'national'
                               : v.state
