@@ -70,7 +70,7 @@ const state = ({ data, payload, pageType, isAmp }) => {
         ]}
         openGraph={{
           site_name: 'ETV Bharat News',
-          url: `https://www.etvbharat.com/${router.asPath.slice(1)}`,
+          url: `https://www.etvbharat.com${pathname}`,
           type: 'article',
           title: data.meta_tag_title,
           description: data.meta_tag_description,
