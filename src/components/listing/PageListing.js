@@ -21,6 +21,7 @@ import { useRouter } from 'next/router';
 import MainArticles from './MainArticles';
 import { RTLContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
+
 const options = {
   loading: () => <p>Loading...</p>,
 };

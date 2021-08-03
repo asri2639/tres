@@ -21,7 +21,7 @@ import VideoList from '@components/video/VideoList';
 import GalleryList from '@components/gallery/GalleryList';
 import ListContainer from '@components/listing/ListContainer';
 import PageListing from '@components/listing/PageListing';
-
+import Error from 'next/error';
 const slug = ({
   data,
   pageType,
@@ -466,7 +466,17 @@ const slug = ({
       </>
     );
   };
-  return <>{data ? getComponent() : <div>No article data</div>}</>;
+  return (
+    <>
+      {data ? (
+        getComponent()
+      ) : (
+        <div className={'not-found'}>
+          <Error statusCode={404}></Error>
+        </div>
+      )}
+    </>
+  );
 };
 
 slug.getInitialProps = async ({ query, req, res, ...args }) => {
@@ -640,9 +650,22 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           app: 'msite',
           url: url,
         },
+      }).catch((e) => {
+        return {
+          data: null,
+        };
       });
 
       const result = response.data;
+      if (!result || (result && result.query_params.length === 0)) {
+        if (res) res.statusCode = 404;
+        return {
+          pageType: 'listing',
+          data: '',
+          statusCode: 404,
+        };
+      }
+
       let finalDataObj = {
         title: '',
         data: [],
@@ -838,72 +861,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         data: redirectUrl,
       };
     }
-
-    /* const stateValue = stateCodeConverter(urlSplit[4]);
- const api = API(APIEnum.Listing, APIEnum.CatalogList);
- const response = await api.Listing.getListingApiKey({
- query: {
- app: 'msite',
- url: args.asPath,
- },
- });
-
- const result = response.data;
-
- const requestPayload = {
- params: {
- key: result.home_link,
- },
- query: {
- collective_ads_count: 0,
- page: 0,
- page_size: 8,
- version: 'v2',
- response: 'r2',
- item_languages: language,
- portal_state: languageState,
- dynamic_state: stateValue,
- },
- };
-
- const listingResp = await trackPromise(
- api.CatalogList.getListing(requestPayload)
- );
-
- const data = listingResp.data.data; */
-
-    /* return {
- namespacesRequired: ['common'],
- pageType: 'listing',
- data: data,
- appConfig: applicationConfig.value,
- payload: requestPayload,
- id: null,
- }; */
-
-    /* const id = query.slug.slice(-1)[0];
- var match = id.match(/\w{2,6}[0-9]+$/);
- if (!(match && match[0])) {
- res.writeHead(302, {
- // or 301
- Location: `${
- publicRuntimeConfig.APP_ENV === 'staging'
- ? 'https://staging.etvbharat.com'
- : 'https://www.etvbharat.com'
- }${req.url}`,
- });
- res.end();
- }
- if (
- req['protocol'] === 'http' &&
- publicRuntimeConfig.APP_ENV !== 'development' &&
- req.headers.host.endsWith('.etvbharat.com')
- ) {
- res.writeHead(302, {
- Location: 'https://' + req.headers.host + req.url,
- });
- res.end();
- } */
   }
 };
 export default slug;

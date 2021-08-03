@@ -214,7 +214,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
       } else {
         // ctx.res.writeHead(302, { Location: decodeURI(pageProps.data) }).end();
       }
-    }
+    } 
   } catch (e) {
     console.log(e);
   }

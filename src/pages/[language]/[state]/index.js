@@ -108,7 +108,21 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       app: 'msite',
       url: url,
     },
+  }).catch((e) => {
+    return {
+      data: null,
+    };
   });
+
+  const result = response.data;
+  if (!result || (result && result.query_params.length === 0)) {
+    if (res) res.statusCode = 404;
+    return {
+      pageType: 'listing',
+      data: '',
+      statusCode: 404,
+    };
+  }
 
   const result = response.data;
   const urlSplit = url.split('/');
