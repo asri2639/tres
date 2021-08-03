@@ -124,7 +124,6 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
     };
   }
 
-  const result = response.data;
   const urlSplit = url.split('/');
   const language = languageMap[urlSplit[1]];
   const state = stateCodeConverter(urlSplit[2]);
