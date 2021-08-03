@@ -204,7 +204,6 @@ const Gallery = ({
               </amp-ad>`;
         }
       }
-
     }
   }, [inView, contentId]);
 
@@ -227,33 +226,69 @@ const Gallery = ({
       </MediaContextProvider>
 
       <div className="md:w-8/12">
-        <Sticky
-          containerSelectorFocus={`.article[data-content-id="${contentId}"]`}
-          stickyEnableRange={[768, Infinity]}
-          offsetTop={60}
+        <div
+          className={`${
+            className || ''
+          } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
         >
-          <div
-            className={`${
-              className || ''
-            } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
-          >
-            {index > 0 && ads ? (
-              <div className="pt-3">
-                <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
-              </div>
-            ) : null}
+          {index > 0 && ads ? (
+            <div className="pt-3">
+              <MobileAd adData={ads ? ads[index * 2 + 1] : null} />
+            </div>
+          ) : null}
 
-            <MediaContextProvider>
-              <Media at="xs">
-                {index === 0 ? (
-                  <FirstAd adData={ads ? ads[index * 2 + 1] : null} />
+          <MediaContextProvider>
+            <Media at="xs">
+              {index === 0 ? (
+                <FirstAd adData={ads ? ads[index * 2 + 1] : null} />
+              ) : null}
+
+              <h1 ref={ref} className="leading-tight text-xl font-bold p-2">
+                {data[0].display_title}{' '}
+              </h1>
+
+              <div className="px-2 text-sm text-gray-600 md:text-black always-english">
+                {data[0].publish_date_uts ? (
+                  <div className="text-sm text-gray-600 md:text-black always-english">
+                    {data[0].publish_date_uts
+                      ? `Published on: ${dateFormatter(
+                          data[0].publish_date_uts,
+                          isAMP
+                        )}`
+                      : ''}
+                    <span className="hidden md:inline-block">
+                      {data[0].publish_date_uts && data[0].update_date_uts
+                        ? `  |  `
+                        : ''}
+                    </span>
+                    <br className="md:hidden" />
+                    {data[0].update_date_uts
+                      ? `Updated on: ${dateFormatter(
+                          data[0].update_date_uts,
+                          isAMP
+                        )}`
+                      : ''}
+                  </div>
                 ) : null}
+              </div>
+              <div className="flex justify-between px-2 w-56 mb-2">
+                <SocialMedia data={data} />
+              </div>
+            </Media>
+          </MediaContextProvider>
 
-                <h1 ref={ref} className="leading-tight text-xl font-bold p-2">
-                  {data[0].display_title}{' '}
-                </h1>
+          <BBCHeader source={source} />
 
-                <div className="px-2 text-sm text-gray-600 md:text-black always-english">
+          <div className="flex flex-col md:flex-col-reverse md:mb-4">
+            <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
+              <MediaContextProvider>
+                <Media greaterThan="xs">
+                  <h1
+                    ref={ref}
+                    className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
+                  >
+                    {data[0].display_title}
+                  </h1>
                   {data[0].publish_date_uts ? (
                     <div className="text-sm text-gray-600 md:text-black always-english">
                       {data[0].publish_date_uts
@@ -276,201 +311,159 @@ const Gallery = ({
                         : ''}
                     </div>
                   ) : null}
-                </div>
-                <div className="flex justify-between px-2 w-56 mb-2">
-                  <SocialMedia data={data} />
+                </Media>
+              </MediaContextProvider>
+            </div>
+          </div>
+
+          <div className="space-y-5 p-3 pt-0">
+            {data.map((image, ind) => {
+              if (
+                image.layout_type &&
+                image.layout_type.indexOf('ad_unit') >= 0 &&
+                image.ad_url.length > 0
+              ) {
+                if (isAMP) {
+                  return (
+                    <>
+                      <amp-ad
+                        width="300"
+                        height="250"
+                        type="doubleclick"
+                        data-slot={image.ad_unit_id}
+                      >
+                        <div placeholder="true"></div>
+                        <div fallback></div>
+                      </amp-ad>
+                    </>
+                  );
+                } else {
+                  const [width, height] =
+                    image.layout_type === 'ad_unit_sqaure_gallery'
+                      ? [300, 250]
+                      : [550, 250];
+                  return (
+                    <iframe
+                      className="mx-auto"
+                      key={image.ad_unit_id + ' ' + ind}
+                      width={width + 50}
+                      height={height + 50}
+                      src={image.ad_url}
+                    />
+                  );
+                }
+              } else {
+                return (
+                  <React.Fragment key={image.order_no + ' 1.' + ind}>
+                    <div className="relative">
+                      {isAMP ? (
+                        <img
+                          loading={ind > 2 ? 'lazy' : ''}
+                          className="rounded-lg"
+                          alt={image.description || image.title}
+                          src={image.thumbnails.l_large.url}
+                        />
+                      ) : (
+                        <LazyLoadImage
+                          className="rounded-lg"
+                          alt={image.description || image.title}
+                          placeholderSrc="/assets/images/placeholder.png"
+                          scrollPosition={scrollPosition}
+                          src={image.thumbnails.l_large.url}
+                        ></LazyLoadImage>
+                      )}
+                      <div className={`${gallery.counter}`}>
+                        <span>{image.order_no}</span>/ {count}
+                      </div>
+                    </div>
+                    <div className="text-md">
+                      {image.description || image.title}
+                    </div>
+                  </React.Fragment>
+                );
+              }
+            })}
+          </div>
+
+          {source ? (
+            <MediaContextProvider>
+              <Media greaterThan="xs">
+                <div className="bbc-tag">
+                  <img src="/assets/bbc/bbc_footer_22px.png" />
                 </div>
               </Media>
             </MediaContextProvider>
+          ) : null}
 
-            <BBCHeader source={source} />
+          <InView
+            as="div"
+            className="pseudo quarter"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { galleryArticle: true },
+                  25
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
+          <InView
+            as="div"
+            className="pseudo half"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { galleryArticle: true },
+                  50
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
 
-            <div className="flex flex-col md:flex-col-reverse md:mb-4">
-              <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
-                <MediaContextProvider>
-                  <Media greaterThan="xs">
-                    <h1
-                      ref={ref}
-                      className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
-                    >
-                      {data[0].display_title}
-                    </h1>
-                    {data[0].publish_date_uts ? (
-                      <div className="text-sm text-gray-600 md:text-black always-english">
-                        {data[0].publish_date_uts
-                          ? `Published on: ${dateFormatter(
-                              data[0].publish_date_uts,
-                              isAMP
-                            )}`
-                          : ''}
-                        <span className="hidden md:inline-block">
-                          {data[0].publish_date_uts && data[0].update_date_uts
-                            ? `  |  `
-                            : ''}
-                        </span>
-                        <br className="md:hidden" />
-                        {data[0].update_date_uts
-                          ? `Updated on: ${dateFormatter(
-                              data[0].update_date_uts,
-                              isAMP
-                            )}`
-                          : ''}
-                      </div>
-                    ) : null}
-                  </Media>
-                </MediaContextProvider>
-              </div>
-            </div>
+          <InView
+            as="div"
+            className="pseudo three-quarter"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { galleryArticle: true },
+                  75
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
 
-            <div className="space-y-5 p-3 pt-0">
-              {data.map((image, ind) => {
-                if (
-                  image.layout_type &&
-                  image.layout_type.indexOf('ad_unit') >= 0 &&
-                  image.ad_url.length > 0
-                ) {
-                  if (isAMP) {
-                    return (
-                      <>
-                        <amp-ad
-                          width="300"
-                          height="250"
-                          type="doubleclick"
-                          data-slot={image.ad_unit_id}
-                        >
-                          <div placeholder="true"></div>
-                          <div fallback></div>
-                        </amp-ad>
-                      </>
-                    );
-                  } else {
-                    const [width, height] =
-                      image.layout_type === 'ad_unit_sqaure_gallery'
-                        ? [300, 250]
-                        : [550, 250];
-                    return (
-                      <iframe
-                        className="mx-auto"
-                        key={image.ad_unit_id + ' ' + ind}
-                        width={width + 50}
-                        height={height + 50}
-                        src={image.ad_url}
-                      />
-                    );
-                  }
-                } else {
-                  return (
-                    <React.Fragment key={image.order_no + ' 1.' + ind}>
-                      <div className="relative">
-                        {isAMP ? (
-                          <img
-                            loading={ind > 2 ? 'lazy' : ''}
-                            className="rounded-lg"
-                            alt={image.description || image.title}
-                            src={image.thumbnails.l_large.url}
-                          />
-                        ) : (
-                          <LazyLoadImage
-                            className="rounded-lg"
-                            alt={image.description || image.title}
-                            placeholderSrc="/assets/images/placeholder.png"
-                            scrollPosition={scrollPosition}
-                            src={image.thumbnails.l_large.url}
-                          ></LazyLoadImage>
-                        )}
-                        <div className={`${gallery.counter}`}>
-                          <span>{image.order_no}</span>/ {count}
-                        </div>
-                      </div>
-                      <div className="text-md">
-                        {image.description || image.title}
-                      </div>
-                    </React.Fragment>
-                  );
-                }
-              })}
-            </div>
+          <InView
+            as="div"
+            className="pseudo full"
+            triggerOnce={true}
+            onChange={(inView, entry) => {
+              if (inView) {
+                GoogleTagManager.articleViewScroll(
+                  data,
+                  { galleryArticle: true },
+                  100
+                );
+              }
+            }}
+          >
+            <span></span>
+          </InView>
 
-            {source ? (
-              <MediaContextProvider>
-                <Media greaterThan="xs">
-                  <div className="bbc-tag">
-                    <img src="/assets/bbc/bbc_footer_22px.png" />
-                  </div>
-                </Media>
-              </MediaContextProvider>
-            ) : null}
-
-            <InView
-              as="div"
-              className="pseudo quarter"
-              triggerOnce={true}
-              onChange={(inView, entry) => {
-                if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { galleryArticle: true },
-                    25
-                  );
-                }
-              }}
-            >
-              <span></span>
-            </InView>
-            <InView
-              as="div"
-              className="pseudo half"
-              triggerOnce={true}
-              onChange={(inView, entry) => {
-                if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { galleryArticle: true },
-                    50
-                  );
-                }
-              }}
-            >
-              <span></span>
-            </InView>
-
-            <InView
-              as="div"
-              className="pseudo three-quarter"
-              triggerOnce={true}
-              onChange={(inView, entry) => {
-                if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { galleryArticle: true },
-                    75
-                  );
-                }
-              }}
-            >
-              <span></span>
-            </InView>
-
-            <InView
-              as="div"
-              className="pseudo full"
-              triggerOnce={true}
-              onChange={(inView, entry) => {
-                if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { galleryArticle: true },
-                    100
-                  );
-                }
-              }}
-            >
-              <span></span>
-            </InView>
-
-            <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
-          </div>
-        </Sticky>
+          <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
+        </div>
       </div>
 
       <MediaContextProvider>
@@ -485,9 +478,15 @@ const Gallery = ({
           ></MobileNextArticle>
         </Media>
         <Media greaterThan="xs" className="md:block md:w-4/12">
-          <div className="w-full flex flex-col items-center space-y-6 pt-4 pb-4">
-            {!rhs ? 'Loading...' : <AdContainer data={rhs} index={index} />}
-          </div>
+          <Sticky
+            containerSelectorFocus={`.article[data-content-id="${contentId}"]`}
+            stickyEnableRange={[768, Infinity]}
+            offsetTop={60}
+          >
+            <div className="w-full flex flex-col items-center space-y-6 pt-4 pb-20">
+              {!rhs ? 'Loading...' : <AdContainer data={rhs} index={index} />}
+            </div>
+          </Sticky>
         </Media>
       </MediaContextProvider>
     </div>
