@@ -35,7 +35,19 @@ const ListingStateSelectModal = dynamic(
   options
 );
 
-const PageListing = ({ children, data, payload, dropdown }) => {
+export const totalItemsCount = (latestdata) => {
+  let itemsCount = 0;
+
+  latestdata.map((subList, ind) => {
+    if (subList.layout_type !== 'catalog_wall_menu') {
+      subList.catalog_list_items.map((child, dnd) => {});
+      itemsCount = itemsCount + subList.catalog_list_items.length;
+    }
+  });
+  return itemsCount;
+};
+
+const PageListing = ({ children, data, payload, dropdown, initCount }) => {
   const api = API(APIEnum.CatalogList, APIEnum.Listing);
   const router = useRouter();
   const isRTL = useContext(RTLContext);
@@ -46,40 +58,8 @@ const PageListing = ({ children, data, payload, dropdown }) => {
     Math.ceil(data.total_items_count / 8)
   );
   const [paginationCount, setPaginationCount] = useState(0);
-  const totalItemsCount = (latestdata) => {
-    let itemsCount = 0;
 
-    latestdata.map((subList, ind) => {
-      if (subList.layout_type !== 'catalog_wall_menu') {
-        subList.catalog_list_items.map((child, dnd) => {});
-        itemsCount = itemsCount + subList.catalog_list_items.length;
-      }
-    });
-    return itemsCount;
-  };
   const reArrangeData = (data) => {
-    /*  let extra = [];
-    return data.catalog_list_items.map((v, i) => {
-      if (v.catalog_list_items.length === 5) {
-        if (extra.length === 0) {
-          extra.push(v.catalog_list_items[4]);
-          return {
-            ...v,
-            catalog_list_items: [...v.catalog_list_items.slice(0, 4)],
-          };
-        } else {
-          return {
-            ...v,
-            catalog_list_items: [
-              ...extra.splice(0, 1),
-              ...v.catalog_list_items,
-            ],
-          };
-        }
-      }
-
-      return v;
-    }); */
     return data.catalog_list_items;
   };
   const [isDesktop, setIsDesktop] = useState(false);
@@ -199,10 +179,8 @@ const PageListing = ({ children, data, payload, dropdown }) => {
       desktopCall
     ) {
       if (callsDone === 1) {
-        let initialArticleCount = totalItemsCount(reArrangeData(data));
-
         setTotalArticleCount(
-          (totalArticleCount) => totalArticleCount + initialArticleCount
+          (totalArticleCount) => totalArticleCount + initCount
         );
       }
       const requestPayload = {
@@ -531,8 +509,6 @@ const PageListing = ({ children, data, payload, dropdown }) => {
                     } else {
                       url = dropdown.url + '/' + district.friendly_id;
                     }
-
-                    console.log(url);
 
                     router.push(url);
                   }

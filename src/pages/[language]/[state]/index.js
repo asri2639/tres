@@ -14,6 +14,7 @@ import {
 import { NextSeo } from 'next-seo';
 import useTranslator from '@hooks/useTranslator';
 import { AMPContext } from '@pages/_app';
+import { totalItemsCount } from '@components/listing/PageListing';
 
 const state = ({ data, payload, pageType, isAmp }) => {
   const router = useRouter();
@@ -115,7 +116,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   });
 
   const result = response.data;
-/*   if (!result || (result && result.query_params.length === 0)) {
+  if (!result) {
     if (res) res.statusCode = 404;
     return {
       pageType: 'listing',
@@ -123,7 +124,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       statusCode: 404,
     };
   }
- */
+
   const urlSplit = url.split('/');
   const language = languageMap[urlSplit[1]];
   const state = stateCodeConverter(urlSplit[2]);
@@ -154,18 +155,37 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
     const listingResp = await trackPromise(
       api.CatalogList.getListing(requestPayload)
     );
-    const data = listingResp.data.data;
 
+    if (listingResp && listingResp.data && listingResp.data.data) {
+      const data = listingResp.data.data;
+      let initCount = 0;
+      try {
+        initCount = totalItemsCount(data.catalog_list_items);
+      } catch (e) {
+        initCount = 0;
+      }
+
+      if (initCount) {
+        return {
+          pageType: 'listing',
+          data: data,
+          payload: requestPayload,
+          isAmp: isAmp,
+        };
+      }
+    }
+
+    if (res) res.statusCode = 404;
     return {
       pageType: 'listing',
-      data: data,
-      payload: requestPayload,
-      isAmp: isAmp,
+      statusCode: 404,
     };
   } else {
+    if (res) res.statusCode = 404;
     return {
       pageType: 'listing',
       data: null,
+      statusCode: 404,
     };
   }
 };

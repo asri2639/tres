@@ -18,13 +18,13 @@ const LargeSquareCard = ({
   const router = useRouter();
 
   const linkInfo = linkInfoGenerator(
-    article ? article.web_url : data.url,
+    article ? article.web_url : data ? data.url : '',
     router.query.state
   );
 
   const thumbnail = article
     ? thumbnailExtractor(article.thumbnails, '3_2', 's2b', 'breaking_news')
-    : data.thumbnails
+    : data && data.thumbnails
     ? thumbnailExtractor(data.thumbnails, '3_2', 's2b', 'breaking_news')
     : null;
 

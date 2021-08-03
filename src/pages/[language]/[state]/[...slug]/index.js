@@ -20,10 +20,11 @@ import ArticleList from '@components/article/ArticleList';
 import VideoList from '@components/video/VideoList';
 import GalleryList from '@components/gallery/GalleryList';
 import ListContainer from '@components/listing/ListContainer';
-import PageListing from '@components/listing/PageListing';
+import PageListing, { totalItemsCount } from '@components/listing/PageListing';
 import Error from 'next/error';
 const slug = ({
   data,
+  initCount,
   pageType,
   appConfig,
   id,
@@ -294,14 +295,6 @@ const slug = ({
           />
         );
         break;
-      case 'listing':
-        return (
-          <ListContainer
-            key={canonicalUrl}
-            data={data}
-            payload={payload}
-          ></ListContainer>
-        );
       case 'navlisting':
         return (
           <>
@@ -355,6 +348,7 @@ const slug = ({
             <PageListing
               key={canonicalUrl}
               data={data}
+              initCount={initCount}
               payload={payload}
               dropdown={dropDownData}
             ></PageListing>
@@ -655,16 +649,15 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           data: null,
         };
       });
-
       const result = response.data;
-     /*  if (!result || (result && result.query_params.length === 0)) {
+      if (!result) {
         if (res) res.statusCode = 404;
         return {
           pageType: 'listing',
           data: '',
           statusCode: 404,
         };
-      } */
+      }
 
       let finalDataObj = {
         title: '',
@@ -716,13 +709,17 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             const response = await trackPromise(
               api.Catalog.getListingPageStates(statePayload)
             );
-            dropDownData = response.data.data.items;
-            if (dropDownData.length > 0) {
-              cacheData.put(
-                language + urlSplit[2],
-                dropDownData,
-                5 * 1000 * 60 * 60
-              );
+            if (response && response.data && response.data.data) {
+              dropDownData = response.data.data.items;
+              if (dropDownData.length > 0) {
+                cacheData.put(
+                  language + urlSplit[2],
+                  dropDownData,
+                  5 * 1000 * 60 * 60
+                );
+              }
+            } else {
+              console.log('h3r3');
             }
           }
         } else {
@@ -754,13 +751,17 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             const response = await trackPromise(
               api.Catalog.getCityDistrictData(cityDistrictPayload)
             );
-            dropDownData = response.data.data.items;
-            if (dropDownData.length > 0) {
-              cacheData.put(
-                language + url[2] + type,
-                dropDownData,
-                5 * 1000 * 60 * 60
-              );
+            if (response && response.data && response.data.data) {
+              dropDownData = response.data.data.items;
+              if (dropDownData.length > 0) {
+                cacheData.put(
+                  language + url[2] + type,
+                  dropDownData,
+                  5 * 1000 * 60 * 60
+                );
+              }
+            } else {
+              console.log('h3r3');
             }
           }
         }
@@ -836,18 +837,38 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           api.CatalogList.getListing(requestPayload)
         );
 
-        const data = listingResp.data.data;
+        if (listingResp && listingResp.data && listingResp.data.data) {
+          const data = listingResp.data.data;
+          let initCount = 0;
+          try {
+            initCount = totalItemsCount(data.catalog_list_items);
+          } catch (e) {
+            initCount = 0;
+          }
+          if (initCount) {
+            return {
+              pageType: 'navlisting',
+              data: data,
+              initCount: initCount,
+              payload: requestPayload,
+              dropDownData: finalDataObj,
+            };
+          }
+        }
+
+        if (res) res.statusCode = 404;
         return {
-          pageType: 'navlisting',
-          data: data,
-          payload: requestPayload,
-          dropDownData: finalDataObj,
+          pageType: 'listing',
+          statusCode: 404,
         };
+
         //console.log(data);
       } else {
+        if (res) res.statusCode = 404;
         return {
-          pageType: 'navlisting',
+          pageType: 'listing',
           data: '',
+          statusCode: 404,
         };
       }
     } else {
