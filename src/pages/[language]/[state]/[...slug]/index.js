@@ -657,14 +657,14 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       });
 
       const result = response.data;
-      if (!result || (result && result.query_params.length === 0)) {
+     /*  if (!result || (result && result.query_params.length === 0)) {
         if (res) res.statusCode = 404;
         return {
           pageType: 'listing',
           data: '',
           statusCode: 404,
         };
-      }
+      } */
 
       let finalDataObj = {
         title: '',

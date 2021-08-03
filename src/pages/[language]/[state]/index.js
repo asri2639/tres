@@ -115,7 +115,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
   });
 
   const result = response.data;
-  if (!result || (result && result.query_params.length === 0)) {
+/*   if (!result || (result && result.query_params.length === 0)) {
     if (res) res.statusCode = 404;
     return {
       pageType: 'listing',
@@ -123,7 +123,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       statusCode: 404,
     };
   }
-
+ */
   const urlSplit = url.split('/');
   const language = languageMap[urlSplit[1]];
   const state = stateCodeConverter(urlSplit[2]);
