@@ -48,7 +48,9 @@ const slug = ({
   let ampExists = null;
   if (id) {
     const match = id.match(/(\d+)/);
-    ampExists = +match[0].slice(0, 12) >= 202102120000;
+    if (match) {
+      ampExists = +match[0].slice(0, 12) >= 202102120000;
+    }
   }
   let readwhere = false;
 
@@ -543,6 +545,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         const videoResp = videoResponse.data.data.catalog_list_items[0];
         const video = videoResp.catalog_list_items[0];
         // Pass data to the page via props
+
         return {
           pageType: 'video',
           data: video,
@@ -569,7 +572,14 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
         const galleryResp = galleryResponse.data.data.catalog_list_items[0];
         const gallery = galleryResp.catalog_list_items;
-
+        if ((!gallery || gallery.length === 0) && res) {
+          if (res) res.statusCode = 404;
+          return {
+            pageType: 'article',
+            data: '',
+            statusCode: 404,
+          };
+        }
         // Pass data to the page via props
         return {
           pageType: 'gallery',
@@ -607,14 +617,21 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         /* console.log(
  articleResp.catalog_list_items.length === 0 ? 'Invalid Response' : ''
  ); */
+        if (error) {
+          if (res) res.statusCode = 404;
+          return {
+            pageType: 'article',
+            data: '',
+            statusCode: 404,
+          };
+        }
         // Pass data to the page via props
         return {
-          pageType: error ? 'error' : 'article',
+          pageType: 'article',
           data: article,
           appConfig: applicationConfig.value,
           isAmp: isAmp,
           id: id,
-          error: error,
         };
     }
   } else {
