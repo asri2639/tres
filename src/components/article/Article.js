@@ -292,7 +292,7 @@ export default function Article({
                       d.head.appendChild(ai);
                     })(
                       window,
-                      document,
+                      window.document,
                       '//a.vdo.ai/core/v-etvbharat/vdo.ai.js'
                     );
                   })(),
@@ -300,8 +300,6 @@ export default function Article({
               },
               !0
             );
-
-            document.head.appendChild(s);
           }
         }
       }
