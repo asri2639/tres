@@ -126,26 +126,42 @@ const slug = ({
         const html = data
           ? data.html_tag.replace(scriptTagExtractionRegex, '')
           : '';
-        const scripts = [];
-
-       /*  let matchedScript = null;
-        do {
-          matchedScript = scriptTagExtractionRegex.exec(data.html_tag);
-          if (matchedScript && !isAmp) {
-            scripts.push(matchedScript[0]);
-          }
-        } while (matchedScript);
 
         if (typeof window !== 'undefined') {
-          scripts.forEach((v) => {
-            const regex = /<script.*?src="(.*?)"/;
-            let m = regex.exec(v);
-            if (m) {
-              tags.add(m[1]);
-              // loadJS(m[1]);
-            }
-          });
-        } */
+          let scrollDepth = !1;
+          window.addEventListener(
+            'scroll',
+            function () {
+              ((0 != document.documentElement.scrollTop &&
+                !1 === scrollDepth) ||
+                (0 != document.body.scrollTop && !1 === scrollDepth)) &&
+                (!(function () {
+                  const scripts = [];
+
+                  let matchedScript = null;
+                  do {
+                    matchedScript = scriptTagExtractionRegex.exec(
+                      data.html_tag
+                    );
+                    if (matchedScript && !isAmp) {
+                      scripts.push(matchedScript[0]);
+                    }
+                  } while (matchedScript);
+
+                  scripts.forEach((v) => {
+                    const regex = /<script.*?src="(.*?)"/;
+                    let m = regex.exec(v);
+                    if (m) {
+                      tags.add(m[1]);
+                      loadJS(m[1]);
+                    }
+                  });
+                })(),
+                (scrollDepth = !0));
+            },
+            !0
+          );
+        }
         datum.html = html;
         datum.data = data;
 

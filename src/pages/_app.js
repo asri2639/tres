@@ -106,9 +106,14 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         ) : isAMP ? null : (
           <script
             dangerouslySetInnerHTML={{
-              __html: `(function(v,d,o,ai){ai=d.createElement('script');
-        ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-etvbharat/vdo.ai.js');
-`,
+              __html: `
+              var scrollDepth = !1;
+              window.addEventListener("scroll", function() {
+              (0 != document.documentElement.scrollTop && !1 === scrollDepth || 0 != document.body.scrollTop && !1 === scrollDepth) && (! function() {
+                (function(v,d,o,ai){ai=d.createElement('script');
+                ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-etvbharat/vdo.ai.js');
+              }(), scrollDepth = !0)
+            }, !0);`,
             }}
           ></script>
         )}
