@@ -91,7 +91,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
             dangerouslySetInnerHTML={{
               __html: `var scrollDepth = !1;
               window.addEventListener("scroll", function() {
-             W (0 != document.documentElement.scrollTop && !1 === scrollDepth || 0 != document.body.scrollTop && !1 === scrollDepth) && (! function() {
+              (0 != document.documentElement.scrollTop && !1 === scrollDepth || 0 != document.body.scrollTop && !1 === scrollDepth) && (! function() {
                (function () {
                  var s = document.createElement("script"),
                      el = document.getElementsByTagName("script")[0];
