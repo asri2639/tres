@@ -15,9 +15,7 @@ const FirstAd = ({ adData, className, refresh }) => {
     if (typeof window !== 'undefined') {
       window.onload = function () {
         if (window.innerWidth < 768) {
-          setTimeout(() => {
-            loadJS('https://securepubads.g.doubleclick.net/tag/js/gpt.js');
-          }, 10);
+          loadJS('https://securepubads.g.doubleclick.net/tag/js/gpt.js');
         }
       };
       setIsDesktop(window.innerWidth >= 768);
