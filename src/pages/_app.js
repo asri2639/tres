@@ -87,7 +87,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
             'kerala',
           ].indexOf(state) === -1 && language !== 'urdu' ? (
           <script
-            async
+            defer
             type="text/javascript"
             src="//cdn.ergadx.com/js/889/ads.js"
           ></script>
