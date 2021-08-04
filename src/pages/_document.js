@@ -77,7 +77,7 @@ export default class ETVDocument extends Document {
           {!isAMP ? (
             <>
               <noscript>
-                 <iframe
+                <iframe
                   src="https://www.googletagmanager.com/ns.html?id=GTM-K3BH7X9"
                   height="0"
                   width="0"
@@ -86,7 +86,7 @@ export default class ETVDocument extends Document {
               </noscript>
 
               <noscript>
-                 <img
+                <img
                   style={{ height: 0, width: 0, visibility: 'hidden' }}
                   src="https://sb.scorecardresearch.com/p?c1=2&c2=20416623&cv=2.0&cj=1"
                 />
@@ -112,7 +112,6 @@ export default class ETVDocument extends Document {
                 window.addEventListener(
                   "scroll",
                   function () {
-                    console.log(123123123)
                     ((document.documentElement.scrollTop && false === scrollDepth) ||
                       (document.body.scrollTop && false === scrollDepth)) &&
                       (!(function () {
