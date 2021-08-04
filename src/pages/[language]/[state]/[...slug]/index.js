@@ -637,7 +637,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   } else {
     const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
     if (
-      (url.includes('state') ) ||
+      url.includes('state') ||
       url.substring(url.length - 'state'.length) == 'state' ||
       url.includes('bharat') ||
       url.includes('crime') ||
@@ -662,6 +662,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           url: url,
         },
       }).catch((e) => {
+        console.log(e);
         return {
           data: null,
         };
@@ -740,22 +741,11 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             }
           }
         } else {
-          let type = '';
-          let finalurl = '';
-          if (url.includes('city')) {
-            type = 'city';
-            if (url.substring(url.length - 'city'.length) !== 'city') {
-              finalurl = url.substr(0, url.lastIndexOf('/'));
-            } else {
-              finalurl = url;
-            }
-          } else {
-            type = 'district';
-            if (url.substring(url.length - 'district'.length) !== 'district') {
-              finalurl = url.substr(0, url.lastIndexOf('/'));
-            } else {
-              finalurl = url;
-            }
+          let type = url.includes('city') ? 'city' : 'district';
+          let finalurl = url;
+
+          if (url.substring(url.length - type.length) !== type) {
+            finalurl = url.substr(0, url.lastIndexOf('/'));
           }
 
           finalDataObj.type = type;
@@ -881,12 +871,13 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
         //console.log(data);
       } else {
-        if (res) res.statusCode = 404;
+        console.log('here');
+        /*  if (res) res.statusCode = 404;
         return {
           pageType: 'listing',
           data: '',
           statusCode: 404,
-        };
+        }; */
       }
     } else {
       const redirectUrl = `${
