@@ -14,7 +14,9 @@ const FirstAd = ({ adData, className, refresh }) => {
     if (typeof window !== 'undefined') {
       window.onload = function () {
         if (window.innerWidth < 768) {
-          loadJS('https://www.googletagservices.com/tag/js/gpt.js');
+          setTimeout(() => {
+            loadJS('https://www.googletagservices.com/tag/js/gpt.js');
+          }, 1000);
         }
       };
       setIsDesktop(window.innerWidth >= 768);
