@@ -250,7 +250,7 @@ export default function Article({
         const adScript = `<div id = "v-etvbharat"></div><script></script>`;
         const splitUrl = location.pathname.split('/');
         const state = splitUrl[2] ? splitUrl[2].toLowerCase() : 'national';
-        const language = splitUrl[1] ? splitUrl[1].toLowerCase(): 'english';
+        const language = splitUrl[1] ? splitUrl[1].toLowerCase() : 'english';
         if (
           [
             'karnataka',
@@ -276,11 +276,31 @@ export default function Article({
             div.innerHTML = adScript;
             content.appendChild(div);
 
-            var s = document.createElement('script');
-            s.type = 'text/javascript';
-            s.innerHTML = `(function(v,d,o,ai){ai=d.createElement('script');
-            ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-etvbharat/vdo.ai.js');
-            `;
+            var scrollDepth = !1;
+            window.addEventListener(
+              'scroll',
+              function () {
+                ((0 != document.documentElement.scrollTop &&
+                  !1 === scrollDepth) ||
+                  (0 != document.body.scrollTop && !1 === scrollDepth)) &&
+                  (!(function () {
+                    (function (v, d, o, ai) {
+                      ai = d.createElement('script');
+                      ai.defer = true;
+                      ai.async = true;
+                      ai.src = v.location.protocol + o;
+                      d.head.appendChild(ai);
+                    })(
+                      window,
+                      document,
+                      '//a.vdo.ai/core/v-etvbharat/vdo.ai.js'
+                    );
+                  })(),
+                  (scrollDepth = !0));
+              },
+              !0
+            );
+
             document.head.appendChild(s);
           }
         }
