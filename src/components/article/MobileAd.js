@@ -76,11 +76,13 @@ const MobileAd = ({ adData, className, refresh }) => {
           }
         } else {
           if (adEl.current) {
-            if (!adEl.current.querySelector('iframe')) {
-              googletag.cmd.push(function () {
-                googletag.pubads().refresh([window[adData.gpt_id]]);
-              });
-            }
+            setTimeout(() => {
+              if (!adEl.current.querySelector('iframe')) {
+                googletag.cmd.push(function () {
+                  googletag.pubads().refresh([window[adData.gpt_id]]);
+                });
+              }
+            }, 300);
           }
         }
       }
