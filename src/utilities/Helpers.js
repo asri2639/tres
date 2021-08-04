@@ -135,17 +135,21 @@ export const configStateCodeConverter = (e) => {
   return state || 'english';
 };
 
-export const loadJS = (file) => {
+export const loadJS = (file, part) => {
+  const name = getFilename(file);
+  if (document.querySelector(`script[id=${name}]`)) {
+    return;
+  }
   // DOM: Create the script element
   var jsElm = document.createElement('script');
   // set the type attribute
   jsElm.type = 'application/javascript';
+  jsElm['id'] = name;
   // make the script element load file
   jsElm.src = file;
   jsElm.async = 'async';
-  jsElm['name'] = getFilename(file);
   // finally insert the element to the body element in order to load the script
-  document.body.appendChild(jsElm);
+  document[part || 'body'].appendChild(jsElm);
 };
 
 export const getFilename = (url) => {

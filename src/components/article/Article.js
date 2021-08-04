@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import AdContainer from '@components/article/AdContainer';
-import { dateFormatter, thumbnailExtractor } from '@utils/Helpers';
+import { dateFormatter, loadJS, thumbnailExtractor } from '@utils/Helpers';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
 import Thumbnail from '@components/common/Thumbnail';
@@ -284,17 +284,7 @@ export default function Article({
                   !1 === scrollDepth) ||
                   (0 != document.body.scrollTop && !1 === scrollDepth)) &&
                   (!(function () {
-                    (function (v, d, o, ai) {
-                      ai = d.createElement('script');
-                      ai.defer = true;
-                      ai.async = true;
-                      ai.src = v.location.protocol + o;
-                      d.head.appendChild(ai);
-                    })(
-                      window,
-                      window.document,
-                      '//a.vdo.ai/core/v-etvbharat/vdo.ai.js'
-                    );
+                    loadJS('//a.vdo.ai/core/v-etvbharat/vdo.ai.js','head');
                   })(),
                   (scrollDepth = !0));
               },
