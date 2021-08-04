@@ -87,14 +87,15 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
             'kerala',
           ].indexOf(state) === -1 && language !== 'urdu' ? (
           <script
+            defer
             dangerouslySetInnerHTML={{
               __html: `var scrollDepth = !1;
               window.addEventListener("scroll", function() {
-              (0 != document.documentElement.scrollTop && !1 === scrollDepth || 0 != document.body.scrollTop && !1 === scrollDepth) && (! function() {
+             W (0 != document.documentElement.scrollTop && !1 === scrollDepth || 0 != document.body.scrollTop && !1 === scrollDepth) && (! function() {
                (function () {
                  var s = document.createElement("script"),
                      el = document.getElementsByTagName("script")[0];
-                 s.async = true;
+                 s.defer = true;
                  s.src = "//cdn.ergadx.com/js/889/ads.js";
                  el.parentNode.insertBefore(s, el);
               })();

@@ -128,7 +128,7 @@ const slug = ({
           : '';
         const scripts = [];
 
-        let matchedScript = null;
+       /*  let matchedScript = null;
         do {
           matchedScript = scriptTagExtractionRegex.exec(data.html_tag);
           if (matchedScript && !isAmp) {
@@ -145,7 +145,7 @@ const slug = ({
               // loadJS(m[1]);
             }
           });
-        }
+        } */
         datum.html = html;
         datum.data = data;
 
