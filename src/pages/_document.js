@@ -77,7 +77,7 @@ export default class ETVDocument extends Document {
           {!isAMP ? (
             <>
               <noscript>
-                <iframe
+                 <iframe
                   src="https://www.googletagmanager.com/ns.html?id=GTM-K3BH7X9"
                   height="0"
                   width="0"
@@ -86,7 +86,7 @@ export default class ETVDocument extends Document {
               </noscript>
 
               <noscript>
-                <img
+                 <img
                   style={{ height: 0, width: 0, visibility: 'hidden' }}
                   src="https://sb.scorecardresearch.com/p?c1=2&c2=20416623&cv=2.0&cj=1"
                 />
@@ -107,43 +107,51 @@ export default class ETVDocument extends Document {
 
           <script
             dangerouslySetInnerHTML={{
-              __html: `
-                  var scrollDepth = !1;
-                 window.addEventListener("scroll", function() {
-                 (0 != document.documentElement.scrollTop && !1 === scrollDepth || 0 != document.body.scrollTop && !1 === scrollDepth) && (! function() {
-                 var e = document.createElement("script");
-                 e.type = "text/javascript", e.async = !0, e.src = "https://securepubads.g.doubleclick.net/tag/js/gpt.js";
-                 var a = document.getElementsByTagName("script")[0];
-                a.parentNode.insertBefore(e, a)
-                 }(), scrollDepth = !0)
-               }, !0);`,
-            }}
-          ></script>
-
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                  var scrollDepth = !1;
-                 window.addEventListener("scroll", function() {
-                 (0 != document.documentElement.scrollTop && !1 === scrollDepth || 0 != document.body.scrollTop && !1 === scrollDepth) && (! function() {
-                  (function(w,d,s,l,i){
-                    w[l]=w[l]||[];
-                    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-                    var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-                    j.async=true;
-                    j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-                    f.parentNode.insertBefore(j,f);
-                  })(window,document,'script','dataLayer','GTM-K3BH7X9');
-
-                  (function () {
-                    var s = document.createElement("script"),
-                        el = document.getElementsByTagName("script")[0];
-                    s.async = true;
-                    s.src = "https://sb.scorecardresearch.com/beacon.js";
-                    el.parentNode.insertBefore(s, el);
-                 })();
-                 }(), scrollDepth = !0)
-               }, !0);`,
+              __html: `(function(){
+                var scrollDepth = false;
+                window.addEventListener(
+                  "scroll",
+                  function () {
+                    console.log(123123123)
+                    ((document.documentElement.scrollTop && false === scrollDepth) ||
+                      (document.body.scrollTop && false === scrollDepth)) &&
+                      (!(function () {
+                        
+                        (function (w, d, s, l, i) {
+                          w[l] = w[l] || [];
+                          w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+                          var f = d.getElementsByTagName(s)[0],
+                            j = d.createElement(s),
+                            dl = l != "dataLayer" ? "&l=" + l : "";
+                          j.async = true;
+                          j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+                          f.parentNode.insertBefore(j, f);
+                        })(window, document, "script", "dataLayer", "GTM-K3BH7X9");
+                
+                        (function () {
+                          var e = document.createElement("script");
+                          e.type = "text/javascript";
+                          e.async = !0;
+                          e.src = "https://securepubads.g.doubleclick.net/tag/js/gpt.js";
+                          var a = document.getElementsByTagName("script")[0];
+                          a.parentNode.insertBefore(e, a);
+                        })();
+                
+                        (function () {
+                          var s = document.createElement("script"),
+                            el = document.getElementsByTagName("script")[0];
+                          s.async = true;
+                          s.src = "https://sb.scorecardresearch.com/beacon.js";
+                          el.parentNode.insertBefore(s, el);
+                        })();
+                        
+                      })(),
+                      (scrollDepth = true));
+                  },
+                  true
+                );
+              })()
+             `,
             }}
           ></script>
         </body>

@@ -121,6 +121,7 @@ const DesktopFooter = ({ data, t }) => {
                   href="/english/aboutUs"
                   as={`/english/aboutUs`}
                   passHref
+                  prefetch={false}
                   title="About us"
                 />
               </li>
@@ -129,6 +130,7 @@ const DesktopFooter = ({ data, t }) => {
                   href="/english/privacyPolicy"
                   as={`/english/privacyPolicy`}
                   passHref
+                  prefetch={false}
                   title="Privacy Policy"
                 />
               </li>
@@ -137,6 +139,7 @@ const DesktopFooter = ({ data, t }) => {
                   href="/english/termsOfService"
                   as={`/english/termsOfService`}
                   passHref
+                  prefetch={false}
                   title="Terms & Conditions"
                 />
               </li>
@@ -145,6 +148,7 @@ const DesktopFooter = ({ data, t }) => {
                   href="/english/contactUs"
                   as={`/english/contactUs`}
                   passHref
+                  prefetch={false}
                   title="Contact us"
                 />
               </li>

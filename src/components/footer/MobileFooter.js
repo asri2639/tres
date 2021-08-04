@@ -128,12 +128,14 @@ const MobileFooter = ({ data, menu }) => {
                         href="/english/aboutUs"
                         as={`/english/aboutUs`}
                         passHref
+                        prefetch={false}
                         title="About us"
                       />
                       <NavLink
                         href="/english/privacyPolicy"
                         as={`/english/privacyPolicy`}
                         passHref
+                        prefetch={false}
                         title="Privacy Policy"
                       />
                     </div>
@@ -142,12 +144,14 @@ const MobileFooter = ({ data, menu }) => {
                         href="/english/termsOfService"
                         as={`/english/termsOfService`}
                         passHref
+                        prefetch={false}
                         title="Terms & Conditions"
                       />
                       <NavLink
                         href="/english/contactUs"
                         as={`/english/contactUs`}
                         passHref
+                        prefetch={false}
                         title="Contact us"
                       />{' '}
                     </div>

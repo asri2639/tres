@@ -276,7 +276,7 @@ export default function Article({
             div.innerHTML = adScript;
             content.appendChild(div);
 
-            var scrollDepth = !1;
+            let scrollDepth = !1;
             window.addEventListener(
               'scroll',
               function () {
@@ -284,7 +284,7 @@ export default function Article({
                   !1 === scrollDepth) ||
                   (0 != document.body.scrollTop && !1 === scrollDepth)) &&
                   (!(function () {
-                    loadJS('//a.vdo.ai/core/v-etvbharat/vdo.ai.js','head');
+                    loadJS('//a.vdo.ai/core/v-etvbharat/vdo.ai.js', 'head');
                   })(),
                   (scrollDepth = !0));
               },
