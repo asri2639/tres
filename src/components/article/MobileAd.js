@@ -74,6 +74,14 @@ const MobileAd = ({ adData, className, refresh }) => {
               window.ads.add(adData.gpt_id);
             }
           }
+        } else {
+          if (adEl.current) {
+            if (!adEl.current.querySelector('iframe')) {
+              googletag.cmd.push(function () {
+                googletag.pubads().refresh([window[adData.gpt_id]]);
+              });
+            }
+          }
         }
       }
     }
