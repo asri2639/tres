@@ -12,7 +12,7 @@ const FirstAd = ({ adData, className, refresh }) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // loadJS('https://www.googletagservices.com/tag/js/gpt.js');
+      loadJS('https://www.googletagservices.com/tag/js/gpt.js');
       setIsDesktop(window.innerWidth >= 768);
     }
   }, [adData]);
