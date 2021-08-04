@@ -31,43 +31,16 @@ export default class ETVDocument extends Document {
 
               <script
                 dangerouslySetInnerHTML={{
-                  __html: `window.dataLayer = window.dataLayer || [];
-                (function(w,d,s,l,i){
-                    w[l]=w[l]||[];
-                    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-                    var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-                    j.async=true;
-                    j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-                    f.parentNode.insertBefore(j,f);
-                })(window,document,'script','dataLayer','GTM-K3BH7X9');`,
+                  __html: `window.dataLayer = window.dataLayer || []; 
+                           window.googletag=window.googletag||{cmd:[]};
+                           var _comscore = _comscore || [];
+                            _comscore.push({
+                                c1: "2",
+                                c2: "20416623"
+                            });`,
                 }}
               ></script>
 
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `  var _comscore = _comscore || [];
-              _comscore.push({
-                  c1: "2",
-                  c2: "20416623"
-              });
-              (function () {
-                  var s = document.createElement("script"),
-                      el = document.getElementsByTagName("script")[0];
-                  s.async = true;
-                  s.src = "https://sb.scorecardresearch.com/beacon.js";
-                  el.parentNode.insertBefore(s, el);
-              })();`,
-                }}
-              ></script>
-              <script
-                async
-                src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
-              ></script>
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: ` window.googletag=window.googletag||{cmd:[]};`,
-                }}
-              ></script>
               <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
@@ -131,6 +104,48 @@ export default class ETVDocument extends Document {
           <Main />
           {/* Here we will mount our modal portal */}
           <div id="modal" style={{ height: 'auto' }} />
+
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                  var scrollDepth = !1;
+                 window.addEventListener("scroll", function() {
+                 (0 != document.documentElement.scrollTop && !1 === scrollDepth || 0 != document.body.scrollTop && !1 === scrollDepth) && (! function() {
+                 var e = document.createElement("script");
+                 e.type = "text/javascript", e.async = !0, e.src = "https://securepubads.g.doubleclick.net/tag/js/gpt.js";
+                 var a = document.getElementsByTagName("script")[0];
+                a.parentNode.insertBefore(e, a)
+                 }(), scrollDepth = !0)
+               }, !0);`,
+            }}
+          ></script>
+
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                  var scrollDepth = !1;
+                 window.addEventListener("scroll", function() {
+                 (0 != document.documentElement.scrollTop && !1 === scrollDepth || 0 != document.body.scrollTop && !1 === scrollDepth) && (! function() {
+                  (function(w,d,s,l,i){
+                    w[l]=w[l]||[];
+                    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+                    var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+                    j.async=true;
+                    j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+                    f.parentNode.insertBefore(j,f);
+                  })(window,document,'script','dataLayer','GTM-K3BH7X9');
+
+                  (function () {
+                    var s = document.createElement("script"),
+                        el = document.getElementsByTagName("script")[0];
+                    s.async = true;
+                    s.src = "https://sb.scorecardresearch.com/beacon.js";
+                    el.parentNode.insertBefore(s, el);
+                 })();
+                 }(), scrollDepth = !0)
+               }, !0);`,
+            }}
+          ></script>
         </body>
         <NextScript />
       </Html>
