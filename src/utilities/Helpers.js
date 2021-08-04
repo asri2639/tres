@@ -142,6 +142,7 @@ export const loadJS = (file) => {
   jsElm.type = 'application/javascript';
   // make the script element load file
   jsElm.src = file;
+  jsElem.async = 'async';
   jsElm['name'] = getFilename(file);
   // finally insert the element to the body element in order to load the script
   document.body.appendChild(jsElm);
