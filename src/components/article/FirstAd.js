@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AMPContext, TransitionContext } from '@pages/_app';
 import { loadJS } from '@utils/Helpers';
+import Head from 'next/head';
 
 const FirstAd = ({ adData, className, refresh }) => {
   const isTransitioning = useContext(TransitionContext);
@@ -58,41 +59,50 @@ const FirstAd = ({ adData, className, refresh }) => {
   }, [adData, isDesktop, adEl]);
 
   return (
-    <div style={{ padding: '5px 0' }}>
-      <div
-        style={{
-          display: 'table',
-          width: width ? width + 'px' : 'auto',
-          height: height ? height + 5 + 'px' : 'auto',
-          background: 'rgb(228 228 228 / 68%)',
-          margin: '0 auto',
-        }}
-      >
-        {isDesktop != null && adData ? (
-          isAMP ? (
-            <amp-ad
-              width="300"
-              height="250"
-              type="doubleclick"
-              data-slot={adData.ad_unit}
-            >
-              <div placeholder></div>
-              <div fallback></div>
-            </amp-ad>
-          ) : (
-            <div
-              ref={adEl}
-              data-ad-unit={adData.ad_unit}
-              id={adData.gpt_id}
-              style={{
-                width: width ? width + 'px' : 'auto',
-                height: height ? height + 'px' : 'auto',
-              }}
-            ></div>
-          )
-        ) : null}
+    <>
+      <Head>
+        <link
+          rel="preload"
+          href="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
+          as="script"
+        />
+      </Head>
+      <div style={{ padding: '5px 0' }}>
+        <div
+          style={{
+            display: 'table',
+            width: width ? width + 'px' : 'auto',
+            height: height ? height + 5 + 'px' : 'auto',
+            background: 'rgb(228 228 228 / 68%)',
+            margin: '0 auto',
+          }}
+        >
+          {isDesktop != null && adData ? (
+            isAMP ? (
+              <amp-ad
+                width="300"
+                height="250"
+                type="doubleclick"
+                data-slot={adData.ad_unit}
+              >
+                <div placeholder></div>
+                <div fallback></div>
+              </amp-ad>
+            ) : (
+              <div
+                ref={adEl}
+                data-ad-unit={adData.ad_unit}
+                id={adData.gpt_id}
+                style={{
+                  width: width ? width + 'px' : 'auto',
+                  height: height ? height + 'px' : 'auto',
+                }}
+              ></div>
+            )
+          ) : null}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
