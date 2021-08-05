@@ -684,6 +684,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         };
       });
       const result = response.data;
+	  console.log('get_home_link',url,result);
       if (!result) {
         if (res) res.statusCode = 404;
         return {
@@ -743,6 +744,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             const response = await trackPromise(
               api.Catalog.getListingPageStates(statePayload)
             );
+			console.log('state',url,result);
             if (response && response.data && response.data.data) {
               dropDownData = response.data.data.items;
               if (dropDownData.length > 0) {
@@ -774,6 +776,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             const response = await trackPromise(
               api.Catalog.getCityDistrictData(cityDistrictPayload)
             );
+			console.log('city',url,result);
             if (response && response.data && response.data.data) {
               dropDownData = response.data.data.items;
               if (dropDownData.length > 0) {
@@ -859,7 +862,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         const listingResp = await trackPromise(
           api.CatalogList.getListing(requestPayload)
         );
-
+console.log('listdata',url,listingResp);
         if (listingResp && listingResp.data && listingResp.data.data) {
           const data = listingResp.data.data;
           let initCount = 0;
