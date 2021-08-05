@@ -30,6 +30,7 @@
     "next": "v10.0.3",
     "next-i18next": "^6.0.3",
     "next-seo": "^4.11.0",
+    "nextjs-redirect": "^5.0.2",
     "node-fetch": "^2.6.1",
     "nprogress": "^0.2.0",
     "react": "16.13.1",

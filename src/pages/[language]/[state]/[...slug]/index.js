@@ -20,6 +20,7 @@ import ArticleList from '@components/article/ArticleList';
 import VideoList from '@components/video/VideoList';
 import GalleryList from '@components/gallery/GalleryList';
 import ListContainer from '@components/listing/ListContainer';
+import redirect from 'nextjs-redirect';
 import PageListing, { totalItemsCount } from '@components/listing/PageListing';
 import Error from 'next/error';
 const slug = ({
@@ -375,9 +376,9 @@ const slug = ({
       case 'search':
         return <ListContainer data={data} payload={payload}></ListContainer>;
       case 'redirect':
-        return null;
+      const Redirect = redirect(data);
+        return <Redirect />;
     }
-
     return (
       <>
         {headerObj.title ? (
@@ -478,6 +479,7 @@ const slug = ({
       </>
     );
   };
+
   return (
     <>
       {data ? (
@@ -558,10 +560,19 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
           // isSSR: typeof window === 'undefined',
         });
+        
+
         const videoResp = videoResponse.data.data.catalog_list_items[0];
         const video = videoResp.catalog_list_items[0];
         // Pass data to the page via props
-
+        if (!video) {
+          if (res) res.statusCode = 404;
+          return {
+            pageType: 'listing',
+            data: '',
+            statusCode: 404,
+          };
+        }
         return {
           pageType: 'video',
           data: video,
@@ -684,7 +695,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         };
       });
       const result = response.data;
-	  console.log('get_home_link',url,result);
+
       if (!result) {
         if (res) res.statusCode = 404;
         return {
@@ -736,7 +747,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         };
 
         if (url.includes('state')) {
-          const data = cacheData.get(language + url[2]);
+          const data = cacheData.get(urlSplit[1] + urlSplit[2]);
           finalDataObj.type = 'state';
           if (data) {
             dropDownData = data;
@@ -744,12 +755,12 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             const response = await trackPromise(
               api.Catalog.getListingPageStates(statePayload)
             );
-			console.log('state',url,result);
+
             if (response && response.data && response.data.data) {
               dropDownData = response.data.data.items;
               if (dropDownData.length > 0) {
                 cacheData.put(
-                  language + urlSplit[2],
+                  urlSplit[1] + urlSplit[2],
                   dropDownData,
                   5 * 1000 * 60 * 60
                 );
@@ -768,21 +779,21 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
           finalDataObj.type = type;
           finalDataObj.url = finalurl;
-          const data = cacheData.get(language + url[2] + type);
+          const data = cacheData.get(urlSplit[1] + urlSplit[2]);
 
           if (data) {
             dropDownData = data;
-			console.log('city',url,data);
+
           } else {
             const response = await trackPromise(
               api.Catalog.getCityDistrictData(cityDistrictPayload)
             );
-			console.log('city',url,response.data);
+
             if (response && response.data && response.data.data) {
               dropDownData = response.data.data.items;
               if (dropDownData.length > 0) {
                 cacheData.put(
-                  language + url[2] + type,
+                  urlSplit[1] + urlSplit[2],
                   dropDownData,
                   5 * 1000 * 60 * 60
                 );
@@ -818,11 +829,12 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       const params = {
         collective_ads_count: 0,
         page: 0,
-        page_size: 8,
+        page_size: 4,
         version: 'v2',
         response: 'r2',
         item_languages: language,
         portal_state: state,
+
       };
 
       if (result) {
@@ -863,7 +875,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         const listingResp = await trackPromise(
           api.CatalogList.getListing(requestPayload)
         );
-console.log('listdata',url,listingResp.data);
+
         if (listingResp && listingResp.data && listingResp.data.data) {
           const data = listingResp.data.data;
           let initCount = 0;
@@ -900,6 +912,7 @@ console.log('listdata',url,listingResp.data);
         }; */
       }
     } else {
+
       const redirectUrl = `${
         publicRuntimeConfig.APP_ENV === 'staging'
           ? 'https://old.etvbharat.com'
