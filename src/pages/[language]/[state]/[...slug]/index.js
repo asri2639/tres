@@ -772,11 +772,12 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
           if (data) {
             dropDownData = data;
+			console.log('city',url,data);
           } else {
             const response = await trackPromise(
               api.Catalog.getCityDistrictData(cityDistrictPayload)
             );
-			console.log('city',url,result);
+			console.log('city',url,response.data);
             if (response && response.data && response.data.data) {
               dropDownData = response.data.data.items;
               if (dropDownData.length > 0) {
@@ -862,7 +863,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         const listingResp = await trackPromise(
           api.CatalogList.getListing(requestPayload)
         );
-console.log('listdata',url,listingResp);
+console.log('listdata',url,listingResp.data);
         if (listingResp && listingResp.data && listingResp.data.data) {
           const data = listingResp.data.data;
           let initCount = 0;
