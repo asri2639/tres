@@ -105,15 +105,18 @@ export default class ETVDocument extends Document {
           {/* Here we will mount our modal portal */}
           <div id="modal" style={{ height: 'auto' }} />
 
-          
-		    <script
+          <script
             dangerouslySetInnerHTML={{
-              __html:`(function(){
-                document.addEventListener('readystatechange', event => {
- 
-   if (event.target.readyState === 'complete') {
-	   setTimeout(function(){
-    (function (w, d, s, l, i) {
+              __html: `(function(){
+                var scrollDepth = false;
+                window.addEventListener(
+                  "scroll",
+                  function () {
+                    ((document.documentElement.scrollTop && false === scrollDepth) ||
+                      (document.body.scrollTop && false === scrollDepth)) &&
+                      (!(function () {
+                        
+                        (function (w, d, s, l, i) {
                           w[l] = w[l] || [];
                           w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
                           var f = d.getElementsByTagName(s)[0],
@@ -140,11 +143,16 @@ export default class ETVDocument extends Document {
                           s.src = "https://sb.scorecardresearch.com/beacon.js";
                           el.parentNode.insertBefore(s, el);
                         })();
-	; }, 2000);
-  }
-})})()`
-			   }}
-			  ></script>
+                        
+                      })(),
+                      (scrollDepth = true));
+                  },
+                  true
+                );
+              })()
+             `,
+            }}
+          ></script>
         </body>
         <NextScript />
       </Html>
