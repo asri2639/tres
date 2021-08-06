@@ -498,7 +498,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     state = 'na',
     params = null,
     bypass = false;
-console.log('amp called')
+//console.log('amp called')
   const { publicRuntimeConfig } = getConfig();
   const isAmp =
     query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
