@@ -94,7 +94,12 @@ app
             if (listing) {
               res.send(JSON.parse(rest.data).amp_html);
             } else {
-              res.send(rest.data.amp);
+				if(rest.data.amp != ''){
+				  res.send(rest.data.amp);
+				}else{
+					res.sendStatus(404);
+				}
+              
             }
           })
           .catch((e) => {
