@@ -759,11 +759,11 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             if (response && response.data && response.data.data) {
               dropDownData = response.data.data.items;
               if (dropDownData.length > 0) {
-                // cacheData.put(
-                //   urlSplit[1] + urlSplit[2],
-                //   dropDownData,
-                //   5 * 1000 * 60 * 60
-                // );
+                cacheData.put(
+                  urlSplit[1] + urlSplit[2],
+                  dropDownData,
+                  10 * 1000 * 60 * 60
+                );
               }
             } else {
               console.log('h3r3');
@@ -779,8 +779,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
           finalDataObj.type = type;
           finalDataObj.url = finalurl;
-          const data = cacheData.get(urlSplit[1] + urlSplit[2]);
-
+          const data = cacheData.get(urlSplit[1] + urlSplit[2]+urlSplit[3]);
+        //  console.log('cache', urlSplit[1] + urlSplit[2]+urlSplit[3]);
           if (data) {
             dropDownData = data;
 
@@ -792,11 +792,11 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             if (response && response.data && response.data.data) {
               dropDownData = response.data.data.items;
               if (dropDownData.length > 0) {
-                // cacheData.put(
-                //   urlSplit[1] + urlSplit[2],
-                //   dropDownData,
-                //   5 * 1000 * 60 * 60
-                // );
+                cacheData.put(
+                  urlSplit[1] + urlSplit[2]+urlSplit[3],
+                  dropDownData,
+                  10 * 1000 * 60 * 60
+                );
               }
             } else {
               console.log('h3r3');
