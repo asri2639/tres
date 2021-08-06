@@ -560,7 +560,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
           // isSSR: typeof window === 'undefined',
         });
-        
+
 
         const videoResp = videoResponse.data.data.catalog_list_items[0];
         const video = videoResp.catalog_list_items[0];
@@ -759,11 +759,11 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             if (response && response.data && response.data.data) {
               dropDownData = response.data.data.items;
               if (dropDownData.length > 0) {
-                cacheData.put(
-                  urlSplit[1] + urlSplit[2],
-                  dropDownData,
-                  5 * 1000 * 60 * 60
-                );
+                // cacheData.put(
+                //   urlSplit[1] + urlSplit[2],
+                //   dropDownData,
+                //   5 * 1000 * 60 * 60
+                // );
               }
             } else {
               console.log('h3r3');
@@ -792,11 +792,11 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             if (response && response.data && response.data.data) {
               dropDownData = response.data.data.items;
               if (dropDownData.length > 0) {
-                cacheData.put(
-                  urlSplit[1] + urlSplit[2],
-                  dropDownData,
-                  5 * 1000 * 60 * 60
-                );
+                // cacheData.put(
+                //   urlSplit[1] + urlSplit[2],
+                //   dropDownData,
+                //   5 * 1000 * 60 * 60
+                // );
               }
             } else {
               console.log('h3r3');
