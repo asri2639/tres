@@ -374,10 +374,10 @@ const slug = ({
           </>
         );
       case 'search':
-        return <ListContainer data={data} payload={payload}></ListContainer>;
+          const Redirect = redirect(data);
+          return <Redirect />;
       case 'redirect':
-      const Redirect = redirect(data);
-        return <Redirect />;
+        return null;
     }
     return (
       <>
@@ -498,7 +498,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     state = 'na',
     params = null,
     bypass = false;
-
+console.log('amp called')
   const { publicRuntimeConfig } = getConfig();
   const isAmp =
     query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
@@ -911,7 +911,17 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           statusCode: 404,
         }; */
       }
-    } else {
+    } else if(url.includes('search') ){
+      const redirectUrl = `${
+        publicRuntimeConfig.APP_ENV === 'staging'
+          ? 'https://old.etvbharat.com'
+          : 'https://old.etvbharat.com'
+      }${url}`;
+      return {
+        pageType: 'search',
+        data: redirectUrl,
+      };
+    }else {
 
       const redirectUrl = `${
         publicRuntimeConfig.APP_ENV === 'staging'
@@ -920,7 +930,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       }${url}`;
       return {
         pageType: 'redirect',
-        data: redirectUrl,
+        data: "",
       };
     }
   }
