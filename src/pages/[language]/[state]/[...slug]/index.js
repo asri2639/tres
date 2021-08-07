@@ -161,7 +161,7 @@ const slug = ({
                     let m = regex.exec(v);
                     if (m) {
                       tags.add(m[1]);
-                      // loadJS(m[1]);
+                      loadJS(m[1]);
                     }
                   });
                 })(),
@@ -191,7 +191,7 @@ const slug = ({
           thumbnail: thumbnailExtractor(
             data.thumbnails,
             '3_2',
-            'b2s',
+            's2b',
             data.media_type
           ),
 

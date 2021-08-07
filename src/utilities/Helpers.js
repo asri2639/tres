@@ -38,9 +38,9 @@ export const thumbnailExtractor = (
   mediaType
 ) => {
   const thumbnailKeys = [
-    'small_3_2',
+    /* 'small_3_2',
     'small_1_1',
-    'small_2_1',
+    'small_2_1', */
     'medium_3_2',
     'medium_2_1',
     'medium_1_1',
