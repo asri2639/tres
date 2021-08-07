@@ -4,10 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { Media, MediaContextProvider } from '@media';
 import RectangleCard from '@components/listing/mobile/RectangleCard';
-import AdContainer from '@components/article/AdContainer';
 import NavLink from '@components/common/NavLink';
-import DesktopAdContainer from '@components/article/DesktopAdContainer';
-import CatalogWall from './mobile/CatalogWall';
 import SeeAll from './mobile/SeeAll';
 import SliderSeeAll from './mobile/SliderSeeAll';
 import GoogleTagManager from '@utils/GoogleTagManager';
@@ -16,15 +13,21 @@ import { stateCodeConverter } from '@utils/Helpers';
 import useSWR from 'swr';
 import React from 'react';
 import Sticky from 'wil-react-sticky';
-import { useRouter } from 'next/router';
 import MainArticles from './MainArticles';
 import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
+import dynamic from 'next/dynamic';
+
+const options = {
+  loading: () => <p>Loading...</p>,
+};
+const AdContainer = dynamic(() => import('@components/article/AdContainer'), options);
+const DesktopAdContainer = dynamic(() => import('@components/article/DesktopAdContainer'), options);
+
 
 const ListContainer = ({ children, data, payload }) => {
   const api = API(APIEnum.CatalogList);
-  const router = useRouter();
   const isRTL = useContext(RTLContext);
 
   const { t, appLanguage } = useTranslator();

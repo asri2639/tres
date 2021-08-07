@@ -15,7 +15,7 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
     router.query.state
   );
 
-  const thumbnail = thumbnailExtractor(article.thumbnails, '3_2', 's2b', null);
+  const thumbnail = thumbnailExtractor(article.thumbnails, '1_1', 'b2s', null);
 
   return (
     <NavLink

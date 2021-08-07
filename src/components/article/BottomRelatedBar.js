@@ -62,8 +62,8 @@ const BottomRelatedBar = ({ data }) => {
       {visible.map((rel, ind) => {
         const thumbnail = thumbnailExtractor(
           rel.thumbnails,
-          '3_2',
-          's2b',
+          '1_1',
+          'b2s',
           null
         );
 

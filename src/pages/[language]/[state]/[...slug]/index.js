@@ -16,13 +16,20 @@ import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import useTranslator from '@hooks/useTranslator';
-import ArticleList from '@components/article/ArticleList';
-import VideoList from '@components/video/VideoList';
-import GalleryList from '@components/gallery/GalleryList';
-import ListContainer from '@components/listing/ListContainer';
+import dynamic from 'next/dynamic';
+
 import redirect from 'nextjs-redirect';
-import PageListing, { totalItemsCount } from '@components/listing/PageListing';
+import { totalItemsCount } from '@components/listing/PageListing';
 import Error from 'next/error';
+
+const options = {
+  loading: () => <p>Loading...</p>,
+};
+const ArticleList = dynamic(() => import('@components/article/ArticleList'), options);
+const VideoList = dynamic(() => import('@components/video/VideoList'), options);
+const GalleryList = dynamic(() => import('@components/gallery/GalleryList'), options);
+const PageListing = dynamic(() => import('@components/listing/PageListing'), options);
+
 const slug = ({
   data,
   initCount,
@@ -374,8 +381,8 @@ const slug = ({
           </>
         );
       case 'search':
-          const Redirect = redirect(data);
-          return <Redirect />;
+        const Redirect = redirect(data);
+        return <Redirect />;
       case 'redirect':
         return null;
     }
@@ -498,7 +505,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     state = 'na',
     params = null,
     bypass = false;
-//console.log('amp called')
+  //console.log('amp called')
   const { publicRuntimeConfig } = getConfig();
   const isAmp =
     query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
@@ -560,7 +567,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
           // isSSR: typeof window === 'undefined',
         });
-
 
         const videoResp = videoResponse.data.data.catalog_list_items[0];
         const video = videoResp.catalog_list_items[0];
@@ -779,11 +785,10 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
 
           finalDataObj.type = type;
           finalDataObj.url = finalurl;
-          const data = cacheData.get(urlSplit[1] + urlSplit[2]+urlSplit[3]);
-        //  console.log('cache', urlSplit[1] + urlSplit[2]+urlSplit[3]);
+          const data = cacheData.get(urlSplit[1] + urlSplit[2] + urlSplit[3]);
+          //  console.log('cache', urlSplit[1] + urlSplit[2]+urlSplit[3]);
           if (data) {
             dropDownData = data;
-
           } else {
             const response = await trackPromise(
               api.Catalog.getCityDistrictData(cityDistrictPayload)
@@ -793,7 +798,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
               dropDownData = response.data.data.items;
               if (dropDownData.length > 0) {
                 cacheData.put(
-                  urlSplit[1] + urlSplit[2]+urlSplit[3],
+                  urlSplit[1] + urlSplit[2] + urlSplit[3],
                   dropDownData,
                   10 * 1000 * 60 * 60
                 );
@@ -834,7 +839,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         response: 'r2',
         item_languages: language,
         portal_state: state,
-
       };
 
       if (result) {
@@ -911,7 +915,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           statusCode: 404,
         }; */
       }
-    } else if(url.includes('search') ){
+    } else if (url.includes('search')) {
       const redirectUrl = `${
         publicRuntimeConfig.APP_ENV === 'staging'
           ? 'https://old.etvbharat.com'
@@ -921,8 +925,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         pageType: 'search',
         data: redirectUrl,
       };
-    }else {
-
+    } else {
       const redirectUrl = `${
         publicRuntimeConfig.APP_ENV === 'staging'
           ? 'https://old.etvbharat.com'
@@ -930,7 +933,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       }${url}`;
       return {
         pageType: 'redirect',
-        data: "",
+        data: '',
       };
     }
   }
