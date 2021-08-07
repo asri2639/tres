@@ -204,7 +204,7 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
           let first = [...firstSet];
           let result = [];
           items.forEach((v) => {
-            if (v.catalog_list_items.length === 5) {
+            if (v.catalog_list_items.length === 100) {
               if (!first.length) {
                 first = v.catalog_list_items;
               } else {
