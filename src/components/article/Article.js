@@ -244,58 +244,6 @@ export default function Article({
     };
   }, [inView, contentId, contentRef]);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined' && !isAMP) {
-      if (contentRef.current) {
-        const adScript = `<div id = "v-etvbharat"></div><script></script>`;
-        const splitUrl = location.pathname.split('/');
-        const state = splitUrl[2] ? splitUrl[2].toLowerCase() : 'national';
-        const language = splitUrl[1] ? splitUrl[1].toLowerCase() : 'english';
-        if (
-          [
-            'karnataka',
-            'telangana',
-            'tamil-nadu',
-            'rajasthan',
-            'uttar-pradesh',
-            'uttarakhand',
-            'madhya-pradesh',
-            'punjab',
-            'odisha',
-            'kerala',
-          ].indexOf(state) >= 0 ||
-          language === 'urdu'
-        ) {
-          const el = document.querySelector(
-            `.article[data-content-id="${contentId}"]`
-          );
-          if (!el.querySelector('#v-etvbharat')) {
-            const content = el.querySelector('.actual-content');
-            var div = document.createElement('div');
-            div.id = 'v-etvbharat';
-            div.innerHTML = adScript;
-            content.appendChild(div);
-
-            let scrollDepth = !1;
-            window.addEventListener(
-              'scroll',
-              function () {
-                ((0 != document.documentElement.scrollTop &&
-                  !1 === scrollDepth) ||
-                  (0 != document.body.scrollTop && !1 === scrollDepth)) &&
-                  (!(function () {
-                    loadJS('//a.vdo.ai/core/v-etvbharat/vdo.ai.js', 'head');
-                  })(),
-                  (scrollDepth = !0));
-              },
-              !0
-            );
-          }
-        }
-      }
-    }
-  }, [contentRef]);
-
   const thumbnail = thumbnailExtractor(
     data.thumbnails,
     '3_2',
