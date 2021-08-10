@@ -58,8 +58,7 @@ export default function Article({
     },
     [inViewRef]
   );
-const splitUrl = location.pathname.split('/');
- const language = splitUrl[1] ? splitUrl[1].toLowerCase() : 'english';
+
   useEffect(() => {
     let api = null;
     if (data.source && data.source.indexOf('bbc_') === 0) {
@@ -292,7 +291,7 @@ const splitUrl = location.pathname.split('/');
               ) : null}
               <MediaContextProvider>
                 <Media at="xs">
-                  {index === 0 && language !== 'english' ? (
+                  {index === 0 ? (
                     <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
                   ) : null}
 
