@@ -22,13 +22,10 @@ import redirect from 'nextjs-redirect';
 import { totalItemsCount } from '@components/listing/PageListing';
 import Error from 'next/error';
 
-const options = {
-  loading: () => <p>Loading...</p>,
-};
-const ArticleList = dynamic(() => import('@components/article/ArticleList'), options);
-const VideoList = dynamic(() => import('@components/video/VideoList'), options);
-const GalleryList = dynamic(() => import('@components/gallery/GalleryList'), options);
-const PageListing = dynamic(() => import('@components/listing/PageListing'), options);
+import ArticleList from '@components/article/ArticleList';
+import VideoList from '@components/video/VideoList';
+import GalleryList from '@components/gallery/GalleryList';
+import PageListing from '@components/listing/PageListing';
 
 const slug = ({
   data,
