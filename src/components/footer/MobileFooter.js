@@ -165,6 +165,7 @@ const MobileFooter = ({ data, menu }) => {
                         passHref
                       >
                         <img
+                          loading="lazy"
                           className="h-6"
                           width="24"
                           height="24"
@@ -180,6 +181,7 @@ const MobileFooter = ({ data, menu }) => {
                         passHref
                       >
                         <img
+                          loading="lazy"
                           className="h-6"
                           width="24"
                           height="24"
@@ -192,6 +194,7 @@ const MobileFooter = ({ data, menu }) => {
                     <li>
                       <NavLink href={socialHandlers.fb} passHref>
                         <img
+                          loading="lazy"
                           className="h-6"
                           width="24"
                           height="24"
@@ -203,6 +206,7 @@ const MobileFooter = ({ data, menu }) => {
                     <li>
                       <NavLink href={socialHandlers.twitter} passHref>
                         <img
+                          loading="lazy"
                           className="h-6"
                           width="24"
                           height="24"

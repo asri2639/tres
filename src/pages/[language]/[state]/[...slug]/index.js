@@ -423,6 +423,15 @@ const slug = ({
               ></meta>
               <link rel="preload" as="image" href={headerObj.thumbnail.url} />
               <link rel="preload" as="image" href={smallThumbnail.url} />
+              <link
+                rel="preconnect"
+                href="https://prod.api.etvbharat.com"
+              ></link>
+              <link
+                rel="preconnect"
+                href="https://etvbharatimages.akamaized.net"
+              ></link>
+
               <meta
                 property="og:image:secure_url"
                 content={headerObj.thumbnail.url}
