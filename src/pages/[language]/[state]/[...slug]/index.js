@@ -188,7 +188,7 @@ const slug = ({
           thumbnail: thumbnailExtractor(
             data.thumbnails,
             '3_2',
-            's2b',
+            'b2s',
             data.media_type
           ),
 
@@ -244,7 +244,7 @@ const slug = ({
           thumbnail: thumbnailExtractor(
             data.thumbnails,
             '3_2',
-            's2b',
+            'b2s',
             data.media_type
           ),
 
@@ -279,7 +279,7 @@ const slug = ({
           thumbnail: thumbnailExtractor(
             data.thumbnails,
             '3_2',
-            's2b',
+            'b2s',
             data.media_type
           ),
 
