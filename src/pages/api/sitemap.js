@@ -20,3 +20,9 @@ export default async function sitemapFunc(req, res) {
     res.end();
   }
 }
+
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
