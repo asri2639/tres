@@ -247,7 +247,7 @@ export default function Article({
   const thumbnail = thumbnailExtractor(
     data.thumbnails,
     '3_2',
-    'b2s',
+    window.innerWidth >= 768 ? 'b2s': 's2b',
     data.media_type
   );
   return (
@@ -291,7 +291,7 @@ export default function Article({
               ) : null}
               <MediaContextProvider>
                 <Media at="xs">
-                  {index === 0 ? (
+                  {index === 0 && false  ? (
                     <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
                   ) : null}
 
