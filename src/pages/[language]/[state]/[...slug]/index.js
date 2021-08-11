@@ -180,6 +180,13 @@ const slug = ({
           ? data.publish_date_string.slice(0, 10)
           : '';
 
+        const smallThumbnail = thumbnailExtractor(
+          data.thumbnails,
+          '3_2',
+          's2b',
+          data.media_type
+        );
+
         headerObj = {
           title: data.title,
           canonicalUrl: canonicalUrl,
@@ -400,6 +407,7 @@ const slug = ({
                 content={headerObj.fbContentId}
               ></meta>
               <link rel="preload" as="image" href={headerObj.thumbnail.url} />
+              <link rel="preload" as="image" href={smallThumbnail.url} />
               <meta
                 property="og:image:secure_url"
                 content={headerObj.thumbnail.url}
@@ -407,7 +415,11 @@ const slug = ({
             </Head>
             <NextSeo
               title={headerObj.title}
-              description={headerObj.description.replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\[/g, '%5B').replace(/\]/g, '%5D')}
+              description={headerObj.description
+                .replace(/\(/g, '%28')
+                .replace(/\)/g, '%29')
+                .replace(/\[/g, '%5B')
+                .replace(/\]/g, '%5D')}
               additionalMetaTags={[
                 {
                   name: 'keywords',
