@@ -213,7 +213,7 @@ export default function Article({
             const el = videos[i];
             const res = results[i];
             const url = new URL(res);
-            const iframeSource = '/assets/embed_etv.html' + url.search;
+            const iframeSource = 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/embed_etv.html' + url.search;
 
             el.innerHTML = `<amp-video-iframe
             layout="responsive"

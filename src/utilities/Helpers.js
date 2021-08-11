@@ -54,8 +54,8 @@ export const thumbnailExtractor = (
 
   if (isEmpty(thumbnailObj)) {
     return !mediaType
-      ? { alt_tags: '', caption: '', url: '/assets/images/placeholder.png' }
-      : { alt_tags: 'Breaking News', url: '/assets/images/breakingplate.jpg' };
+      ? { alt_tags: '', caption: '', url: 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png' }
+      : { alt_tags: 'Breaking News', url: 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/breakingplate.jpg' };
   }
 
   const order = (extractionOrder === 's2b'
@@ -68,7 +68,7 @@ export const thumbnailExtractor = (
       return thumbnailObj[i];
     }
   }
-  return { alt_tags: '', caption: '', url: '/assets/images/placeholder.png' };
+  return { alt_tags: '', caption: '', url: 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png' };
 };
 
 export const stateCodeConverter = (e) => {

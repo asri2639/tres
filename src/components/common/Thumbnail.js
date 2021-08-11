@@ -41,7 +41,7 @@ const Thumbnail = ({
   const onError = () => {
     if (!state.errored && !isAMP) {
       setState({
-        src: '/assets/images/placeholder.png',
+        src: 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png',
         errored: true,
       });
     }
@@ -74,7 +74,7 @@ const Thumbnail = ({
         width="auto"
         src={
           (lazy === undefined || lazy === true) && !isAMP
-            ? '/assets/images/placeholder.png'
+            ? 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png'
             : state.src
         }
         onError={onError}

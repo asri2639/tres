@@ -127,7 +127,7 @@ export const constructPlaybackUrl = (
     w = smartData.adaptive_urls[0].playback_url,
     g = smartData.adaptive_urls[0].video_duration,
     origin = isAMP
-      ? '/assets/embed_etv.html?contenturl='
+      ? 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/embed_etv.html?contenturl='
       : publicRuntimeConfig.APP_ENV === 'staging' ||
         publicRuntimeConfig.APP_ENV === 'development'
       ? 'https://etvbharatimages.akamaized.net/player/etvbharat-test/embed_etv.html?contenturl='
