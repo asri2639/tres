@@ -73,6 +73,7 @@ const slug = ({
   const getComponent = () => {
     let component = null;
     let headerObj = {};
+    let smallThumbnail = {};
     let stateName = null;
     let canonicalUrl = '';
 
@@ -180,7 +181,7 @@ const slug = ({
           ? data.publish_date_string.slice(0, 10)
           : '';
 
-        const smallThumbnail = thumbnailExtractor(
+        smallThumbnail = thumbnailExtractor(
           data.thumbnails,
           '3_2',
           's2b',
@@ -262,6 +263,13 @@ const slug = ({
           ldjson: false,
         };
 
+        smallThumbnail = thumbnailExtractor(
+          data.thumbnails,
+          '3_2',
+          's2b',
+          data.media_type
+        );
+
         component = (
           <VideoList
             videoData={{
@@ -309,6 +317,13 @@ const slug = ({
           ],
           ldjson: false,
         };
+
+        smallThumbnail = thumbnailExtractor(
+          data.thumbnails,
+          '3_2',
+          's2b',
+          data.media_type
+        );
 
         component = (
           <GalleryList
