@@ -239,9 +239,9 @@ const Gallery = ({
 
           <MediaContextProvider>
             <Media at="xs">
-              {index === 0 ? (
+              {/* {index === 0 ? (
                 <FirstAd adData={ads ? ads[index * 2 + 1] : null} />
-              ) : null}
+              ) : null} */}
 
               <h1 ref={ref} className="leading-tight text-xl font-bold p-2">
                 {data[0].display_title}{' '}
