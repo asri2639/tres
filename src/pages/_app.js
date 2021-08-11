@@ -18,7 +18,7 @@ import useTranslator from '@hooks/useTranslator';
 // export function reportWebVitals(metric: NextWebVitalsMetric) {
 //   console.log(metric)
 // }
-
+import '@styles/globals.scss';
 export const AMPContext = React.createContext(false);
 export const TransitionContext = React.createContext(true);
 
