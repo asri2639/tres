@@ -36,6 +36,7 @@ const slug = ({
   isAmp,
   payload,
   dropDownData,
+  userAgent
 }) => {
   const router = useRouter();
   const { appLanguage } = useTranslator();
@@ -49,6 +50,7 @@ const slug = ({
       appConfig.params_hash2.config_params.fb_pages[convertedState];
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
+
 
   let ampExists = null;
   if (id) {
@@ -188,7 +190,7 @@ const slug = ({
           thumbnail: thumbnailExtractor(
             data.thumbnails,
             '3_2',
-            'b2s',
+            userAgent.includes("Mobile") ? 's2b' : 'b2s',
             data.media_type
           ),
 
@@ -271,6 +273,8 @@ const slug = ({
           return v.description;
         });
 
+		let thumbnail ;
+		
         headerObj = {
           title: main.display_title,
           canonicalUrl: canonicalUrl,
@@ -520,7 +524,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   const isAmp =
     query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
   const url = args.asPath;
-
+  const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
+  
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
@@ -641,7 +646,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
             content_id: id, //variable
             gallery_ad: true,
             page: 0,
-            page_size: typeof window === 'undefined' ? 1 : 10,
+            page_size: 1,
             portal_state: state, //national
             scroll_no: 0,
           },
@@ -675,6 +680,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           appConfig: applicationConfig.value,
           isAmp: isAmp,
           id: id,
+		  userAgent: userAgent,
         };
     }
   } else {
