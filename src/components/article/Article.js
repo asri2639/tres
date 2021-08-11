@@ -247,7 +247,7 @@ export default function Article({
   const thumbnail = thumbnailExtractor(
     data.thumbnails,
     '3_2',
-    'b2s',
+    window.innerWidth >= 768 ? 'b2s': 's2b',
     data.media_type
   );
   return (
