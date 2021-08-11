@@ -80,14 +80,14 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
           <>
             <link
               rel="preload"
-              href="https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/English/english.woff2"
+              href="https://www.etvbharat.com/assets/fonts/English/english.woff2"
               as="font"
               type="font/woff2"
               crossOrigin={'anonymous'}
             />
             <link
               rel="preload"
-              href="https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/English/english.woff"
+              href="https://www.etvbharat.com/assets/fonts/English/english.woff"
               as="font"
               type="font/woff2"
               crossOrigin={'anonymous'}
@@ -96,14 +96,14 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
               <>
                 <link
                   rel="preload"
-                  href={`https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/${langCap}/${langName}.woff2`}
+                  href={`https://www.etvbharat.com/etvbharat/static/assets/fonts/${langCap}/${langName}.woff2`}
                   as="font"
                   type="font/woff2"
                   crossOrigin={'anonymous'}
                 />
                 <link
                   rel="preload"
-                  href={`https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/${langCap}/${langName}.woff`}
+                  href={`https://www.etvbharat.com/etvbharat/static/assets/fonts/${langCap}/${langName}.woff`}
                   as="font"
                   type="font/woff2"
                   crossOrigin={'anonymous'}

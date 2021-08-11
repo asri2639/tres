@@ -27,11 +27,11 @@ $languages: (
     font-style: normal;
     font-display: swap;
     src: local('Likhith' + $cap-name), local('Likhith-' + $cap-name),
-      url('https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/' + $cap-name + '/' + $name + '.woff2')
+      url('https://www.etvbharat.com/assets/fonts/' + $cap-name + '/' + $name + '.woff2')
         format('woff2'),
-      url('https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/' + $cap-name + '/' + $name + '.woff')
+      url('https://www.etvbharat.com/assets/fonts/' + $cap-name + '/' + $name + '.woff')
         format('woff'),
-      url('https://etvbharatimages.akamaized.net/etvbharat/static/fonts/' + $cap-name + '/' + $name + '.ttf')
+      url('https://www.etvbharat.com/fonts/' + $cap-name + '/' + $name + '.ttf')
         format('truetype');
   }
 
