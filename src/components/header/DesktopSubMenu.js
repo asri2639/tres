@@ -93,7 +93,7 @@ export default function DesktopSubMenu({ category }) {
                     <img
                       loading="lazy"
                       className="w-full rounded-md"
-                      src="/assets/images/placeholder.png"
+                      src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png"
                       alt="placeholder image"
                     />
                   )}
@@ -114,7 +114,7 @@ export default function DesktopSubMenu({ category }) {
                 <img
                   loading="lazy"
                   className="w-full rounded-md"
-                  src="/assets/images/placeholder.png"
+                  src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png"
                   alt="placeholder image"
                 />
                 <div className="text-sm mt-1"></div>

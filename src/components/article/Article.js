@@ -395,7 +395,7 @@ export default function Article({
                 <MediaContextProvider>
                   <Media greaterThan="xs">
                     <div className="bbc-tag">
-                      <img src="/assets/bbc/bbc_footer_22px.png" />
+                      <img src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
                     </div>
                   </Media>
                 </MediaContextProvider>

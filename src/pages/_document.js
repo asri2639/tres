@@ -13,6 +13,7 @@ export default class ETVDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+
           <style
             type="text/css"
             dangerouslySetInnerHTML={{ __html: mediaStyles }}

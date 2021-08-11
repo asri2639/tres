@@ -284,7 +284,7 @@ const Video = ({
               ) : (
                 <img
                   className="w-full rounded-md -mt-10"
-                  src="/assets/images/placeholder.png"
+                  src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png"
                   alt="placeholder image"
                 />
               )}
@@ -302,7 +302,7 @@ const Video = ({
               <MediaContextProvider>
                 <Media greaterThan="xs">
                   <div className="bbc-tag">
-                    <img src="/assets/bbc/bbc_footer_22px.png" />
+                    <img src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
                   </div>
                 </Media>
               </MediaContextProvider>

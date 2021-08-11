@@ -170,7 +170,7 @@ const MobileFooter = ({ data, menu }) => {
                           width="24"
                           height="24"
                           alt="ETV"
-                          src="/assets/images/android_icon-2x.png"
+                          src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/android_icon-2x.png"
                         />
                       </NavLink>
                     </li>
@@ -186,7 +186,7 @@ const MobileFooter = ({ data, menu }) => {
                           width="24"
                           height="24"
                           alt="ETV"
-                          src="/assets/images/apple_icon-2x.png"
+                          src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/apple_icon-2x.png"
                         />
                       </NavLink>
                     </li>
@@ -199,7 +199,7 @@ const MobileFooter = ({ data, menu }) => {
                           width="24"
                           height="24"
                           alt="ETV"
-                          src="/assets/images/facebook_icon-2x.png"
+                          src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/facebook_icon-2x.png"
                         />
                       </NavLink>
                     </li>
@@ -211,7 +211,7 @@ const MobileFooter = ({ data, menu }) => {
                           width="24"
                           height="24"
                           alt="ETV"
-                          src="/assets/images/twitter_icon-2x.png"
+                          src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/twitter_icon-2x.png"
                         />
                       </NavLink>
                     </li>
@@ -282,7 +282,7 @@ const MobileFooter = ({ data, menu }) => {
                           width="24"
                           height="24"
                           alt="ETV"
-                          src="/assets/images/android-grey.png"
+                          src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/android-grey.png"
                         />
                         <p>INSTALL APP</p>
                       </NavLink>
@@ -297,7 +297,7 @@ const MobileFooter = ({ data, menu }) => {
                           width="24"
                           height="24"
                           alt="ETV"
-                          src="/assets/images/applegrey.png"
+                          src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/applegrey.png"
                         />
                         <p className="whitespace-nowrap">INSTALL APP</p>
                       </NavLink>
@@ -402,7 +402,7 @@ const MobileFooter = ({ data, menu }) => {
                       width="24"
                       height="24"
                       alt="ETV"
-                      src="/assets/images/etv-grey.png"
+                      src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/etv-grey.png"
                     />
                     <p className="whitespace-nowrap">CHANGE STATE</p>
                   </div>
@@ -417,7 +417,7 @@ const MobileFooter = ({ data, menu }) => {
                       width="24"
                       height="24"
                       alt="ETV"
-                      src="/assets/images/search-grey.png"
+                      src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/search-grey.png"
                     />
                     <p className="whitespace-nowrap">SEARCH</p>
                   </div>
@@ -435,7 +435,7 @@ const MobileFooter = ({ data, menu }) => {
                       width="24"
                       height="24"
                       alt="ETV"
-                      src="/assets/images/hamburger-grey.png"
+                      src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/hamburger-grey.png"
                     />
                     <p
                       className="whitespace-nowrap"

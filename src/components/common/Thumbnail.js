@@ -55,8 +55,8 @@ const Thumbnail = ({
       alt="Breaking News"
       height="100%"
       width="auto"
-      src="/assets/images/placeholder.png"
-      data-src="/assets/images/breakingplate.jpg"
+      src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png"
+      data-src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/breakingplate.jpg"
       src={`/assets/images/${
         (lazy === undefined || lazy === true) && !isAMP
           ? 'placeholder'

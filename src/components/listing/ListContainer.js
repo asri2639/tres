@@ -20,7 +20,7 @@ import useTranslator from '@hooks/useTranslator';
 import dynamic from 'next/dynamic';
 
 const options = {
-  loading: () => <p>Loading...</p>,
+  loading: () => <div>Loading...</div>,
 };
 const AdContainer = dynamic(() => import('@components/article/AdContainer'), options);
 const DesktopAdContainer = dynamic(() => import('@components/article/DesktopAdContainer'), options);

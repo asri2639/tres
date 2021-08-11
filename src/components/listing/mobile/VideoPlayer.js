@@ -41,7 +41,7 @@ const VideoPlayer = ({ article, className }) => {
       ) : (
         <img
           className={`w-full rounded-md -mt-10 `}
-          src="/assets/images/newstime.png"
+          src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/newstime.png"
           alt="placeholder image"
         />
       )}

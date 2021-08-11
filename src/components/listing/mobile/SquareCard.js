@@ -68,7 +68,7 @@ const SquareCard = ({
         ) : article.has_videos ? (
           <img
             className="absolute w-6 bottom-1 right-1"
-            src="/assets/images/video_big_icon-2x.png"
+            src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/video_big_icon-2x.png"
           />
         ) : null}
       </div>

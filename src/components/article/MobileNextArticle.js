@@ -103,7 +103,7 @@ const MobileNextArticle = ({
 
       {showBbc ? (
         <div className="bbc-tag bbc-tag-footer">
-          <img src="/assets/bbc/bbc_footer_22px.png" />
+          <img src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
         </div>
       ) : null}
 
@@ -146,7 +146,7 @@ const MobileNextArticle = ({
               height="24"
               width="24"
               className="w-6"
-              src="/assets/images/nextarticle.png"
+              src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/nextarticle.png"
             />
             <span className="text-lg font-thin pl-2"> {t(label)}</span>
           </div>
@@ -165,7 +165,7 @@ const MobileNextArticle = ({
               height="24"
               width="24"
               className="w-6"
-              src="/assets/images/nextarticle.png"
+              src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/nextarticle.png"
             />
             <span className="text-lg font-thin pl-2">{t(label)}</span>
           </div>

@@ -259,7 +259,7 @@ export default function contactUs() {
           <div className="w-80  flex  w-full justify-center flex-col items-center">
             <img
               className="contact-img w-24"
-              src="/assets/images/contactus.png"
+              src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/contactus.png"
               data-pagespeed-url-hash="4235406410"
             />
             <h1 className="title-big text-gray-600 font-bold text-lg">

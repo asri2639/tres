@@ -177,7 +177,7 @@ const SocialMedia = ({ data }) => {
              height="24"
              width="24"
             className="w-6 lg:mx-auto inline-block cursor-pointer"
-            src="/assets/images/comment.png"
+            src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/comment.png"
             onClick={() => {
               GoogleTagManager.comment(data);
               toggleOpen(true);
