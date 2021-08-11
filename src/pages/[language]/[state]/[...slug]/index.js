@@ -73,7 +73,6 @@ const slug = ({
   const getComponent = () => {
     let component = null;
     let headerObj = {};
-    let smallThumbnail = {};
     let stateName = null;
     let canonicalUrl = '';
 
@@ -181,13 +180,6 @@ const slug = ({
           ? data.publish_date_string.slice(0, 10)
           : '';
 
-        smallThumbnail = thumbnailExtractor(
-          data.thumbnails,
-          '3_2',
-          's2b',
-          data.media_type
-        );
-
         headerObj = {
           title: data.title,
           canonicalUrl: canonicalUrl,
@@ -263,13 +255,6 @@ const slug = ({
           ldjson: false,
         };
 
-        smallThumbnail = thumbnailExtractor(
-          data.thumbnails,
-          '3_2',
-          's2b',
-          data.media_type
-        );
-
         component = (
           <VideoList
             videoData={{
@@ -317,13 +302,6 @@ const slug = ({
           ],
           ldjson: false,
         };
-
-        smallThumbnail = thumbnailExtractor(
-          data.thumbnails,
-          '3_2',
-          's2b',
-          data.media_type
-        );
 
         component = (
           <GalleryList
@@ -422,7 +400,6 @@ const slug = ({
                 content={headerObj.fbContentId}
               ></meta>
               <link rel="preload" as="image" href={headerObj.thumbnail.url} />
-              <link rel="preload" as="image" href={smallThumbnail.url} />
               <link
                 rel="preconnect"
                 href="https://prod.api.etvbharat.com"

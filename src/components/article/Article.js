@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import AdContainer from '@components/article/AdContainer';
-import { dateFormatter, loadJS, thumbnailExtractor } from '@utils/Helpers';
+import { dateFormatter, thumbnailExtractor } from '@utils/Helpers';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
 import Thumbnail from '@components/common/Thumbnail';
@@ -247,7 +247,7 @@ export default function Article({
   const thumbnail = thumbnailExtractor(
     data.thumbnails,
     '3_2',
-    window.innerWidth >= 768 ? 'b2s': 's2b',
+    'b2s',
     data.media_type
   );
   return (
@@ -291,7 +291,7 @@ export default function Article({
               ) : null}
               <MediaContextProvider>
                 <Media at="xs">
-                {/*   {index === 0 ? (
+                  {/*   {index === 0 ? (
                     <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
                   ) : null} */}
 
@@ -329,7 +329,10 @@ export default function Article({
               </MediaContextProvider>
               <BBCHeader source={source} />
               <div className="flex flex-col md:flex-col-reverse md:mb-8">
-                <div className="-mx-3 md:mx-0 relative " style={{minWidth: '300px', minHeight: '200px'}}>
+                <div
+                  className="-mx-3 md:mx-0 relative "
+                  style={{ minWidth: '300px', minHeight: '200px' }}
+                >
                   <Thumbnail
                     thumbnail={thumbnail}
                     className={'md:rounded-lg w-full'}
