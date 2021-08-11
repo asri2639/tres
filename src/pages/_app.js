@@ -2,6 +2,7 @@ import Layout from '@components/layout/Layout';
 import React, { useEffect, useState } from 'react';
 import '@styles/tailwind.css';
 import '@styles/_fonts.scss';
+import '@styles/globals.scss';
 
 import Router, { useRouter } from 'next/router';
 import Constants, {
@@ -74,10 +75,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="bingbots" content="all" />
         <meta name="robots" content="all" />
         <meta name="theme-color" content="#07254c" />
-        <link
-          rel="stylesheet"
-          href="https://etvbharatimages.akamaized.net/etvbharat/static/globals.css"
-        />
+      
         {!isAMP ? (
           <>
             <link
