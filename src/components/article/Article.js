@@ -5,6 +5,7 @@ import { dateFormatter, thumbnailExtractor } from '@utils/Helpers';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
 import Thumbnail from '@components/common/Thumbnail';
+import ArticleThumbnail from '@components/common/ArticleThumbnail'
 import GoogleTagManager from '@utils/GoogleTagManager';
 import ComScore from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
@@ -333,11 +334,11 @@ export default function Article({
                   className="-mx-3 md:mx-0 relative "
                   style={{ minWidth: '300px', minHeight: '200px' }}
                 >
-                  <Thumbnail
+                  <ArticleThumbnail
                     thumbnail={thumbnail}
                     className={'md:rounded-lg w-full'}
                     type={data.media_type}
-                    lazy={false}
+                    
                   />
                 </div>
                 <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
