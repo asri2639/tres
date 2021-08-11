@@ -329,7 +329,7 @@ export default function Article({
               </MediaContextProvider>
               <BBCHeader source={source} />
               <div className="flex flex-col md:flex-col-reverse md:mb-8">
-                <div className="-mx-3 md:mx-0 relative">
+                <div className="-mx-3 md:mx-0 relative " style={{minWidth: '300px', minHeight: '200px'}}>
                   <Thumbnail
                     thumbnail={thumbnail}
                     className={'md:rounded-lg w-full'}
