@@ -13,7 +13,10 @@ export default class ETVDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-
+          <link
+            rel="preconnect"
+            href="https://etvbharatimages.akamaized.net"
+          ></link>
           <style
             type="text/css"
             dangerouslySetInnerHTML={{ __html: mediaStyles }}
