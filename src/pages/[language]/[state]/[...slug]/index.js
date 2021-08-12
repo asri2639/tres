@@ -190,7 +190,7 @@ const slug = ({
           thumbnail: thumbnailExtractor(
             data.thumbnails,
             '3_2',
-            userAgent.includes("Mobile") ? 's2b' : 'b2s',
+            userAgent && userAgent.includes("Mobile") ? 's2b' : 'b2s',
             data.media_type
           ),
 
