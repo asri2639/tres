@@ -36,7 +36,7 @@ const ArticleList = ({ articleData }) => {
         response: methodName === 'getArticleDetails' ? 'r2' : 'r1',
         item_languages: language,
         page: 0,
-        page_size: 10,
+        page_size: window && window.innerWidth >= 768 ? 10 : 1,
         content_id: contentId,
         gallery_ad: true,
         scroll_no: 0,
