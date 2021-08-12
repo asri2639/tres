@@ -4,10 +4,10 @@ import React from 'react';
 
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { accessToken as token, languageMap } from '@utils/Constants';
 import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
-// import Loader from 'react-loader-spinner';
+import Loader from 'react-loader-spinner';
 import { usePromiseTracker } from 'react-promise-tracker';
 import { useRouter } from 'next/router';
 import eventBus from '@utils/EventBus';
@@ -313,13 +313,12 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
                 alignItems: 'center',
               }}
             >
-           {/*    <Loader
+              <Loader
                 type="ThreeDots"
                 color="#2BAD60"
                 height="100"
                 width="100"
-              /> */}
-              <div>Loading...</div>
+              />
             </div>
           ) : (
             <section

@@ -8,15 +8,21 @@ import Thumbnail from '@components/common/Thumbnail';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import ComScore from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
-import MobileNextArticle from '@components/article/MobileNextArticle';
 import Sticky from 'wil-react-sticky';
 import { AMPContext } from '@pages/_app';
-import BBCHeader from '@components/common/BBCHeader';
 import stringToHTML from '@utils/StringToHtml';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
-import MobileAd from '@components/article/MobileAd';
 // import FirstAd from '@components/article/FirstAd';
+import dynamic from 'next/dynamic';
+const options = {
+  loading: () => <div>Loading...</div>,
+};
+const MobileAd = dynamic(() => import('@components/article/MobileAd'), options);
+const MobileNextArticle = dynamic(
+  () => import('@components/article/MobileNextArticle'),
+  options
+);
 
 // initialPosition
 // div height
@@ -28,17 +34,14 @@ export default function Article({
   html,
   className,
   rhs,
-  desktop,
   nextArticle,
   scrollToNextArticle,
   viewed,
-  updateViewed,
   related,
   ads,
   index,
 }) {
   const isAMP = useContext(AMPContext);
-  const [source, setSource] = useState(null);
   const [ampHtml, setAmpHtml] = useState(null);
 
   const contentRef = useRef(null);
@@ -61,9 +64,7 @@ export default function Article({
 
   useEffect(() => {
     let api = null;
-    if (data.source && data.source.indexOf('bbc_') === 0) {
-      setSource(data.source);
-    }
+
     if (viewed.indexOf(contentId) === -1) {
       viewed.push(contentId);
       GoogleTagManager.articleViewScroll(data, { newsArticle: true });
@@ -75,7 +76,6 @@ export default function Article({
       }
     }
     if (inView) {
-      const urlParts = data.web_url.split('/');
       const contentIdFromUrl = window.location.href.split('/').slice(-1)[0];
       if (contentIdFromUrl === contentId) {
         return;
@@ -329,7 +329,6 @@ export default function Article({
                   </div>
                 </Media>
               </MediaContextProvider>
-              <BBCHeader source={source} />
               <div className="flex flex-col md:flex-col-reverse md:mb-8">
                 <div
                   className="-mx-3 md:mx-0 relative "
