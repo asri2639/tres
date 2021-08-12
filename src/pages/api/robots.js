@@ -23,9 +23,8 @@ Disallow:/1754*
 Disallow:/*%
 
 # Sitemap Files
-Sitemap: https://www.etvbharat.com/googlenewssitemap.xml
-Sitemap: https://www.etvbharat.com/sitemap.xml
-Sitemap: https://www.etvbharat.com/category-sitemap.xml
+Sitemap: https://www.etvbharat.com/english/national/latest_news_sitemap.xml
+Sitemap: https://www.etvbharat.com/telugu/andhra-pradesh/latest_news_sitemap.xml
 Sitemap: https://www.etvbharat.com/hindi/bihar/latest_news_sitemap.xml
 Sitemap: https://www.etvbharat.com/hindi/chhattisgarh/latest_news_sitemap.xml
 Sitemap: https://www.etvbharat.com/gujarati/gujarat/latest_news_sitemap.xml
@@ -47,7 +46,9 @@ Sitemap: https://www.etvbharat.com/telugu/telangana/latest_news_sitemap.xml
 Sitemap: https://www.etvbharat.com/bengali/west-bengal/latest_news_sitemap.xml
 Sitemap: https://www.etvbharat.com/hindi/uttar-pradesh/latest_news_sitemap.xml
 Sitemap: https://www.etvbharat.com/kannada/karnataka/latest_news_sitemap.xml
-Sitemap: https://www.etvbharat.com/hindi/madhya-pradesh/latest_news_sitemap.xml`;
+Sitemap: https://www.etvbharat.com/hindi/madhya-pradesh/latest_news_sitemap.xml
+Sitemap: https://www.etvbharat.com/googlenewssitemap.xml
+Sitemap: https://www.etvbharat.com/category-sitemap.xml`;
 
 /* class Sitemap extends React.Component {
   static async getInitialProps({ res }) {
