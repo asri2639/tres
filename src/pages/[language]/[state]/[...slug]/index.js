@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { NextSeo, ArticleJsonLd } from 'next-seo';
+import React from 'react';
+import { NextSeo } from 'next-seo';
 import { trackPromise } from 'react-promise-tracker';
 import cacheData from 'memory-cache';
 import API from '@api/API';
@@ -16,9 +16,7 @@ import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import useTranslator from '@hooks/useTranslator';
-import dynamic from 'next/dynamic';
 
-import redirect from 'nextjs-redirect';
 import { totalItemsCount } from '@components/listing/PageListing';
 import Error from 'next/error';
 
@@ -40,8 +38,7 @@ const slug = ({
 }) => {
   const router = useRouter();
   const { appLanguage } = useTranslator();
-  let canonicalUrl = '',
-    ampUrl = '';
+  let ampUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
@@ -79,6 +76,8 @@ const slug = ({
 
     if (pageType === 'error') {
       return <div>URL Not Found</div>;
+    } else if (pageType === 'redirect') {
+      return null;
     }
 
     const pathname = new URL(`http:localhost:3000${router.asPath}`).pathname;
@@ -380,11 +379,10 @@ const slug = ({
             ></PageListing>
           </>
         );
-      case 'search':
-        const Redirect = redirect(data);
-        return <Redirect />;
       case 'redirect':
         return null;
+      default:
+        return <></>;
     }
     return (
       <>
@@ -516,17 +514,28 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     params = null,
     bypass = false;
   //console.log('amp called')
-  const { publicRuntimeConfig } = getConfig();
   const isAmp =
     query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
   const url = args.asPath;
   const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
 
+  if (url.includes('/search/')) {
+    const redirectUrl = `https://old.etvbharat.com${url}`;
+    if (res) {
+      res.writeHead(302, { Location: `https://old.etvbharat.com${url}` }).end();
+    } else {
+      window.location = redirectUrl;
+    }
+    return {
+      data: {},
+      pageType: 'redirect',
+    };
+  }
+
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
 
-  const languageState = urlSplit[1];
   params = {
     state: query.state,
     language: language,
@@ -924,22 +933,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           statusCode: 404,
         }; */
       }
-    } else if (url.includes('search')) {
-      const redirectUrl = `${
-        publicRuntimeConfig.APP_ENV === 'staging'
-          ? 'https://old.etvbharat.com'
-          : 'https://old.etvbharat.com'
-      }${url}`;
-      return {
-        pageType: 'search',
-        data: redirectUrl,
-      };
     } else {
-      const redirectUrl = `${
-        publicRuntimeConfig.APP_ENV === 'staging'
-          ? 'https://old.etvbharat.com'
-          : 'https://old.etvbharat.com'
-      }${url}`;
       return {
         pageType: 'redirect',
         data: '',
