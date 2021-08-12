@@ -399,15 +399,6 @@ export default function Article({
                   }}
                 />
               ) : null}
-              {source ? (
-                <MediaContextProvider>
-                  <Media greaterThan="xs">
-                    <div className="bbc-tag">
-                      <img src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
-                    </div>
-                  </Media>
-                </MediaContextProvider>
-              ) : null}
               {ads ? (
                 <div className="pt-3">
                   <MobileAd
@@ -428,7 +419,6 @@ export default function Article({
               related={related}
               scrollToNextArticle={scrollToNextArticle}
               nextArticle={nextArticle}
-              showBbc={!!source}
             ></MobileNextArticle>
           </Media>
           {isAMP ? null : (
