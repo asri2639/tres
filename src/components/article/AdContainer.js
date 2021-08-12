@@ -1,6 +1,11 @@
-import GridList from '@components/article/GridList';
-import PopularList from '@components/article/PopularList';
-import MobileAd from '@components/article/MobileAd';
+import dynamic from 'next/dynamic';
+const options = {
+  loading: () => <div>Loading...</div>,
+};
+
+const GridList = dynamic(() => import('@components/article/GridList'), options);
+const PopularList = dynamic(() => import('@components/article/PopularList'), options);
+const MobileAd = dynamic(() => import('@components/article/MobileAd'), options);
 
 const AdContainer = ({ data, className, type, index }) => {
   return (

@@ -16,7 +16,7 @@ import stringToHTML from '@utils/StringToHtml';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import MobileAd from '@components/article/MobileAd';
-import FirstAd from '@components/article/FirstAd';
+// import FirstAd from '@components/article/FirstAd';
 
 // initialPosition
 // div height

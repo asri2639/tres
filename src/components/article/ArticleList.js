@@ -36,7 +36,7 @@ const ArticleList = ({ articleData }) => {
         response: methodName === 'getArticleDetails' ? 'r2' : 'r1',
         item_languages: language,
         page: 0,
-        page_size: 1,
+        page_size: 10,
         content_id: contentId,
         gallery_ad: true,
         scroll_no: 0,
@@ -49,10 +49,16 @@ const ArticleList = ({ articleData }) => {
   };
 
   const { data: adData, error: adError } = useSWR(
-    ['CatalogList', 'getArticleDetails', articleData.contentId],
+    () => {
+      const isDesktop = window && window.innerWidth >= 768;
+      return isDesktop
+        ? ['CatalogList', 'getArticleDetails', articleData.contentId]
+        : null;
+    },
     relatedArticlesFetcher,
     { dedupingInterval: 5 * 60 * 1000 }
   );
+
   const { data, error } = useSWR(
     ['CatalogList', 'getRelatedArticles', articleData.contentId],
     relatedArticlesFetcher,
