@@ -36,7 +36,7 @@ const slug = ({
   isAmp,
   payload,
   dropDownData,
-  userAgent
+  userAgent,
 }) => {
   const router = useRouter();
   const { appLanguage } = useTranslator();
@@ -50,7 +50,6 @@ const slug = ({
       appConfig.params_hash2.config_params.fb_pages[convertedState];
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
-
 
   let ampExists = null;
   if (id) {
@@ -190,7 +189,7 @@ const slug = ({
           thumbnail: thumbnailExtractor(
             data.thumbnails,
             '3_2',
-            userAgent && userAgent.includes("Mobile") ? 's2b' : 'b2s',
+            userAgent && userAgent.includes('Mobile') ? 's2b' : 'b2s',
             data.media_type
           ),
 
@@ -273,8 +272,8 @@ const slug = ({
           return v.description;
         });
 
-		let thumbnail ;
-		
+        let thumbnail;
+
         headerObj = {
           title: main.display_title,
           canonicalUrl: canonicalUrl,
@@ -525,7 +524,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
   const url = args.asPath;
   const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
-  
+
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
@@ -662,9 +661,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           error = 'Invalid URL';
         }
 
-        /* console.log(
- articleResp.catalog_list_items.length === 0 ? 'Invalid Response' : ''
- ); */
         if (error) {
           if (res) res.statusCode = 404;
           return {
@@ -680,7 +676,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
           appConfig: applicationConfig.value,
           isAmp: isAmp,
           id: id,
-		  userAgent: userAgent,
+          userAgent: userAgent,
         };
     }
   } else {

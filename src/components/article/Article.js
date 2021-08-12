@@ -213,7 +213,9 @@ export default function Article({
             const el = videos[i];
             const res = results[i];
             const url = new URL(res);
-            const iframeSource = 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/embed_etv.html' + url.search;
+            const iframeSource =
+              'https://etvbharatimages.akamaized.net/etvbharat/static/assets/embed_etv.html' +
+              url.search;
 
             el.innerHTML = `<amp-video-iframe
             layout="responsive"
@@ -247,7 +249,7 @@ export default function Article({
   const thumbnail = thumbnailExtractor(
     data.thumbnails,
     '3_2',
-    window.innerWidth >= 768 ? 'b2s': 's2b',
+    window.innerWidth >= 768 ? 'b2s' : 's2b',
     data.media_type
   );
   return (
@@ -333,12 +335,19 @@ export default function Article({
                   className="-mx-3 md:mx-0 relative "
                   style={{ minWidth: '300px', minHeight: '200px' }}
                 >
-                  <Thumbnail
-                    thumbnail={thumbnail}
-                    className={'md:rounded-lg w-full'}
-                    type={data.media_type}
-                    lazy={false}
-                  />
+                  {contentId == 'na20210812113903042' ? (
+                    <img
+                      src="https://res.cloudinary.com/demo/image/upload/w_300/sample.webp"
+                      style={{ width: '100%' }}
+                    />
+                  ) : (
+                    <Thumbnail
+                      thumbnail={thumbnail}
+                      className={'md:rounded-lg w-full'}
+                      type={data.media_type}
+                      lazy={false}
+                    />
+                  )}
                 </div>
                 <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
                   <MediaContextProvider>
