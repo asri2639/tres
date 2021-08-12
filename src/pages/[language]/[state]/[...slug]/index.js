@@ -390,6 +390,7 @@ const slug = ({
           <>
             {' '}
             <Head>
+              <link rel="preload" as="image" href={headerObj.thumbnail.url} />
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
               {ampExists && (data.is_amp || readwhere) ? (
@@ -401,7 +402,6 @@ const slug = ({
                 content={headerObj.fbContentId}
               ></meta>
 
-              <link rel="preload" as="image" href={headerObj.thumbnail.url} />
               <link
                 rel="preconnect"
                 href="https://prod.api.etvbharat.com"

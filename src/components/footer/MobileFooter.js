@@ -77,7 +77,7 @@ const MobileFooter = ({ data, menu }) => {
 
   return (
     <>
-      {false && menu && menu.mobile ? (
+      {menu && menu.mobile ? (
         <>
           {isAMP ? <AMPSidebar data={{ menu: menu }} /> : null}
           {sidebar ? (
