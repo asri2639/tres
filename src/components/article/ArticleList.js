@@ -25,6 +25,7 @@ const ArticleList = ({ articleData }) => {
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
 
+  const [loadRelated, setLoadRelated] = useState(false);
   const [viewed, setViewed] = useState([]);
 
   const relatedArticlesFetcher = (...args) => {
@@ -60,11 +61,15 @@ const ArticleList = ({ articleData }) => {
   );
 
   const { data, error } = useSWR(
-    ['CatalogList', 'getRelatedArticles', articleData.contentId],
+    () => {
+      return loadRelated
+        ? ['CatalogList', 'getRelatedArticles', articleData.contentId]
+        : null;
+    },
     relatedArticlesFetcher,
     { dedupingInterval: 5 * 60 * 1000 }
   );
-  
+
   // Set articles from articleData
   useEffect(() => {
     if (articleData) {
@@ -114,6 +119,7 @@ const ArticleList = ({ articleData }) => {
   });
 
   const handleScroll = async () => {
+    setLoadRelated(true);
     // To get page offset of last article
     const lastArticleLoaded = document.querySelector(
       '.article-list > .article:last-child'
