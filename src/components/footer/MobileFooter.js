@@ -402,7 +402,7 @@ const MobileFooter = ({ data, menu }) => {
                       width="24"
                       height="24"
                       alt="ETV"
-                      src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/etv-grey.png"
+                      src="/assets/images/etv-grey.png"
                     />
                     <p className="whitespace-nowrap">CHANGE STATE</p>
                   </div>
@@ -417,7 +417,7 @@ const MobileFooter = ({ data, menu }) => {
                       width="24"
                       height="24"
                       alt="ETV"
-                      src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/search-grey.png"
+                      src="/assets/images/search-grey.png"
                     />
                     <p className="whitespace-nowrap">SEARCH</p>
                   </div>
@@ -435,7 +435,7 @@ const MobileFooter = ({ data, menu }) => {
                       width="24"
                       height="24"
                       alt="ETV"
-                      src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/hamburger-grey.png"
+                      src="/assets/images/hamburger-grey.png"
                     />
                     <p
                       className="whitespace-nowrap"
