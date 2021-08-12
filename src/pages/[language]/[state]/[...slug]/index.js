@@ -402,6 +402,7 @@ const slug = ({
                 property="fb:pages"
                 content={headerObj.fbContentId}
               ></meta>
+              <link rel="preload" as="image" href="https://res.cloudinary.com/demo/image/upload/w_300/sample.webp" />
               <link rel="preload" as="image" href={headerObj.thumbnail.url} />
               <link
                 rel="preconnect"
