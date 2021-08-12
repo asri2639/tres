@@ -14,7 +14,6 @@ import {
 } from '@utils/Helpers';
 import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
-import getConfig from 'next/config';
 import useTranslator from '@hooks/useTranslator';
 
 import { totalItemsCount } from '@components/listing/PageListing';
