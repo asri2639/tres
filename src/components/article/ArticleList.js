@@ -64,6 +64,7 @@ const ArticleList = ({ articleData }) => {
     relatedArticlesFetcher,
     { dedupingInterval: 5 * 60 * 1000 }
   );
+  
   // Set articles from articleData
   useEffect(() => {
     if (articleData) {
