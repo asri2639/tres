@@ -22,7 +22,7 @@ module.exports = {
         '-10': '-10',
       },
       fontFamily: {
-        english: ['LikhithEnglish'],
+        // english: ['LikhithEnglish'],
       },
       boxShadow: {
         t: '0 -2px 13px rgba(0,0,0,0.2)',

@@ -230,9 +230,6 @@ const slug = ({
           loadJS(
             'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
           );
-          loadJS(
-            'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
-          );
         }
 
         headerObj = {
