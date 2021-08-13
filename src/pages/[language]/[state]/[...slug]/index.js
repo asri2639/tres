@@ -39,6 +39,7 @@ const slug = ({
   const { appLanguage } = useTranslator();
   let ampUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+  const cssTagExtractionRegex = /<link\b[^<]*(?:(?!<\/link>)<[^<]*)*<\/link>/gi;
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
   if (appConfig && appConfig.params_hash2) {
@@ -128,8 +129,14 @@ const slug = ({
         const tags = new Set();
         let datum = {};
         const html = data
-          ? data.html_tag.replace(scriptTagExtractionRegex, '')
+          ? data.html_tag
+              .replace(scriptTagExtractionRegex, '')
+              .replace(
+                '<link rel="stylesheet" href="https://etvbharatimages.akamaized.net/newsroom-metadata/saranyunewsroom-2.css">',
+                ''
+              )
           : '';
+        console.log(html);
 
         if (typeof window !== 'undefined') {
           let scrollDepth = !1;
@@ -226,9 +233,6 @@ const slug = ({
         if (typeof window !== 'undefined' && !isAmp) {
           loadJS(
             'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
-          );
-          loadJS(
-            'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
           );
           loadJS(
             'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
