@@ -39,7 +39,6 @@ const slug = ({
   const { appLanguage } = useTranslator();
   let ampUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
-  const cssTagExtractionRegex = /<link\b[^<]*(?:(?!<\/link>)<[^<]*)*<\/link>/gi;
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
   if (appConfig && appConfig.params_hash2) {
@@ -136,7 +135,6 @@ const slug = ({
                 ''
               )
           : '';
-        console.log(html);
 
         if (typeof window !== 'undefined') {
           let scrollDepth = !1;
