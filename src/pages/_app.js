@@ -78,34 +78,9 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 
         {!isAMP ? (
           <>
-            {langName !== 'english' ? (
-              <>
-                <link
-                  rel="preload"
-                  href={`https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/${langCap}/${langName}.woff2`}
-                  as="font"
-                  type="font/woff2"
-                  crossOrigin={'anonymous'}
-                />
-                <link
-                  rel="preload"
-                  href={`https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/${langCap}/${langName}.woff`}
-                  as="font"
-                  type="font/woff2"
-                  crossOrigin={'anonymous'}
-                />
-              </>
-            ) : null}
             <link
               rel="preload"
-              href="https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/English/english.woff2"
-              as="font"
-              type="font/woff2"
-              crossOrigin={'anonymous'}
-            />
-            <link
-              rel="preload"
-              href="https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/English/english.woff"
+              href={`https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/${langCap}/${langName}.woff2`}
               as="font"
               type="font/woff2"
               crossOrigin={'anonymous'}
