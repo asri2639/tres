@@ -144,9 +144,7 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
         } */
         setIsDesktop(true);
       }, 10);
-      if (callsDone === 1) {
-        fetchMoreListItems();
-      }
+    
       document.addEventListener('load', () => {
         setTimeout(() => {
           // googletag.pubads().refresh();
