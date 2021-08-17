@@ -2,15 +2,15 @@ $font-stack: 'Helvetica, Arial, sans-serif';
 $languages: (
   'asm': 'assamese',
   'en': 'english',
-  'hi': 'hindi',
-  'ml': 'malayalam',
   'mr': 'marathi',
-  'pan': 'punjabi',
-  'ta': 'tamil',
+  'pan': 'punjabi',  
   'ur': 'urdu',
 );
 
 $languages1: (
+  'ml': 'malayalam',
+  'ta': 'tamil',
+  'hi': 'hindi',
   'bn': 'bengali',
   'gu': 'gujarati',
   'kn': 'kannada',
