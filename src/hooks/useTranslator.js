@@ -1,4 +1,4 @@
-import { domainUrl, languageMap } from '@utils/Constants';
+import { languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 

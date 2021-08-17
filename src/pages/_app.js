@@ -78,13 +78,13 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
 
         {!isAMP ? (
           <>
-            <link
-              rel="preload"
-              href={`https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/${langCap}/${langName}.woff2`}
-              as="font"
-              type="font/woff2"
-              crossOrigin={'anonymous'}
-            />
+             <link
+                  rel="preload"
+                  href={`https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/${langCap}/${langName}.woff2`}
+                  as="font"
+                  type="font/woff2"
+                  crossOrigin={'anonymous'}
+                />
           </>
         ) : null}
       </Head>

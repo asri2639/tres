@@ -1,18 +1,21 @@
 $font-stack: 'Helvetica, Arial, sans-serif';
 $languages: (
   'asm': 'assamese',
-  // 'bn': 'bengali',
   'en': 'english',
-  'gu': 'gujarati',
   'hi': 'hindi',
-  'kn': 'kannada',
   'ml': 'malayalam',
   'mr': 'marathi',
-  'or': 'oriya2',
   'pan': 'punjabi',
   'ta': 'tamil',
-  'te': 'telugu',
   'ur': 'urdu',
+);
+
+$languages1: (
+  'bn': 'bengali',
+  'gu': 'gujarati',
+  'kn': 'kannada',
+  'or': 'oriya',
+  'te': 'telugu',
 );
 
 @function capitalize($string) {
@@ -27,16 +30,35 @@ $languages: (
     font-style: normal;
     font-display: swap;
     src: local('Likhith' + $cap-name), local('Likhith-' + $cap-name),
-      url('https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/' + $cap-name + '/' + $name + '.woff2')
-        format('woff2'),
-      url('https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/' + $cap-name + '/' + $name + '.woff')
-        format('woff'),
-      url('https://etvbharatimages.akamaized.net/etvbharat/static/fonts/' + $cap-name + '/' + $name + '.ttf')
+      url('https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/' + $cap-name + '/' + $name + '.woff2') format('woff2'),
+      url('https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/' + $cap-name + '/' + $name + '.woff') format('woff'),
+      url('https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/' + $cap-name + '/' + $name + '.ttf')
         format('truetype');
   }
 
   html[lang='#{$key}'],
   html[lang='#{$key}'] body {
     font-family: 'Likhith' + $cap-name, unquote($font-stack);
+  }
+}
+
+
+@each $key, $name in $languages1 {
+  $cap-name: capitalize($name);
+  @font-face {
+    font-family: 'Noto Sans ' + $cap-name;
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: local('Noto Sans ' + $cap-name), local('Noto Sans -' + $cap-name),
+      url('https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/' + $cap-name + '/' + $name + '.woff2') format('woff2'),
+      url('https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/' + $cap-name + '/' + $name + '.woff') format('woff'),
+      url('https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/' + $cap-name + '/' + $name + '.ttf')
+        format('truetype');
+  }
+
+  html[lang='#{$key}'],
+  html[lang='#{$key}'] body {
+    font-family: 'Noto Sans ' + $cap-name, unquote($font-stack);
   }
 }

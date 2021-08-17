@@ -224,10 +224,6 @@ const slug = ({
         videoDatum.contentType = data.content_type;
         videoDatum.contentId = data.content_id;
 
-        const isLive =
-          data['media_type'] === 'live_stream' ||
-          data['episode_type'] === 'live_stream';
-
         if (typeof window !== 'undefined' && !isAmp) {
           loadJS(
             'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
@@ -271,8 +267,6 @@ const slug = ({
         const keywords = data.gallery.map((v) => {
           return v.description;
         });
-
-        let thumbnail;
 
         headerObj = {
           title: main.display_title,
