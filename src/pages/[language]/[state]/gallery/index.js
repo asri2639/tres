@@ -59,10 +59,9 @@ const slug = ({
   // const ampExists = false; // prod enabling amp
 
   const getComponent = () => {
-    let component = null;
-    let headerObj = {};
     let stateName = null;
     let canonicalUrl = '';
+    let ampUrl = '';
 
     if (pageType === 'error') {
       return <div>URL Not Found</div>;

@@ -62,6 +62,7 @@ const slug = ({
     let headerObj = {};
     let stateName = null;
     let canonicalUrl = '';
+    let ampUrl = '';
 
     if (pageType === 'error') {
       return <div>URL Not Found</div>;
