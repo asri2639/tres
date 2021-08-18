@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import ListContainer from '@components/listing/ListContainer';
@@ -13,10 +13,9 @@ import {
 } from '@utils/Helpers';
 import { NextSeo } from 'next-seo';
 import useTranslator from '@hooks/useTranslator';
-import { AMPContext } from '@pages/_app';
 import { totalItemsCount } from '@components/listing/PageListing';
 
-const state = ({ data, payload, pageType, isAmp }) => {
+const state = ({ data, payload }) => {
   const router = useRouter();
 
   const { appLanguage } = useTranslator();

@@ -18,15 +18,80 @@ export const linkInfoGenerator = (url, state) => {
   if (splitUrl[0].toLowerCase() === 'urdu') {
     splitUrl[1] = state;
   }
-  return {
-    href: {
-      pathname: '/[language]/[state]/[...slug]',
-      query: {
-        language: splitUrl[0],
-        state: splitUrl[1],
-        slug: splitUrl.slice(2).join('/'),
+  if (
+    ['gallery', 'video', 'videos', 'live-streaming'].indexOf(splitUrl[2]) >= 0
+  ) {
+    if (splitUrl.length === 3) {
+      return {
+        href: {
+          pathname: `/[language]/[state]/${splitUrl[2]}`,
+          query: {
+            language: splitUrl[0],
+            state: splitUrl[1],
+          },
+        },
+        as: `/${splitUrl.join('/')}`,
+      };
+    }
+    return {
+      href: {
+        pathname: `/[language]/[state]/${splitUrl[2]}/[...slug]`,
+        query: {
+          language: splitUrl[0],
+          state: splitUrl[1],
+          slug: splitUrl.slice(2).join('/'),
+        },
       },
+      as: `/${splitUrl.join('/')}`,
+    };
+  }
+
+  let href = {
+    pathname: '/[language]/[state]/[category]/[subcategory]/[...slug]',
+    query: {
+      language: splitUrl[0],
+      state: splitUrl[1],
+      category: splitUrl[2],
+      subcategory: splitUrl[3],
+      slug: splitUrl.slice(4).join('/'),
     },
+  };
+  switch (splitUrl.length) {
+    case 2:
+      href = {
+        pathname: '/[language]/[state]',
+        query: {
+          language: splitUrl[0],
+          state: splitUrl[1],
+        },
+      };
+      break;
+
+    case 3:
+      href = {
+        pathname: '/[language]/[state]/[category]',
+        query: {
+          language: splitUrl[0],
+          state: splitUrl[1],
+          category: splitUrl[2],
+        },
+      };
+      break;
+    case 4:
+      href = {
+        pathname: '/[language]/[state]/[category]/[subcategory]',
+        query: {
+          language: splitUrl[0],
+          state: splitUrl[1],
+          category: splitUrl[2],
+          subcategory: splitUrl[3],
+        },
+      };
+      break;
+  }
+
+  return {
+    href: href,
     as: `/${splitUrl.join('/')}`,
   };
 };
@@ -54,8 +119,17 @@ export const thumbnailExtractor = (
 
   if (isEmpty(thumbnailObj)) {
     return !mediaType
-      ? { alt_tags: '', caption: '', url: 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png' }
-      : { alt_tags: 'Breaking News', url: 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/breakingplate.jpg' };
+      ? {
+          alt_tags: '',
+          caption: '',
+          url:
+            'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png',
+        }
+      : {
+          alt_tags: 'Breaking News',
+          url:
+            'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/breakingplate.jpg',
+        };
   }
 
   const order = (extractionOrder === 's2b'
@@ -68,7 +142,12 @@ export const thumbnailExtractor = (
       return thumbnailObj[i];
     }
   }
-  return { alt_tags: '', caption: '', url: 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png' };
+  return {
+    alt_tags: '',
+    caption: '',
+    url:
+      'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png',
+  };
 };
 
 export const stateCodeConverter = (e) => {

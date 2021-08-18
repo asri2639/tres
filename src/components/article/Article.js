@@ -242,7 +242,7 @@ export default function Article({
     }
 
     return () => {
-      // api && api.shutdown();
+      api && api.shutdown();
     };
   }, [inView, contentId, contentRef]);
 
