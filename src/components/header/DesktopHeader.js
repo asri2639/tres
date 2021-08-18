@@ -485,7 +485,8 @@ const DesktopHeader = ({ className, data }) => {
               }}
               as={`/${language}/${router.query.state}`}
               passHref
-              ariaLabel={`ETV ${language}`}
+              title={`ETV ${language}`}
+              hideTitle={true}
             >
               <div className={`logo ${language}`}></div>
             </NavLink>

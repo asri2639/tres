@@ -62,7 +62,6 @@ const DistrictSelectModal = ({ state, onClose, onDistrictSelect, mainUrl }) => {
     if (data) {
       stopLoading();
       const newdata = data.map((v) => {
-        console.log(v);
         return { ...v, linkInfo: getLink(v.friendly_id) };
       });
       setDistricts(newdata);
