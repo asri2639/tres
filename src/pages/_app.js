@@ -77,15 +77,17 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="theme-color" content="#07254c" />
 
         {!isAMP ? (
-          <>
-             <link
-                  rel="preload"
-                  href={`https://etvbharatimages.akamaized.net/etvbharat/static/assets/fonts/${langCap}/${langName}.woff2`}
-                  as="font"
-                  type="font/woff2"
-                  crossOrigin={'anonymous'}
-                />
-          </>
+          <link
+            rel="preload"
+            href={`https://etvbharatimages.akamaized.net/etvbharat/static/${
+              langName === 'assamese'
+                ? 'o-0IIpQlx3QUlC5A4PNr5TRA.woff2'
+                : 'assets/fonts/${langCap}/${langName}.woff2'
+            }`}
+            as="font"
+            type="font/woff2"
+            crossOrigin={'anonymous'}
+          />
         ) : null}
       </Head>
 
