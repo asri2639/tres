@@ -12,14 +12,20 @@ import gallery from './Gallery.module.scss';
 import GoogleTagManager from '@utils/GoogleTagManager';
 import ComScore from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
-import MobileNextArticle from '@components/article/MobileNextArticle';
 import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
 import { AMPContext } from '@pages/_app';
 import BBCHeader from '@components/common/BBCHeader';
 import React from 'react';
-import MobileAd from '@components/article/MobileAd';
-import FirstAd from '@components/article/FirstAd';
+import dynamic from 'next/dynamic';
+const options = {
+  loading: () => <div>Loading...</div>,
+};
+const MobileAd = dynamic(() => import('@components/article/MobileAd'), options);
+const MobileNextArticle = dynamic(
+  () => import('@components/article/MobileNextArticle'),
+  options
+);
 
 const Gallery = ({
   contentId,
@@ -389,7 +395,7 @@ const Gallery = ({
             <MediaContextProvider>
               <Media greaterThan="xs">
                 <div className="bbc-tag">
-                  <img src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
+                  <img alt="" src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
                 </div>
               </Media>
             </MediaContextProvider>

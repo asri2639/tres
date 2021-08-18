@@ -11,9 +11,7 @@ import {
 } from '@utils/Helpers';
 import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
-
 import Error from 'next/error';
-
 import GalleryList from '@components/gallery/GalleryList';
 
 const slug = ({ data, pageType, appConfig, id }) => {

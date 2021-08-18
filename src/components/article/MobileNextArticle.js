@@ -103,7 +103,7 @@ const MobileNextArticle = ({
 
       {showBbc ? (
         <div className="bbc-tag bbc-tag-footer">
-          <img src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
+          <img alt="" src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
         </div>
       ) : null}
 
