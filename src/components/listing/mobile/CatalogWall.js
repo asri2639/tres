@@ -1,5 +1,5 @@
 import NavLink from '@components/common/NavLink';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import { articleClick } from '@utils/GoogleTagManager';
 import { linkInfoGenerator } from '@utils/Helpers';
 
 const CatalogWall = ({ data, article, className }) => {
@@ -17,7 +17,7 @@ const CatalogWall = ({ data, article, className }) => {
               as={linkInfo.as}
               passHref
               onClick={() => {
-                GoogleTagManager.articleClick(item);
+                articleClick(item);
               }}
             >
               <div className="wall-image">

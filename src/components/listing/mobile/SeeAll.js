@@ -1,6 +1,6 @@
 import NavLink from '@components/common/NavLink';
 import eventBus from '@utils/EventBus';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import { articleClick } from '@utils/GoogleTagManager';
 import { configStateCodeConverter, linkInfoGenerator } from '@utils/Helpers';
 import SquareCard from './SquareCard';
 import DistrictSelectModal from '@components/common/DistrictSelectModal';
@@ -234,7 +234,7 @@ const SeeAll = ({ data, article, className }) => {
           onClose={() => {
             setShowDistrictModal(false);
           }}
-          mainUrl={displayData ? displayData.url: ''}
+          mainUrl={displayData ? displayData.url : ''}
           onDistrictSelect={(district) => {
             startLoading();
 
@@ -290,7 +290,7 @@ const SeeAll = ({ data, article, className }) => {
             as={scope.link_info.as}
             passHref
             onClick={() => {
-              GoogleTagManager.articleClick(article);
+              articleClick(article);
             }}
           >
             {t(scope.text)}

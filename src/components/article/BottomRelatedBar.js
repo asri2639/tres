@@ -1,9 +1,9 @@
 import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
-import GoogleTagManager from '@utils/GoogleTagManager';
 import { thumbnailExtractor } from '@utils/Helpers';
 import { useContext, useEffect, useState } from 'react';
+import { articleClick } from '@utils/GoogleTagManager';
 
 import bottom from './BottomRelatedBar.module.scss';
 const BottomRelatedBar = ({ data }) => {
@@ -80,7 +80,7 @@ const BottomRelatedBar = ({ data }) => {
             as={`/${rel.web_url}`}
             passHref
             onClick={() => {
-              GoogleTagManager.articleClick(rel);
+              articleClick(rel);
             }}
           >
             <Thumbnail

@@ -1,7 +1,7 @@
 import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import { articleClick } from '@utils/GoogleTagManager';
 import { linkInfoGenerator, thumbnailExtractor } from '@utils/Helpers';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
@@ -27,7 +27,7 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
       as={linkInfo.as}
       passHref
       onClick={() => {
-        GoogleTagManager.articleClick(article);
+        articleClick(article);
       }}
     >
       <div

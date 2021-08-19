@@ -3,8 +3,8 @@ import { useInView, InView } from 'react-intersection-observer';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
 import video from './Video.module.scss';
-import GoogleTagManager from '@utils/GoogleTagManager';
-import ComScore from '@utils/ComScore';
+import { articleViewScroll } from '@utils/GoogleTagManager';
+import { pageView, nextPageView } from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
@@ -90,11 +90,11 @@ const Video = ({
 
     if (viewed.indexOf(contentId) === -1) {
       viewed.push(contentId);
-      GoogleTagManager.articleViewScroll(data, { videoArticle: true });
+      articleViewScroll(data, { videoArticle: true });
       if (viewed.length === 1) {
-        ComScore.pageView();
+        pageView();
       } else {
-        ComScore.nextPageView();
+        nextPageView();
       }
     }
     if (typeof window !== 'undefined' && !isAMP && desktop) {
@@ -302,7 +302,10 @@ const Video = ({
               <MediaContextProvider>
                 <Media greaterThan="xs">
                   <div className="bbc-tag">
-                    <img alt="" src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
+                    <img
+                      alt=""
+                      src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png"
+                    />
                   </div>
                 </Media>
               </MediaContextProvider>
@@ -314,11 +317,7 @@ const Video = ({
               triggerOnce={true}
               onChange={(inView, entry) => {
                 if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { videoArticle: true },
-                    25
-                  );
+                  articleViewScroll(data, { videoArticle: true }, 25);
                 }
               }}
             >
@@ -330,11 +329,7 @@ const Video = ({
               triggerOnce={true}
               onChange={(inView, entry) => {
                 if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { videoArticle: true },
-                    50
-                  );
+                  articleViewScroll(data, { videoArticle: true }, 50);
                 }
               }}
             >
@@ -346,11 +341,7 @@ const Video = ({
               triggerOnce={true}
               onChange={(inView, entry) => {
                 if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { videoArticle: true },
-                    75
-                  );
+                  articleViewScroll(data, { videoArticle: true }, 75);
                 }
               }}
             >
@@ -362,11 +353,7 @@ const Video = ({
               triggerOnce={true}
               onChange={(inView, entry) => {
                 if (inView) {
-                  GoogleTagManager.articleViewScroll(
-                    data,
-                    { videoArticle: true },
-                    100
-                  );
+                  articleViewScroll(data, { videoArticle: true }, 100);
                 }
               }}
             >

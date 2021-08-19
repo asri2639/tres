@@ -1,19 +1,15 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import AdContainer from '@components/article/AdContainer';
 import { dateFormatter, thumbnailExtractor } from '@utils/Helpers';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
 import Thumbnail from '@components/common/Thumbnail';
-import GoogleTagManager from '@utils/GoogleTagManager';
-import ComScore from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import { AMPContext } from '@pages/_app';
 import stringToHTML from '@utils/StringToHtml';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
-// import FirstAd from '@components/article/FirstAd';
 import dynamic from 'next/dynamic';
 const options = {
   loading: () => <div>Loading...</div>,
@@ -23,6 +19,13 @@ const MobileNextArticle = dynamic(
   () => import('@components/article/MobileNextArticle'),
   options
 );
+const AdContainer = dynamic(
+  () => import('@components/article/AdContainer'),
+  options
+);
+
+import { articleViewScroll } from '@utils/GoogleTagManager';
+import { pageView, nextPageView } from '@utils/ComScore';
 
 // initialPosition
 // div height
@@ -67,12 +70,12 @@ export default function Article({
 
     if (viewed.indexOf(contentId) === -1) {
       viewed.push(contentId);
-      GoogleTagManager.articleViewScroll(data, { newsArticle: true });
+      articleViewScroll(data, { newsArticle: true });
 
       if (viewed.length === 1) {
-        ComScore.pageView();
+        pageView();
       } else {
-        ComScore.nextPageView();
+        nextPageView();
       }
     }
     if (inView) {

@@ -1,7 +1,7 @@
 import NavLink from '@components/common/NavLink';
 import { RTLContext } from '@components/layout/Layout';
-import GoogleTagManager from '@utils/GoogleTagManager';
 import { useContext } from 'react';
+import { stateChange } from '@utils/GoogleTagManager';
 
 export default function LanguageList({ languages }) {
   const isRTL = useContext(RTLContext);
@@ -25,7 +25,7 @@ export default function LanguageList({ languages }) {
           as={`/${language.item_languages[0]}/${state || 'national'}`}
           passHref
           onClick={() => {
-            GoogleTagManager.stateChange(language);
+            stateChange(language);
           }}
           title={language.display_title}
         />

@@ -7,7 +7,7 @@ import RectangleCard from '@components/listing/mobile/RectangleCard';
 import NavLink from '@components/common/NavLink';
 import SeeAll from './mobile/SeeAll';
 import SliderSeeAll from './mobile/SliderSeeAll';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import { menuClick } from '@utils/GoogleTagManager';
 import Loading from './mobile/Loading';
 import { stateCodeConverter } from '@utils/Helpers';
 import useSWR from 'swr';
@@ -22,9 +22,14 @@ import dynamic from 'next/dynamic';
 const options = {
   loading: () => <div>Loading...</div>,
 };
-const AdContainer = dynamic(() => import('@components/article/AdContainer'), options);
-const DesktopAdContainer = dynamic(() => import('@components/article/DesktopAdContainer'), options);
-
+const AdContainer = dynamic(
+  () => import('@components/article/AdContainer'),
+  options
+);
+const DesktopAdContainer = dynamic(
+  () => import('@components/article/DesktopAdContainer'),
+  options
+);
 
 const ListContainer = ({ children, data, payload }) => {
   const api = API(APIEnum.CatalogList);
@@ -305,7 +310,7 @@ const ListContainer = ({ children, data, payload }) => {
                     as={listItems[0].url}
                     passHref
                     onClick={() => {
-                      GoogleTagManager.menuClick(listItems[0], 'headermenu');
+                      menuClick(listItems[0], 'headermenu');
                     }}
                   >
                     {t('see_all')}

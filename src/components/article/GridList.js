@@ -1,11 +1,11 @@
 import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
-import GoogleTagManager from '@utils/GoogleTagManager';
 import { linkInfoGenerator, thumbnailExtractor } from '@utils/Helpers';
 import { useContext } from 'react';
 import grid from './GridList.module.scss';
 import { useRouter } from 'next/router';
+import { articleClick } from '@utils/GoogleTagManager';
 
 const GridList = ({ data }) => {
   const isRTL = useContext(RTLContext);
@@ -30,7 +30,7 @@ const GridList = ({ data }) => {
               as={linkInfo.as}
               passHref
               onClick={() => {
-                GoogleTagManager.articleClick(v);
+                articleClick(v);
               }}
             >
               <Thumbnail

@@ -1,5 +1,4 @@
 import { thumbnailExtractor } from '@utils/Helpers';
-import GoogleTagManager from '@utils/GoogleTagManager';
 import Modal from '@components/modal/Modal';
 import { useContext, useState } from 'react';
 import { AMPContext } from '@pages/_app';

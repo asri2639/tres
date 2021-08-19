@@ -8,7 +8,12 @@ import NavLink from '@components/common/NavLink';
 import DesktopSidebar from '@components/header/DesktopSidebar';
 import Modal from '@components/modal/Modal';
 import DesktopSubMenu from '@components/header/DesktopSubMenu';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import {
+  languageChange,
+  searchItem,
+  menuClick,
+  subMenuClick,
+} from '@utils/GoogleTagManager';
 import { Media, MediaContextProvider } from '@media';
 import { RTLContext } from '@components/layout/Layout';
 import API from '@services/api/API';
@@ -47,7 +52,7 @@ const DesktopHeader = ({ className, data }) => {
   };
 
   const goToLanguageListing = (language, routeParams) => {
-    GoogleTagManager.languageChange(language);
+    languageChange(language);
     setTimeout(() => {
       router.push(routeParams[1]);
     }, 10);
@@ -79,7 +84,7 @@ const DesktopHeader = ({ className, data }) => {
   const searchitem = (e) => {
     const goTo = () => {
       toggleSearchBox(false);
-      GoogleTagManager.searchItem(searchInput);
+      searchItem(searchInput);
       router.push(
         `/${language}/${router.query.state}/search/${decodeURI(searchInput)}`
       );
@@ -385,7 +390,7 @@ const DesktopHeader = ({ className, data }) => {
                         as={item.url}
                         passHref
                         onClick={() => {
-                          GoogleTagManager.menuClick(item, 'headermenu');
+                          menuClick(item, 'headermenu');
                         }}
                       >
                         {item.ml_title[0].text.toUpperCase()}
@@ -433,10 +438,7 @@ const DesktopHeader = ({ className, data }) => {
                                       as={subitem.url}
                                       passHref
                                       onClick={() => {
-                                        GoogleTagManager.subMenuClick(
-                                          subitem,
-                                          ''
-                                        );
+                                        subMenuClick(subitem, '');
                                       }}
                                     >
                                       {subitem.ml_title[0].text}

@@ -13,9 +13,9 @@ import {
   RedditIcon,
 } from 'react-share';
 import { thumbnailExtractor } from '@utils/Helpers';
-import GoogleTagManager from '@utils/GoogleTagManager';
 import getConfig from 'next/config';
 import { AMPContext } from '@pages/_app';
+import { comment, share } from '@utils/GoogleTagManager';
 
 const SocialMedia = ({ data }) => {
   const { publicRuntimeConfig } = getConfig();
@@ -131,7 +131,7 @@ const SocialMedia = ({ data }) => {
           <FacebookShareButton
             url={`${baseUrl}/${url}`}
             beforeOnClick={() => {
-              GoogleTagManager.share(data);
+              share(data);
             }}
           >
             <FacebookIcon size={32} round={true} />
@@ -140,7 +140,7 @@ const SocialMedia = ({ data }) => {
             title={data.title}
             url={`${baseUrl}/${url}`}
             beforeOnClick={() => {
-              GoogleTagManager.share(data);
+              share(data);
             }}
           >
             <LinkedinIcon size={32} round={true} />
@@ -149,7 +149,7 @@ const SocialMedia = ({ data }) => {
             title={data.title}
             url={`${baseUrl}/${url}`}
             beforeOnClick={() => {
-              GoogleTagManager.share(data);
+              share(data);
             }}
           >
             <TwitterIcon size={32} round={true} />
@@ -158,7 +158,7 @@ const SocialMedia = ({ data }) => {
             title={data.title}
             url={`${baseUrl}/${url}`}
             beforeOnClick={() => {
-              GoogleTagManager.share(data);
+              share(data);
             }}
           >
             <WhatsappIcon size={32} round={true} />
@@ -167,20 +167,20 @@ const SocialMedia = ({ data }) => {
             title={data.title}
             url={`${baseUrl}/${url}`}
             beforeOnClick={() => {
-              GoogleTagManager.share(data);
+              share(data);
             }}
           >
             <RedditIcon size={32} round={true} />
           </RedditShareButton>
 
           <img
-             height="24"
-             width="24"
+            height="24"
+            width="24"
             className="w-6 lg:mx-auto inline-block cursor-pointer"
             src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/comment.png"
             alt=""
             onClick={() => {
-              GoogleTagManager.comment(data);
+              comment(data);
               toggleOpen(true);
             }}
           ></img>

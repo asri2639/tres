@@ -1,7 +1,7 @@
 import NavLink from '@components/common/NavLink';
 import DesktopSidebar from '@components/header/DesktopSidebar';
 import Constants from '@utils/Constants';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import { backToTop, appInstall } from '@utils/GoogleTagManager';
 import { useContext, useEffect, useState } from 'react';
 import footer from './Footer.module.scss';
 import { AMPContext } from '@pages/_app';
@@ -26,13 +26,13 @@ const MobileFooter = ({ data, menu }) => {
   const [searchInput, setSearchInput] = useState('');
   const [sidebar, toggleSidebar] = useState(false);
 
-  const backToTop = () => {
+  const backToTopp = () => {
     window.scroll({
       top: 0,
       left: 0,
       behavior: 'smooth',
     });
-    GoogleTagManager.backToTop();
+    backToTop();
   };
 
   const searchitem = (e) => {
@@ -111,7 +111,7 @@ const MobileFooter = ({ data, menu }) => {
                     left: 'calc(50% - 5rem)',
                   }}
                   onClick={() => {
-                    backToTop();
+                    backToTopp();
                   }}
                 >
                   {router.query.language ? t('back_to_top') : 'BACK TO TOP'}
@@ -160,7 +160,7 @@ const MobileFooter = ({ data, menu }) => {
                   <ul className="flex w-48 mx-auto justify-around my-4">
                     <li>
                       <NavLink
-                        onClick={() => GoogleTagManager.appInstall('Android')}
+                        onClick={() => appInstall('Android')}
                         href={Constants.appURLs.android}
                         passHref
                       >
@@ -176,7 +176,7 @@ const MobileFooter = ({ data, menu }) => {
                     </li>
                     <li>
                       <NavLink
-                        onClick={() => GoogleTagManager.appInstall('IOS')}
+                        onClick={() => appInstall('IOS')}
                         href={Constants.appURLs.ios}
                         passHref
                       >
@@ -263,7 +263,7 @@ const MobileFooter = ({ data, menu }) => {
                   <div className="flex flex-col items-center justify-center whitespace-nowrap">
                     {!isiOS ? (
                       <NavLink
-                        onClick={() => GoogleTagManager.appInstall('Android')}
+                        onClick={() => appInstall('Android')}
                         href={Constants.appURLs.android}
                         passHref
                         style={
@@ -288,7 +288,7 @@ const MobileFooter = ({ data, menu }) => {
                       </NavLink>
                     ) : (
                       <NavLink
-                        onClick={() => GoogleTagManager.appInstall('IOS')}
+                        onClick={() => appInstall('IOS')}
                         href={Constants.appURLs.ios}
                         passHref
                       >
