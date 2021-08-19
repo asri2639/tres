@@ -13,6 +13,7 @@ export default class ETVDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+		<meta charset="UTF-8" />
           <link
             rel="preconnect"
             href="https://etvbharatimages.akamaized.net"

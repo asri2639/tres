@@ -302,11 +302,7 @@ const slug = ({
             </Head>
             <NextSeo
               title={headerObj.title}
-              description={headerObj.description
-                .replace(/\(/g, '%28')
-                .replace(/\)/g, '%29')
-                .replace(/\[/g, '%5B')
-                .replace(/\]/g, '%5D')}
+              description={headerObj.description}
               additionalMetaTags={[
                 {
                   name: 'keywords',
