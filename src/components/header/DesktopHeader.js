@@ -105,6 +105,7 @@ const DesktopHeader = ({ className, data }) => {
   useEffect(() => {
     const splitPath = location.pathname.split('/');
     const state = splitPath[2];
+	const isDesktop = window && window.innerWidth >= 768;
     const socialLinks = getSocialLinks(state);
     setSocialHandlers(socialLinks);
 
@@ -137,14 +138,19 @@ const DesktopHeader = ({ className, data }) => {
         })
         .catch((e) => {});
     };
+	if(isDesktop){
     getHeaderAd();
+	}
     const handleRouteChange = (url) => {
       const splitPath = location.pathname.split('/');
       const state = splitPath[2];
       const socialLinks = getSocialLinks(state);
       setSocialHandlers(socialLinks);
       // setTwitterHandler();
-      getHeaderAd(url);
+	  if(isDesktop){
+		  getHeaderAd(url);
+	  }
+      
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);
