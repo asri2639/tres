@@ -9,8 +9,8 @@ import {
   trackWindowScroll,
 } from 'react-lazy-load-image-component';
 import gallery from './Gallery.module.scss';
-import GoogleTagManager from '@utils/GoogleTagManager';
-import ComScore from '@utils/ComScore';
+import { articleViewScroll } from '@utils/GoogleTagManager';
+import { pageView, nextPageView } from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
@@ -80,12 +80,12 @@ const Gallery = ({
       viewed.push(contentId);
       // updateViewed(viewed);
       // console.log(viewed);
-      GoogleTagManager.articleViewScroll(data[0], { galleryArticle: true });
+      articleViewScroll(data[0], { galleryArticle: true });
 
       if (viewed.length === 1) {
-        ComScore.pageView();
+        pageView();
       } else {
-        ComScore.nextPageView();
+        nextPageView();
       }
     }
     if (inView) {
@@ -395,7 +395,10 @@ const Gallery = ({
             <MediaContextProvider>
               <Media greaterThan="xs">
                 <div className="bbc-tag">
-                  <img alt="" src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
+                  <img
+                    alt=""
+                    src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png"
+                  />
                 </div>
               </Media>
             </MediaContextProvider>
@@ -407,11 +410,7 @@ const Gallery = ({
             triggerOnce={true}
             onChange={(inView, entry) => {
               if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { galleryArticle: true },
-                  25
-                );
+                articleViewScroll(data, { galleryArticle: true }, 25);
               }
             }}
           >
@@ -423,11 +422,7 @@ const Gallery = ({
             triggerOnce={true}
             onChange={(inView, entry) => {
               if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { galleryArticle: true },
-                  50
-                );
+                articleViewScroll(data, { galleryArticle: true }, 50);
               }
             }}
           >
@@ -440,11 +435,7 @@ const Gallery = ({
             triggerOnce={true}
             onChange={(inView, entry) => {
               if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { galleryArticle: true },
-                  75
-                );
+                articleViewScroll(data, { galleryArticle: true }, 75);
               }
             }}
           >
@@ -457,11 +448,7 @@ const Gallery = ({
             triggerOnce={true}
             onChange={(inView, entry) => {
               if (inView) {
-                GoogleTagManager.articleViewScroll(
-                  data,
-                  { galleryArticle: true },
-                  100
-                );
+                articleViewScroll(data, { galleryArticle: true }, 100);
               }
             }}
           >

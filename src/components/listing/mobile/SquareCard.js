@@ -1,7 +1,7 @@
 import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import { articleClick, seeAll } from '@utils/GoogleTagManager';
 import { thumbnailExtractor, linkInfoGenerator } from '@utils/Helpers';
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
@@ -15,7 +15,7 @@ const SquareCard = ({
   imgHeight,
   noDescription,
   styleObj,
-  main
+  main,
 }) => {
   const isRTL = useContext(RTLContext);
   const router = useRouter();
@@ -41,7 +41,7 @@ const SquareCard = ({
       as={linkInfo.as}
       passHref
       onClick={() => {
-        GoogleTagManager.articleClick(article);
+        articleClick(article);
       }}
       style={style}
     >
@@ -101,7 +101,7 @@ const SquareCard = ({
       as={linkInfo.as}
       passHref
       onClick={() => {
-        GoogleTagManager.seeAll(linkInfo);
+        seeAll(linkInfo);
       }}
     >
       {data.text}

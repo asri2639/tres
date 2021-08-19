@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import header from './Header.module.scss';
 import NavLink from '@components/common/NavLink';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import { subMenuClick, menuClick } from '@utils/GoogleTagManager';
 import { RTLContext } from '@components/layout/Layout';
 
 export default function DesktopSidebar({ data, onClose, isMobile = false }) {
@@ -76,7 +76,7 @@ export default function DesktopSidebar({ data, onClose, isMobile = false }) {
                     as={item.url}
                     passHref
                     onClick={() => {
-                      GoogleTagManager.menuClick(item, 'sidemenu');
+                      menuClick(item, 'sidemenu');
                     }}
                   >
                     <div
@@ -127,7 +127,7 @@ export default function DesktopSidebar({ data, onClose, isMobile = false }) {
                           as={subitem.url}
                           passHref
                           onClick={() => {
-                            GoogleTagManager.subMenuClick(subitem, item);
+                            subMenuClick(subitem, item);
                           }}
                         >
                           <span> {subitem.ml_title[0].text}</span>

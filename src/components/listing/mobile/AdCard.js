@@ -1,9 +1,4 @@
-import NavLink from '@components/common/NavLink';
-import Thumbnail from '@components/common/Thumbnail';
-import { RTLContext } from '@components/layout/Layout';
-import GoogleTagManager from '@utils/GoogleTagManager';
-import { thumbnailExtractor } from '@utils/Helpers';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const AdCard = ({ data, className }) => {
   const slotArr = '[300, 250]';

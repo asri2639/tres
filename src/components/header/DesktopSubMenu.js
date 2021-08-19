@@ -3,7 +3,7 @@ import Thumbnail from '@components/common/Thumbnail';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import { languageMap } from '@utils/Constants';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import { articleClick } from '@utils/GoogleTagManager';
 import {
   linkInfoGenerator,
   stateCodeConverter,
@@ -54,56 +54,58 @@ export default function DesktopSubMenu({ category }) {
   return (
     <>
       {response && response.data && response.data.catalog_list_items
-        ? response.data.catalog_list_items[0].catalog_list_items.slice(0, 3).map((item) => {
-            const splitUrl = item.web_url ? item.web_url.split('/') : [];
-            const thumbnail = thumbnailExtractor(
-              item.thumbnails,
-              '3_2',
-              'b2s',
-              ''
-            );
-            const linkInfo = linkInfoGenerator(
-              item.web_url,
-              router.query.state
-            );
+        ? response.data.catalog_list_items[0].catalog_list_items
+            .slice(0, 3)
+            .map((item) => {
+              const splitUrl = item.web_url ? item.web_url.split('/') : [];
+              const thumbnail = thumbnailExtractor(
+                item.thumbnails,
+                '3_2',
+                'b2s',
+                ''
+              );
+              const linkInfo = linkInfoGenerator(
+                item.web_url,
+                router.query.state
+              );
 
-            return !splitUrl.length ? (
-              <div></div>
-            ) : (
-              <NavLink
-                key={item.content_id}
-                className="p-3 pt-2 flex-grow-0 flex flex-shrink-0 whitespace-pre-wrap"
-                style={{ flexBasis: '27%' }}
-                href={linkInfo.href}
-                as={linkInfo.as}
-                passHref
-                onClick={() => {
-                  GoogleTagManager.articleClick(item);
-                }}
-              >
-                <div className="relative">
-                  {item.thumbnails ? (
-                    <Thumbnail
-                      thumbnail={thumbnail}
-                      className={`w-full rounded-md`}
-                      type={''}
-                      creditSize={'medium'}
-                    />
-                  ) : (
-                    <img
-                      loading="lazy"
-                      className="w-full rounded-md"
-                      src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png"
-                      alt="placeholder image"
-                    />
-                  )}
-                  <div className="text-sm mt-1 font-semibold">
-                    {item.ml_title[0].text}
+              return !splitUrl.length ? (
+                <div></div>
+              ) : (
+                <NavLink
+                  key={item.content_id}
+                  className="p-3 pt-2 flex-grow-0 flex flex-shrink-0 whitespace-pre-wrap"
+                  style={{ flexBasis: '27%' }}
+                  href={linkInfo.href}
+                  as={linkInfo.as}
+                  passHref
+                  onClick={() => {
+                    articleClick(item);
+                  }}
+                >
+                  <div className="relative">
+                    {item.thumbnails ? (
+                      <Thumbnail
+                        thumbnail={thumbnail}
+                        className={`w-full rounded-md`}
+                        type={''}
+                        creditSize={'medium'}
+                      />
+                    ) : (
+                      <img
+                        loading="lazy"
+                        className="w-full rounded-md"
+                        src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png"
+                        alt="placeholder image"
+                      />
+                    )}
+                    <div className="text-sm mt-1 font-semibold">
+                      {item.ml_title[0].text}
+                    </div>
                   </div>
-                </div>
-              </NavLink>
-            );
-          })
+                </NavLink>
+              );
+            })
         : [0, 1, 2].map((item) => {
             return (
               <div

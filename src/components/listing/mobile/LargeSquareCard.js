@@ -1,7 +1,7 @@
 import NavLink from '@components/common/NavLink';
 import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import { articleClick } from '@utils/GoogleTagManager';
 import { thumbnailExtractor, linkInfoGenerator } from '@utils/Helpers';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
@@ -38,7 +38,7 @@ const LargeSquareCard = ({
       as={linkInfo.as}
       passHref
       onClick={() => {
-        GoogleTagManager.articleClick(article);
+        articleClick(article);
       }}
     >
       <div className="relative">

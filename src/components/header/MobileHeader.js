@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import NavLink from '@components/common/NavLink';
 import header from './Header.module.scss';
 import Modal from '@components/modal/Modal';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import { menuClick } from '@utils/GoogleTagManager';
 import { AMPContext } from '@pages/_app';
 import useTranslator from '@hooks/useTranslator';
 import { RTLContext } from '@components/layout/Layout';
@@ -342,7 +342,7 @@ export default function MobileHeader({ data, className }) {
                         as={item.url}
                         passHref
                         onClick={() => {
-                          GoogleTagManager.menuClick(item, 'headermenu');
+                          menuClick(item, 'headermenu');
                         }}
                       >
                         <div>{item.ml_title[0].text.toUpperCase()}</div>

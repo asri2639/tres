@@ -10,7 +10,7 @@ import DesktopAdContainer from '@components/article/DesktopAdContainer';
 import CatalogWall from './mobile/CatalogWall';
 import SeeAll from './mobile/SeeAll';
 import SliderSeeAll from './mobile/SliderSeeAll';
-import GoogleTagManager from '@utils/GoogleTagManager';
+import { menuClick } from '@utils/GoogleTagManager';
 import Loading from './mobile/Loading';
 import { stateCodeConverter } from '@utils/Helpers';
 import dynamic from 'next/dynamic';
@@ -144,7 +144,7 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
         } */
         setIsDesktop(true);
       }, 10);
-    
+
       document.addEventListener('load', () => {
         setTimeout(() => {
           // googletag.pubads().refresh();
@@ -465,7 +465,7 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                     as={listItems[0].url}
                     passHref
                     onClick={() => {
-                      GoogleTagManager.menuClick(listItems[0], 'headermenu');
+                      menuClick(listItems[0], 'headermenu');
                     }}
                   >
                     {t('see_all')}
@@ -551,7 +551,7 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                     as={listItems[0].url}
                     passHref
                     onClick={() => {
-                      GoogleTagManager.menuClick(listItems[0], 'headermenu');
+                      menuClick(listItems[0], 'headermenu');
                     }}
                   >
                     {t('see_all')}
