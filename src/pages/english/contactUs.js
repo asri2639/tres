@@ -261,6 +261,7 @@ export default function contactUs() {
               className="contact-img w-24"
               src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/contactus.png"
               data-pagespeed-url-hash="4235406410"
+              alt=""
             />
             <h1 className="title-big text-gray-600 font-bold text-lg">
               ETV BHARAT

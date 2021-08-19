@@ -1,10 +1,17 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function NavLink(props) {
-    return (<Link  {...props} >
-        <a onClick={props.onClick}
-            className={props.className}
-            style={props.style}
-        > {props.title ? props.title : props.children}</a>
-    </Link>)
+  return (
+    <Link {...props}>
+      <a
+        onClick={props.onClick}
+        className={props.className}
+        style={props.style}
+        aria-label={props.title || 'Link'}
+      >
+        {' '}
+        {props.title && !props.hideTitle ? props.title : props.children}
+      </a>
+    </Link>
+  );
 }

@@ -302,7 +302,7 @@ const Video = ({
               <MediaContextProvider>
                 <Media greaterThan="xs">
                   <div className="bbc-tag">
-                    <img src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
+                    <img alt="" src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
                   </div>
                 </Media>
               </MediaContextProvider>

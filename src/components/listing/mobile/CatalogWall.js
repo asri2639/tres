@@ -23,6 +23,7 @@ const CatalogWall = ({ data, article, className }) => {
               <div className="wall-image">
                 <img
                   className="wall-icn"
+                  alt=""
                   src={`/assets/images/menu_icon/${item.layout_type}.png`}
                 ></img>
               </div>

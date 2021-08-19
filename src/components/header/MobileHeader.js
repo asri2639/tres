@@ -256,6 +256,8 @@ export default function MobileHeader({ data, className }) {
             }}
             as={`/${language}/${router.query.state}`}
             passHref
+            title={`ETV ${language}`}
+            hideTitle={true}
           >
             <div
               className={`logo ${language}`}
