@@ -92,7 +92,7 @@ $languages3: (
 @each $key, $name in $languages3 {
   $cap-name: capitalize($name);
   @font-face {
-    font-family: 'Likhith' + $cap-name;
+    font-family: 'LikhithTlg045Unicode';
     font-weight: 400;
     font-style: normal;
     font-display: swap;
