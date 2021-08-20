@@ -14,11 +14,14 @@ $languages1: (
   'gu': 'gujarati',
   'kn': 'kannada',
   'or': 'oriya',
-  'te': 'telugu',
 );
 
 $languages2: (
   'asm': 'assamese',
+);
+
+$languages3: (
+  'te': 'telugu',
 );
 
 @function capitalize($string) {
@@ -77,6 +80,23 @@ $languages2: (
     font-style: normal;
     font-display: swap;
     src: url('https://etvbharatimages.akamaized.net/etvbharat/static/o-0IIpQlx3QUlC5A4PNr5TRA.woff2')
+      format('woff2');
+  }
+
+  html[lang='#{$key}'],
+  html[lang='#{$key}'] body {
+    font-family: 'Likhith' + $cap-name, unquote($font-stack);
+  }
+}
+
+@each $key, $name in $languages3 {
+  $cap-name: capitalize($name);
+  @font-face {
+    font-family: 'Likhith' + $cap-name;
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url('https://etvbharatimages.akamaized.net/etvbharat/static/liutlg45-webfont.woff2')
       format('woff2');
   }
 
