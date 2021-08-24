@@ -10,48 +10,56 @@ const Breadcrumbs = () => {
   const [crumbsMap, setCrumbsMap] = useState([]);
 
   useEffect(() => {
-    const crumbs = Array.isArray(router.query.slug)
-      ? router.query.slug
-      : router.query.slug.split('/');
-
+    console.log(router.asPath);
+    const splitUrl = router.asPath.split('/');
+    splitUrl.shift();
+    let crumbs = [];
     let route = '';
+
+    crumbs = splitUrl.slice(2, -1).map((v, i) => {
+      return {
+        label: v.toUpperCase().replace(/-/gi, ' '),
+        as: `/${router.query.language}/${router.query.state}${route}`, //
+      };
+    });
+
     setCrumbsMap([
       {
         label: 'HOME',
-        href: '/[language]/[state]',
-        as: `/${router.query.language}/${router.query.state}`,
+        href: `/${router.query.language}/${router.query.state}`,
       },
-      ...crumbs.slice(0, -1).map((v) => {
+      ...splitUrl.slice(2, -1).map((v) => {
         route += '/' + v;
         return {
           label: v.toUpperCase().replace(/-/gi, ' '),
-          href: '[language]/[state]/[...slug]',
-          as: `/${router.query.language}/${router.query.state}${route}`, //
+          href: `/${router.query.language}/${router.query.state}${route}`, //
         };
       }),
     ]);
   }, [router]);
 
   return (
-    <div
-      className={`lg:container mx-auto flex text-xs text-gray-600 font-medium pt-1 ${
-        isRTL ? 'flex-row-reverse rtl' : ''
-      }`}
-    >
-      {crumbsMap.map((v, i) => {
-        return i === crumbsMap.length - 1 ? (
-          <div key={i} className="text-red-600">
-            {v.label}
-          </div>
-        ) : (
-          <NavLink key={i} href={v.href} as={v.as} passHref>
-            {isRTL ? <span className="px-2">/</span> : null}
-            {v.label}
-            {!isRTL ? <span className="px-2">/</span> : null}
-          </NavLink>
-        );
-      })}
-    </div>
+    <>
+      <div
+        className={`lg:container px-4 lg:px-0 mb-1 md:mb-0 mx-auto md:flex text-xs text-gray-600 font-medium pt-1 ${
+          isRTL ? 'flex-row-reverse rtl' : ''
+        }`}
+      >
+        {crumbsMap.map((v, i) => {
+          return i === crumbsMap.length - 1 ? (
+            <span key={-1} className="text-red-600">
+              {v.label}
+            </span>
+          ) : (
+            <NavLink key={i} href={v.href} as={v.as} passHref>
+              {isRTL ? <span className="px-2">/</span> : null}
+              {v.label}
+              {!isRTL ? <span className="px-2">/</span> : null}
+            </NavLink>
+          );
+        })}
+      </div>{' '}
+    </>
   );
 };
 
