@@ -203,6 +203,7 @@ const slug = ({
 
         component = (
           <ArticleList
+            userAgent={userAgent}
             articleData={{ articles: [datum], contentId: datum.contentId }}
           />
         );

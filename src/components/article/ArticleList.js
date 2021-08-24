@@ -12,7 +12,7 @@ import Breadcrumbs from '@components/article/Breadcrumbs';
 import { useRouter } from 'next/router';
 import { languageMap } from '@utils/Constants';
 
-const ArticleList = ({ articleData }) => {
+const ArticleList = ({ articleData, userAgent }) => {
   const api = API(APIEnum.CatalogList);
   const router = useRouter();
   const language = languageMap[router.query.language];
