@@ -302,12 +302,12 @@ export default function Article({
 
                   <h1
                     ref={ref}
-                    className="leading-tight text-xll font-bold p-2"
+                    className="leading-tight text-lg font-bold p-2"
                   >
                     {data.title}
                   </h1>
 
-                  <div className="px-2 text-sm text-gray-600 md:text-black always-english">
+                  <div className="px-2 mb-2 text-sm text-gray-600 md:text-black always-english">
                     {data.publish_date_uts
                       ? `Published on: ${dateFormatter(
                           data.publish_date_uts,

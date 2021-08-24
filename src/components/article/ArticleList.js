@@ -51,7 +51,7 @@ const ArticleList = ({ articleData }) => {
 
   const { data: adData, error: adError } = useSWR(
     () => {
-      const isDesktop = window && window.innerWidth >= 768;
+      const isDesktop = userAgent && !userAgent.includes('Mobile');
       return isDesktop
         ? ['CatalogList', 'getArticleDetails', articleData.contentId]
         : null;
@@ -106,7 +106,7 @@ const ArticleList = ({ articleData }) => {
     }
 
     return () => {
-      api && api.shutdown();
+      // api && api.shutdown();
     };
   }, [articleData, data, adData]);
 
@@ -202,14 +202,8 @@ const ArticleList = ({ articleData }) => {
 
   return (
     <>
-      {/* <div className="article-count fixed right-0 text-white top-0 z-50 p-3 text-2xl font-bold">{articles.length}</div> */}
-      <MediaContextProvider>
-        <Media greaterThan="xs" className="w-full">
-          {' '}
-          <Breadcrumbs />
-        </Media>
-      </MediaContextProvider>
-
+      {/* <div className="article-count fixed right-0 text-white top-0 z-50 p-3 text-2xl font-bold">{articles.length}</div> */}{' '}
+      <Breadcrumbs />
       <ul className={`article-list flex flex-col lg:container lg:mx-auto `}>
         {articles.length > 0 &&
           articles.map((article, index) => (
@@ -233,7 +227,6 @@ const ArticleList = ({ articleData }) => {
           <h1 className="w-full text-red-700 text-2xl z-10">Loading ...</h1>
         )}
       </ul>
-
       {related ? (
         <MediaContextProvider>
           <Media
