@@ -126,11 +126,17 @@ const slug = ({ data, pageType, appConfig, id, isAmp }) => {
         data.media_type
       ),
 
+      headline: data.title.replace(/\"/gi, '\\"'),
+      thumbnailM:
+        data.thumbnails && data.thumbnails.medium_3_2
+          ? data.thumbnails.medium_3_2.url
+          : '',
+
       description: data.short_description || data.description,
       keywords: data.keywords ? data.keywords.join(', ') : '',
       url: data.web_url,
       contentType: data.content_type,
-      ldjson: false,
+      ldjson: true,
     };
 
     component = (
@@ -212,40 +218,27 @@ const slug = ({ data, pageType, appConfig, id, isAmp }) => {
             type="application/ld+json"
             dangerouslySetInnerHTML={{
               __html: `
- {
- "@context": "https://schema.org",
- "@type": "NewsArticle",
- "mainEntityOfPage": {
- "@type": "WebPage",
- "@id": "https://www.etvbharat.com/${headerObj.url}"
- },
- "headline": "${headerObj.headline}",
- "description": "${headerObj.description.replace(/\"/gi, '\\"')}",
- "image": {
- "@type": "ImageObject",
- "url": "${headerObj.thumbnailM}",
- "width": 708,
- "height": 474
- },
- "author": {
- "@type": "Organization",
- "name": "ETV Bharat"
- },
- "publisher": {
- "@type": "Organization",
- "name": "ETV Bharat",
- "logo": {
- "@type": "ImageObject",
- "url": "https://www.etvbharat.com/assets/images/etvlogo/${(
-   headerObj.url.split('/')[0] + ''
- ).toLowerCase()}.png",
- "width": 82,
- "height": 60
- }
- },
- "datePublished": "${headerObj.publishedAt}",
- "dateModified": "${headerObj.updatedAt || headerObj.publishedAt}"
- }`,
+              {
+                "@context":"https://schema.org",
+                "@type":"VideoObject",
+                "name":"${headerObj.headline}",
+                "description":"${headerObj.description}",
+                "thumbnailUrl": "${headerObj.thumbnailM}",
+                "uploadDate":"${headerObj.updatedAt || headerObj.publishedAt}",
+                "contentUrl":"${data.web_url}",
+                "publisher":{
+                  "@type": "Organization",
+                  "name": "ETV Bharat",
+                  "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://www.etvbharat.com/assets/images/etvlogo/${(
+                        headerObj.url.split('/')[0] + ''
+                      ).toLowerCase()}.png",
+                      "width": 82,
+                      "height": 60
+                    }
+                  }
+                },`,
             }}
           ></script>
         ) : null}
@@ -272,7 +265,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     state = 'na',
     params = null,
     bypass = false;
-  //console.log('amp called')
+  //// console.log('amp called')
   const isAmp =
     query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
   const url = args.asPath;
