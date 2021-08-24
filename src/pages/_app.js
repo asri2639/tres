@@ -81,7 +81,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
             href={`https://etvbharatimages.akamaized.net/etvbharat/static/${
               langName === 'assamese'
                 ? 'o-0IIpQlx3QUlC5A4PNr5TRA.woff2'
-                : langName === 'telugu' ? 'liutlg45-webfont.woff2':'assets/fonts/' + langCap + '/' + langName + '.woff2'
+                : 'assets/fonts/' + langCap + '/' + langName + '.woff2'
             }`}
             as="font"
             type="font/woff2"
