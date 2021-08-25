@@ -392,7 +392,7 @@ export default function Article({
 				  {
 					!isAMP && htmlShow && userAgent && userAgent.includes('Mobile') ? (
                 <div
-                  className={`text-base md:text-md }`}
+                  className={`text-base md:text-md `}
                   dangerouslySetInnerHTML={{
                     __html: html,
                   }}
@@ -402,7 +402,7 @@ export default function Article({
                {
 					!isAMP && userAgent && !userAgent.includes('Mobile') ? (
                 <div
-                  className={`text-base md:text-md }`}
+                  className={`text-base md:text-md `}
                   dangerouslySetInnerHTML={{
                     __html: html,
                   }}
