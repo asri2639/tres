@@ -58,13 +58,7 @@ const FirstAd = ({ adData, className, refresh }) => {
 
   return (
     <>
-      <Head>
-        <link
-          rel="preload"
-          href="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
-          as="script"
-        />
-      </Head>
+      
       <div style={{ padding: '5px 0' }}>
         <div
           style={{
