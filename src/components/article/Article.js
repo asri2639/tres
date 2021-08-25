@@ -15,7 +15,6 @@ const options = {
   loading: () => <div>Loading...</div>,
 };
 const MobileAd = dynamic(() => import('@components/article/MobileAd'), options);
-const FirstAd = dynamic(() => import('@components/article/FirstAd'), options);
 const MobileNextArticle = dynamic(
   () => import('@components/article/MobileNextArticle'),
   options
@@ -299,9 +298,9 @@ export default function Article({
               ) : null}
               <MediaContextProvider>
                 <Media at="xs">
-                    {index === 0 && htmlShow ? (
+                  {/*   {index === 0 ? (
                     <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
-                  ) : null} 
+                  ) : null} */}
 
                   <h1
                     ref={ref}
@@ -335,10 +334,8 @@ export default function Article({
                   </div>
                 </Media>
               </MediaContextProvider>
-			  
               <div className="flex flex-col md:flex-col-reverse md:mb-8">
-			  { htmlShow && userAgent && userAgent.includes('Mobile') ? (
-			  <div
+                <div
                   className="-mx-3 md:mx-0 relative "
                   style={{ minWidth: '300px', minHeight: '200px' }}
                 >
@@ -349,23 +346,6 @@ export default function Article({
                     lazy={false}
                   />
                 </div>
-			  ) : null }
-			  
-			  {
-			   userAgent && !userAgent.includes('Mobile') ? (
-			  <div
-                  className="-mx-3 md:mx-0 relative "
-                  style={{ minWidth: '300px', minHeight: '200px' }}
-                >
-                  <Thumbnail
-                    thumbnail={thumbnail}
-                    className={'md:rounded-lg w-full'}
-                    type={data.media_type}
-                    lazy={false}
-                  />
-                </div>
-			  ) : null }
-                
                 <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
                   <MediaContextProvider>
                     <Media greaterThan="xs">
