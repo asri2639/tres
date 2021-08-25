@@ -302,12 +302,7 @@ const VideoList = ({ videoData, appConfig }) => {
   return (
     <>
       {/* <div className="article-count fixed right-0 text-white top-0 z-50 p-3 text-2xl font-bold">{videos.length}</div> */}
-      <MediaContextProvider>
-        <Media greaterThan="xs" className="w-full">
-          {' '}
-          <Breadcrumbs />
-        </Media>
-      </MediaContextProvider>
+       <Breadcrumbs />
 
       <ul className="article-list flex flex-col lg:container lg:mx-auto">
         {videos.length > 0 &&

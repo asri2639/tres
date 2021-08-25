@@ -41,13 +41,13 @@ const Breadcrumbs = () => {
   return (
     <>
       <div
-        className={`lg:container px-4 lg:px-0 mb-1 md:mb-0 mx-auto md:flex text-xs text-gray-600 font-medium pt-1 ${
+        className={`lg:container px-4 lg:px-0 mb-1 mt-1 md:mb-0 mx-auto md:flex text-xs text-gray-600 font-medium pt-1 ${
           isRTL ? 'flex-row-reverse rtl' : ''
         }`}
       >
         {crumbsMap.map((v, i) => {
           return i === crumbsMap.length - 1 ? (
-            <span key={-1} className="text-red-600">
+            <span key={-1} >
               {v.label}
             </span>
           ) : (
