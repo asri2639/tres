@@ -44,6 +44,7 @@ export default function Article({
   ads,
   index,
   userAgent,
+  htmlShow
 }) {
   const isAMP = useContext(AMPContext);
   const [ampHtml, setAmpHtml] = useState(null);
@@ -388,15 +389,26 @@ export default function Article({
                 />
               ) : null}
               {/** actual article content */}
-				 
-              {!isAMP ? (
+				  {
+					!isAMP && htmlShow && userAgent && userAgent.includes('Mobile') ? (
                 <div
-                  className={`text-base md:text-md html-content ${index === 0 && userAgent && userAgent.includes('Mobile')? 'hide': ''}`}
+                  className={`text-base md:text-md }`}
                   dangerouslySetInnerHTML={{
                     __html: html,
                   }}
                 />
-              ) : null}
+              ) : null
+				  } 	 
+               {
+					!isAMP && userAgent && !userAgent.includes('Mobile') ? (
+                <div
+                  className={`text-base md:text-md }`}
+                  dangerouslySetInnerHTML={{
+                    __html: html,
+                  }}
+                />
+              ) : null
+				  } 
               {ads ? (
                 <div className="pt-3">
                   <MobileAd

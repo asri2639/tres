@@ -19,6 +19,7 @@ const ArticleList = ({ articleData, userAgent }) => {
 
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [htmlShow, setHtmlShow] = useState(false);
   const [related, setRelated] = useState([]);
   const [mobileAds, setMobileAds] = useState([]);
   const [rhs, setRhs] = useState(null);
@@ -120,6 +121,9 @@ const ArticleList = ({ articleData, userAgent }) => {
 
   const handleScroll = async () => {
     setLoadRelated(true);
+	if(!htmlShow){
+		setHtmlShow(true);
+	}
 	const el = document.querySelector('.html-content.hide');
 	if (el) {
 		el.classList.remove('hide');
@@ -222,6 +226,7 @@ const ArticleList = ({ articleData, userAgent }) => {
               viewed={viewed}
               index={index}
 			  userAgent={userAgent}
+			  htmlShow={htmlShow}
               ads={mobileAds}
               updateViewed={(viewed) => {
                 setViewed(viewed);
