@@ -43,6 +43,7 @@ export default function Article({
   related,
   ads,
   index,
+  userAgent,
 }) {
   const isAMP = useContext(AMPContext);
   const [ampHtml, setAmpHtml] = useState(null);
@@ -387,9 +388,10 @@ export default function Article({
                 />
               ) : null}
               {/** actual article content */}
+				 
               {!isAMP ? (
                 <div
-                  className="text-base md:text-md"
+                  className={`text-base md:text-md html-content ${index === 0 && userAgent && userAgent.includes('Mobile')? 'hide': ''}`}
                   dangerouslySetInnerHTML={{
                     __html: html,
                   }}
