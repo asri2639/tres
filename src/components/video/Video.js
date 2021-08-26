@@ -22,12 +22,14 @@ const Video = ({
   viewed,
   related,
   ads,
+  thumbnail,
   index,
 }) => {
   const isAMP = useContext(AMPContext);
 
   const isRTL = useContext(RTLContext);
   const [source, setSource] = useState(null);
+  const [showVideo, setShowVideo] = useState(false);
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
     // triggerOnce: true,
@@ -196,6 +198,19 @@ const Video = ({
     }
   }, [inView, contentId, rhs, desktop, iframeSource]);
 
+  useEffect(() => {
+    if (showVideo) {
+      setTimeout(() => {
+        let iframe = document.getElementById('player' + contentId);
+        iframe.onload = function (params) {
+          setTimeout(() => {
+            iframe.contentWindow.postMessage("SPWebSiteVodsPlay");
+          }, 600);
+        };
+      }, 200);
+    }
+  }, [showVideo]);
+
   return (
     <div
       data-content-id={contentId}
@@ -278,8 +293,21 @@ const Video = ({
                     src={iframeSource}
                     poster="https://www.etvbharat.com/assets/images/placeholder.png"
                   ></amp-video-iframe>
+                ) : !showVideo ? (
+                  <div
+                    className="play-button"
+                    onClick={() => {
+                      setShowVideo(true);
+                    }}
+                  >
+                    <img
+                      className="w-full rounded-md -mt-10"
+                      src={thumbnail.url}
+                      alt="Thumbnail image"
+                    />
+                  </div>
                 ) : (
-                  <iframe src={iframeSource}></iframe>
+                  <iframe id={'player' + contentId} src={iframeSource}></iframe>
                 )
               ) : (
                 <img

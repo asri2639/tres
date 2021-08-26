@@ -1188,5 +1188,20 @@ div[dir*='rtl'] #IVCaption {
   width: 100%;
 }
 .html-content.hide {
- display: none;
- }
+  display: none;
+}
+
+.play-button {
+  position: relative;
+}
+.play-button::after {
+  content: "";
+  position: absolute;
+  top:0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: url('https://etvbharatimages.akamaized.net/player/etvbharat-test/saranyu_player/skins/image/bigplay.png')
+    center center no-repeat;
+  cursor: pointer;
+}

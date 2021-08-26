@@ -126,12 +126,13 @@ export const constructPlaybackUrl = (
     }[(h = 'national' == l ? o : l)],
     w = smartData.adaptive_urls[0].playback_url,
     g = smartData.adaptive_urls[0].video_duration,
-    origin = isAMP
-      ? 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/embed_etv.html?contenturl='
+    origin = '/assets/embed_etv.html?contenturl=',
+   /*  origin = isAMP
+      ? '/assets/embed_etv.html?contenturl='
       : publicRuntimeConfig.APP_ENV === 'staging' ||
         publicRuntimeConfig.APP_ENV === 'development'
       ? 'https://etvbharatimages.akamaized.net/player/etvbharat-test/embed_etv.html?contenturl='
-      : 'https://etvbharatimages.akamaized.net/player/etvbharat-staging/embed_etv.html?contenturl=',
+      : 'https://etvbharatimages.akamaized.net/player/etvbharat-staging/embed_etv.html?contenturl=', */
     y =
       origin +
       w +
@@ -265,6 +266,21 @@ const VideoList = ({ videoData, appConfig }) => {
     let video = videos.find(
       (article) => article.data.content_id === videoData.contentId
     );
+
+    if (video) {
+      video.thumbnail = thumbnailExtractor(
+        video.data.thumbnails,
+        '3_2',
+        'b2s',
+        video.data.media_type
+      );
+
+      if (video.thumbnail.url.indexOf('/placeholder.png') > 0) {
+        video.thumbnail.url =
+          'https://www.etvbharat.com/assets/images/newstime.png';
+      }
+    }
+
     if (adData) {
       if (video) {
         const data = adData.catalog_list_items.slice(1).filter((v) => {
@@ -302,7 +318,7 @@ const VideoList = ({ videoData, appConfig }) => {
   return (
     <>
       {/* <div className="article-count fixed right-0 text-white top-0 z-50 p-3 text-2xl font-bold">{videos.length}</div> */}
-       <Breadcrumbs />
+      <Breadcrumbs />
 
       <ul className="article-list flex flex-col lg:container lg:mx-auto">
         {videos.length > 0 &&
@@ -318,6 +334,7 @@ const VideoList = ({ videoData, appConfig }) => {
               related={related}
               index={i}
               ads={mobileAds}
+              thumbnail={video.thumbnail}
               updateViewed={(viewed) => {
                 setViewed(viewed);
               }}
