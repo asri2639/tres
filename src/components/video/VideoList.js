@@ -55,9 +55,14 @@ export const constructPlaybackUrl = (
   data,
   smartData,
   publicRuntimeConfig,
-  isAMP
+  isAmp,
+  thumbnail
 ) => {
-  if (Object.keys(smartData).length === 0 || !smartData.adaptive_urls) {
+  if (
+    !smartData ||
+    Object.keys(smartData).length === 0 ||
+    !smartData.adaptive_urls
+  ) {
     return null;
   }
   let urlSplit = data.web_url.split('/');
@@ -65,13 +70,6 @@ export const constructPlaybackUrl = (
     publicRuntimeConfig.APP_ENV !== 'development'
       ? `${window.location.origin}/${data.web_url}`
       : `https://www.etvbharat.com/${data.web_url}`;
-
-  let thumbnail = thumbnailExtractor(
-    data.thumbnails,
-    '3_2',
-    'b2s',
-    data.media_type
-  );
 
   if (thumbnail.url.indexOf('/placeholder.png') > 0) {
     thumbnail.url = 'https://www.etvbharat.com/assets/images/newstime.png';
@@ -127,7 +125,7 @@ export const constructPlaybackUrl = (
     w = smartData.adaptive_urls[0].playback_url,
     g = smartData.adaptive_urls[0].video_duration,
     origin = '/assets/embed_etv.html?contenturl=',
-   /*  origin = isAMP
+    /*  origin = isAMP
       ? '/assets/embed_etv.html?contenturl='
       : publicRuntimeConfig.APP_ENV === 'staging' ||
         publicRuntimeConfig.APP_ENV === 'development'
@@ -169,7 +167,7 @@ export const constructPlaybackUrl = (
   return y;
 };
 
-const VideoList = ({ videoData, appConfig }) => {
+const VideoList = ({ videoData, appConfig, userAgent }) => {
   const isAMP = useContext(AMPContext);
 
   const { publicRuntimeConfig } = getConfig();
@@ -178,7 +176,7 @@ const VideoList = ({ videoData, appConfig }) => {
   const api = API(APIEnum.CatalogList, APIEnum.Video);
   const language = languageMap[router.query.language];
 
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState(videoData.videos);
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
   const [rhs, setRhs] = useState(null);
@@ -230,13 +228,19 @@ const VideoList = ({ videoData, appConfig }) => {
   };
 
   const { data: smartUrls, error: smartUrlError } = useSWR(
-    [
-      videoData.videos[0].data.play_url.url,
-      createHash(
-        'ywVXaTzycwZ8agEs3ujx' + videoData.videos[0].data.play_url.url
-      ),
-      publicRuntimeConfig,
-    ],
+    () => {
+      const isDesktop = userAgent && !userAgent.includes('Mobile');
+      return isDesktop || isAMP
+        ? [
+            videoData.videos[0].data.play_url.url,
+            createHash(
+              'ywVXaTzycwZ8agEs3ujx' + videoData.videos[0].data.play_url.url
+            ),
+            publicRuntimeConfig,
+          ]
+        : null;
+    },
+
     smartUrlFetcher,
     {
       dedupingInterval: 5 * 60 * 1000,
@@ -244,15 +248,42 @@ const VideoList = ({ videoData, appConfig }) => {
   );
 
   const { data: adData, error: adError } = useSWR(
-    ['CatalogList', 'getVideoDetails', videoData.contentId],
+    () => {
+      const isDesktop = userAgent && !userAgent.includes('Mobile');
+      return isDesktop
+        ? ['CatalogList', 'getVideoDetails', videoData.contentId]
+        : null;
+    },
     relatedVideosFetcher,
     { dedupingInterval: 5 * 60 * 1000 }
   );
+
   const { data, error } = useSWR(
-    ['CatalogList', 'getRelatedArticles', videoData.contentId],
+    () => {
+      const isDesktop = userAgent && !userAgent.includes('Mobile');
+      return isDesktop
+        ? ['CatalogList', 'getRelatedArticles', videoData.contentId]
+        : null;
+    },
     relatedVideosFetcher,
     { dedupingInterval: 5 * 60 * 1000 }
   );
+
+  if (videos) {
+    videos.forEach((video) => {
+      video.data.thumbnail = thumbnailExtractor(
+        video.data.thumbnails,
+        '3_2',
+        'b2s',
+        video.data.media_type
+      );
+
+      if (video.data.thumbnail.url.indexOf('/placeholder.png') > 0) {
+        video.data.thumbnail.url =
+          'https://www.etvbharat.com/assets/images/newstime.png';
+      }
+    });
+  }
   // Set videos from videoData
   useEffect(() => {
     if (data) {
@@ -267,7 +298,7 @@ const VideoList = ({ videoData, appConfig }) => {
       (article) => article.data.content_id === videoData.contentId
     );
 
-    if (video) {
+    if (video && !video.thumbnail) {
       video.thumbnail = thumbnailExtractor(
         video.data.thumbnails,
         '3_2',
@@ -301,7 +332,8 @@ const VideoList = ({ videoData, appConfig }) => {
         video.data,
         smartUrls,
         publicRuntimeConfig,
-        isAMP
+        isAMP,
+        video.data.thumbnail
       );
       setVideos((videos) => [...videos]);
     } else {
@@ -335,6 +367,7 @@ const VideoList = ({ videoData, appConfig }) => {
               index={i}
               ads={mobileAds}
               thumbnail={video.thumbnail}
+              userAgent={userAgent}
               updateViewed={(viewed) => {
                 setViewed(viewed);
               }}

@@ -105,15 +105,6 @@ const slug = ({ data, pageType, appConfig, id, isAmp }) => {
     videoDatum.contentType = data.content_type;
     videoDatum.contentId = data.content_id;
 
-    if (typeof window !== 'undefined' && !isAmp) {
-      loadJS(
-        'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
-      );
-      loadJS(
-        'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
-      );
-    }
-
     headerObj = {
       title: data.title,
       canonicalUrl: canonicalUrl,
@@ -146,6 +137,7 @@ const slug = ({ data, pageType, appConfig, id, isAmp }) => {
           contentId: videoDatum.contentId,
         }}
         appConfig={appConfig}
+        userAgent={userAgent}
       />
     );
 
@@ -353,6 +345,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       appConfig: applicationConfig.value,
       isAmp: isAmp,
       id: id,
+      userAgent: userAgent,
     };
   }
 };

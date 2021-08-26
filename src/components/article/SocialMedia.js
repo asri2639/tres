@@ -33,7 +33,7 @@ const SocialMedia = ({ data }) => {
     darkMode: 'false',
     emotesEnabled: 'true',
     d: 'false',
-    refHost: location.host,
+    refHost: 'www.etvbharat.com',
     l_d: 'false',
     totWideImg: 'false',
     link: 'https://[url]',

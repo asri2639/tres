@@ -7,10 +7,16 @@ import { articleViewScroll } from '@utils/GoogleTagManager';
 import { pageView, nextPageView } from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
-import { dateFormatter } from '@utils/Helpers';
+import { createHash, dateFormatter, loadJS } from '@utils/Helpers';
 import { AMPContext } from '@pages/_app';
 import BBCHeader from '@components/common/BBCHeader';
 import AdContainer from '@components/article/AdContainer';
+import useSWR from 'swr';
+import {
+  constructPlaybackUrl,
+  smartUrlFetcher,
+} from '@components/video/VideoList';
+import getConfig from 'next/config';
 
 const Video = ({
   contentId,
@@ -20,15 +26,14 @@ const Video = ({
   desktop,
   iframeSource,
   viewed,
-  related,
-  ads,
-  thumbnail,
   index,
+  userAgent,
 }) => {
   const isAMP = useContext(AMPContext);
+  const { publicRuntimeConfig } = getConfig();
 
   const isRTL = useContext(RTLContext);
-  const [source, setSource] = useState(null);
+  const [source, setSource] = useState(iframeSource);
   const [showVideo, setShowVideo] = useState(false);
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
@@ -46,10 +51,41 @@ const Video = ({
     [inViewRef]
   );
 
-  useEffect(() => {
-    if (data.source && data.source.indexOf('bbc_') === 0) {
-      setSource(data.source);
+  const { data: smartUrls, error: smartUrlError } = useSWR(
+    () => {
+      const isMobile = userAgent && userAgent.includes('Mobile');
+      return isMobile && !isAMP
+        ? [
+            data.play_url.url,
+            createHash('ywVXaTzycwZ8agEs3ujx' + data.play_url.url),
+            publicRuntimeConfig,
+          ]
+        : null;
+    },
+    smartUrlFetcher,
+    {
+      dedupingInterval: 5 * 60 * 1000,
     }
+  );
+
+  useEffect(() => {
+    const isMobile = userAgent && userAgent.includes('Mobile');
+    if (isMobile && !isAMP && !source) {
+      const source = constructPlaybackUrl(
+        data,
+        smartUrls,
+        publicRuntimeConfig,
+        isAMP,
+        data.thumbnail
+      );
+
+      setSource(source);
+    } else {
+      setSource(iframeSource);
+    }
+  }, [smartUrls, iframeSource]);
+
+  useEffect(() => {
     if (inView) {
       const urlParts = data.web_url.split('/');
       const state = urlParts[1];
@@ -196,15 +232,23 @@ const Video = ({
         }
       }
     }
-  }, [inView, contentId, rhs, desktop, iframeSource]);
+  }, [inView, contentId, rhs, desktop, source]);
 
   useEffect(() => {
     if (showVideo) {
+      if (typeof window !== 'undefined' && !isAMP) {
+        loadJS(
+          'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
+        );
+        loadJS(
+          'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
+        );
+      }
       setTimeout(() => {
         let iframe = document.getElementById('player' + contentId);
         iframe.onload = function (params) {
           setTimeout(() => {
-            iframe.contentWindow.postMessage("SPWebSiteVodsPlay");
+            iframe.contentWindow.postMessage('SPWebSiteVodsPlay');
           }, 600);
         };
       }, 200);
@@ -240,7 +284,6 @@ const Video = ({
               className || ''
             } actual-content lg:container lg:mx-auto px-3 md:px-0 `}
           >
-            <BBCHeader source={source} />
             <div className="flex flex-col md:flex-col-reverse md:mb-1">
               <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
                 <h1
@@ -284,13 +327,13 @@ const Video = ({
             </div>
 
             <div className={`${video.player} z-0`}>
-              {iframeSource ? (
+              {source ? (
                 isAMP ? (
                   <amp-video-iframe
                     layout="responsive"
                     width="16"
                     height="9"
-                    src={iframeSource}
+                    src={source}
                     poster="https://www.etvbharat.com/assets/images/placeholder.png"
                   ></amp-video-iframe>
                 ) : !showVideo ? (
@@ -302,12 +345,12 @@ const Video = ({
                   >
                     <img
                       className="w-full rounded-md -mt-10"
-                      src={thumbnail.url}
+                      src={data.thumbnail.url}
                       alt="Thumbnail image"
                     />
                   </div>
                 ) : (
-                  <iframe id={'player' + contentId} src={iframeSource}></iframe>
+                  <iframe id={'player' + contentId} src={source}></iframe>
                 )
               ) : (
                 <img
@@ -325,19 +368,6 @@ const Video = ({
             <div className="EtvadsSection">
               <div id="adsContainer"></div>
             </div>
-
-            {source ? (
-              <MediaContextProvider>
-                <Media greaterThan="xs">
-                  <div className="bbc-tag">
-                    <img
-                      alt=""
-                      src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png"
-                    />
-                  </div>
-                </Media>
-              </MediaContextProvider>
-            ) : null}
 
             <InView
               as="div"

@@ -17,7 +17,7 @@ import Error from 'next/error';
 
 import VideoList from '@components/video/VideoList';
 
-const slug = ({ data, pageType, appConfig, id, isAmp }) => {
+const slug = ({ data, pageType, appConfig, id, isAmp, userAgent }) => {
   const router = useRouter();
   let ampUrl = '';
   const convertedState = configStateCodeConverter(router.query.state);
@@ -105,15 +105,6 @@ const slug = ({ data, pageType, appConfig, id, isAmp }) => {
     videoDatum.contentType = data.content_type;
     videoDatum.contentId = data.content_id;
 
-    if (typeof window !== 'undefined' && !isAmp) {
-      loadJS(
-        'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
-      );
-      loadJS(
-        'https://players-saranyu.s3.amazonaws.com/etvbharat_staging/saranyu_player/plugin/external-js/scroll-playpause1.js'
-      );
-    }
-
     headerObj = {
       title: data.title,
       canonicalUrl: canonicalUrl,
@@ -140,6 +131,7 @@ const slug = ({ data, pageType, appConfig, id, isAmp }) => {
           contentId: videoDatum.contentId,
         }}
         appConfig={appConfig}
+        userAgent={userAgent}
       />
     );
 
@@ -276,6 +268,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   const isAmp =
     query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
   const url = args.asPath;
+  const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
 
   if (url.includes('/search/')) {
     const redirectUrl = `https://old.etvbharat.com${url}`;
@@ -359,6 +352,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       appConfig: applicationConfig.value,
       isAmp: isAmp,
       id: id,
+      userAgent: userAgent,
     };
   }
 };
