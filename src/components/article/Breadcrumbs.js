@@ -1,7 +1,7 @@
 import NavLink from '@components/common/NavLink';
 import { RTLContext } from '@components/layout/Layout';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 const Breadcrumbs = () => {
   const router = useRouter();
