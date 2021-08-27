@@ -136,11 +136,21 @@ const slug = ({ data, pageType, appConfig, id, isAmp,userAgent }) => {
           videos: [videoDatum],
           contentId: videoDatum.contentId,
         }}
-		userAgent={userAgent}
+		    userAgent={userAgent}
         appConfig={appConfig}
         userAgent={userAgent}
       />
     );
+
+    let thumbnail = null;
+    if (userAgent && userAgent.includes('Mobile')) {
+      thumbnail = thumbnailExtractor(
+        data.thumbnails,
+        '3_2',
+        's2b',
+        data.media_type
+      );
+    }
 
     return (
       <>
@@ -148,7 +158,7 @@ const slug = ({ data, pageType, appConfig, id, isAmp,userAgent }) => {
           <>
             {' '}
             <Head>
-              <link rel="preload" as="image" href={headerObj.thumbnail.url} />
+              <link rel="preload" as="image" href={thumbnail ? thumbnail.url : headerObj.thumbnail.url} />
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
               {ampExists && (data.is_amp || readwhere) ? (
