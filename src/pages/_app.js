@@ -64,7 +64,7 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
     };
   }, []);
 
-  const langName = language === 'oriya' ? 'oriya2' : language;
+  const langName = language;
   const langCap = langName.charAt(0).toUpperCase() + langName.slice(1);
   return (
     <>
