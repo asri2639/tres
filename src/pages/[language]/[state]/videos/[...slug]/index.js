@@ -17,7 +17,7 @@ import Error from 'next/error';
 
 import VideoList from '@components/video/VideoList';
 
-const slug = ({ data, pageType, appConfig, id, isAmp, userAgent }) => {
+const slug = ({ data, pageType, appConfig, id, isAmp,userAgent }) => {
   const router = useRouter();
   let ampUrl = '';
   const convertedState = configStateCodeConverter(router.query.state);
@@ -130,6 +130,7 @@ const slug = ({ data, pageType, appConfig, id, isAmp, userAgent }) => {
           videos: [videoDatum],
           contentId: videoDatum.contentId,
         }}
+		userAgent={userAgent}
         appConfig={appConfig}
         userAgent={userAgent}
       />
@@ -351,6 +352,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       data: video,
       appConfig: applicationConfig.value,
       isAmp: isAmp,
+	  userAgent: userAgent,
       id: id,
       userAgent: userAgent,
     };

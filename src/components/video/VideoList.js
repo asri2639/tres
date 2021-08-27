@@ -167,7 +167,7 @@ export const constructPlaybackUrl = (
   return y;
 };
 
-const VideoList = ({ videoData, appConfig, userAgent }) => {
+const VideoList = ({ videoData, userAgent, appConfig }) => {
   const isAMP = useContext(AMPContext);
 
   const { publicRuntimeConfig } = getConfig();
@@ -298,11 +298,11 @@ const VideoList = ({ videoData, appConfig, userAgent }) => {
       (article) => article.data.content_id === videoData.contentId
     );
 
-    if (video && !video.thumbnail) {
+    if (video) {
       video.thumbnail = thumbnailExtractor(
         video.data.thumbnails,
         '3_2',
-        'b2s',
+        userAgent && userAgent.includes('Mobile') ? 's2b' : 'b2s',
         video.data.media_type
       );
 
