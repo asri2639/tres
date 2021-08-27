@@ -273,7 +273,7 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
       video.data.thumbnail = thumbnailExtractor(
         video.data.thumbnails,
         '3_2',
-        'b2s',
+        userAgent && userAgent.includes('Mobile') ? 's2b' : 'b2s',
         video.data.media_type
       );
 
