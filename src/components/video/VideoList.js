@@ -169,7 +169,6 @@ export const constructPlaybackUrl = (
 
 const VideoList = ({ videoData, userAgent, appConfig }) => {
   const isAMP = useContext(AMPContext);
-
   const { publicRuntimeConfig } = getConfig();
 
   const router = useRouter();
@@ -373,9 +372,9 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
               }}
             />
           ))}
-        {loading && (
+       {/*  {loading && (
           <h1 className="w-full text-red-700 text-2xl z-10">Loading ...</h1>
-        )}
+        )} */}
       </ul>
 
       {related ? (

@@ -9,7 +9,6 @@ import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import { createHash, dateFormatter, loadJS } from '@utils/Helpers';
 import { AMPContext } from '@pages/_app';
-import BBCHeader from '@components/common/BBCHeader';
 import AdContainer from '@components/article/AdContainer';
 import useSWR from 'swr';
 import {
