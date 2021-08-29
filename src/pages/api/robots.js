@@ -20,7 +20,7 @@ Disallow:/in-article-ads
 Disallow:/banner-near-logo
 Disallow:/tamara-hospital
 Disallow:/1754*
-Disallow:/*%
+Disallow:/elections/*
 
 # Sitemap Files
 Sitemap: https://www.etvbharat.com/sitemap.xml

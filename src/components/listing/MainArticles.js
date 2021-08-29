@@ -1,5 +1,4 @@
 import SquareCard from '@components/listing/mobile/SquareCard';
-import LargeSquareCard from '@components/listing/mobile/LargeSquareCard';
 import { useContext } from 'react';
 import { RTLContext } from '@components/layout/Layout';
 

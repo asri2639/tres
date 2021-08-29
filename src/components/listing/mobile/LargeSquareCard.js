@@ -77,7 +77,7 @@ const LargeSquareCard = ({
             display: '-webkit-box',
             WebkitLineClamp: '3',
           }}
-          className={`text-sm md:text-base relative -top-1 ${
+          className={`text-base md:text-base relative -top-1 ${
             isRTL ? 'rtl' : ''
           }`}
         >

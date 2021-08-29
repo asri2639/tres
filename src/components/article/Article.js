@@ -304,7 +304,7 @@ export default function Article({
 
                   <h1
                     ref={ref}
-                    className="leading-tight text-lg font-bold p-2"
+                    className="leading-tight text-xl font-bold p-2"
                   >
                     {data.title}
                   </h1>
