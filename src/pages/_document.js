@@ -11,7 +11,7 @@ export default class ETVDocument extends Document {
   render() {
     const isAMP = this.props.__NEXT_DATA__.query.amp === '1';
     return (
-      <Html lang="en">
+      <Html lang="">
         <Head>
 		<meta charset="UTF-8" />
           <link
