@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import Error from 'next/error';
 import GalleryList from '@components/gallery/GalleryList';
 
-const slug = ({ data, pageType, appConfig, id }) => {
+const slug = ({ data, pageType, appConfig, id, userAgent }) => {
   const router = useRouter();
   let ampUrl = '';
   const convertedState = configStateCodeConverter(router.query.state);
@@ -117,6 +117,7 @@ const slug = ({ data, pageType, appConfig, id }) => {
         main.short_description || main.description || main.display_title,
       keywords: keywords ? keywords.join(', ') : '',
       url: `${router.asPath.slice(1)}`,
+      headline: main.display_title.replace(/\"/gi, '\\"'),
       contentType: main.content_type,
       images: [
         {
@@ -130,7 +131,7 @@ const slug = ({ data, pageType, appConfig, id }) => {
             : main.thumbnails.web_3_2.alt_tags,
         },
       ],
-      ldjson: false,
+      ldjson: true,
     };
 
     component = (
@@ -145,6 +146,7 @@ const slug = ({ data, pageType, appConfig, id }) => {
           ],
           contentId: data.gallery[0].parent_id,
         }}
+        userAgent={userAgent}
       />
     );
 
@@ -213,10 +215,11 @@ const slug = ({ data, pageType, appConfig, id }) => {
           </>
         ) : null}
         {headerObj.ldjson ? (
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: `
+          <>
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: `
  {
  "@context": "https://schema.org",
  "@type": "NewsArticle",
@@ -228,7 +231,7 @@ const slug = ({ data, pageType, appConfig, id }) => {
  "description": "${headerObj.description.replace(/\"/gi, '\\"')}",
  "image": {
  "@type": "ImageObject",
- "url": "${headerObj.thumbnailM}",
+ "url": "${headerObj.thumbnail.url}",
  "width": 708,
  "height": 474
  },
@@ -251,8 +254,60 @@ const slug = ({ data, pageType, appConfig, id }) => {
  "datePublished": "${headerObj.publishedAt}",
  "dateModified": "${headerObj.updatedAt || headerObj.publishedAt}"
  }`,
-            }}
-          ></script>
+              }}
+            ></script>
+
+            {/*   <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: `{
+                  "@context": "https://schema.org",
+                  "@type": "imageGallery",
+                  "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://www.etvbharat.com/${headerObj.url}",
+                    "headline": "${headerObj.headline}",
+                    "description": "${headerObj.description.replace(
+                      /\"/gi,
+                      '\\"'
+                    )}",
+                    "keywords": "${headerObj.keywords}"
+                  },
+                  "url": "https://www.etvbharat.com/${headerObj.url}",
+                  "image": {
+                    "@type": "ImageObject",
+                    "url": ${JSON.stringify(
+                      data.gallery
+                        .filter((v) => v.thumbnails && v.type === 'image')
+                        .map((v) => v.thumbnails.l_large.url)
+                        .filter(Boolean)
+                    )},
+                    "width": 1200,
+                    "height": 800
+                  },
+                  "datePublished": "${headerObj.publishedAt}",
+                  "dateModified": "${
+                    headerObj.updatedAt || headerObj.publishedAt
+                  }"
+                  "author": { "@type": "Person", "name": "ETV Bharat" },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "ETV Bharat",
+                    "url": "https://www.etvbharat.com/",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://www.etvbharat.com/assets/images/etvlogo/${(
+                        headerObj.url.split('/')[0] + ''
+                      ).toLowerCase()}.png",
+                      "width": 82,
+                      "height": 60
+                    }
+                  }
+                }
+              `,
+              }}
+            ></script> */}
+          </>
         ) : null}
         {component}
       </>
@@ -343,6 +398,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       appConfig: applicationConfig.value,
       isAmp: isAmp,
       id: id,
+      userAgent: userAgent,
     };
   }
 };

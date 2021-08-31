@@ -1,7 +1,5 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
-import { useRouter } from 'next/router';
-import AdContainer from '@components/article/AdContainer';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
 import {
@@ -15,15 +13,20 @@ import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
 import { AMPContext } from '@pages/_app';
-import BBCHeader from '@components/common/BBCHeader';
 import React from 'react';
 import dynamic from 'next/dynamic';
+import Thumbnail from '@components/common/Thumbnail';
+
 const options = {
   loading: () => <div>Loading...</div>,
 };
 const MobileAd = dynamic(() => import('@components/article/MobileAd'), options);
 const MobileNextArticle = dynamic(
   () => import('@components/article/MobileNextArticle'),
+  options
+);
+const AdContainer = dynamic(
+  () => import('@components/article/AdContainer'),
   options
 );
 
@@ -42,13 +45,14 @@ const Gallery = ({
   related,
   ads,
   index,
+  userAgent,
+  scrolled,
 }) => {
   const isAMP = useContext(AMPContext);
-  const router = useRouter();
   const isRTL = useContext(RTLContext);
-  const [ampHtml, setAmpHtml] = useState(null);
-
-  const [source, setSource] = useState(null);
+  const [isMobile, setIsMobile] = useState(
+    userAgent && userAgent.includes('Mobile')
+  );
 
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
@@ -73,9 +77,6 @@ const Gallery = ({
   });
  */
   useEffect(() => {
-    if (data.source && data.source.indexOf('bbc_') === 0) {
-      setSource(data.source);
-    }
     if (viewed.indexOf(contentId) === -1) {
       viewed.push(contentId);
       // updateViewed(viewed);
@@ -243,84 +244,46 @@ const Gallery = ({
             </div>
           ) : null}
 
+          <div className="flex flex-col md:flex-col-reverse md:mb-4">
+            <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
+              <h1
+                ref={ref}
+                className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
+              >
+                {data[0].display_title}
+              </h1>
+              {data[0].publish_date_uts ? (
+                <div className="text-sm text-gray-600 md:text-black always-english">
+                  {data[0].publish_date_uts
+                    ? `Published on: ${dateFormatter(
+                        data[0].publish_date_uts,
+                        isAMP
+                      )}`
+                    : ''}
+                  <span className="hidden md:inline-block">
+                    {data[0].publish_date_uts && data[0].update_date_uts
+                      ? `  |  `
+                      : ''}
+                  </span>
+                  <br className="md:hidden" />
+                  {data[0].update_date_uts
+                    ? `Updated on: ${dateFormatter(
+                        data[0].update_date_uts,
+                        isAMP
+                      )}`
+                    : ''}
+                </div>
+              ) : null}
+            </div>
+          </div>
+
           <MediaContextProvider>
             <Media at="xs">
-              {/* {index === 0 ? (
-                <FirstAd adData={ads ? ads[index * 2 + 1] : null} />
-              ) : null} */}
-
-              <h1 ref={ref} className="leading-tight text-xl font-bold p-2">
-                {data[0].display_title}{' '}
-              </h1>
-
-              <div className="px-2 text-sm text-gray-600 md:text-black always-english">
-                {data[0].publish_date_uts ? (
-                  <div className="text-sm text-gray-600 md:text-black always-english">
-                    {data[0].publish_date_uts
-                      ? `Published on: ${dateFormatter(
-                          data[0].publish_date_uts,
-                          isAMP
-                        )}`
-                      : ''}
-                    <span className="hidden md:inline-block">
-                      {data[0].publish_date_uts && data[0].update_date_uts
-                        ? `  |  `
-                        : ''}
-                    </span>
-                    <br className="md:hidden" />
-                    {data[0].update_date_uts
-                      ? `Updated on: ${dateFormatter(
-                          data[0].update_date_uts,
-                          isAMP
-                        )}`
-                      : ''}
-                  </div>
-                ) : null}
-              </div>
               <div className="flex justify-between px-2 w-56 mb-2">
                 <SocialMedia data={data} />
               </div>
             </Media>
           </MediaContextProvider>
-
-          <BBCHeader source={source} />
-
-          <div className="flex flex-col md:flex-col-reverse md:mb-4">
-            <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
-              <MediaContextProvider>
-                <Media greaterThan="xs">
-                  <h1
-                    ref={ref}
-                    className="leading-tight text-xl md:text-2xl md:pt-3 md:pb-2 font-bold"
-                  >
-                    {data[0].display_title}
-                  </h1>
-                  {data[0].publish_date_uts ? (
-                    <div className="text-sm text-gray-600 md:text-black always-english">
-                      {data[0].publish_date_uts
-                        ? `Published on: ${dateFormatter(
-                            data[0].publish_date_uts,
-                            isAMP
-                          )}`
-                        : ''}
-                      <span className="hidden md:inline-block">
-                        {data[0].publish_date_uts && data[0].update_date_uts
-                          ? `  |  `
-                          : ''}
-                      </span>
-                      <br className="md:hidden" />
-                      {data[0].update_date_uts
-                        ? `Updated on: ${dateFormatter(
-                            data[0].update_date_uts,
-                            isAMP
-                          )}`
-                        : ''}
-                    </div>
-                  ) : null}
-                </Media>
-              </MediaContextProvider>
-            </div>
-          </div>
 
           <div className="space-y-5 p-3 pt-0">
             {data.map((image, ind) => {
@@ -348,7 +311,7 @@ const Gallery = ({
                     image.layout_type === 'ad_unit_sqaure_gallery'
                       ? [300, 250]
                       : [550, 250];
-                  return (
+                  return scrolled ? (
                     <iframe
                       className="mx-auto"
                       key={image.ad_unit_id + ' ' + ind}
@@ -356,7 +319,7 @@ const Gallery = ({
                       height={height + 50}
                       src={image.ad_url}
                     />
-                  );
+                  ) : null;
                 }
               } else {
                 return (
@@ -370,13 +333,17 @@ const Gallery = ({
                           src={image.thumbnails.l_large.url}
                         />
                       ) : (
-                        <LazyLoadImage
-                          className="rounded-lg"
-                          alt={image.description || image.title}
-                          placeholderSrc="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png"
-                          scrollPosition={scrollPosition}
-                          src={image.thumbnails.l_large.url}
-                        ></LazyLoadImage>
+                        <Thumbnail
+                          className={'rounded-lg'}
+                          thumbnail={{
+                            url: image.thumbnails.l_large.url,
+                            alt_tags: image.description || image.title,
+                          }}
+                          styleObj={
+                            isMobile && ind === 0 ? { minHeight: '300px' } : {}
+                          }
+                          lazy={ind > (isMobile ? 0 : 2) ? true : false}
+                        />
                       )}
                       <div className={`${gallery.counter}`}>
                         <span>{image.order_no}</span>/ {count}
@@ -390,19 +357,6 @@ const Gallery = ({
               }
             })}
           </div>
-
-          {source ? (
-            <MediaContextProvider>
-              <Media greaterThan="xs">
-                <div className="bbc-tag">
-                  <img
-                    alt=""
-                    src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png"
-                  />
-                </div>
-              </Media>
-            </MediaContextProvider>
-          ) : null}
 
           <InView
             as="div"
@@ -467,7 +421,6 @@ const Gallery = ({
             nextArticle={nextGallery}
             data={data}
             related={related}
-            showBbc={!!source}
           ></MobileNextArticle>
         </Media>
         <Media greaterThan="xs" className="md:block md:w-4/12">

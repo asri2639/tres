@@ -16,7 +16,6 @@ const MobileNextArticle = ({
 }) => {
   const { t } = useTranslator();
   const isAMP = useContext(AMPContext);
-  const router = useRouter();
   const query = {
     amp: 'false',
     apiKey: '99a287d2-81b1-4013-8705-0805df9481e0',
@@ -25,11 +24,11 @@ const MobileNextArticle = ({
     globalLang: 'en',
     img: thumbnailExtractor(data.thumbnails, '3_2', 's2b', ''),
     title: data.title,
-    url: location.origin + data.web_url,
+    url: "https://www.etvbharat.com" + data.web_url,
     darkMode: 'false',
     emotesEnabled: 'true',
     d: 'false',
-    refHost: location.host,
+    refHost: "www.etvbharat.com",
     l_d: 'false',
     totWideImg: 'false',
     link: 'https://[url]',
@@ -114,7 +113,6 @@ const MobileNextArticle = ({
               __html: `
           ${JSON.stringify(
             related.slice(1).map((rel) => {
-              const splitUrl = rel.web_url.split('/');
               const thumbnail = thumbnailExtractor(
                 rel.thumbnails,
                 '3_2',

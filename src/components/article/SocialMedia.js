@@ -16,9 +16,12 @@ import { thumbnailExtractor } from '@utils/Helpers';
 import getConfig from 'next/config';
 import { AMPContext } from '@pages/_app';
 import { comment, share } from '@utils/GoogleTagManager';
+import { useRouter } from 'next/router';
 
 const SocialMedia = ({ data }) => {
   const { publicRuntimeConfig } = getConfig();
+  const router = useRouter();
+
   const isAMP = useContext(AMPContext);
   const [isOpen, toggleOpen] = useState(false);
   const query = {
@@ -53,9 +56,7 @@ const SocialMedia = ({ data }) => {
   )}`;
   const baseUrl = `https://www.etvbharat.com`;
 
-  const url = data.web_url
-    ? data.web_url
-    : new URL(location.href).pathname.slice(1);
+  const url = data.web_url ? data.web_url : router.asPath.slice(1);
 
   return (
     <>

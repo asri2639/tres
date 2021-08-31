@@ -121,13 +121,13 @@ const ArticleList = ({ articleData, userAgent }) => {
 
   const handleScroll = async () => {
     setLoadRelated(true);
-	if(!htmlShow){
-		setHtmlShow(true);
-	}
-	const el = document.querySelector('.html-content.hide');
-	if (el) {
-		el.classList.remove('hide');
-	}
+    if (!htmlShow) {
+      setHtmlShow(true);
+    }
+    const el = document.querySelector('.html-content.hide');
+    if (el) {
+      el.classList.remove('hide');
+    }
     // To get page offset of last article
     const lastArticleLoaded = document.querySelector(
       '.article-list > .article:last-child'
@@ -225,8 +225,8 @@ const ArticleList = ({ articleData, userAgent }) => {
               scrollToNextArticle={() => scrollToArticle(related[index + 1])}
               viewed={viewed}
               index={index}
-			  userAgent={userAgent}
-			  htmlShow={htmlShow}
+              userAgent={userAgent}
+              htmlShow={htmlShow}
               ads={mobileAds}
               updateViewed={(viewed) => {
                 setViewed(viewed);

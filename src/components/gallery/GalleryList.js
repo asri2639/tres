@@ -11,13 +11,14 @@ import Breadcrumbs from '@components/article/Breadcrumbs';
 import Gallery from '@components/gallery/Gallery';
 import { useRouter } from 'next/router';
 import { languageMap } from '@utils/Constants';
+import Head from 'next/head';
 
-const GalleryList = ({ galleryData }) => {
+const GalleryList = ({ galleryData, userAgent }) => {
   const router = useRouter();
   const api = API(APIEnum.CatalogList);
   const language = languageMap[router.query.language];
 
-  const [galleries, setGalleries] = useState([]);
+  const [galleries, setGalleries] = useState(galleryData.galleries || []);
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
   const [mobileAds, setMobileAds] = useState([]);
@@ -25,6 +26,7 @@ const GalleryList = ({ galleryData }) => {
   const stopLoading = () => setLoading(false);
   const [viewed, setViewed] = useState([]);
   const [rhs, setRhs] = useState(null);
+  const [loadRelated, setLoadRelated] = useState(false);
 
   const relatedGalleriesFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
@@ -50,15 +52,26 @@ const GalleryList = ({ galleryData }) => {
   };
 
   const { data: adData, error: adError } = useSWR(
-    ['CatalogList', 'getArticleDetails', galleryData.contentId],
+    () => {
+      const isDesktop = userAgent && !userAgent.includes('Mobile');
+      return isDesktop
+        ? ['CatalogList', 'getArticleDetails', galleryData.contentId]
+        : null;
+    },
     relatedGalleriesFetcher,
     { dedupingInterval: 5 * 60 * 1000 }
   );
+
   const { data, error } = useSWR(
-    ['CatalogList', 'getRelatedArticles', galleryData.contentId],
+    () => {
+      return loadRelated
+        ? ['CatalogList', 'getRelatedArticles', galleryData.contentId]
+        : null;
+    },
     relatedGalleriesFetcher,
     { dedupingInterval: 5 * 60 * 1000 }
   );
+
   // Set galleries from galleryData
   useEffect(() => {
     if (galleryData) {
@@ -106,6 +119,7 @@ const GalleryList = ({ galleryData }) => {
   });
 
   const handleScroll = async () => {
+    setLoadRelated(true);
     // To get page offset of last article
     const lastGalleryLoaded = document.querySelector(
       '.article-list > .article:last-child'
@@ -169,14 +183,16 @@ const GalleryList = ({ galleryData }) => {
   };
   return (
     <>
+      <Head>
+        <link
+          rel="preload"
+          as="image"
+          href={galleries[0].images[0].thumbnails.l_large.url}
+        />
+      </Head>
       {/* <div className="article-count fixed right-0 text-white top-0 z-50 p-3 text-2xl font-bold">{galleries.length}</div> */}
-      <MediaContextProvider>
-        <Media greaterThan="xs" className="w-full">
-          {' '}
-          <Breadcrumbs />
-        </Media>
-      </MediaContextProvider>
 
+      <Breadcrumbs />
       <ul className="article-list flex flex-col lg:container lg:mx-auto">
         {galleries.length > 0 &&
           galleries.map((gallery, i) => (
@@ -195,6 +211,8 @@ const GalleryList = ({ galleryData }) => {
               related={related}
               index={i}
               ads={mobileAds}
+              userAgent={userAgent}
+              scrolled={loadRelated}
               updateViewed={(viewed) => {
                 setViewed(viewed);
               }}
