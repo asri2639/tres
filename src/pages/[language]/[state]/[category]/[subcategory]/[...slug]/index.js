@@ -379,7 +379,6 @@ const slug = ({
       </>
     );
   };
-  console.log(data);
   return (
     <>
       {data ? (
@@ -435,7 +434,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     if (bypass) {
       type = 'live-streaming';
     }
-    console.log('asdf');
 
     const articleResponse = await api.CatalogList.getArticleDetails({
       params: params,
@@ -452,7 +450,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       },
       config: { isSSR: typeof window === 'undefined' },
     });
-    console.log(articleResponse.data.data);
 
     let article = null;
     let error = '';

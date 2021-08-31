@@ -2,9 +2,6 @@
 const express = require('express');
 const next = require('next');
 const fetch = require('node-fetch');
-const he = require('he');
-const path = require('path');
-const fs = require('fs');
 const compression = require('compression');
 
 const shouldCompress = (req, res) => {
@@ -94,12 +91,11 @@ app
             if (listing) {
               res.send(JSON.parse(rest.data).amp_html);
             } else {
-				if(rest.data.amp != ''){
-				  res.send(rest.data.amp);
-				}else{
-					res.sendStatus(404);
-				}
-              
+              if (rest.data.amp != '') {
+                res.send(rest.data.amp);
+              } else {
+                res.sendStatus(404);
+              }
             }
           })
           .catch((e) => {

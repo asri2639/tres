@@ -233,7 +233,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         url: url,
       },
     }).catch((e) => {
-      console.log(e);
+      // console.log(e);
       return {
         data: null,
       };
