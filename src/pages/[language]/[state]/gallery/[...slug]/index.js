@@ -401,6 +401,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       userAgent: userAgent,
     };
   }else{
+	  if (res) res.statusCode = 404;
 	  return {
         pageType: 'article',
         data: '',
