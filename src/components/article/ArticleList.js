@@ -19,7 +19,7 @@ const ArticleList = ({ articleData, userAgent }) => {
 
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [htmlShow, setHtmlShow] = useState(false);
+  const [htmlShow, setHtmlShow] = useState(true);
   const [related, setRelated] = useState([]);
   const [mobileAds, setMobileAds] = useState([]);
   const [rhs, setRhs] = useState(null);
