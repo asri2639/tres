@@ -400,6 +400,12 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       id: id,
       userAgent: userAgent,
     };
+  }else{
+	  return {
+        pageType: 'article',
+        data: '',
+        statusCode: 404,
+      };
   }
 };
 export default slug;
