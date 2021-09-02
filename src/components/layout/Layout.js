@@ -302,7 +302,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
       ) : null}
       <RTLContext.Provider value={language === 'ur' ? true : false}>
         <MenuContext.Provider value={appConfig}>
-          <Header data={data.header} />
+          <Header data={data.header} language={language} />
           {promiseInProgress ? (
             <div
               style={{

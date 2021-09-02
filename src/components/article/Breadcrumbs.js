@@ -5,11 +5,15 @@ import { useRouter } from 'next/router';
 import { useContext } from 'react';
 
 export function capSentence(text) {
-  let wordsArray = text.toLowerCase().split(' ')
-  let capsArray = wordsArray.map(word=>{
-      return word[0].toUpperCase() + word.slice(1)
-  })
-  return capsArray.join(' ')
+  if (text.trim().length === 0) {
+    return '';
+  }
+  console.log(text)
+  let wordsArray = text.toLowerCase().split(' ');
+  let capsArray = wordsArray.map((word) => {
+    return word[0].toUpperCase() + word.slice(1);
+  });
+  return capsArray.join(' ');
 }
 
 const Breadcrumbs = () => {
