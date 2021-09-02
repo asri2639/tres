@@ -8,7 +8,6 @@ export function capSentence(text) {
   if (text.trim().length === 0) {
     return '';
   }
-  console.log(text)
   let wordsArray = text.toLowerCase().split(' ');
   let capsArray = wordsArray.map((word) => {
     return word[0].toUpperCase() + word.slice(1);
