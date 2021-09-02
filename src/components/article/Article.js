@@ -44,7 +44,7 @@ export default function Article({
   ads,
   index,
   userAgent,
-  htmlShow
+  htmlShow,
 }) {
   const isAMP = useContext(AMPContext);
   const [ampHtml, setAmpHtml] = useState(null);
@@ -302,10 +302,7 @@ export default function Article({
                     <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
                   ) : null} */}
 
-                  <h1
-                    ref={ref}
-                    className="leading-tight text-xl font-bold p-2"
-                  >
+                  <h1 ref={ref} className="leading-tight text-xl font-bold p-2">
                     {data.title}
                   </h1>
 
@@ -389,26 +386,18 @@ export default function Article({
                 />
               ) : null}
               {/** actual article content */}
-				  {
-					!isAMP && htmlShow && userAgent && userAgent.includes('Mobile') ? (
+              {!isAMP &&
+              (htmlShow ||
+                !userAgent ||
+                (userAgent && !userAgent.includes('Mobile'))) ? (
                 <div
                   className={`text-base md:text-md `}
                   dangerouslySetInnerHTML={{
                     __html: html,
                   }}
                 />
-              ) : null
-				  } 	 
-               {
-					!isAMP && userAgent && !userAgent.includes('Mobile') ? (
-                <div
-                  className={`text-base md:text-md `}
-                  dangerouslySetInnerHTML={{
-                    __html: html,
-                  }}
-                />
-              ) : null
-				  } 
+              ) : null}
+
               {ads ? (
                 <div className="pt-3">
                   <MobileAd
