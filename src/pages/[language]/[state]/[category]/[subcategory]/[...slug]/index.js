@@ -456,11 +456,12 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     try {
       const articleResp = articleResponse.data.data.catalog_list_items[0];
       article = articleResp.catalog_list_items[0];
+	 
     } catch (e) {
       error = 'Invalid URL';
     }
 
-    if (error) {
+    if (error || !article) {
       if (res) res.statusCode = 404;
       return {
         pageType: 'article',
