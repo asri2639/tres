@@ -16,7 +16,6 @@ Disallow:/etvbharat_staging
 Disallow:/react_etvbharat_staging
 Disallow:/gallery-ads
 Disallow:/home-page-ad-units
-Disallow:/in-article-ads
 Disallow:/in-article-ads/*
 Disallow:/banner-near-logo
 Disallow:/tamara-hospital
