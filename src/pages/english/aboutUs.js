@@ -1,8 +1,3 @@
-aboutUs.getInitialProps = async ({ query, req, res, ...args }) => {
-  return {
-    pageType: '',
-  };
-};
 export default function aboutUs() {
   return (
     <div className=" md:container mx-auto  px-3" style={{ maxWidth: '1024px' }}>
@@ -64,7 +59,10 @@ export default function aboutUs() {
       <br />
       <p className="text-justify"> ETV BHARAT</p>
       <br />
-      <p className="text-justify"> A Division of Ushodaya Enterprises Pvt. Ltd. ,</p>
+      <p className="text-justify">
+        {' '}
+        A Division of Ushodaya Enterprises Pvt. Ltd. ,
+      </p>
       <br />
       <p className="text-justify"> Ramoji Film City, R.R. Distt. ,</p>
       <br />

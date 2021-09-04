@@ -47,13 +47,12 @@ const SquareCard = ({
     >
       <div
         className="relative"
-        style={{ height: imgHeight ? imgHeight : 'auto' }}
+        style={{ height: imgHeight ? imgHeight : '100%', minHeight: '100px' }}
       >
         <Thumbnail
           thumbnail={thumbnail}
           className={`rounded-t-md w-full ${imgHeight ? 'h-full' : ''}`}
           type={''}
-          creditSize={'no-size'}
           styleObj={styleObj}
           lazy={!main}
         ></Thumbnail>

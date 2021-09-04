@@ -9,8 +9,7 @@ import { useRouter } from 'next/router';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import useSWR, { mutate } from 'swr';
-import { RTLContext } from '@components/layout/Layout';
-import { MenuContext } from '@components/layout/Layout';
+import { RTLContext, MenuContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
 import { AMPContext } from '@pages/_app';
 
@@ -20,9 +19,9 @@ const capitalize = (s) => {
 const SeeAll = ({ data, article, className }) => {
   const isRTL = useContext(RTLContext);
   const isAMP = useContext(AMPContext);
+  const appConfig = useContext(MenuContext);
 
   const router = useRouter();
-  const config = useContext(MenuContext);
   const { t, appLanguage } = useTranslator();
 
   const api = API(APIEnum.CatalogList);
@@ -56,7 +55,7 @@ const SeeAll = ({ data, article, className }) => {
     return {
       params: {
         key:
-          config.params_hash2.config_params.carousel_on_selection[
+          appConfig.params_hash2.config_params.carousel_on_selection[
             configStateCodeConverter(router.query.state)
           ]['dynamic-list'],
       },

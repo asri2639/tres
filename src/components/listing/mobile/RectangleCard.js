@@ -4,7 +4,7 @@ import { RTLContext } from '@components/layout/Layout';
 import { articleClick } from '@utils/GoogleTagManager';
 import { linkInfoGenerator, thumbnailExtractor } from '@utils/Helpers';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 const RectangleCard = ({ data, article, className, keyProp }) => {
   const isRTL = useContext(RTLContext);
@@ -20,18 +20,19 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
   return (
     <NavLink
       key={keyProp}
-      className={`flex  justify-between px-1 pt-2 pb-1 cursor-pointer border shadow ${
+      className={`flex  justify-between px-1 pt-1 pb-1 cursor-pointer border shadow ${
         isRTL ? 'rtl' : ''
       } ${className}`}
       href={linkInfo.href}
       as={linkInfo.as}
       passHref
+      prefetch={false}
       onClick={() => {
         articleClick(article);
       }}
     >
       <div
-        className={`px-1 text-base md:text-base text-gray-700 leading-tight ${
+        className={`px-1 pt-1 text-base md:text-base text-gray-700 leading-tight ${
           isRTL ? 'rtl' : ''
         }`}
         style={{ width: 'calc(100% - 6rem)' }}
@@ -44,7 +45,6 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
           thumbnail={thumbnail}
           className={'w-full'}
           type={''}
-          creditSize={'no-size'}
           styleObj={{ minHeight: '65px' }}
         />
 

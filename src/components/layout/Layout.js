@@ -5,13 +5,18 @@ import React from 'react';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import { useEffect, useState } from 'react';
-import { accessToken as token, languageMap } from '@utils/Constants';
+import {
+  applicationConfig,
+  accessToken as token,
+  languageMap,
+} from '@utils/Constants';
 import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
 // import Loader from 'react-loader-spinner';
 import { usePromiseTracker } from 'react-promise-tracker';
 import { useRouter } from 'next/router';
 import eventBus from '@utils/EventBus';
 import StateSelectModal from '@components/common/StateSelectModal';
+import FileFetcher from '@services/api/FileFetcher';
 
 const country = 'IN';
 export const RTLContext = React.createContext(false);
@@ -43,8 +48,24 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
 
   useEffect(() => {
     const populateData = async () => {
+      if (!applicationConfig.value) {
+        const res = await FileFetcher.getAppConfig({
+          query: {
+            response: 'r2',
+            item_languages: 'en',
+            current_version: '1.1',
+            region: 'IN',
+            version: 'v2',
+          },
+          isSSR: true,
+        });
+
+        appConfig = res.data.data;
+        applicationConfig.value = appConfig;
+      }
+
       if (!data.footer.length) {
-        const result = await api.Catalog.getFooterDetails({
+        const result = await FileFetcher.getFooterDetails({
           query: {
             region: country,
             response: 'r2',
@@ -88,7 +109,6 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
         });
       }
     };
-
     populateData();
 
     eventBus.on('state-selector', (data) => {
@@ -173,57 +193,10 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
 
   useEffect(() => {
     const populateData = async () => {
-      if (!data.footer.length) {
-        const result = await api.Catalog.getFooterDetails({
-          query: {
-            region: country,
-            response: 'r2',
-            item_languages: language,
-            //  env: 'staging',
-          },
-        });
-        const requiredData = result.data.data.params_hash2.footer;
-        let languageData = {};
-        requiredData.forEach((state) => {
-          state.item_languages.forEach((language) => {
-            languageData[language] = languageData[language] || [];
-            if (state.state) {
-              if (state.state === 'tamilnadu') {
-                state.state = 'tamil-nadu';
-              } else if (state.state === 'orissa') {
-                state.state = 'odisha';
-              } else if (state.state === 'maharastra') {
-                state.state = 'maharashtra';
-              } else if (state.state === 'Assam') {
-                state.state = 'assam';
-              } else if (state.state === 'tripura') {
-              }
-              state.display_title = state.display_title.replace(' ETV', '');
-              if (state.state !== 'tripura') {
-                languageData[language].push(state);
-              }
-            }
-          });
-        });
-        languageData = Object.keys(languageData)
-          .sort()
-          .reduce((a, c) => ((a[c] = languageData[c]), a), {});
-
-        setData({
-          header: {
-            ...data.header,
-            languages: languageData,
-          },
-          footer: requiredData,
-        });
-      }
-
       const menu = {
         desktop: [],
         mobile: [],
       };
-
-      const isDesktop = window.innerWidth > 768;
 
       let convertedState = configStateCodeConverter(state);
       convertedState =
@@ -245,41 +218,21 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
         },
         isSSR: true,
       });
-      // if (isDesktop) {
-      menu.desktop = headerResp.data.data.catalog_list_items;
-      // } else {
-      menu.mobile = headerResp.data.data.catalog_list_items;
-      // }
-      /*  if (!isDesktop && !menu.desktop.length) {
-        const resp = await api.CatalogList.getMenuDetails({
-          params: {
-            suffix:
-              appConfig.params_hash2.config_params['web_lists'][convertedState][
-                'tabs'
-              ],
+      if (headerResp && headerResp.data) {
+        menu.desktop = headerResp.data.data.catalog_list_items;
+        menu.mobile = headerResp.data.data.catalog_list_items;
+
+        setData((data) => ({
+          ...data,
+          header: {
+            ...data.header,
+            menu: menu,
           },
-          query: {
-            region: country,
-            response: 'r2',
-            item_languages: language,
-            portal_state: stateCodeConverter(state),
-            only_items: 'catalog_list',
-          },
-          isSSR: true,
-        });
-        menu.desktop = resp.data.data.catalog_list_items;
+        }));
       }
- */
-      setData((data) => ({
-        ...data,
-        header: {
-          ...data.header,
-          menu: menu,
-        },
-      }));
     };
 
-    if (accessToken.mobile.length) {
+    if (accessToken && accessToken.mobile.length) {
       token.web = accessToken.web;
       token.mobile = accessToken.mobile;
       populateData();
@@ -289,6 +242,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
       window['menu'] = data.header;
     }
   }, [language, router.query.state, accessToken]);
+
   return (
     <>
       {showStateModal ? (

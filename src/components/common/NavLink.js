@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function NavLink(props) {
   return (
-    <Link {...props}>
+    <Link {...props} prefetch={false}>
       <a
         onClick={props.onClick}
         className={props.className}

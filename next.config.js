@@ -25,6 +25,10 @@ module.exports = {
     TEST: process.env.NEXT_TEST,
   },
 
+  images: {
+    domains: ['etvbharatimages.akamaized.net','localhost'],
+  },
+
   rewrites: async () => {
     return [
       {

@@ -1,9 +1,3 @@
-privacyPolicy.getInitialProps = async ({ query, req, res, ...args }) => {
-  return {
-    pageType: '',
-  };
-};
-
 export default function privacyPolicy() {
   return (
     <div

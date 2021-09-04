@@ -22,6 +22,18 @@ import MainArticles from './MainArticles';
 import { RTLContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
 
+export const totalItemsCount = (latestdata) => {
+  let itemsCount = 0;
+
+  latestdata.map((subList, ind) => {
+    if (subList.layout_type !== 'catalog_wall_menu') {
+      subList.catalog_list_items.map((child, dnd) => {});
+      itemsCount = itemsCount + subList.catalog_list_items.length;
+    }
+  });
+  return itemsCount;
+};
+
 const options = {
   loading: () => <p>Loading...</p>,
 };
@@ -34,18 +46,6 @@ const ListingStateSelectModal = dynamic(
   () => import('@components/common/ListingStateSelectModal'),
   options
 );
-
-export const totalItemsCount = (latestdata) => {
-  let itemsCount = 0;
-
-  latestdata.map((subList, ind) => {
-    if (subList.layout_type !== 'catalog_wall_menu') {
-      subList.catalog_list_items.map((child, dnd) => {});
-      itemsCount = itemsCount + subList.catalog_list_items.length;
-    }
-  });
-  return itemsCount;
-};
 
 const PageListing = ({ children, data, payload, dropdown, initCount }) => {
   const api = API(APIEnum.CatalogList, APIEnum.Listing);

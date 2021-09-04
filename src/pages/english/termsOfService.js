@@ -1,8 +1,3 @@
-termsOfService.getInitialProps = async ({ query, req, res, ...args }) => {
-  return {
-    pageType: '',
-  };
-};
 export default function termsOfService() {
   return (
     <div
@@ -108,7 +103,9 @@ export default function termsOfService() {
           the app :
         </p>
         <br />
-        <p className="text-justify">From Profile Menu, user can navigate to subscription page.</p>
+        <p className="text-justify">
+          From Profile Menu, user can navigate to subscription page.
+        </p>
         <br />
         <p className="text-justify">
           If user clicks on any premium content before he or she subscribes the

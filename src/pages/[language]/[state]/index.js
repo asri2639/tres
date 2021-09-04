@@ -17,8 +17,11 @@ import { totalItemsCount } from '@components/listing/PageListing';
 
 const state = ({ data, payload }) => {
   const router = useRouter();
-
   const { appLanguage } = useTranslator();
+
+  if (router.isFallback) {
+    return <h2>Loading...</h2>;
+  }
 
   const convertedState = configStateCodeConverter(router.query.state);
 
@@ -98,15 +101,19 @@ const state = ({ data, payload }) => {
   ) : null;
 };
 
-state.getInitialProps = async ({ query, req, res, ...args }) => {
-  const api = API(APIEnum.Listing, APIEnum.CatalogList);
-  const url = args.asPath.split('?')[0];
-  const isAmp = query.amp === '1';
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
+  };
+}
 
+export async function getStaticProps({ params, ...args }) {
+  const api = API(APIEnum.Listing, APIEnum.CatalogList);
   const response = await api.Listing.getListingApiKey({
     query: {
       app: 'msite',
-      url: url,
+      url: `/${params.language}/${params.state}`,
     },
   }).catch((e) => {
     return {
@@ -116,25 +123,16 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
 
   const result = response.data;
   if (!result) {
-    if (res) res.statusCode = 404;
     return {
-      pageType: 'listing',
-      data: '',
-      statusCode: 404,
+      redirect: {
+        destination: '/english/national',
+        permanent: false,
+      },
     };
   }
 
-  const urlSplit = url.split('/');
-  const language = languageMap[urlSplit[1]];
-  const state = stateCodeConverter(urlSplit[2]);
-
-  if (!state) {
-    /*  if (process.browser) {
-      router.push('/english/national');
-    } else {
-      res.writeHead(302, { Location: '/english/national' }).end();
-    } */
-  }
+  const language = languageMap[params.language];
+  const state = stateCodeConverter(params.state);
 
   if (result) {
     const requestPayload = {
@@ -144,7 +142,7 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       query: {
         collective_ads_count: 0,
         page: 0,
-        page_size: isAmp ? 40 : 8,
+        page_size: 8,
         version: 'v2',
         response: 'r2',
         item_languages: language,
@@ -163,30 +161,26 @@ state.getInitialProps = async ({ query, req, res, ...args }) => {
       } catch (e) {
         initCount = 0;
       }
-
       if (initCount) {
         return {
-          pageType: 'listing',
-          data: data,
-          payload: requestPayload,
-          isAmp: isAmp,
+          props: {
+            pageType: 'listing',
+            data: data,
+            payload: requestPayload,
+          },
+          revalidate: 120,
         };
       }
     }
 
-    if (res) res.statusCode = 404;
     return {
-      pageType: 'listing',
-      statusCode: 404,
+      notFound: true,
     };
   } else {
-    if (res) res.statusCode = 404;
     return {
-      pageType: 'listing',
-      data: null,
-      statusCode: 404,
+      notFound: true,
     };
   }
-};
+}
 
 export default state;

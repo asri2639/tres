@@ -184,6 +184,9 @@ export const stateCodeConverter = (e) => {
 };
 
 export const configStateCodeConverter = (e) => {
+  if (!e) {
+    return 'english';
+  }
   const state = {
     'andhra-pradesh': 'ap',
     assam: 'assam',

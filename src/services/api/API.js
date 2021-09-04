@@ -17,7 +17,7 @@ const requireComponent = require.context(
 );
 
 const apis = {};
-// For each matching file name...
+/* // For each matching file name...
 requireComponent.keys().forEach((fileName) => {
   // Get the component config
   const componentConfig = requireComponent(fileName);
@@ -25,7 +25,7 @@ requireComponent.keys().forEach((fileName) => {
     apis[fileName.match(/\.\/(\w+)\.js$/)[1]] =
       componentConfig.default || componentConfig;
   }
-});
+}); */
 
 export const apiStatusHandler = (error, hideMessage = false) => {
   let message = '';
@@ -157,11 +157,21 @@ export default function API(...controllers) {
   }, errorResponseHandler);
 
   /* controllers from mounted() method */
-
   controllers = controllers.concat(defaultControllers);
+
   if (controllers.length) {
-    controllers.forEach((controller) => {
+    for (let i = 0; i < controllers.length; i++) {
+      const controller = controllers[i];
+
       if (controller) {
+        
+        if (!apis[controller]) {
+          const fileContent = require('./' + controller + '.js');
+          if (fileContent && fileContent.default) {
+            apis[controller] = require('./' + controller + '.js').default;
+          }
+        }
+
         requiredServices[controller] = {
           ...apis[controller](inst),
         };
@@ -170,7 +180,7 @@ export default function API(...controllers) {
           `Failed to load api! Given enum of controller - ${controller} doesn't exist`
         );
       }
-    });
+    }
   }
 
   return {

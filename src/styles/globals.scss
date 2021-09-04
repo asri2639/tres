@@ -119,6 +119,10 @@ section.content {
   border-bottom-left-radius: 4px;
 }
 
+.rectangle-card {
+  height: 75px;
+}
+
 @media (min-width: 768px) {
   section.content {
     padding-bottom: 340px;
@@ -142,6 +146,7 @@ section.content {
 
   .rectangle-card {
     width: calc(50% - 4px);
+    min-height: 90px;
     &:nth-child(2n + 1) {
       margin-left: 4px;
     }

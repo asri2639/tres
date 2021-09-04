@@ -4,7 +4,6 @@ import Document, {
   Head,
   Main,
   NextScript,
-  DocumentContext,
 } from 'next/document';
 
 export default class ETVDocument extends Document {
@@ -13,7 +12,7 @@ export default class ETVDocument extends Document {
     return (
       <Html lang="">
         <Head>
-		<meta charset="UTF-8" />
+          <meta charset="UTF-8" />
           <link
             rel="preconnect"
             href="https://etvbharatimages.akamaized.net"

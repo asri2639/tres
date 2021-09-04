@@ -5,37 +5,19 @@ import cacheData from 'memory-cache';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import Head from 'next/head';
-import {
-  configStateCodeConverter,
-  getAmpUrl,
-  stateCodeConverter,
-} from '@utils/Helpers';
+import { getAmpUrl, stateCodeConverter } from '@utils/Helpers';
 import { languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import useTranslator from '@hooks/useTranslator';
-
-import { totalItemsCount } from '@components/listing/PageListing';
 import Error from 'next/error';
+import PageListing, { totalItemsCount } from '@components/listing/PageListing';
 
-import PageListing from '@components/listing/PageListing';
-
-const slug = ({
-  data,
-  initCount,
-  pageType,
-  appConfig,
-  id,
-  payload,
-  dropDownData,
-}) => {
+const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
   const router = useRouter();
   const { appLanguage } = useTranslator();
-  const convertedState = configStateCodeConverter(router.query.state);
-  let fbContentId = '';
-  if (appConfig && appConfig.params_hash2) {
-    const fbContent =
-      appConfig.params_hash2.config_params.fb_pages[convertedState];
-    fbContentId = fbContent ? fbContent.fb_page_id : null;
+
+  if (router.isFallback) {
+    return <h2>Loading...</h2>;
   }
 
   let ampExists = null;
@@ -56,14 +38,9 @@ const slug = ({
     readwhere = true;
   }
 
-  // const ampExists = false; // prod enabling amp
-
   const getComponent = () => {
-    let component = null;
-    let headerObj = {};
     let stateName = null;
     let canonicalUrl = '';
-    let ampUrl = '';
 
     if (pageType === 'error') {
       return <div>URL Not Found</div>;
@@ -83,7 +60,7 @@ const slug = ({
     } else {
       canonicalUrl = `https://www.etvbharat.com${pathname}`;
     }
-
+    let ampUrl = '';
     const state = splitPath[2];
     if (
       state === 'uttar-pradesh' ||
@@ -172,15 +149,18 @@ const slug = ({
   );
 };
 
-slug.getInitialProps = async ({ query, req, res, ...args }) => {
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
+  };
+}
+
+export async function getStaticProps({ params, ...args }) {
   let language = 'en',
-    state = 'na',
-    params = null,
-    bypass = false;
-  //console.log('amp called')
-  const isAmp =
-    query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
-  const url = args.asPath;
+    state = 'na';
+  const url = `/${params.language}/${params.state}/videos/${params.list}`;
+  const urlSplit = url.split('/');
 
   if (url.includes('/search/')) {
     const redirectUrl = `https://old.etvbharat.com${url}`;
@@ -195,16 +175,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     };
   }
 
-  const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
-
-  params = {
-    state: query.state,
-    language: language,
-  };
-
-  bypass = args.asPath.indexOf('/live-streaming/') >= 0;
 
   const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
   if (
@@ -226,7 +198,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     url.includes('opinion') ||
     url.includes('sports')
   ) {
-    const url = args.asPath;
     const response = await api.Listing.getListingApiKey({
       query: {
         app: 'msite',
@@ -241,11 +212,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     const result = response.data;
 
     if (!result) {
-      if (res) res.statusCode = 404;
       return {
-        pageType: 'listing',
-        data: '',
-        statusCode: 404,
+        notFound: true,
       };
     }
 
@@ -415,7 +383,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       const listingResp = await trackPromise(
         api.CatalogList.getListing(requestPayload)
       );
-
       if (listingResp && listingResp.data && listingResp.data.data) {
         const data = listingResp.data.data;
         let initCount = 0;
@@ -424,38 +391,36 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         } catch (e) {
           initCount = 0;
         }
+        
         if (initCount) {
           return {
-            pageType: 'navlisting',
-            data: data,
-            initCount: initCount,
-            payload: requestPayload,
-            dropDownData: finalDataObj,
+            props: {
+              pageType: 'navlisting',
+              data: data,
+              initCount: initCount,
+              payload: requestPayload,
+              dropDownData: finalDataObj,
+            },
+            revalidate: 120,
           };
         }
       }
 
-      if (res) res.statusCode = 404;
       return {
-        pageType: 'listing',
-        statusCode: 404,
+        notFound: true,
       };
 
       //console.log(data);
     } else {
       console.log('here');
-      /*  if (res) res.statusCode = 404;
-        return {
-          pageType: 'listing',
-          data: '',
-          statusCode: 404,
-        }; */
     }
   } else {
     return {
-      pageType: 'redirect',
-      data: '',
+      redirect: {
+        destination: '/english/national',
+        permanent: false,
+      },
     };
   }
-};
+}
 export default slug;

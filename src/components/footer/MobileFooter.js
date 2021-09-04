@@ -163,6 +163,7 @@ const MobileFooter = ({ data, menu }) => {
                         onClick={() => appInstall('Android')}
                         href={Constants.appURLs.android}
                         passHref
+                        prefetch={false}
                       >
                         <img
                           loading="lazy"
@@ -179,6 +180,7 @@ const MobileFooter = ({ data, menu }) => {
                         onClick={() => appInstall('IOS')}
                         href={Constants.appURLs.ios}
                         passHref
+                        prefetch={false}
                       >
                         <img
                           loading="lazy"
@@ -192,7 +194,11 @@ const MobileFooter = ({ data, menu }) => {
                     </li>
                     <li className="border-r"></li>
                     <li>
-                      <NavLink href={socialHandlers.fb} passHref>
+                      <NavLink
+                        href={socialHandlers.fb}
+                        passHref
+                        prefetch={false}
+                      >
                         <img
                           loading="lazy"
                           className="h-6"
@@ -204,7 +210,11 @@ const MobileFooter = ({ data, menu }) => {
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink href={socialHandlers.twitter} passHref>
+                      <NavLink
+                        href={socialHandlers.twitter}
+                        passHref
+                        prefetch={false}
+                      >
                         <img
                           loading="lazy"
                           className="h-6"
@@ -265,6 +275,7 @@ const MobileFooter = ({ data, menu }) => {
                       <NavLink
                         onClick={() => appInstall('Android')}
                         href={Constants.appURLs.android}
+                        prefetch={false}
                         passHref
                         style={
                           isAMP
@@ -291,6 +302,7 @@ const MobileFooter = ({ data, menu }) => {
                         onClick={() => appInstall('IOS')}
                         href={Constants.appURLs.ios}
                         passHref
+                        prefetch={false}
                       >
                         <img
                           className="h-6 mx-auto"

@@ -1,10 +1,5 @@
 import { useEffect } from 'react';
 
-contactUs.getInitialProps = async ({ query, req, res, ...args }) => {
-  return {
-    pageType: '',
-  };
-};
 export default function contactUs() {
   useEffect(() => {
     try {

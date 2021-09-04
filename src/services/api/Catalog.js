@@ -27,14 +27,6 @@ export default function Catalog(inst) {
         config
       );
     },
-    getFooterDetails({ params, query, config } = new APIRequest()) {
-      return import('../../static/footer').then((r) => r.default);
-    },
-    getAppConfig({ params, query, ...config }) {
-      return import('../../static/appConfig')
-        .then((r) => r.default)
-        .catch((e) => {});
-    },
     getPageAds({ params, query, config } = new APIRequest()) {
       return inst.get(`/page_ads?${new URLSearchParams(query)}`, config);
     },

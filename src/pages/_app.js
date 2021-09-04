@@ -4,31 +4,19 @@ import '@styles/tailwind.css';
 import '@styles/_fonts.scss';
 import '@styles/globals.scss';
 
-import Router, { useRouter } from 'next/router';
-import Constants, {
-  accessToken,
-  languageMap,
-  applicationConfig,
-} from '@utils/Constants';
+import { useRouter } from 'next/router';
+import { accessToken } from '@utils/Constants';
 import Head from 'next/head';
-import API from '@services/api/API';
-import APIEnum from '@services/api/APIEnum';
 import NProgress from 'nprogress';
 import useTranslator from '@hooks/useTranslator';
-// export function reportWebVitals(metric: NextWebVitalsMetric) {
-//   console.log(metric)
-// }
 
 export const AMPContext = React.createContext(false);
 export const TransitionContext = React.createContext(true);
 
-function App({ Component, pageProps, data, accessToken, appConfig }) {
+function App({ Component, pageProps }) {
   const router = useRouter();
   const [isTransitioning, setIsTransitioning] = useState(false);
   const language = router.query.language || 'english';
-  const state = router.query.state
-    ? router.query.state.toLowerCase()
-    : 'national';
   const isAMP = router.query.amp === '1';
   useTranslator({ init: true });
 
@@ -40,9 +28,11 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
       // destroy all ad slots
       const { googletag } = window;
       window.ads = new Set();
-      googletag.cmd.push(function () {
-        googletag.destroySlots();
-      });
+      if (googletag) {
+        googletag.cmd.push(function () {
+          googletag.destroySlots();
+        });
+      }
     };
     const handleRouteError = () => NProgress.done();
 
@@ -76,39 +66,35 @@ function App({ Component, pageProps, data, accessToken, appConfig }) {
         <meta name="theme-color" content="#07254c" />
 
         {!isAMP ? (
-          <link
-            rel="preload"
-            href={`https://etvbharatimages.akamaized.net/etvbharat/static/${
-              langName === 'assamese'
-                ? 'o-0IIpQlx3QUlC5A4PNr5TRA.woff2'
-                : 'assets/fonts/' + langCap + '/' + langName + '.woff2'
-            }`}
-            as="font"
-            type="font/woff2"
-            crossOrigin={'anonymous'}
-          />
+          <>
+            <link
+              rel="preload"
+              href={`https://etvbharatimages.akamaized.net/etvbharat/static/${
+                langName === 'assamese'
+                  ? 'o-0IIpQlx3QUlC5A4PNr5TRA.woff2'
+                  : 'assets/fonts/' + langCap + '/' + langName + '.woff2'
+              }`}
+              as="font"
+              type="font/woff2"
+              crossOrigin={'anonymous'}
+            />
+          </>
         ) : null}
       </Head>
 
-      {accessToken.web.length && accessToken.mobile.length ? (
-        <AMPContext.Provider value={isAMP}>
-          <TransitionContext.Provider value={isTransitioning}>
-            {/*   {isTransitioning ? <GlobalSpinner /> : null} */}
-            <Layout
-              accessToken={accessToken}
-              appConfig={appConfig}
-              pageType={pageProps.pageType}
-            >
-              <Component {...pageProps} />
-            </Layout>
-          </TransitionContext.Provider>
-        </AMPContext.Provider>
-      ) : null}
+      <AMPContext.Provider value={isAMP}>
+        <TransitionContext.Provider value={isTransitioning}>
+          {/*   {isTransitioning ? <GlobalSpinner /> : null} */}
+          <Layout accessToken={accessToken} pageType={pageProps.pageType}>
+            <Component {...pageProps} />
+          </Layout>
+        </TransitionContext.Provider>
+      </AMPContext.Provider>
     </>
   );
 }
 
-App.getInitialProps = async ({ Component, ctx }) => {
+/* App.getInitialProps = async ({ Component, ctx }) => {
   const language = ctx.asPath.split('?')[0].split('/')[1];
   if (ctx.asPath === '/' || !languageMap[language]) {
     if (process.browser) {
@@ -137,22 +123,6 @@ App.getInitialProps = async ({ Component, ctx }) => {
     });
     accessToken.mobile = result.data.data.access_token;
   }
-  let appConfig = null;
-  // if (accessToken.mobile.length && !applicationConfig.value) {
-  const result = await api.Catalog.getAppConfig({
-    query: {
-      response: 'r2',
-      item_languages: 'en',
-      current_version: '1.1',
-      region: 'IN',
-      version: 'v2',
-    },
-    isSSR: true,
-  });
-
-  appConfig = result.data.data;
-  applicationConfig.value = appConfig;
-  // }
   let pageProps;
   try {
     pageProps = await Component.getInitialProps(ctx);
@@ -174,8 +144,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
     pageProps,
     data: '',
     accessToken,
-    appConfig: applicationConfig.value,
   };
-};
+}; */
 
 export default App;

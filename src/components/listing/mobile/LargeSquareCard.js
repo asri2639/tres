@@ -41,13 +41,12 @@ const LargeSquareCard = ({
         articleClick(article);
       }}
     >
-      <div className="relative">
+      <div className="relative" style={styleObj}>
         <Thumbnail
           thumbnail={thumbnail}
           className={'rounded-t-md w-full'}
           type={''}
           creditSize={'no-size'}
-          styleObj={styleObj}
           lazy={!main}
         ></Thumbnail>
 
