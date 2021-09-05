@@ -175,10 +175,12 @@ export async function getStaticProps({ params, ...args }) {
 
     return {
       notFound: true,
+      revalidate: 120,
     };
   } else {
     return {
       notFound: true,
+      revalidate: 120,
     };
   }
 }

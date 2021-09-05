@@ -214,6 +214,7 @@ export async function getStaticProps({ params, ...args }) {
     if (!result) {
       return {
         notFound: true,
+        revalidate: 120,
       };
     }
 
@@ -335,7 +336,7 @@ export async function getStaticProps({ params, ...args }) {
       finalDataObj.title = selectedValue;
     }
 
-    const params = {
+    const qparams = {
       collective_ads_count: 0,
       page: 0,
       page_size: 4,
@@ -377,7 +378,7 @@ export async function getStaticProps({ params, ...args }) {
         params: {
           key: result.home_link,
         },
-        query: Object.assign({}, params, finalQueryParamObject),
+        query: Object.assign({}, qparams, finalQueryParamObject),
       };
 
       const listingResp = await trackPromise(
@@ -391,7 +392,7 @@ export async function getStaticProps({ params, ...args }) {
         } catch (e) {
           initCount = 0;
         }
-        
+
         if (initCount) {
           return {
             props: {
@@ -408,6 +409,7 @@ export async function getStaticProps({ params, ...args }) {
 
       return {
         notFound: true,
+        revalidate: 120,
       };
 
       //console.log(data);
@@ -417,7 +419,7 @@ export async function getStaticProps({ params, ...args }) {
   } else {
     return {
       redirect: {
-        destination: '/english/national',
+        destination: `/${params.language}/${params.state}`,
         permanent: false,
       },
     };

@@ -214,6 +214,7 @@ export async function getStaticProps({ params, ...args }) {
     if (!result) {
       return {
         notFound: true,
+        revalidate: 120,
       };
     }
 
@@ -391,7 +392,7 @@ export async function getStaticProps({ params, ...args }) {
         } catch (e) {
           initCount = 0;
         }
-        
+
         if (initCount) {
           return {
             props: {
@@ -408,6 +409,7 @@ export async function getStaticProps({ params, ...args }) {
 
       return {
         notFound: true,
+        revalidate: 120,
       };
 
       //console.log(data);
@@ -417,7 +419,7 @@ export async function getStaticProps({ params, ...args }) {
   } else {
     return {
       redirect: {
-        destination: '/english/national',
+        destination: `/${params.language}/${params.state}`,
         permanent: false,
       },
     };

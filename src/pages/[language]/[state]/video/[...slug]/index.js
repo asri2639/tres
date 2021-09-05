@@ -12,13 +12,18 @@ import {
 } from '@utils/Helpers';
 import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
+import FileFetcher from '@services/api/FileFetcher';
 
 import Error from 'next/error';
 
 import VideoList from '@components/video/VideoList';
 
-const slug = ({ data, pageType, appConfig, id, isAmp,userAgent }) => {
+const slug = ({ data, pageType, appConfig, id, userAgent }) => {
   const router = useRouter();
+  if (router.isFallback) {
+    return <h2>Loading...</h2>;
+  }
+
   let ampUrl = '';
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
@@ -117,17 +122,11 @@ const slug = ({ data, pageType, appConfig, id, isAmp,userAgent }) => {
         data.media_type
       ),
 
-      headline: data.title.replace(/\"/gi, '\\"'),
-      thumbnailM:
-        data.thumbnails && data.thumbnails.medium_3_2
-          ? data.thumbnails.medium_3_2.url
-          : '',
-
       description: data.short_description || data.description,
       keywords: data.keywords ? data.keywords.join(', ') : '',
       url: data.web_url,
       contentType: data.content_type,
-      ldjson: true,
+      ldjson: false,
     };
 
     component = (
@@ -136,9 +135,8 @@ const slug = ({ data, pageType, appConfig, id, isAmp,userAgent }) => {
           videos: [videoDatum],
           contentId: videoDatum.contentId,
         }}
-		    userAgent={userAgent}
-        appConfig={appConfig}
         userAgent={userAgent}
+        appConfig={appConfig}
       />
     );
 
@@ -158,7 +156,11 @@ const slug = ({ data, pageType, appConfig, id, isAmp,userAgent }) => {
           <>
             {' '}
             <Head>
-              <link rel="preload" as="image" href={thumbnail ? thumbnail.url : headerObj.thumbnail.url} />
+              <link
+                rel="preload"
+                as="image"
+                href={thumbnail ? thumbnail.url : headerObj.thumbnail.url}
+              />
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
               {ampExists && (data.is_amp || readwhere) ? (
@@ -221,27 +223,40 @@ const slug = ({ data, pageType, appConfig, id, isAmp,userAgent }) => {
             type="application/ld+json"
             dangerouslySetInnerHTML={{
               __html: `
-              {
-                "@context":"https://schema.org",
-                "@type":"VideoObject",
-                "name":"${headerObj.headline}",
-                "description":"${headerObj.description}",
-                "thumbnailUrl": "${headerObj.thumbnailM}",
-                "uploadDate":"${headerObj.updatedAt || headerObj.publishedAt}",
-                "contentUrl":"${data.web_url}",
-                "publisher":{
-                  "@type": "Organization",
-                  "name": "ETV Bharat",
-                  "logo": {
-                      "@type": "ImageObject",
-                      "url": "https://www.etvbharat.com/assets/images/etvlogo/${(
-                        headerObj.url.split('/')[0] + ''
-                      ).toLowerCase()}.png",
-                      "width": 82,
-                      "height": 60
-                    }
-                  }
-                },`,
+ {
+ "@context": "https://schema.org",
+ "@type": "NewsArticle",
+ "mainEntityOfPage": {
+ "@type": "WebPage",
+ "@id": "https://www.etvbharat.com/${headerObj.url}"
+ },
+ "headline": "${headerObj.headline}",
+ "description": "${headerObj.description.replace(/\"/gi, '\\"')}",
+ "image": {
+ "@type": "ImageObject",
+ "url": "${headerObj.thumbnailM}",
+ "width": 708,
+ "height": 474
+ },
+ "author": {
+ "@type": "Organization",
+ "name": "ETV Bharat"
+ },
+ "publisher": {
+ "@type": "Organization",
+ "name": "ETV Bharat",
+ "logo": {
+ "@type": "ImageObject",
+ "url": "https://www.etvbharat.com/assets/images/etvlogo/${(
+   headerObj.url.split('/')[0] + ''
+ ).toLowerCase()}.png",
+ "width": 82,
+ "height": 60
+ }
+ },
+ "datePublished": "${headerObj.publishedAt}",
+ "dateModified": "${headerObj.updatedAt || headerObj.publishedAt}"
+ }`,
             }}
           ></script>
         ) : null}
@@ -263,16 +278,25 @@ const slug = ({ data, pageType, appConfig, id, isAmp,userAgent }) => {
   );
 };
 
-slug.getInitialProps = async ({ query, req, res, ...args }) => {
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
+  };
+}
+
+export async function getStaticProps({ params, ...args }) {
   let language = 'en',
     state = 'na',
-    params = null,
+    qparams = null,
     bypass = false;
-  //// console.log('amp called')
-  const isAmp =
-    query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
-  const url = args.asPath;
-  const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
+
+  console.log(params);
+  const url = `/${params.language}/${params.state}/video/${params.slug.join(
+    '/'
+  )}`;
+  // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
+  const userAgent = 'Mobile';
 
   if (url.includes('/search/')) {
     const redirectUrl = `https://old.etvbharat.com${url}`;
@@ -284,7 +308,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     return {
       data: {},
       pageType: 'redirect',
-	  userAgent: userAgent,
     };
   }
 
@@ -292,18 +315,19 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
 
-  params = {
-    state: query.state,
+  qparams = {
+    state: params.state,
     language: language,
   };
+  console.log(state);
 
-  bypass = args.asPath.indexOf('/live-streaming/') >= 0;
-  const id = query.slug.slice(-1)[0];
+  bypass = url.indexOf('/live-streaming/') >= 0;
+  const id = params.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
   if (re.test(id) || bypass) {
     const api = API(APIEnum.CatalogList);
-    let type = query.slug[0].toLowerCase();
+    let type = params.slug[0].toLowerCase();
     if (bypass) {
       type = 'live-streaming';
     }
@@ -312,18 +336,31 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       window['applicationConfig'] = applicationConfig;
     }
     let suffix = null;
-    if (applicationConfig.value) {
-      let convertedState = configStateCodeConverter(query.state);
-      convertedState = query.language === 'urdu' ? 'urdu' : convertedState;
-      suffix =
-        applicationConfig.value['params_hash2'].config_params.ssr_details[
-          convertedState
-        ].video_details_link;
+    if (!applicationConfig.value) {
+      const res = await FileFetcher.getAppConfig({
+        query: {
+          response: 'r2',
+          item_languages: 'en',
+          current_version: '1.1',
+          region: 'IN',
+          version: 'v2',
+        },
+        isSSR: true,
+      });
+
+      applicationConfig.value = res.data.data;
     }
+
+    let convertedState = configStateCodeConverter(params.state);
+    convertedState = params.language === 'urdu' ? 'urdu' : convertedState;
+    suffix =
+      applicationConfig.value['params_hash2'].config_params.ssr_details[
+        convertedState
+      ].video_details_link;
 
     const videoResponse = await api.CatalogList.getVideoDetails({
       params: {
-        ...params,
+        ...qparams,
         suffix: suffix,
       },
       query: {
@@ -352,13 +389,22 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
       };
     }
     return {
-      pageType: 'video',
-      data: video,
-      appConfig: applicationConfig.value,
-      isAmp: isAmp,
-      id: id,
-      userAgent: userAgent,
+      props: {
+        pageType: 'video',
+        data: video,
+        appConfig: applicationConfig.value,
+        userAgent: userAgent,
+        id: id,
+      },
+      revalidate: 120,
+    };
+  } else {
+    if (res) res.statusCode = 404;
+    return {
+      pageType: 'listing',
+      data: '',
+      statusCode: 404,
     };
   }
-};
+}
 export default slug;

@@ -14,7 +14,6 @@ const Thumbnail = ({ thumbnail, className, type, lazy }) => {
       priority={!((lazy === undefined || lazy === true) && !isAMP)}
       layout="fill"
       src={`/assets/images/${'breakingplate'}.png`}
-      loader={`https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png`}
       className="breaking_news"
       alt="Breaking News"
     />
@@ -24,7 +23,6 @@ const Thumbnail = ({ thumbnail, className, type, lazy }) => {
         priority={!((lazy === undefined || lazy === true) && !isAMP)}
         layout="fill"
         src={state.src}
-        loader={`https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png`}
         className={`${className} ${type}`}
         alt={thumbnail.alt_tags}
       />

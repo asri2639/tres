@@ -62,6 +62,8 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
 
         appConfig = res.data.data;
         applicationConfig.value = appConfig;
+      } else {
+        appConfig = applicationConfig.value;
       }
 
       if (!data.footer.length) {
