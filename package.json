@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "cross-env NEXT_PUBLIC_APP_ENV=development PORT=3000 NEXT_PUBLIC_TEST=test node server.js",
     "build": "cross-env  NEXT_PUBLIC_APP_ENV=production next build",
-    "build-staging": "cross-env NEXT_PUBLIC_APP_ENV=staging PORT=3000 node server.js",
+    "build-staging": "cross-env NEXT_PUBLIC_APP_ENV=staging next build",
     "staging": "cross-env NEXT_PUBLIC_APP_ENV=staging PORT=3000 node server.js",
     "start": "cross-env NEXT_PUBLIC_APP_ENV=production PORT=3000 node server.js",
     "test-build": "cross-env NEXT_PUBLIC_APP_ENV=production NEXT_PUBLIC_TEST=test next build ",
