@@ -40,14 +40,13 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
         {article.display_title}
       </div>
 
-      <div className="relative w-24 rounded-md ">
-        <Thumbnail
-          thumbnail={thumbnail}
-          className={'w-full'}
-          type={''}
-          styleObj={{ minHeight: '65px' }}
-        />
-
+      <div className="flex items-center w-24 rounded-md flex">
+        <div
+          className="relative"
+          style={{ width: '100%', paddingTop: '75.25%' }}
+        >
+          <Thumbnail thumbnail={thumbnail} className={'w-full'} type={''} />
+        </div>
         {article.overlay_tag ? (
           <img
             loading="lazy"

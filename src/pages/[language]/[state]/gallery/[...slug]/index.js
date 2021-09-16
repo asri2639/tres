@@ -16,6 +16,11 @@ import GalleryList from '@components/gallery/GalleryList';
 
 const slug = ({ data, pageType, appConfig, id, userAgent }) => {
   const router = useRouter();
+
+  if (router.isFallback) {
+    return <h2>Loading...</h2>;
+  }
+
   let ampUrl = '';
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
@@ -156,7 +161,6 @@ const slug = ({ data, pageType, appConfig, id, userAgent }) => {
           <>
             {' '}
             <Head>
-              <link rel="preload" as="image" href={headerObj.thumbnail.url} />
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
               {ampExists && (data.is_amp || readwhere) ? (
@@ -327,15 +331,18 @@ const slug = ({ data, pageType, appConfig, id, userAgent }) => {
   );
 };
 
-slug.getInitialProps = async ({ query, req, res, ...args }) => {
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
+  };
+}
+
+export async function getStaticProps({ params, ...args }) {
   let language = 'en',
     state = 'na',
-    params = null;
-  //console.log('amp called')
-  const isAmp =
-    query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
-  const url = args.asPath;
-  const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
+    qparams = null;
+  const url = `/${params.language}/${params.state}/gallery/${params.slug}`;
 
   if (url.includes('/search/')) {
     const redirectUrl = `https://old.etvbharat.com${url}`;
@@ -350,23 +357,23 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     };
   }
 
+  const id = params.slug.slice(-1)[0];
+  const re = new RegExp('(' + state + '|na)\\d+', 'gi');
+
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
 
-  params = {
-    state: query.state,
+  qparams = {
+    state: params.state,
     language: language,
   };
-
-  const id = query.slug.slice(-1)[0];
-  const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
   if (re.test(id)) {
     const api = API(APIEnum.CatalogList);
 
     const galleryResponse = await api.CatalogList.getArticleDetails({
-      params: params,
+      params: qparams,
       query: {
         item_languages: language,
         region: 'IN',
@@ -378,35 +385,38 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         portal_state: state, //national
         scroll_no: 0,
       },
-      config: { isSSR: typeof window === 'undefined' },
     });
-
     const galleryResp = galleryResponse.data.data.catalog_list_items[0];
     const gallery = galleryResp.catalog_list_items;
     if ((!gallery || gallery.length === 0) && res) {
       if (res) res.statusCode = 404;
       return {
-        pageType: 'article',
-        data: '',
-        statusCode: 404,
+        props: {
+          pageType: 'article',
+          data: '',
+          statusCode: 404,
+        },
       };
     }
     // Pass data to the page via props
     return {
-      pageType: 'gallery',
-      data: { gallery, items_count: galleryResp.total_items_count },
-      appConfig: applicationConfig.value,
-      isAmp: isAmp,
-      id: id,
-      userAgent: userAgent,
+      props: {
+        pageType: 'gallery',
+        data: { gallery, items_count: galleryResp.total_items_count },
+        appConfig: applicationConfig.value,
+        id: id,
+      },
+      revalidate: 120,
     };
-  }else{
-	  if (res) res.statusCode = 404;
-	  return {
+  } else {
+    if (res) res.statusCode = 404;
+    return {
+      props: {
         pageType: 'article',
         data: '',
         statusCode: 404,
-      };
+      },
+    };
   }
-};
+}
 export default slug;

@@ -83,13 +83,22 @@ const BottomRelatedBar = ({ data }) => {
               articleClick(rel);
             }}
           >
-            <Thumbnail
-              thumbnail={thumbnail}
-              className={'rounded-md w-20'}
-              type={''}
-              creditSize={'no-size'}
-            />
-
+            <div
+              className="relative"
+              style={{
+                flex: '1 0 100px',
+                maxWidth: '100px',
+                marginTop: '-5px',
+                marginBottom: '-3px',
+              }}
+            >
+              <Thumbnail
+                thumbnail={thumbnail}
+                className={'rounded-md w-20'}
+                type={''}
+                creditSize={'no-size'}
+              />
+            </div>
             <div className=" px-1 text-xs text-gray-700 leading-tight">
               {rel.display_title}
             </div>

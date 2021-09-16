@@ -137,8 +137,11 @@ export default function API(...controllers) {
       request.baseURL = 'https://prod.suv.etvbharat.com';
     } else {
       if (!request.url.startsWith('/access_token')) {
-        console.log(Constants.mAuthToken, accessToken.mobile);
-        request.url = `${request.url}&auth_token=${Constants.mAuthToken}&access_token=${accessToken.mobile}`;
+        if (request.url.indexOf('msite') >= 0 || request.isSSR) {
+          request.url = `${request.url}&auth_token=${Constants.mAuthToken}&access_token=${accessToken.mobile}`;
+        } else {
+          request.url = `${request.url}&auth_token=${Constants.authToken}&access_token=${accessToken.web}`;
+        }
       }
     }
     return request;

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
@@ -15,6 +15,7 @@ import {
   smartUrlFetcher,
 } from '@components/video/VideoList';
 import getConfig from 'next/config';
+import Image from 'next/image';
 
 const Video = ({
   contentId,
@@ -29,6 +30,7 @@ const Video = ({
 }) => {
   const isAMP = false;
   const { publicRuntimeConfig } = getConfig();
+  const [isDesktop, setIsDesktop] = useState(null);
 
   const isRTL = useContext(RTLContext);
   const [source, setSource] = useState(iframeSource);
@@ -51,8 +53,7 @@ const Video = ({
 
   const { data: smartUrls, error: smartUrlError } = useSWR(
     () => {
-      const isMobile = userAgent && userAgent.includes('Mobile');
-      return isMobile && !isAMP
+      return isDesktop != null && !isDesktop && !isAMP
         ? [
             data.play_url.url,
             createHash('ywVXaTzycwZ8agEs3ujx' + data.play_url.url),
@@ -67,7 +68,8 @@ const Video = ({
   );
 
   useEffect(() => {
-    const isMobile = userAgent && userAgent.includes('Mobile');
+    setIsDesktop(window.innerWidth >= 768);
+    const isMobile = !isDesktop;
     if (isMobile && !isAMP && !source) {
       const source = constructPlaybackUrl(
         data,
@@ -289,32 +291,35 @@ const Video = ({
               </MediaContextProvider>
             </div>
 
-            <div className={`${video.player} z-0`}>
-              {source ? (
-                !showVideo ? (
+            {
+              <div className={`${video.player} z-0`}>
+                {!showVideo ? (
                   <div
                     className="play-button"
                     onClick={() => {
                       setShowVideo(true);
                     }}
                   >
-                    <img
+                    <div
                       className="w-full rounded-md -mt-10"
-                      src={data.thumbnail.url}
-                      alt="Thumbnail image"
-                    />
+                      style={{
+                        width: '100%',
+                        padding: '30.25%',
+                      }}
+                    >
+                      <Image
+                        priority
+                        layout="fill"
+                        src={data.thumbnail.url}
+                        alt="Thumbnail image"
+                      />
+                    </div>
                   </div>
-                ) : (
+                ) : source ? (
                   <iframe id={'player' + contentId} src={source}></iframe>
-                )
-              ) : (
-                <img
-                  className="w-full rounded-md -mt-10"
-                  src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png"
-                  alt="placeholder image"
-                />
-              )}
-            </div>
+                ) : null}
+              </div>
+            }
 
             <div className="px-2 py-4 text-sm lg:text-base text-justify lg:text-left">
               {data.description}
@@ -375,18 +380,6 @@ const Video = ({
           </div>
         </Sticky>
       </div>
-
-      {/*     <MediaContextProvider>
-        <Media at="xs">
-          <MobileNextArticle
-            label={'next_videos'}
-            data={data}
-            scrollToNextArticle={scrollToNextVideo}
-            nextArticle={nextVideo}
-            related={related}
-            showBbc={!!source}
-          ></MobileNextArticle>
-        </Media>*/}
 
       <MediaContextProvider>
         <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>

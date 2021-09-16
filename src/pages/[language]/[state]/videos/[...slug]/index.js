@@ -156,11 +156,6 @@ const slug = ({ data, pageType, appConfig, id, userAgent }) => {
           <>
             {' '}
             <Head>
-              <link
-                rel="preload"
-                as="image"
-                href={thumbnail ? thumbnail.url : headerObj.thumbnail.url}
-              />
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
               {ampExists && (data.is_amp || readwhere) ? (
@@ -291,7 +286,6 @@ export async function getStaticProps({ params, ...args }) {
     qparams = null,
     bypass = false;
 
-  console.log(params);
   const url = `/${params.language}/${params.state}/videos/${params.slug.join(
     '/'
   )}`;
@@ -319,7 +313,6 @@ export async function getStaticProps({ params, ...args }) {
     state: params.state,
     language: language,
   };
-  console.log(state);
 
   bypass = url.indexOf('/live-streaming/') >= 0;
   const id = params.slug.slice(-1)[0];

@@ -45,10 +45,7 @@ const SquareCard = ({
       }}
       style={style}
     >
-      <div
-        className="relative"
-        style={{ height: imgHeight ? imgHeight : '100%', minHeight: '100px' }}
-      >
+      <div className="relative" style={{ width: '100%', paddingTop: '75.25%' }}>
         <Thumbnail
           thumbnail={thumbnail}
           className={`rounded-t-md w-full ${imgHeight ? 'h-full' : ''}`}

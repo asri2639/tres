@@ -56,7 +56,7 @@ export default function CatalogList(inst) {
       return inst.get(
         `${controller}/${params.suffix}${getProperParam(
           params
-        )}.gzip?${new URLSearchParams({ ...query /* , env: 'staging' */   })}`,
+        )}.gzip?${new URLSearchParams({ ...query /* , env: 'staging' */ })}`,
         config
       );
     },
@@ -72,7 +72,7 @@ export default function CatalogList(inst) {
         config
       );
     },
-    getSearchResults({  query, config } = new APIRequest()) {
+    getSearchResults({ query, config } = new APIRequest()) {
       return inst.get(
         `${controller}/search-page-list?${new URLSearchParams(query)}`,
         config

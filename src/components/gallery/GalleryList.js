@@ -17,6 +17,7 @@ const GalleryList = ({ galleryData, userAgent }) => {
   const router = useRouter();
   const api = API(APIEnum.CatalogList);
   const language = languageMap[router.query.language];
+  const [isDesktop, setIsDesktop] = useState(null);
 
   const [galleries, setGalleries] = useState(galleryData.galleries || []);
   const [loading, setLoading] = useState(false);
@@ -53,7 +54,6 @@ const GalleryList = ({ galleryData, userAgent }) => {
 
   const { data: adData, error: adError } = useSWR(
     () => {
-      const isDesktop = userAgent && !userAgent.includes('Mobile');
       return isDesktop
         ? ['CatalogList', 'getArticleDetails', galleryData.contentId]
         : null;
@@ -71,6 +71,12 @@ const GalleryList = ({ galleryData, userAgent }) => {
     relatedGalleriesFetcher,
     { dedupingInterval: 5 * 60 * 1000 }
   );
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsDesktop(window.innerWidth >= 768);
+    }
+  }, []);
 
   // Set galleries from galleryData
   useEffect(() => {

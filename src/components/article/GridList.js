@@ -33,12 +33,14 @@ const GridList = ({ data }) => {
                 articleClick(v);
               }}
             >
-              <Thumbnail
-                thumbnail={thumbnail}
-                className={'rounded-lg'}
-                type={''}
-                creditSize={'small'}
-              />
+              <div className="relative" style={{ minHeight: '150px' }}>
+                <Thumbnail
+                  thumbnail={thumbnail}
+                  className={'rounded-lg'}
+                  type={''}
+                  creditSize={'small'}
+                />
+              </div>
               <div className="pt-2 leading-tight">{v.display_title}</div>
             </NavLink>
           );

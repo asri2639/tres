@@ -178,6 +178,7 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
   const [rhs, setRhs] = useState(null);
+  const [isDesktop, setIsDesktop] = useState(null);
 
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
@@ -227,7 +228,6 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
 
   const { data: smartUrls, error: smartUrlError } = useSWR(
     () => {
-      const isDesktop = userAgent && !userAgent.includes('Mobile');
       return isDesktop
         ? [
             videoData.videos[0].data.play_url.url,
@@ -247,7 +247,6 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
 
   const { data: adData, error: adError } = useSWR(
     () => {
-      const isDesktop = userAgent && !userAgent.includes('Mobile');
       return isDesktop
         ? ['CatalogList', 'getVideoDetails', videoData.contentId]
         : null;
@@ -258,7 +257,6 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
 
   const { data, error } = useSWR(
     () => {
-      const isDesktop = userAgent && !userAgent.includes('Mobile');
       return isDesktop
         ? ['CatalogList', 'getRelatedArticles', videoData.contentId]
         : null;
@@ -282,6 +280,12 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
       }
     });
   }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsDesktop(window.innerWidth >= 768);
+    }
+  }, []);
   // Set videos from videoData
   useEffect(() => {
     if (data) {

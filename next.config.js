@@ -45,6 +45,10 @@ module.exports = {
         destination: '/api/sitemap',
       },
       {
+        source: '/apis/v2/:path*',
+        destination: 'https://prod.suv.etvbharat.com/v2/:path*',
+      },
+      {
         source: '/apis/:path*',
         destination: 'https://prod.api.etvbharat.com/:path*',
       },

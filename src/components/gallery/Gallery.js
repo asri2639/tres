@@ -307,18 +307,15 @@ const Gallery = ({
               } else {
                 return (
                   <React.Fragment key={image.order_no + ' 1.' + ind}>
-                    <div className="relative">
+                    <div className="relative" style={{ height: '350px' }}>
                       {
                         <Thumbnail
-                          className={'rounded-lg'}
+                          className={'rounded-lg w-24'}
                           thumbnail={{
                             url: image.thumbnails.l_large.url,
                             alt_tags: image.description || image.title,
                           }}
-                          styleObj={
-                            isMobile && ind === 0 ? { minHeight: '300px' } : {}
-                          }
-                          lazy={ind > (isMobile ? 0 : 2) ? true : false}
+                          lazy={+image.order_no > 2 ? true : false}
                         />
                       }
                       <div className={`${gallery.counter}`}>

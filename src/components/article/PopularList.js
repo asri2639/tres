@@ -72,13 +72,17 @@ const PopularList = ({ data }) => {
                 articleClick(v);
               }}
             >
-              <Thumbnail
-                thumbnail={{ ...thumbnail, alt_tags: v.alt_tags }}
-                className={'rounded-md w-32 max-w-32 min-w-32'}
-                type={''}
-                creditSize={'small'}
-              />
-
+              <div
+                className="relative"
+                style={{ flex: '1 0 30%', height: '80px' }}
+              >
+                <Thumbnail
+                  thumbnail={{ ...thumbnail, alt_tags: v.alt_tags }}
+                  className={'rounded-md w-32 max-w-32 min-w-32'}
+                  type={''}
+                  creditSize={'small'}
+                />
+              </div>
               <div className=" px-3 text-sm text-gray-700">
                 {v.display_title}
               </div>

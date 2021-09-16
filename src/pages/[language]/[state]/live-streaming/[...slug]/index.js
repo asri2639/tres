@@ -291,7 +291,6 @@ export async function getStaticProps({ params, ...args }) {
     qparams = null,
     bypass = false;
 
-  console.log(params);
   const url = `/${params.language}/${
     params.state
   }/live-streaming/${params.slug.join('/')}`;
@@ -319,7 +318,6 @@ export async function getStaticProps({ params, ...args }) {
     state: params.state,
     language: language,
   };
-  console.log(state);
 
   bypass = url.indexOf('/live-streaming/') >= 0;
   const id = params.slug.slice(-1)[0];

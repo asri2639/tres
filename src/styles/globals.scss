@@ -1203,16 +1203,22 @@ div[dir*='rtl'] #IVCaption {
 
 .play-button {
   position: relative;
+  cursor: pointer;
 }
 .play-button::after {
   content: '';
+  border: 0;
+  background: transparent;
+  box-sizing: border-box;
+  width: 0;
+  height: 40px;
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: url('https://etvbharatimages.akamaized.net/player/etvbharat-test/saranyu_player/skins/image/bigplay.png')
-    center center no-repeat;
-  cursor: pointer;
-  background-size: 45px;
+  top: 41%;
+  left: calc(50% - 22px);
+  border-color: transparent transparent transparent #fff;
+  transition: 100ms all ease;
+
+  // play state
+  border-style: solid;
+  border-width: 20px 0 20px 40px;
 }

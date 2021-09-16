@@ -83,25 +83,45 @@ export default function DesktopSubMenu({ category }) {
                     articleClick(item);
                   }}
                 >
-                  <div className="relative">
+                  <div className="relative w-full">
                     {item.thumbnails ? (
-                      <Thumbnail
-                        thumbnail={thumbnail}
-                        className={`w-full rounded-md`}
-                        type={''}
-                        creditSize={'medium'}
-                      />
+                      <>
+                        <div
+                          className="relative"
+                          style={{ width: '100%', paddingTop: '60.25%' }}
+                        >
+                          <Thumbnail
+                            thumbnail={thumbnail}
+                            className={`w-full rounded-md`}
+                            type={''}
+                            creditSize={'medium'}
+                          />
+                        </div>
+
+                        <div className="text-sm mt-1 font-semibold">
+                          {item.ml_title[0].text}
+                        </div>
+                      </>
                     ) : (
-                      <img
-                        loading="lazy"
-                        className="w-full rounded-md"
-                        src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png"
-                        alt="placeholder image"
-                      />
+                      <>
+                        <div
+                          className="relative"
+                          style={{ width: '100%', paddingTop: '75.25%' }}
+                        >
+                          <img
+                            loading="lazy"
+                            className="w-full rounded-md"
+                            src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png"
+                            alt="placeholder image"
+                          />
+                        </div>
+
+                        <div className="invisible">
+                          asdfja jahsd fjasjd asjdhfa jsdfhasd ajdhf ajsdhf
+                          jasdh
+                        </div>
+                      </>
                     )}
-                    <div className="text-sm mt-1 font-semibold">
-                      {item.ml_title[0].text}
-                    </div>
                   </div>
                 </NavLink>
               );
