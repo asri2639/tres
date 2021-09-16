@@ -109,78 +109,78 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, ...args }) {
-  const api = API(APIEnum.Listing, APIEnum.CatalogList);
-  const response = await api.Listing.getListingApiKey({
-    query: {
-      app: 'msite',
-      url: `/${params.language}/${params.state}`,
-    },
-  }).catch((e) => {
-    return {
-      data: null,
-    };
-  });
-
-  const result = response.data;
-  if (!result) {
-    return {
-      redirect: {
-        destination: '/english/national',
-        permanent: false,
-      },
-    };
-  }
-
-  const language = languageMap[params.language];
-  const state = stateCodeConverter(params.state);
-
-  if (result) {
-    const requestPayload = {
-      params: {
-        key: result.home_link,
-      },
+  try {
+    const api = API(APIEnum.Listing, APIEnum.CatalogList);
+    const response = await api.Listing.getListingApiKey({
       query: {
-        collective_ads_count: 0,
-        page: 0,
-        page_size: 8,
-        version: 'v2',
-        response: 'r2',
-        item_languages: language,
-        portal_state: state,
+        app: 'msite',
+        url: `/${params.language}/${params.state}`,
       },
-    };
-    const listingResp = await trackPromise(
-      api.CatalogList.getListing(requestPayload)
-    );
+    });
 
-    if (listingResp && listingResp.data && listingResp.data.data) {
-      const data = listingResp.data.data;
-      let initCount = 0;
-      try {
-        initCount = totalItemsCount(data.catalog_list_items);
-      } catch (e) {
-        initCount = 0;
-      }
-      if (initCount) {
-        return {
-          props: {
-            pageType: 'listing',
-            data: data,
-            payload: requestPayload,
-          },
-          revalidate: 120,
-        };
-      }
+    const result = response.data;
+    if (!result) {
+      return {
+        redirect: {
+          destination: '/english/national',
+          permanent: false,
+        },
+      };
     }
 
+    const language = languageMap[params.language];
+    const state = stateCodeConverter(params.state);
+
+    if (result) {
+      const requestPayload = {
+        params: {
+          key: result.home_link,
+        },
+        query: {
+          collective_ads_count: 0,
+          page: 0,
+          page_size: 8,
+          version: 'v2',
+          response: 'r2',
+          item_languages: language,
+          portal_state: state,
+        },
+      };
+      const listingResp = await api.CatalogList.getListing(requestPayload);
+
+      if (listingResp && listingResp.data && listingResp.data.data) {
+        const data = listingResp.data.data;
+        let initCount = 0;
+        try {
+          initCount = totalItemsCount(data.catalog_list_items);
+        } catch (e) {
+          initCount = 0;
+        }
+        if (initCount) {
+          return {
+            props: {
+              pageType: 'listing',
+              data: data,
+              payload: requestPayload,
+            },
+            revalidate: 60,
+          };
+        }
+      }
+
+      return {
+        notFound: true,
+        revalidate: 120,
+      };
+    } else {
+      return {
+        notFound: true,
+        revalidate: 120,
+      };
+    }
+  } catch (e) {
     return {
       notFound: true,
-      revalidate: 120,
-    };
-  } else {
-    return {
-      notFound: true,
-      revalidate: 120,
     };
   }
 }

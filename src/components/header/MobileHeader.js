@@ -5,14 +5,13 @@ import NavLink from '@components/common/NavLink';
 import header from './Header.module.scss';
 import Modal from '@components/modal/Modal';
 import { menuClick } from '@utils/GoogleTagManager';
-import { AMPContext } from '@pages/_app';
 import useTranslator from '@hooks/useTranslator';
 import { RTLContext } from '@components/layout/Layout';
 
 const country = 'IN';
 
 export default function MobileHeader({ data, className }) {
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
   const router = useRouter();
   const language = router.query.language || 'english';
   const [stateData, setStateData] = useState(null);
@@ -298,9 +297,7 @@ export default function MobileHeader({ data, className }) {
             >
               {data.languages
                 ? Object.entries(data.languages).map(([language, states]) => {
-                    return isAMP ? (
-                      getAMPHTML(language, states)
-                    ) : (
+                    return (
                       <div
                         key={language}
                         onClick={() => languageNStateSelect(language, states)}

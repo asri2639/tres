@@ -1,9 +1,8 @@
 import Image from 'next/image';
-import { AMPContext } from '@pages/_app';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
 const Thumbnail = ({ thumbnail, className, type, lazy }) => {
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
   const [state, setState] = useState({
     src: thumbnail.url,
     errored: false,

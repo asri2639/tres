@@ -18,15 +18,16 @@ const localeSubpaths = {
 
 module.exports = {
   distDir: 'dist',
+  productionBrowserSourceMaps: true,
   // rewrites: async () => nextI18NextRewrites(localeSubpaths),
   publicRuntimeConfig: {
     localeSubpaths,
     APP_ENV: process.env.NEXT_PUBLIC_APP_ENV, // Pass through env variables
-    TEST: process.env.NEXT_TEST,
+    TEST: process.env.NEXT_PUBLIC_TEST,
   },
 
   images: {
-    domains: ['etvbharatimages.akamaized.net','localhost'],
+    domains: ['etvbharatimages.akamaized.net', 'localhost'],
   },
 
   rewrites: async () => {
@@ -42,6 +43,10 @@ module.exports = {
       {
         source: '/:slug*/:slug.xml',
         destination: '/api/sitemap',
+      },
+      {
+        source: '/apis/:path*',
+        destination: 'https://prod.api.etvbharat.com/:path*',
       },
     ];
   },

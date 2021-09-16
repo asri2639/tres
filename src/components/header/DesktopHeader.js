@@ -18,12 +18,11 @@ import { Media, MediaContextProvider } from '@media';
 import { RTLContext } from '@components/layout/Layout';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
-import { AMPContext } from '@pages/_app';
 import { getSocialLinks } from '@utils/Helpers';
 import useTranslator from '@hooks/useTranslator';
 
 const DesktopHeader = ({ className, data }) => {
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
   const router = useRouter();
   const { t, appLanguage } = useTranslator();
   const language = router.query.language || 'english';
@@ -110,7 +109,7 @@ const DesktopHeader = ({ className, data }) => {
   useEffect(() => {
     const splitPath = location.pathname.split('/');
     const state = splitPath[2];
-	const isDesktop = window && window.innerWidth >= 768;
+    const isDesktop = window && window.innerWidth >= 768;
     const socialLinks = getSocialLinks(state);
     setSocialHandlers(socialLinks);
 
@@ -143,19 +142,18 @@ const DesktopHeader = ({ className, data }) => {
         })
         .catch((e) => {});
     };
-	if(isDesktop){
-    getHeaderAd();
-	}
+    if (isDesktop) {
+      getHeaderAd();
+    }
     const handleRouteChange = (url) => {
       const splitPath = location.pathname.split('/');
       const state = splitPath[2];
       const socialLinks = getSocialLinks(state);
       setSocialHandlers(socialLinks);
       // setTwitterHandler();
-	  if(isDesktop){
-		  getHeaderAd(url);
-	  }
-      
+      if (isDesktop) {
+        getHeaderAd(url);
+      }
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);
@@ -525,7 +523,7 @@ const DesktopHeader = ({ className, data }) => {
             {/* <iframe className="mx-auto" width={755} height={110} src={`https://www.etvbharat.com/banner-near-logo/${router.query.state}/business/728x90-1.htm`}/> */}
 
             <MediaContextProvider>
-              <Media greaterThan="xs"> {isAMP ? null : headerAd}</Media>
+              <Media greaterThan="xs"> {headerAd}</Media>
             </MediaContextProvider>
           </div>
         </div>

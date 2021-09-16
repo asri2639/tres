@@ -1,6 +1,5 @@
 import ClientOnlyPortal from '@components/modal/ClientOnlyPortal';
 import useTranslator from '@hooks/useTranslator';
-import { AMPContext } from '@pages/_app';
 import { useContext } from 'react';
 
 const Modal = ({
@@ -14,29 +13,11 @@ const Modal = ({
   ampon,
 }) => {
   const { t } = useTranslator();
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
 
   return (
     <>
-      {isAMP ? (
-        <amp-lightbox
-          id={ampon ? ampon.split(':')[1] : '-'}
-          layout="nodisplay"
-          className="lightbox"
-        >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {children}
-          </div>
-        </amp-lightbox>
-      ) : null}
-
-      {!isAMP && open && (
+      {open && (
         <ClientOnlyPortal selector="#modal">
           <div className="backdrop flex justify-center items-center">
             <div

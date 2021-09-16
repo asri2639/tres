@@ -11,14 +11,13 @@ import APIEnum from '@services/api/APIEnum';
 import useSWR, { mutate } from 'swr';
 import { RTLContext, MenuContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
-import { AMPContext } from '@pages/_app';
 
 const capitalize = (s) => {
   return s && s[0].toUpperCase() + s.slice(1);
 };
 const SeeAll = ({ data, article, className }) => {
   const isRTL = useContext(RTLContext);
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
   const appConfig = useContext(MenuContext);
 
   const router = useRouter();
@@ -109,12 +108,6 @@ const SeeAll = ({ data, article, className }) => {
       dedupingInterval: 5 * 60 * 1000,
     }
   );
-
-  useEffect(() => {
-    if (isAMP) {
-      selectorModal(scope);
-    }
-  });
 
   useEffect(() => {
     if (districtFetchedData && district) {

@@ -12,7 +12,9 @@ const apis = [];
 requireComponent.keys().forEach((fileName) => {
   // Get the component config
   if (fileName.search(/\.\/(?:(index|API|APIEnum))\.js$/g)) {
-    apis.push(fileName.match(/\.\/(\w+)\.js$/)[1]);
+    if (fileName.match(/\.\/(\w+)\.js$/)) {
+      apis.push(fileName.match(/\.\/(\w+)\.js$/)[1]);
+    }
   }
 });
 

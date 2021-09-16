@@ -2,9 +2,8 @@ import NavLink from '@components/common/NavLink';
 import DesktopSidebar from '@components/header/DesktopSidebar';
 import Constants from '@utils/Constants';
 import { backToTop, appInstall } from '@utils/GoogleTagManager';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import footer from './Footer.module.scss';
-import { AMPContext } from '@pages/_app';
 import AMPSidebar from '@components/header/AMPSidebar';
 import { getSocialLinks } from '@utils/Helpers';
 import eventBus from '@utils/EventBus';
@@ -12,7 +11,7 @@ import { useRouter } from 'next/router';
 import useTranslator from '@hooks/useTranslator';
 
 const MobileFooter = ({ data, menu }) => {
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
   const router = useRouter();
   const { t } = useTranslator();
 
@@ -79,7 +78,6 @@ const MobileFooter = ({ data, menu }) => {
     <>
       {menu && menu.mobile ? (
         <>
-          {isAMP ? <AMPSidebar data={{ menu: menu }} /> : null}
           {sidebar ? (
             <DesktopSidebar
               data={{ menu: menu }}
@@ -92,31 +90,19 @@ const MobileFooter = ({ data, menu }) => {
             className="mobile-footer w-full block md:hidden bg-mbg text-white absolute bottom-0"
           >
             <div className="eb-navbar mb-12 pb-1">
-              {isAMP ? (
-                <a
-                  href="#"
-                  className="btot text-center absolute bg-red-700 w-40 px-4 py-3 rounded-full"
-                  style={{
-                    top: '-2.5rem',
-                    left: 'calc(50% - 5rem)',
-                  }}
-                >
-                  {t('back_to_top')}
-                </a>
-              ) : (
-                <button
-                  className="btot text-center absolute bg-red-700 w-40 px-4 py-3 rounded-full"
-                  style={{
-                    top: '-2.5rem',
-                    left: 'calc(50% - 5rem)',
-                  }}
-                  onClick={() => {
-                    backToTopp();
-                  }}
-                >
-                  {router.query.language ? t('back_to_top') : 'BACK TO TOP'}
-                </button>
-              )}
+              <button
+                className="btot text-center absolute bg-red-700 w-40 px-4 py-3 rounded-full"
+                style={{
+                  top: '-2.5rem',
+                  left: 'calc(50% - 5rem)',
+                }}
+                onClick={() => {
+                  backToTopp();
+                }}
+              >
+                {router.query.language ? t('back_to_top') : 'BACK TO TOP'}
+              </button>
+
               <div className="bottom-section mx-8">
                 <div className="text-center img-block">
                   <div className="footer-icon"></div>
@@ -317,87 +303,6 @@ const MobileFooter = ({ data, menu }) => {
                   </div>
                 </div>
                 <div className="item w-1/4">
-                  {isAMP ? (
-                    <amp-lightbox
-                      id="my-lightbox"
-                      layout="nodisplay"
-                      className="lightbox"
-                    >
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <div
-                          className="p-3 pb-4 rounded-md"
-                          style={{ background: '#f0f0f0' }}
-                        >
-                          <div className="flex justify-between pb-4">
-                            <div
-                              className="text-gray-700 text-md pl-2"
-                              style={{ fontSize: '1rem' }}
-                            >
-                              Change State
-                            </div>
-                            <div>
-                              <button
-                                type="button"
-                                role="button"
-                                tabIndex={0}
-                                className="font-semibold text-gray-500 hover:text-gray-900 text-md"
-                                on="tap:my-lightbox.close"
-                              >
-                                &#10005;
-                              </button>
-                            </div>
-                          </div>
-
-                          <div className="flex flex-wrap w-full px-3 text-sm mx-auto">
-                            {data
-                              .filter(
-                                (v) =>
-                                  ['national', 'goa', 'tripura'].indexOf(
-                                    v.state
-                                  ) === -1 && v.state
-                              )
-                              .map((v) => ({
-                                label: v.state.replace(/-/gi, ' '),
-                                ...v,
-                              }))
-                              .sort((a, b) => {
-                                let textA = a.label.toUpperCase();
-                                let textB = b.label.toUpperCase();
-                                return textA < textB
-                                  ? -1
-                                  : textA > textB
-                                  ? 1
-                                  : 0;
-                              })
-                              .map((v) => {
-                                return (
-                                  <a
-                                    key={v.state}
-                                    href={`https://www.etvbharat.com/${
-                                      v.item_languages[0]
-                                    }/${
-                                      v.item_languages[0] === 'english'
-                                        ? 'national'
-                                        : v.state
-                                    }`}
-                                    className="py-1 capitalize"
-                                    style={{ flexBasis: '50%' }}
-                                  >
-                                    {v.label}
-                                  </a>
-                                );
-                              })}
-                          </div>
-                        </div>
-                      </div>
-                    </amp-lightbox>
-                  ) : null}
                   <div
                     className="flex flex-col items-center justify-center"
                     on="tap:my-lightbox"

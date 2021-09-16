@@ -21,6 +21,7 @@ import FileFetcher from '@services/api/FileFetcher';
 const country = 'IN';
 export const RTLContext = React.createContext(false);
 export const MenuContext = React.createContext([]);
+export const ScrollContext = React.createContext(false);
 
 function debounce(fn, ms) {
   let timer;
@@ -45,6 +46,15 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
   const state = router.query.state || 'national';
   const [showStateModal, setShowStateModal] = useState(null);
   const { promiseInProgress } = usePromiseTracker();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('script-loaded', () => {
+      setTimeout(() => {
+        setIsScrolled(true);
+      }, 200);
+    });
+  });
 
   useEffect(() => {
     const populateData = async () => {
@@ -257,42 +267,46 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
         />
       ) : null}
       <RTLContext.Provider value={language === 'ur' ? true : false}>
-        <MenuContext.Provider value={appConfig}>
-          <Header data={data.header} language={language} />
-          {promiseInProgress ? (
-            <div
-              style={{
-                width: '100%',
-                height: '100',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              {/*  <Loader
+        <ScrollContext.Provider value={isScrolled}>
+          <MenuContext.Provider value={appConfig}>
+            <Header data={data.header} language={language} />
+            {promiseInProgress ? (
+              <div
+                style={{
+                  width: '100%',
+                  height: '100',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                {/*  <Loader
                 type="ThreeDots"
                 color="#2BAD60"
                 height="100"
                 width="100"
               /> */}
-              Loading...
-            </div>
-          ) : (
-            <section
-              className={`content ${
-                pageType === 'listing' || pageType === 'navlisting'
-                  ? 'bg-gray-200'
-                  : 'bg-white'
-              }`}
-            >
-              {children}
-            </section>
-          )}
-          <Footer
-            data={data.footer}
-            menu={data.header ? data.header['menu'] : null}
-          />
-        </MenuContext.Provider>
+                Loading...
+              </div>
+            ) : (
+              <section
+                className={`content ${
+                  pageType === 'listing' || pageType === 'navlisting'
+                    ? 'bg-gray-200'
+                    : 'bg-white'
+                }`}
+              >
+                {children}
+              </section>
+            )}
+            {isScrolled ? (
+              <Footer
+                data={data.footer}
+                menu={data.header ? data.header['menu'] : null}
+              />
+            ) : null}
+          </MenuContext.Provider>
+        </ScrollContext.Provider>
       </RTLContext.Provider>
     </>
   );

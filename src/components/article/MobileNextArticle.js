@@ -1,8 +1,6 @@
 import { thumbnailExtractor } from '@utils/Helpers';
 import Modal from '@components/modal/Modal';
-import { useContext, useState } from 'react';
-import { AMPContext } from '@pages/_app';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 import useTranslator from '@hooks/useTranslator';
 
 const MobileNextArticle = ({
@@ -11,11 +9,9 @@ const MobileNextArticle = ({
   nextArticle,
   scrollToNextArticle,
   related,
-  showBbc,
   children,
 }) => {
   const { t } = useTranslator();
-  const isAMP = useContext(AMPContext);
   const query = {
     amp: 'false',
     apiKey: '99a287d2-81b1-4013-8705-0805df9481e0',
@@ -24,11 +20,11 @@ const MobileNextArticle = ({
     globalLang: 'en',
     img: thumbnailExtractor(data.thumbnails, '3_2', 's2b', ''),
     title: data.title,
-    url: "https://www.etvbharat.com" + data.web_url,
+    url: 'https://www.etvbharat.com' + data.web_url,
     darkMode: 'false',
     emotesEnabled: 'true',
     d: 'false',
-    refHost: "www.etvbharat.com",
+    refHost: 'www.etvbharat.com',
     l_d: 'false',
     totWideImg: 'false',
     link: 'https://[url]',
@@ -83,97 +79,26 @@ const MobileNextArticle = ({
           </>
         </Modal>
       ) : null}
-
       {children}
-      {/*   <div className="flex justify-end">
-        {!isAMP ? (
-          <div
-            className="button px-4 py-2 m-3 border-2 border-red-700 text-red-700 rounded-md cursor-pointer focus:text-white focus:bg-red-700"
-            onClick={() => {
-              GoogleTagManager.comment(data);
-              toggleOpen(true);
-            }}
-          >
-            {t('add_comment')}
-          </div>
-        ) : null}
-      </div> */}
 
-      {showBbc ? (
-        <div className="bbc-tag bbc-tag-footer">
-          <img alt="" src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/bbc/bbc_footer_22px.png" />
+      <div className="flex flex-col py-4 px-5  bg-mbg text-white cursor-pointer">
+        <div className="flex items-center mb-1">
+          <img
+            alt="ETV"
+            height="24"
+            width="24"
+            className="w-6"
+            src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/nextarticle.png"
+          />
+          <span className="text-lg font-thin pl-2">{t(label)}</span>
         </div>
-      ) : null}
-
-      {isAMP && related && related.length > 0 && false ? (
-        <amp-next-page>
-          <script
-            type="application/json"
-            dangerouslySetInnerHTML={{
-              __html: `
-          ${JSON.stringify(
-            related.slice(1).map((rel) => {
-              const thumbnail = thumbnailExtractor(
-                rel.thumbnails,
-                '3_2',
-                'b2s',
-                null
-              );
-              return {
-                title: rel.display_title,
-                image: thumbnail.url,
-                url: location.origin + '/amp/' + rel.web_url,
-              };
-            })
-          )}
-          `,
-            }}
-          ></script>
-        </amp-next-page>
-      ) : null}
-
-      {isAMP && nextArticle ? (
-        <a
-          href={`/${nextArticle.web_url}`}
-          className="flex flex-col py-4 px-5  bg-mbg text-white cursor-pointer"
+        <div
+          className="text-gray-500 tracking-tighter pl-2"
+          onClick={scrollToNextArticle}
         >
-          <div className="flex items-center mb-1">
-            <img
-              alt="ETV"
-              height="24"
-              width="24"
-              className="w-6"
-              src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/nextarticle.png"
-            />
-            <span className="text-lg font-thin pl-2"> {t(label)}</span>
-          </div>
-          <div
-            className="text-gray-500 tracking-tighter pl-2"
-            onClick={scrollToNextArticle}
-          >
-            {nextArticle ? nextArticle.ml_title[0].text : ''}
-          </div>
-        </a>
-      ) : (
-        <div className="flex flex-col py-4 px-5  bg-mbg text-white cursor-pointer">
-          <div className="flex items-center mb-1">
-            <img
-              alt="ETV"
-              height="24"
-              width="24"
-              className="w-6"
-              src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/nextarticle.png"
-            />
-            <span className="text-lg font-thin pl-2">{t(label)}</span>
-          </div>
-          <div
-            className="text-gray-500 tracking-tighter pl-2"
-            onClick={scrollToNextArticle}
-          >
-            {nextArticle ? nextArticle.ml_title[0].text : ''}
-          </div>
+          {nextArticle ? nextArticle.ml_title[0].text : ''}
         </div>
-      )}
+      </div>
     </>
   );
 };

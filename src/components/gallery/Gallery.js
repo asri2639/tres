@@ -12,7 +12,6 @@ import { pageView, nextPageView } from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
-import { AMPContext } from '@pages/_app';
 import React from 'react';
 import dynamic from 'next/dynamic';
 import Thumbnail from '@components/common/Thumbnail';
@@ -48,7 +47,7 @@ const Gallery = ({
   userAgent,
   scrolled,
 }) => {
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
   const isRTL = useContext(RTLContext);
   const [isMobile, setIsMobile] = useState(
     userAgent && userAgent.includes('Mobile')
@@ -292,47 +291,24 @@ const Gallery = ({
                 image.layout_type.indexOf('ad_unit') >= 0 &&
                 image.ad_url.length > 0
               ) {
-                if (isAMP) {
-                  return (
-                    <>
-                      <amp-ad
-                        width="300"
-                        height="250"
-                        type="doubleclick"
-                        data-slot={image.ad_unit_id}
-                      >
-                        <div placeholder="true"></div>
-                        <div fallback></div>
-                      </amp-ad>
-                    </>
-                  );
-                } else {
-                  const [width, height] =
-                    image.layout_type === 'ad_unit_sqaure_gallery'
-                      ? [300, 250]
-                      : [550, 250];
-                  return scrolled ? (
-                    <iframe
-                      className="mx-auto"
-                      key={image.ad_unit_id + ' ' + ind}
-                      width={width + 50}
-                      height={height + 50}
-                      src={image.ad_url}
-                    />
-                  ) : null;
-                }
+                const [width, height] =
+                  image.layout_type === 'ad_unit_sqaure_gallery'
+                    ? [300, 250]
+                    : [550, 250];
+                return scrolled ? (
+                  <iframe
+                    className="mx-auto"
+                    key={image.ad_unit_id + ' ' + ind}
+                    width={width + 50}
+                    height={height + 50}
+                    src={image.ad_url}
+                  />
+                ) : null;
               } else {
                 return (
                   <React.Fragment key={image.order_no + ' 1.' + ind}>
                     <div className="relative">
-                      {isAMP ? (
-                        <img
-                          loading={ind > 2 ? 'lazy' : ''}
-                          className="rounded-lg"
-                          alt={image.description || image.title}
-                          src={image.thumbnails.l_large.url}
-                        />
-                      ) : (
+                      {
                         <Thumbnail
                           className={'rounded-lg'}
                           thumbnail={{
@@ -344,7 +320,7 @@ const Gallery = ({
                           }
                           lazy={ind > (isMobile ? 0 : 2) ? true : false}
                         />
-                      )}
+                      }
                       <div className={`${gallery.counter}`}>
                         <span>{image.order_no}</span>/ {count}
                       </div>

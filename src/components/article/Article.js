@@ -6,10 +6,6 @@ import SocialMedia from '@components/article/SocialMedia';
 import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
-import { AMPContext } from '@pages/_app';
-import stringToHTML from '@utils/StringToHtml';
-import API from '@services/api/API';
-import APIEnum from '@services/api/APIEnum';
 import dynamic from 'next/dynamic';
 const options = {
   loading: () => <div>Loading...</div>,
@@ -46,7 +42,7 @@ export default function Article({
   userAgent,
   htmlShow,
 }) {
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
   const [ampHtml, setAmpHtml] = useState(null);
 
   const contentRef = useRef(null);
@@ -106,143 +102,66 @@ export default function Article({
       }
     }
 
-    if (typeof window !== 'undefined' && !isAMP) {
-      console.log('inside non-amp!!!!');
-      const isDesktop = window.innerWidth >= 768;
-      const divStyle = isDesktop
-        ? `width: 728px; height: 90px;`
-        : `width: 300px; height: 250px;`;
-      const slotArr = isDesktop ? [728, 90] : [300, 250];
-      let adHTML = null;
-      let adConf = null;
-      if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
-        if (data.ad_conf[0].web_msite && data.ad_conf[0].web_msite) {
-          adConf = data.ad_conf[0].web_msite[0];
-        } else {
-          if (isDesktop) {
-            adConf = data.ad_conf[0].web ? data.ad_conf[0].web[0] : null;
-          } else {
-            adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite[0] : null;
-          }
-        }
-      }
-
-      const id = adConf ? adConf.gpt_id : null;
-      const ad_id = adConf ? adConf.ad_unit_id : null;
-      window.ads = window.ads || new Set();
-      const ads = window.ads;
-
-      const showAd = (ad_id, slotArr, id) => {
-        if (window.googletag && googletag.apiReady) {
-          googletag.cmd.push(function () {
-            googletag.pubads().collapseEmptyDivs();
-            googletag
-              .defineSlot(ad_id, slotArr, id)
-              .addService(googletag.pubads());
-            googletag.enableServices();
-          });
-          googletag.cmd.push(function () {
-            googletag.display(id);
-          });
-          window.ads.add(id);
-        }
-      };
-
-      if (id && ad_id) {
-        if (!ads.has(adConf.gpt_id)) {
-          adHTML = `<div id='${id}' style='${divStyle}'></div>`;
-          const el = document.querySelector(
-            `[data-content-id="${contentId}"] .EtvadsSection`
-          );
-          if (el && el.querySelector('#adsContainer')) {
-            el.innerHTML = adHTML;
-            showAd(ad_id, slotArr, id);
-          } else {
-            const el = document.getElementById(adConf.gpt_id);
-            if (el && !el.hasChildNodes()) {
-              showAd(ad_id, slotArr, id);
-            }
-
-            console.log(window.ads);
-            console.log(adConf.gpt_id);
-            console.log('In-Article ad container not found!!!', contentId);
-          }
-        }
-      }
-    }
-
-    if (isAMP) {
-      let adConf = null;
-      if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
-        if (data.ad_conf[0].web_msite && data.ad_conf[0].web_msite) {
-          adConf = data.ad_conf[0].web_msite[0];
+    console.log('inside non-amp!!!!');
+    const isDesktop = window.innerWidth >= 768;
+    const divStyle = isDesktop
+      ? `width: 728px; height: 90px;`
+      : `width: 300px; height: 250px;`;
+    const slotArr = isDesktop ? [728, 90] : [300, 250];
+    let adHTML = null;
+    let adConf = null;
+    if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
+      if (data.ad_conf[0].web_msite && data.ad_conf[0].web_msite) {
+        adConf = data.ad_conf[0].web_msite[0];
+      } else {
+        if (isDesktop) {
+          adConf = data.ad_conf[0].web ? data.ad_conf[0].web[0] : null;
         } else {
           adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite[0] : null;
         }
       }
+    }
 
-      const id = adConf ? adConf.gpt_id : null;
-      const ad_id = adConf ? adConf.ad_unit_id : null;
+    const id = adConf ? adConf.gpt_id : null;
+    const ad_id = adConf ? adConf.ad_unit_id : null;
+    window.ads = window.ads || new Set();
+    const ads = window.ads;
 
-      const parsedHtml = stringToHTML(html);
-      if (ad_id) {
-        const el = parsedHtml.querySelector(`.EtvadsSection`);
-        if (el) {
-          el.innerHTML = `<amp-ad width=300 height=250
-                  type="doubleclick"
-                  data-slot="${ad_id}">
-                <div placeholder></div>
-                <div fallback></div>
-              </amp-ad>`;
-        }
-      }
-
-      if (data.has_videos) {
-        api = API(APIEnum.Video);
-        let promises = [];
-
-        const videos = parsedHtml.querySelectorAll('.videoDiv');
-        for (let i = 0; i < videos.length; i++) {
-          const el = videos[i];
-          const iframe = el.querySelector('iframe.player-Iframe');
-
-          promises.push(
-            api.Video.decodeSmartUrl({
-              params: { url: iframe.src },
-            })
-          );
-        }
-
-        Promise.all(promises).then((results) => {
-          for (let i = 0; i < results.length; i++) {
-            const el = videos[i];
-            const res = results[i];
-            const url = new URL(res);
-            const iframeSource =
-              'https://etvbharatimages.akamaized.net/etvbharat/static/assets/embed_etv.html' +
-              url.search;
-
-            el.innerHTML = `<amp-video-iframe
-            layout="responsive"
-            width="16"
-            height="9"
-            src=${iframeSource}
-            poster="https://www.etvbharat.com/assets/images/placeholder.png"
-            ></amp-video-iframe>`;
-
-            if (i === results.length - 1) {
-              setAmpHtml(parsedHtml.innerHTML);
-            }
-          }
+    const showAd = (ad_id, slotArr, id) => {
+      if (window.googletag && googletag.apiReady) {
+        googletag.cmd.push(function () {
+          googletag.pubads().collapseEmptyDivs();
+          googletag
+            .defineSlot(ad_id, slotArr, id)
+            .addService(googletag.pubads());
+          googletag.enableServices();
         });
+        googletag.cmd.push(function () {
+          googletag.display(id);
+        });
+        window.ads.add(id);
+      }
+    };
 
-        // videos.forEach((el) => {
+    if (id && ad_id) {
+      if (!ads.has(adConf.gpt_id)) {
+        adHTML = `<div id='${id}' style='${divStyle}'></div>`;
+        const el = document.querySelector(
+          `[data-content-id="${contentId}"] .EtvadsSection`
+        );
+        if (el && el.querySelector('#adsContainer')) {
+          el.innerHTML = adHTML;
+          showAd(ad_id, slotArr, id);
+        } else {
+          const el = document.getElementById(adConf.gpt_id);
+          if (el && !el.hasChildNodes()) {
+            showAd(ad_id, slotArr, id);
+          }
 
-        // el.innerHTML = '<span>video</span>';
-        // console.log(el);
-        // });
-      } else {
-        setAmpHtml(parsedHtml.innerHTML);
+          console.log(window.ads);
+          console.log(adConf.gpt_id);
+          console.log('In-Article ad container not found!!!', contentId);
+        }
       }
     }
 
@@ -310,7 +229,7 @@ export default function Article({
                     {data.publish_date_uts
                       ? `Published on: ${dateFormatter(
                           data.publish_date_uts,
-                          isAMP
+                          false
                         )}`
                       : ''}
                     <span className="hidden md:inline-block">
@@ -377,19 +296,10 @@ export default function Article({
                   </MediaContextProvider>
                 </div>
               </div>
-              {isAMP && ampHtml ? (
-                <div
-                  className="text-base md:text-md"
-                  dangerouslySetInnerHTML={{
-                    __html: ampHtml,
-                  }}
-                />
-              ) : null}
-              {/** actual article content */}
-              {!isAMP &&
-              (htmlShow ||
-                !userAgent ||
-                (userAgent && !userAgent.includes('Mobile'))) ? (
+
+              {htmlShow ||
+              !userAgent ||
+              (userAgent && !userAgent.includes('Mobile')) ? (
                 <div
                   className={`text-base md:text-md `}
                   dangerouslySetInnerHTML={{
@@ -420,13 +330,12 @@ export default function Article({
               nextArticle={nextArticle}
             ></MobileNextArticle>
           </Media>
-          {isAMP ? null : (
-            <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
-              <div className="w-full items-center space-y-6 pt-4 pb-4">
-                {!rhs ? 'Loading...' : <AdContainer data={rhs} index={index} />}
-              </div>
-            </Media>
-          )}
+
+          <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
+            <div className="w-full items-center space-y-6 pt-4 pb-4">
+              {!rhs ? 'Loading...' : <AdContainer data={rhs} index={index} />}
+            </div>
+          </Media>
         </MediaContextProvider>
       </div>
     </>

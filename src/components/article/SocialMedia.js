@@ -13,16 +13,13 @@ import {
   RedditIcon,
 } from 'react-share';
 import { thumbnailExtractor } from '@utils/Helpers';
-import getConfig from 'next/config';
-import { AMPContext } from '@pages/_app';
 import { comment, share } from '@utils/GoogleTagManager';
 import { useRouter } from 'next/router';
 
 const SocialMedia = ({ data }) => {
-  const { publicRuntimeConfig } = getConfig();
   const router = useRouter();
 
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
   const [isOpen, toggleOpen] = useState(false);
   const query = {
     amp: 'false',
@@ -94,40 +91,7 @@ const SocialMedia = ({ data }) => {
           </>
         </Modal>
       ) : null}
-      {isAMP ? (
-        <>
-          <a
-            href={`https://www.facebook.com/sharer.php?u=${baseUrl}/${data.web_url}`}
-            target="_blank"
-            className="amp-social-share amp-social-share-facebook"
-            style={{ width: '32px', height: '32px' }}
-          ></a>
-          <amp-social-share
-            class="amp-social-share"
-            type="linkedin"
-            width="32"
-            height="32"
-            data-param-url={`${baseUrl}/${data.web_url}`}
-            aria-label="Share on LinkedIn"
-          ></amp-social-share>
-          <amp-social-share
-            class="amp-social-share"
-            type="twitter"
-            width="32"
-            height="32"
-            data-param-url={`${baseUrl}/${data.web_url}`}
-            aria-label="Share on Twitter"
-          ></amp-social-share>
-          <amp-social-share
-            class="amp-social-share"
-            type="whatsapp"
-            width="32"
-            height="32"
-            aria-label="Share on WhatsApp"
-            data-param-text={`TITLE - ${baseUrl}/${data.web_url}`}
-          ></amp-social-share>
-        </>
-      ) : (
+      {
         <>
           <FacebookShareButton
             url={`${baseUrl}/${url}`}
@@ -186,7 +150,7 @@ const SocialMedia = ({ data }) => {
             }}
           ></img>
         </>
-      )}
+      }
     </>
   );
 };

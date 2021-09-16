@@ -1,14 +1,8 @@
 import { mediaStyles } from 'media';
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-} from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 export default class ETVDocument extends Document {
   render() {
-    const isAMP = this.props.__NEXT_DATA__.query.amp === '1';
     return (
       <Html lang="">
         <Head>
@@ -21,34 +15,32 @@ export default class ETVDocument extends Document {
             type="text/css"
             dangerouslySetInnerHTML={{ __html: mediaStyles }}
           />
-          {!isAMP ? (
-            <>
-              {
-                <script
-                  dangerouslySetInnerHTML={{
-                    __html: ` if (location.protocol === 'http:' && !location.hostname === 'localhost') {
+          {
+            <script
+              dangerouslySetInnerHTML={{
+                __html: ` if (location.protocol === 'http:' && !location.hostname === 'localhost') {
                 window.location.href = window.location.href.replace('http:', 'https:');
               }`,
-                  }}
-                ></script>
-              }
+              }}
+            ></script>
+          }
 
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `window.dataLayer = window.dataLayer || []; 
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer = window.dataLayer || []; 
                            window.googletag=window.googletag||{cmd:[]};
                            var _comscore = _comscore || [];
                             _comscore.push({
                                 c1: "2",
                                 c2: "20416623"
                             });`,
-                }}
-              ></script>
+            }}
+          ></script>
 
-              <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                  __html: `{
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: `{
                     "@context": "https://schema.org",
                     "@type": "NewsMediaOrganization",
                     "name": "ETV Bharat",
@@ -56,12 +48,12 @@ export default class ETVDocument extends Document {
                     "logo": "https://www.etvbharat.com/assets/images/etvlogo/english.png",
                     "sameAs": "https://www.facebook.com/ETVBharatEnglish/"
                 }`,
-                }}
-              ></script>
-              <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                  __html: `{
+            }}
+          ></script>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: `{
                               "@context": "https://schema.org/",
                               "@type": "WebSite",
                               "name": "ETV Bharat",
@@ -72,46 +64,33 @@ export default class ETVDocument extends Document {
                                   "query-input": "required name=search_term_string"
                               }
                           }`,
-                }}
-              ></script>
-            </>
-          ) : null}
+            }}
+          ></script>
         </Head>
         <body>
-          {!isAMP ? (
-            <>
-              <noscript>
-                <iframe
-                  src="https://www.googletagmanager.com/ns.html?id=GTM-K3BH7X9"
-                  height="0"
-                  width="0"
-                  style={{ display: 'none', visibility: 'hidden' }}
-                ></iframe>
-              </noscript>
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-K3BH7X9"
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            ></iframe>
+          </noscript>
 
-              <noscript>
-                <img
-                  style={{ height: 0, width: 0, visibility: 'hidden' }}
-                  src="https://sb.scorecardresearch.com/p?c1=2&c2=20416623&cv=2.0&cj=1"
-                />
-              </noscript>
-            </>
-          ) : null}
-          {isAMP ? (
-            <>
-              <amp-analytics
-                config="https://www.googletagmanager.com/amp.json?id=GTM-KQ4QPLR"
-                data-credentials="include"
-              ></amp-analytics>
-            </>
-          ) : null}
+          <noscript>
+            <img
+              style={{ height: 0, width: 0, visibility: 'hidden' }}
+              src="https://sb.scorecardresearch.com/p?c1=2&c2=20416623&cv=2.0&cj=1"
+            />
+          </noscript>
+
           <Main />
           {/* Here we will mount our modal portal */}
           <div id="modal" style={{ height: 'auto' }} />
 
           <script
             dangerouslySetInnerHTML={{
-              __html: `(function(){
+              __html: `(function () {
                 var scrollDepth = false;
                 window.addEventListener(
                   "scroll",
@@ -119,41 +98,110 @@ export default class ETVDocument extends Document {
                     ((document.documentElement.scrollTop && false === scrollDepth) ||
                       (document.body.scrollTop && false === scrollDepth)) &&
                       (!(function () {
-                        
-                        (function (w, d, s, l, i) {
-                          w[l] = w[l] || [];
-                          w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-                          var f = d.getElementsByTagName(s)[0],
-                            j = d.createElement(s),
-                            dl = l != "dataLayer" ? "&l=" + l : "";
-                          j.async = true;
-                          j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-                          f.parentNode.insertBefore(j, f);
-                        })(window, document, "script", "dataLayer", "GTM-K3BH7X9");
-                
-                        (function () {
-                          var e = document.createElement("script");
-                          e.type = "text/javascript";
-                          e.async = !0;
-                          e.src = "https://securepubads.g.doubleclick.net/tag/js/gpt.js";
-                          var a = document.getElementsByTagName("script")[0];
-                          a.parentNode.insertBefore(e, a);
-                        })();
-                
-                        (function () {
-                          var s = document.createElement("script"),
-                            el = document.getElementsByTagName("script")[0];
-                          s.async = true;
-                          s.src = "https://sb.scorecardresearch.com/beacon.js";
-                          el.parentNode.insertBefore(s, el);
-                        })();
-                        
+                        loadScripts();
                       })(),
                       (scrollDepth = true));
                   },
                   true
                 );
-              })()
+              })();
+              
+              let __loaded = false;
+              window.addEventListener("script-load", () => {
+                __loaded = true;
+                setTimeout(()=>{
+                  const event = new Event("script-loaded");
+                  window.dispatchEvent(event);
+                },200)
+              });
+              
+              window.onload = ()=> {
+                setTimeout(() => {
+                  if (!__loaded) {
+                    loadScripts();
+                  }
+                }, 6000);
+              }
+              
+              const loadScripts = () => {
+                  try {
+                    var scripts = [
+                        "https://securepubads.g.doubleclick.net/tag/js/gpt.js",
+                        "https://sb.scorecardresearch.com/beacon.js",
+                        "https://www.googletagmanager.com/gtm.js?id=GTM-K3BH7X9",
+                      ],
+                      src,
+                      pendingScripts = [],
+                      firstScript = document.scripts[0];
+                    //polyfil checks and loads here
+                    if (
+                      typeof IntersectionObserver === "undefined" ||
+                      IntersectionObserver.toString().indexOf("[native code]") === -1
+                    ) {
+                      scripts.unshift("js/libs/polyfil/intersection-observer.js");
+                    }
+                    // Watch scripts load in IE
+                    function stateChange() {
+                      // Execute as many scripts in order as we can
+                      var pendingScript;
+                      while (pendingScripts[0] && pendingScripts[0].readyState == "loaded") {
+                        pendingScript = pendingScripts.shift();
+                        // avoid future loading events from this script (eg, if src changes)
+                        pendingScript.onreadystatechange = null;
+                        // can't just appendChild, old IE bug if element isn't closed
+                        firstScript.parentNode.insertBefore(pendingScript, firstScript);
+                      }
+                      console.log("scripts should be loaded now");
+                    }
+                    // loop through our script urls
+                    while ((src = scripts.shift())) {
+                      if ("async" in firstScript) {
+                        // modern browsers
+                        script = document.createElement("script");
+                        script.async = true;
+                        script.src = src;
+                        document.body.appendChild(script);
+                      } else if (firstScript.readyState) {
+                        // IE<10 // create a script and add it to our todo pile
+                        script = document.createElement("script");
+                        pendingScripts.push(script); // listen for state changes
+                        script.onreadystatechange = stateChange; // must set src AFTER adding onreadystatechange listener // else we’ll miss the loaded event for cached scripts
+                        script.src = src;
+                      } else {
+                        // fall back to defer
+                        document.write('<script src="' + src + '" defer></' + "script>");
+                      }
+                    }
+                  } catch (error) {
+                    alert(error);
+                  }
+              
+                  setTimeout(() => {
+                    if (window.googletag && googletag.apiReady) {
+                      // Register event handlers to observe lazy loading behavior.
+                      window.googletag
+                        .pubads()
+                        .addEventListener("slotRequested", function (event) {
+                          console.log(event.slot.getSlotElementId(), "fetched");
+                        });
+              
+                      window.googletag
+                        .pubads()
+                        .addEventListener("slotOnload", function (event) {
+                          console.log(event.slot.getSlotElementId(), "rendered");
+                        });
+                    }
+                  }, 200);
+              
+                (function (w, d, s, l, i) {
+                  w[l] = w[l] || [];
+                  w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+                })(window, document, "script", "dataLayer", "GTM-K3BH7X9");
+              
+                const event = new Event("script-load");
+                window.dispatchEvent(event);
+              };
+              
              `,
             }}
           ></script>

@@ -1,5 +1,4 @@
-import { AMPContext } from '@pages/_app';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const ArticleThumbnail = ({
   thumbnail,
@@ -10,7 +9,7 @@ const ArticleThumbnail = ({
   lazy,
   styleObj,
 }) => {
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
 
   const [state, setState] = useState({
     src: thumbnail.url,
@@ -41,7 +40,8 @@ const ArticleThumbnail = ({
   const onError = () => {
     if (!state.errored && !isAMP) {
       setState({
-        src: 'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png',
+        src:
+          'https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/placeholder.png',
         errored: true,
       });
     }
@@ -68,13 +68,10 @@ const ArticleThumbnail = ({
     <>
       <img
         ref={imgEl}
-
         data-src={state.src}
         height="100%"
         width="auto"
-        src={
-         state.src
-        }
+        src={state.src}
         onError={onError}
         className={`${className} ${type}`}
         alt={thumbnail.alt_tags}

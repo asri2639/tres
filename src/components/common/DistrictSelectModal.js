@@ -1,10 +1,9 @@
 import Modal from '@components/modal/Modal';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import useSWR from 'swr';
 import useTranslator from '@hooks/useTranslator';
-import { AMPContext } from '@pages/_app';
 import NavLink from '@components/common/NavLink';
 import { linkInfoGenerator } from '@utils/Helpers';
 
@@ -16,7 +15,7 @@ const DistrictSelectModal = ({ state, onClose, onDistrictSelect, mainUrl }) => {
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
   const { t, appLanguage } = useTranslator();
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
 
   const fUrl = mainUrl.startsWith('/') ? mainUrl.slice(1) : mainUrl;
   const getLink = (district) => {
@@ -107,19 +106,7 @@ const DistrictSelectModal = ({ state, onClose, onDistrictSelect, mainUrl }) => {
           <div className="flex flex-wrap w-full px-3 text-sm mx-auto">
             {!loading && districts.length > 0
               ? districts.map((v) => {
-                  return isAMP ? (
-                    <NavLink
-                      key={v.id}
-                      href={v.linkInfo.href}
-                      as={v.linkInfo.as}
-                      passHref
-                      className="py-1 capitalize cursor-pointer"
-                      style={{ flexBasis: '50%' }}
-                    >
-                      {' '}
-                      {v.ml_title[0].text}
-                    </NavLink>
-                  ) : (
+                  return (
                     <div
                       key={v.id}
                       onClick={() => {

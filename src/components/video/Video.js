@@ -8,7 +8,6 @@ import { pageView, nextPageView } from '@utils/ComScore';
 import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import { createHash, dateFormatter, loadJS } from '@utils/Helpers';
-import { AMPContext } from '@pages/_app';
 import AdContainer from '@components/article/AdContainer';
 import useSWR from 'swr';
 import {
@@ -28,7 +27,7 @@ const Video = ({
   index,
   userAgent,
 }) => {
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
   const { publicRuntimeConfig } = getConfig();
 
   const isRTL = useContext(RTLContext);
@@ -196,41 +195,6 @@ const Video = ({
         }
       }
     }
-
-    if (typeof window !== 'undefined' && isAMP) {
-      let adConf = null;
-      if (
-        desktop.ad_conf &&
-        Array.isArray(desktop.ad_conf) &&
-        desktop.ad_conf[0]
-      ) {
-        if (desktop.ad_conf[0].web_msite && desktop.ad_conf[0].web_msite) {
-          adConf = data.ad_conf[0].web_msite[0];
-        } else {
-          if (isDesktop) {
-            adConf = desktop.ad_conf[0].web ? desktop.ad_conf[0].web[0] : null;
-          } else {
-            adConf = desktop.ad_conf[0].msite
-              ? desktop.ad_conf[0].msite[0]
-              : null;
-          }
-        }
-      }
-      const id = adConf ? adConf.gpt_id : null;
-      const ad_id = adConf ? adConf.ad_unit_id : null;
-
-      if (ad_id) {
-        const el = document.querySelector(`.EtvadsSection`);
-        if (el) {
-          el.innerHTML = `<amp-ad width=300 height=250
-                  type="doubleclick"
-                  data-slot="${ad_id}">
-                <div placeholder></div>
-                <div fallback></div>
-              </amp-ad>`;
-        }
-      }
-    }
   }, [inView, contentId, rhs, desktop, source]);
 
   useEffect(() => {
@@ -327,15 +291,7 @@ const Video = ({
 
             <div className={`${video.player} z-0`}>
               {source ? (
-                isAMP ? (
-                  <amp-video-iframe
-                    layout="responsive"
-                    width="16"
-                    height="9"
-                    src={source}
-                    poster="https://www.etvbharat.com/assets/images/placeholder.png"
-                  ></amp-video-iframe>
-                ) : !showVideo ? (
+                !showVideo ? (
                   <div
                     className="play-button"
                     onClick={() => {
@@ -433,13 +389,11 @@ const Video = ({
         </Media>*/}
 
       <MediaContextProvider>
-        {isAMP ? null : (
-          <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
-            <div className="w-full items-center space-y-6 pt-4 pb-4">
-              {!rhs ? 'Loading...' : <AdContainer data={rhs} index={index} />}
-            </div>
-          </Media>
-        )}
+        <Media greaterThan="xs" className={`ad-content md:block md:w-4/12`}>
+          <div className="w-full items-center space-y-6 pt-4 pb-4">
+            {!rhs ? 'Loading...' : <AdContainer data={rhs} index={index} />}
+          </div>
+        </Media>
       </MediaContextProvider>
     </div>
   );

@@ -18,7 +18,6 @@ import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import VideoAPI from '@services/api/Video';
 import { languageMap } from '@utils/Constants';
-import { AMPContext } from '@pages/_app';
 
 export const smartUrlFetcher = (...args) => {
   const [play_url, hash, envs] = args;
@@ -168,7 +167,7 @@ export const constructPlaybackUrl = (
 };
 
 const VideoList = ({ videoData, userAgent, appConfig }) => {
-  const isAMP = useContext(AMPContext);
+  const isAMP = false;
   const { publicRuntimeConfig } = getConfig();
 
   const router = useRouter();
@@ -229,7 +228,7 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
   const { data: smartUrls, error: smartUrlError } = useSWR(
     () => {
       const isDesktop = userAgent && !userAgent.includes('Mobile');
-      return isDesktop || isAMP
+      return isDesktop
         ? [
             videoData.videos[0].data.play_url.url,
             createHash(
@@ -372,7 +371,7 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
               }}
             />
           ))}
-       {/*  {loading && (
+        {/*  {loading && (
           <h1 className="w-full text-red-700 text-2xl z-10">Loading ...</h1>
         )} */}
       </ul>

@@ -6,9 +6,9 @@ const env = publicRuntimeConfig.APP_ENV;
 const prd_test = publicRuntimeConfig.TEST === 'test';
 
 const baseURL =
-  env === 'production'
+  env === 'production' && !prd_test
     ? 'https://prod.api.etvbharat.com'
-    :env === 'development' || prd_test
+    : env === 'development' || prd_test
     ? 'http://localhost:3000/apis'
     : 'https://origin.prod.api.etvbharat.com';
 
@@ -32,7 +32,6 @@ const Constants = Object.freeze({
     ios: 'https://itunes.apple.com/us/app/yourapp/id1453416186',
   },
 });
-
 
 export const accessToken = {
   web:
