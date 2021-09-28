@@ -21,6 +21,7 @@ import { useRouter } from 'next/router';
 import MainArticles from './MainArticles';
 import { RTLContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
+import MobileMainArticles from './mobile/MobileMainArticles';
 
 export const totalItemsCount = (latestdata) => {
   let itemsCount = 0;
@@ -37,10 +38,7 @@ export const totalItemsCount = (latestdata) => {
 const options = {
   loading: () => <p>Loading...</p>,
 };
-const MobileMainArticles = dynamic(
-  () => import('./mobile/MobileMainArticles'),
-  options
-);
+
 const Modal = dynamic(() => import('@components/modal/Modal'), options);
 const ListingStateSelectModal = dynamic(
   () => import('@components/common/ListingStateSelectModal'),
