@@ -166,14 +166,14 @@ export const constructPlaybackUrl = (
   return y;
 };
 
-const VideoList = ({ videoData, userAgent, appConfig }) => {
+const VideoList = ({ videoData, appConfig }) => {
   const isAMP = false;
   const { publicRuntimeConfig } = getConfig();
 
   const router = useRouter();
   const api = API(APIEnum.CatalogList, APIEnum.Video);
   const language = languageMap[router.query.language];
-
+  const [isDesktop, setIsDesktop] = useState(null);
   const [videos, setVideos] = useState(videoData.videos);
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);
@@ -270,7 +270,7 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
       video.data.thumbnail = thumbnailExtractor(
         video.data.thumbnails,
         '3_2',
-        userAgent && userAgent.includes('Mobile') ? 's2b' : 'b2s',
+        !isDesktop ? 's2b' : 'b2s',
         video.data.media_type
       );
 
@@ -304,7 +304,7 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
       video.thumbnail = thumbnailExtractor(
         video.data.thumbnails,
         '3_2',
-        userAgent && userAgent.includes('Mobile') ? 's2b' : 'b2s',
+        !isDesktop ? 's2b' : 'b2s',
         video.data.media_type
       );
 
@@ -369,7 +369,7 @@ const VideoList = ({ videoData, userAgent, appConfig }) => {
               index={i}
               ads={mobileAds}
               thumbnail={video.thumbnail}
-              userAgent={userAgent}
+              userAgent={isDesktop? '': 'Mobile'}
               updateViewed={(viewed) => {
                 setViewed(viewed);
               }}

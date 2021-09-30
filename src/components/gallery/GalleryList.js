@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 import { languageMap } from '@utils/Constants';
 import Head from 'next/head';
 
-const GalleryList = ({ galleryData, userAgent }) => {
+const GalleryList = ({ galleryData }) => {
   const router = useRouter();
   const api = API(APIEnum.CatalogList);
   const language = languageMap[router.query.language];
@@ -217,7 +217,7 @@ const GalleryList = ({ galleryData, userAgent }) => {
               related={related}
               index={i}
               ads={mobileAds}
-              userAgent={userAgent}
+              userAgent={isDesktop? '': 'Mobile'}
               scrolled={loadRelated}
               updateViewed={(viewed) => {
                 setViewed(viewed);

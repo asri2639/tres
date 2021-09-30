@@ -12,10 +12,11 @@ import Breadcrumbs from '@components/article/Breadcrumbs';
 import { useRouter } from 'next/router';
 import { languageMap } from '@utils/Constants';
 
-const ArticleList = ({ articleData, userAgent }) => {
+const ArticleList = ({ articleData }) => {
   const api = API(APIEnum.CatalogList);
   const router = useRouter();
   const language = languageMap[router.query.language];
+  const [isDesktop, setIsDesktop] = useState(null);
 
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -52,7 +53,6 @@ const ArticleList = ({ articleData, userAgent }) => {
 
   const { data: adData, error: adError } = useSWR(
     () => {
-      const isDesktop = userAgent && !userAgent.includes('Mobile');
       return isDesktop
         ? ['CatalogList', 'getArticleDetails', articleData.contentId]
         : null;
@@ -70,6 +70,12 @@ const ArticleList = ({ articleData, userAgent }) => {
     relatedArticlesFetcher,
     { dedupingInterval: 5 * 60 * 1000 }
   );
+
+   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsDesktop(window.innerWidth >= 768);
+    }
+  }, []);
 
   // Set articles from articleData
   useEffect(() => {
@@ -225,7 +231,7 @@ const ArticleList = ({ articleData, userAgent }) => {
               scrollToNextArticle={() => scrollToArticle(related[index + 1])}
               viewed={viewed}
               index={index}
-              userAgent={userAgent}
+              userAgent={isDesktop? '': 'Mobile'}
               htmlShow={htmlShow}
               ads={mobileAds}
               updateViewed={(viewed) => {

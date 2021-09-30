@@ -14,7 +14,6 @@ import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import useTranslator from '@hooks/useTranslator';
 
-import Error from 'next/error';
 
 import ArticleList from '@components/article/ArticleList';
 import PageListing from '@components/listing/PageListing';
@@ -25,10 +24,8 @@ const slug = ({
   pageType,
   appConfig,
   id,
-  isAmp,
   payload,
   dropDownData,
-  userAgent,
 }) => {
   const router = useRouter();
   const { appLanguage } = useTranslator();
@@ -143,7 +140,7 @@ const slug = ({
                     matchedScript = scriptTagExtractionRegex.exec(
                       data.html_tag
                     );
-                    if (matchedScript && !isAmp) {
+                    if (matchedScript) {
                       scripts.push(matchedScript[0]);
                     }
                   } while (matchedScript);
@@ -183,7 +180,7 @@ const slug = ({
           thumbnail: thumbnailExtractor(
             data.thumbnails,
             '3_2',
-            userAgent && userAgent.includes('Mobile') ? 's2b' : 'b2s',
+            'b2s',
             data.media_type
           ),
 
@@ -203,7 +200,6 @@ const slug = ({
 
         component = (
           <ArticleList
-            userAgent={userAgent}
             articleData={{ articles: [datum], contentId: datum.contentId }}
           />
         );
@@ -385,58 +381,61 @@ const slug = ({
         getComponent()
       ) : (
         <div className={'not-found'}>
-          <Error statusCode={404}></Error>
+          {/* <Error statusCode={404}></Error> */}
         </div>
       )}
     </>
   );
 };
 
-slug.getInitialProps = async ({ query, req, res, ...args }) => {
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
+  };
+}
+
+export async function getStaticProps({ params, ...args }) {
   let language = 'en',
-    state = 'na',
-    params = null,
-    bypass = false;
-  //console.log('amp called')
-  const isAmp =
-    query.amp === '1'; /* && publicRuntimeConfig.APP_ENV !== 'production' */
-  const url = args.asPath;
-  const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
+    state = 'na', bypass=false,qparams = null;
+  const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}/${params.slug}`;
 
   if (url.includes('/search/')) {
     const redirectUrl = `https://old.etvbharat.com${url}`;
-    if (res) {
-      res.writeHead(302, { Location: `https://old.etvbharat.com${url}` }).end();
-    } else {
-      window.location = redirectUrl;
-    }
-    return {
-      data: {},
-      pageType: 'redirect',
-    };
+      if (res) {
+        res.writeHead(302, { Location: `https://old.etvbharat.com${url}` }).end();
+      } else {
+        window.location = redirectUrl;
+      }
+      return {
+        data: {},
+        pageType: 'redirect',
+      };
   }
 
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
 
-  params = {
-    state: query.state,
+
+  qparams = {
+    state: params.state,
     language: language,
   };
 
-  bypass = args.asPath.indexOf('/live-streaming/') >= 0;
-  const id = query.slug.slice(-1)[0];
+  bypass = url.indexOf('/live-streaming/') >= 0;
+  const id = params.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
   if (re.test(id) || bypass) {
     const api = API(APIEnum.CatalogList);
-    let type = query.slug[0].toLowerCase();
+    let type = urlSplit[0].toLowerCase();
     if (bypass) {
       type = 'live-streaming';
     }
 
     const articleResponse = await api.CatalogList.getArticleDetails({
-      params: params,
+      params: qparams,
       query: {
         item_languages: language,
         region: 'IN',
@@ -448,7 +447,6 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
         portal_state: state, //national
         scroll_no: 0,
       },
-      config: { isSSR: typeof window === 'undefined' },
     });
 
     let article = null;
@@ -462,28 +460,27 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     }
 
     if (error || !article) {
-      if (res) res.statusCode = 404;
       return {
-        pageType: 'article',
-        data: '',
-        statusCode: 404,
+        notFound: true,
+        revalidate: 120,
       };
     }
     // Pass data to the page via props
-    return {
-      pageType: 'article',
-      data: article,
-      appConfig: applicationConfig.value,
-      isAmp: isAmp,
-      id: id,
-      userAgent: userAgent,
-    };
+
+     return {
+        props: {
+          pageType: 'article',
+          data: article,
+          appConfig: applicationConfig.value,
+          id: id,
+        },
+        revalidate: 120,
+      };
   } else {
     return {
-      pageType: 'article',
-      data: '',
-      statusCode: 404,
+      notFound: true,
+      revalidate: 120,
     };
   }
-};
+}
 export default slug;

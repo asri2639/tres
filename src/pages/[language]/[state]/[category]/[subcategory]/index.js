@@ -159,7 +159,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params, ...args }) {
   let language = 'en',
     state = 'na';
-  const url = `/${params.language}/${params.state}/${params.category}//${params.subcategory}`;
+  const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}`;
   const urlSplit = url.split('/');
 
   if (url.includes('/search/')) {

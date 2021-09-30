@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import Error from 'next/error';
 import GalleryList from '@components/gallery/GalleryList';
 
-const slug = ({ data, pageType, appConfig, id, userAgent }) => {
+const slug = ({ data, pageType, appConfig, id }) => {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -151,7 +151,6 @@ const slug = ({ data, pageType, appConfig, id, userAgent }) => {
           ],
           contentId: data.gallery[0].parent_id,
         }}
-        userAgent={userAgent}
       />
     );
 
@@ -381,7 +380,7 @@ export async function getStaticProps({ params, ...args }) {
         content_id: id, //variable
         gallery_ad: true,
         page: 0,
-        page_size: typeof window === 'undefined' ? 1 : 10,
+        page_size: 1,
         portal_state: state, //national
         scroll_no: 0,
       },
