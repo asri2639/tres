@@ -155,11 +155,11 @@ const slug = ({ data, pageType, appConfig, id }) => {
           <>
             {' '}
             <Head>
-              <link
+              {/* <link
                 rel="preload"
                 as="image"
                 href={thumbnail ? thumbnail.url : headerObj.thumbnail.url}
-              />
+              /> */}
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
               {ampExists && (data.is_amp || readwhere) ? (

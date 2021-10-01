@@ -275,7 +275,7 @@ const slug = ({
           <>
             {' '}
             <Head>
-              <link rel="preload" as="image" href={headerObj.thumbnail.url} />
+              {/* <link rel="preload" as="image" href={headerObj.thumbnail.url} /> */}
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
               {ampExists && (data.is_amp || readwhere) ? (
