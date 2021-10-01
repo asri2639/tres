@@ -71,7 +71,7 @@ const Gallery = ({
   let properData = [
     {
       ...data[0], thumbnails: {
-        l_large: {...data[0].main_thumbnails.med_3_2
+        l_large: {...data[0].main_thumbnails.medium_3_2
       }
     } }, ...data]
 
