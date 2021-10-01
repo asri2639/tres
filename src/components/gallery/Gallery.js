@@ -71,12 +71,12 @@ const Gallery = ({
   let properData = [
     {
       ...data[0], thumbnails: {
-        l_large: {...data[0].main_thumbnails.high_3_2
+        l_large: {...data[0].main_thumbnails.med_3_2
       }
     } }, ...data]
 
   if (thumbnail && data[0].thumbnails && data[0].thumbnails.l_large && data[0].main_thumbnails.high_3_2.url === data[0].thumbnails.l_large.url ) {
-    properData = data;
+    // properData = data;
   }
   /*   
   const {ref, inView, entry} = useInView({
@@ -347,7 +347,7 @@ const Gallery = ({
                     </div>
                      
                       :
-                  <>  <div className="relative">
+                 (scrolled ? <>  <div className="relative">
                       {
                         <Thumbnail1
                             className={'rounded-lg'}
@@ -364,7 +364,7 @@ const Gallery = ({
                     </div>
                     <div className="text-md">
                       {image.description || image.title}
-                    </div></>
+                    </div></>: null)
                     }
                   </React.Fragment>
                 );
