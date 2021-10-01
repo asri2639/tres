@@ -173,7 +173,6 @@ const VideoList = ({ videoData, appConfig }) => {
   const router = useRouter();
   const api = API(APIEnum.CatalogList, APIEnum.Video);
   const language = languageMap[router.query.language];
-  const [isDesktop, setIsDesktop] = useState(null);
   const [videos, setVideos] = useState(videoData.videos);
   const [loading, setLoading] = useState(false);
   const [related, setRelated] = useState([]);

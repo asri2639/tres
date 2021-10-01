@@ -163,7 +163,7 @@ export async function getStaticProps({ params, ...args }) {
               data: data,
               payload: requestPayload,
             },
-            revalidate: 60,
+            revalidate: 120,
           };
         }
       }
