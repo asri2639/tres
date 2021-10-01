@@ -356,7 +356,7 @@ const Gallery = ({
                               url: image.thumbnails.l_large.url,
                               alt_tags: image.description || image.title,
                             }}
-                            lazy={ind > 2}
+                            lazy={true}
                           />
                       }
                       <div className={`${gallery.counter}`}>
