@@ -15,6 +15,8 @@ import { dateFormatter } from '@utils/Helpers';
 import React from 'react';
 import dynamic from 'next/dynamic';
 import Thumbnail from '@components/common/Thumbnail';
+import Thumbnail1 from '@components/common/Thumbnail1';
+import Image from 'next/image';
 
 const options = {
   loading: () => <div>Loading...</div>,
@@ -44,14 +46,11 @@ const Gallery = ({
   related,
   ads,
   index,
-  userAgent,
   scrolled,
+  thumbnail
 }) => {
   const isAMP = false;
   const isRTL = useContext(RTLContext);
-  const [isMobile, setIsMobile] = useState(
-    userAgent && userAgent.includes('Mobile')
-  );
 
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
@@ -69,7 +68,19 @@ const Gallery = ({
     [inViewRef]
   );
 
-  /*   const {ref, inView, entry} = useInView({
+  let properData = [
+    {
+      ...data[0], thumbnails: {
+        l_large: {...data[0].main_thumbnails.high_3_2
+      }
+    } }, ...data]
+
+  if (thumbnail && data[0].thumbnails && data[0].thumbnails.l_large && data[0].main_thumbnails.high_3_2.url === data[0].thumbnails.l_large.url ) {
+    console.log(123)
+    properData = data;
+  }
+  /*   
+  const {ref, inView, entry} = useInView({
     // delay: 200,
     // triggerOnce: true,
     threshold: 1,
@@ -285,7 +296,7 @@ const Gallery = ({
           </MediaContextProvider>
 
           <div className="space-y-5 p-3 pt-0">
-            {data.map((image, ind) => {
+            {properData.map((image, ind) => {
               if (
                 image.layout_type &&
                 image.layout_type.indexOf('ad_unit') >= 0 &&
@@ -307,24 +318,55 @@ const Gallery = ({
               } else {
                 return (
                   <React.Fragment key={image.order_no + ' 1.' + ind}>
-                    <div className="relative" style={{ height: '350px' }}>
+
+                    {ind === 0 ? 
+                    
+                <div
+                  className="-mx-3 md:mx-0 relative "
+                  style={{ minWidth: '300px', minHeight: '200px' }}
+                >             
+
+                   <div
+                      className="w-full rounded-md"
+                      style={{
+                        width: '100%',
+                        padding: '38.25%',
+                        mariginTop: '30px',
+                        marginBottom:'90px'
+                      }}
+                    >
+                      <Image
+                        priority
+                        layout="fill"
+                        src={image.thumbnails.l_large.url}
+                        alt={image.description || image.title}
+                      />
+                    </div>
+                         <div className={`${gallery.counter}`}>
+                        <span>{image.order_no}</span>/ {count}
+                      </div>
+                    </div>
+                     
+                      :
+                  <>  <div className="relative">
                       {
-                        <Thumbnail
-                          className={'rounded-lg w-24'}
-                          thumbnail={{
-                            url: image.thumbnails.l_large.url,
-                            alt_tags: image.description || image.title,
-                          }}
-                          lazy={+image.order_no > 2 ? true : false}
-                        />
+                        <Thumbnail1
+                            className={'rounded-lg'}
+                            thumbnail={{
+                              url: image.thumbnails.l_large.url,
+                              alt_tags: image.description || image.title,
+                            }}
+                            lazy={ind > 2}
+                          />
                       }
                       <div className={`${gallery.counter}`}>
-                        <span>{image.order_no}</span>/ {count}
+                        <span>{ind+1}</span>/ {count + 1}
                       </div>
                     </div>
                     <div className="text-md">
                       {image.description || image.title}
-                    </div>
+                    </div></>
+                    }
                   </React.Fragment>
                 );
               }

@@ -106,17 +106,18 @@ const slug = ({ data, pageType, appConfig, id }) => {
       return v.description;
     });
 
+    const thumbnail = thumbnailExtractor(
+      main.main_thumbnails,
+      '3_2',
+      'b2s',
+      main.media_type
+    );
     headerObj = {
       title: main.display_title,
       canonicalUrl: canonicalUrl,
       ampUrl: ampUrl,
       fbContentId: fbContentId,
-      thumbnail: thumbnailExtractor(
-        data.thumbnails,
-        '3_2',
-        'b2s',
-        data.media_type
-      ),
+      thumbnail: thumbnail,
 
       description:
         main.short_description || main.description || main.display_title,
@@ -147,6 +148,7 @@ const slug = ({ data, pageType, appConfig, id }) => {
               content_id: data.gallery[0].parent_id,
               images: data.gallery,
               count: data.items_count,
+              thumbnail: thumbnail
             },
           ],
           contentId: data.gallery[0].parent_id,

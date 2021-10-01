@@ -5,6 +5,7 @@ const AdCard = ({ data, className }) => {
   const id = data.msite_gpt_id;
   const ad_id = data.msite_adunit_id;
 
+
   useEffect(() => {
     if (id && ad_id) {
       var s = document.createElement('script');
@@ -13,7 +14,8 @@ const AdCard = ({ data, className }) => {
             if(window.googletag && googletag.apiReady) {
               googletag.cmd.push(function() {
                 googletag.pubads().collapseEmptyDivs();
-                googletag.defineSlot('${ad_id}', ${slotArr}, '${id}').addService(googletag.pubads()); 
+                googletag.defineSlot('${ad_id}', ${slotArr}, '${id}')
+                  .addService(googletag.pubads());
                 googletag.enableServices(); 
               }); 
               googletag.cmd.push(function() { 

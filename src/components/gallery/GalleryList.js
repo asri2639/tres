@@ -210,6 +210,7 @@ const GalleryList = ({ galleryData }) => {
               rhs={rhs}
               desktop={gallery.desktop}
               count={gallery.count}
+              thumbnail={gallery.thumbnail}
               webUrl={gallery.web_url}
               nextGallery={i < 9 ? related[i + 1] : null}
               scrollToNextGallery={() => scrollToGallery(related[i + 1])}
