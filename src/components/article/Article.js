@@ -7,6 +7,8 @@ import Thumbnail from '@components/common/Thumbnail';
 import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
+
 const options = {
   loading: () => <div>Loading...</div>,
 };
@@ -255,12 +257,27 @@ export default function Article({
                   className="-mx-3 md:mx-0 relative "
                   style={{ minWidth: '300px', minHeight: '200px' }}
                 >
-                  <Thumbnail
+                {/*   <Thumbnail
                     thumbnail={thumbnail}
                     className={'md:rounded-lg w-full'}
                     type={data.media_type}
                     lazy={false}
-                  />
+                  /> */}
+
+                   <div
+                      className="w-full rounded-md -mt-10"
+                      style={{
+                        width: '100%',
+                        padding: '38.25%',
+                      }}
+                    >
+                      <Image
+                        priority
+                        layout="fill"
+                        src={thumbnail.url}
+                        alt="Thumbnail image"
+                      />
+                    </div>
                 </div>
                 <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
                   <MediaContextProvider>
