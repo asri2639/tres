@@ -190,11 +190,11 @@ const GalleryList = ({ galleryData }) => {
   return (
     <>
       <Head>
-        <link
+      {/*   <link
           rel="preload"
           as="image"
           href={galleries[0].images[0].thumbnails.l_large.url}
-        />
+        /> */}
       </Head>
       {/* <div className="article-count fixed right-0 text-white top-0 z-50 p-3 text-2xl font-bold">{galleries.length}</div> */}
 
