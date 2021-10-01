@@ -18,7 +18,7 @@ import Error from 'next/error';
 
 import VideoList from '@components/video/VideoList';
 
-const slug = ({ data, pageType, appConfig, id, userAgent }) => {
+const slug = ({ data, pageType, appConfig, id }) => {
   const router = useRouter();
   if (router.isFallback) {
     return <h2>Loading...</h2>;
@@ -135,7 +135,6 @@ const slug = ({ data, pageType, appConfig, id, userAgent }) => {
           videos: [videoDatum],
           contentId: videoDatum.contentId,
         }}
-        userAgent={userAgent}
         appConfig={appConfig}
       />
     );
