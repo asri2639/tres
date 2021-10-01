@@ -76,7 +76,6 @@ const Gallery = ({
     } }, ...data]
 
   if (thumbnail && data[0].thumbnails && data[0].thumbnails.l_large && data[0].main_thumbnails.high_3_2.url === data[0].thumbnails.l_large.url ) {
-    console.log(123)
     properData = data;
   }
   /*   
@@ -356,7 +355,7 @@ const Gallery = ({
                               url: image.thumbnails.l_large.url,
                               alt_tags: image.description || image.title,
                             }}
-                            lazy={ind > 2}
+                            lazy={true}
                           />
                       }
                       <div className={`${gallery.counter}`}>
