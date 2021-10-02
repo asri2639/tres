@@ -17,6 +17,7 @@ import useTranslator from '@hooks/useTranslator';
 
 import ArticleList from '@components/article/ArticleList';
 import PageListing from '@components/listing/PageListing';
+import { getData } from '..';
 
 const slug = ({
   data,
@@ -400,6 +401,7 @@ export async function getStaticProps({ params, ...args }) {
   let language = 'en',
     state = 'na', bypass=false,qparams = null;
   const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}/${params.slug}`;
+  console.log(url)
 
   if (url.includes('/search/')) {
     const redirectUrl = `https://old.etvbharat.com${url}`;
@@ -477,10 +479,7 @@ export async function getStaticProps({ params, ...args }) {
         revalidate: 120,
       };
   } else {
-    return {
-      notFound: true,
-      revalidate: 120,
-    };
+    return getData(url, language, state, urlSplit)
   }
 }
 export default slug;

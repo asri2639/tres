@@ -161,7 +161,6 @@ export async function getStaticProps({ params, ...args }) {
     state = 'na';
   const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}`;
   const urlSplit = url.split('/');
-
   if (url.includes('/search/')) {
     const redirectUrl = `https://old.etvbharat.com${url}`;
     if (res) {
@@ -178,6 +177,11 @@ export async function getStaticProps({ params, ...args }) {
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
 
+  return getData(url, language, state, urlSplit);
+  
+}
+
+export const getData = async (url, language, state, urlSplit) => {
   const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
   if (
     url.includes('state') ||
@@ -425,4 +429,5 @@ export async function getStaticProps({ params, ...args }) {
     };
   }
 }
+
 export default slug;
