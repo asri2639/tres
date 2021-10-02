@@ -45,7 +45,6 @@ export default function Article({
   htmlShow,
 }) {
   const isAMP = false;
-  const [ampHtml, setAmpHtml] = useState(null);
 
   const contentRef = useRef(null);
   const isRTL = useContext(RTLContext);

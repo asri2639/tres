@@ -18,7 +18,7 @@ const ArticleList = ({ articleData }) => {
   const language = languageMap[router.query.language];
   const [isDesktop, setIsDesktop] = useState(null);
 
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState(articleData.articles);
   const [loading, setLoading] = useState(false);
   const [htmlShow, setHtmlShow] = useState(true);
   const [related, setRelated] = useState([]);
