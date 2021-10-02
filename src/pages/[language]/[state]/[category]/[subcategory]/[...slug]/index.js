@@ -401,8 +401,6 @@ export async function getStaticProps({ params, ...args }) {
   let language = 'en',
     state = 'na', bypass=false,qparams = null;
   const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}/${params.slug}`;
-  console.log(url)
-
   if (url.includes('/search/')) {
     const redirectUrl = `https://old.etvbharat.com${url}`;
       if (res) {
