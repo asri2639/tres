@@ -17,7 +17,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
   const { appLanguage } = useTranslator();
 
   if (router.isFallback) {
-    return <h2>Loading...</h2>;
+    return <h2 class="loading"></h2>;
   }
 
   let ampExists = null;
@@ -152,7 +152,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
 export async function getStaticPaths() {
   return {
     paths: [],
-    fallback: true,
+    fallback: 'blocking',
   };
 }
 

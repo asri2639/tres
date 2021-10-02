@@ -21,7 +21,7 @@ import VideoList from '@components/video/VideoList';
 const slug = ({ data, pageType, appConfig, id, userAgent }) => {
   const router = useRouter();
   if (router.isFallback) {
-    return <h2>Loading...</h2>;
+    return <h2 class="loading"></h2>;
   }
 
   let ampUrl = '';
@@ -276,7 +276,7 @@ const slug = ({ data, pageType, appConfig, id, userAgent }) => {
 export async function getStaticPaths() {
   return {
     paths: [],
-    fallback: true,
+    fallback: 'blocking',
   };
 }
 

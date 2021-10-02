@@ -20,7 +20,7 @@ const state = ({ data, payload }) => {
   const { appLanguage } = useTranslator();
 
   if (router.isFallback) {
-    return <h2>Loading...</h2>;
+    return <h2 class="loading"></h2>;
   }
 
   const convertedState = configStateCodeConverter(router.query.state);
@@ -104,7 +104,7 @@ const state = ({ data, payload }) => {
 export async function getStaticPaths() {
   return {
     paths: [],
-    fallback: true,
+    fallback: 'blocking',
   };
 }
 

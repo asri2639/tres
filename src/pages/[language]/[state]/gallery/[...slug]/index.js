@@ -18,7 +18,7 @@ const slug = ({ data, pageType, appConfig, id }) => {
   const router = useRouter();
 
   if (router.isFallback) {
-    return <h2>Loading...</h2>;
+    return <h2 class="loading"></h2>;
   }
 
   let ampUrl = '';
@@ -335,7 +335,7 @@ const slug = ({ data, pageType, appConfig, id }) => {
 export async function getStaticPaths() {
   return {
     paths: [],
-    fallback: true,
+    fallback: 'blocking',
   };
 }
 

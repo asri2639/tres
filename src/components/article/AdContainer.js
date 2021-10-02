@@ -1,14 +1,17 @@
 import dynamic from 'next/dynamic';
+import { useContext } from 'react';
 const options = {
-  loading: () => <div>Loading...</div>,
+  loading: () => <div>Loading../.</div>,
 };
+import { ScrollContext } from '@components/layout/Layout';
 
 const GridList = dynamic(() => import('@components/article/GridList'), options);
 const PopularList = dynamic(() => import('@components/article/PopularList'), options);
 const MobileAd = dynamic(() => import('@components/article/MobileAd'), options);
 
 const AdContainer = ({ data, className, type, index }) => {
-  return (
+  const isScrolled = useContext(ScrollContext);
+  return (!isScrolled ? null :
     <>
       {data.map((val, i) => {
         if (val.layout_type.indexOf('ad_unit') >= 0 && val.ad_conf) {

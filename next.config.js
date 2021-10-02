@@ -30,7 +30,7 @@ module.exports = {
     domains: ['etvbharatimages.akamaized.net', 'localhost'],
   },
 
-  rewrites: async () => {
+  rewrites: () => {
     return [
       {
         source: '/robots.txt',
@@ -52,6 +52,23 @@ module.exports = {
         source: '/apis/:path*',
         destination: 'https://prod.api.etvbharat.com/:path*',
       },
+    ];
+  },
+
+
+   redirects: () => {
+    return [
+      {
+        source: '/',
+        destination: '/english/national',
+        permanent: true
+      },
+       {
+        source: '/:language',
+        destination: '/english/national',
+        permanent: true
+      },
+     
     ];
   },
 

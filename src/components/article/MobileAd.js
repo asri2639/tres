@@ -77,7 +77,7 @@ const MobileAd = ({ adData, className, refresh }) => {
         } else {
           if (adEl.current) {
             setTimeout(() => {
-              if (!adEl.current.querySelector('iframe')) {
+              if (adEl.current && !adEl.current.querySelector('iframe')) {
                 googletag.cmd.push(function () {
                   googletag.pubads().refresh([window[adData.gpt_id]]);
                 });

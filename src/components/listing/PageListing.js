@@ -71,7 +71,6 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [callsDone, setCallsDone] = useState(1);
-  const [listId, setListId] = useState(null);
   const [desktopUrl, setDesktopUrl] = useState(null);
   const [filteredRHS, setFilteredRHS] = useState([]);
   const adsMap = [];

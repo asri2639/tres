@@ -232,7 +232,7 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
                 height="100"
                 width="100"
               /> */}
-                Loading...
+                Loading..
               </div>
             ) : (
               <section
