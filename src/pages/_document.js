@@ -54,16 +54,16 @@ export default class ETVDocument extends Document {
             type="application/ld+json"
             dangerouslySetInnerHTML={{
               __html: `{
-                              "@context": "https://schema.org/",
-                              "@type": "WebSite",
-                              "name": "ETV Bharat",
-                              "url": "https://www.etvbharat.com",
-                              "potentialAction": {
-                                  "@type": "SearchAction",
-                                  "target": "https://www.etvbharat.com/english/national/search/{search_term_string}",
-                                  "query-input": "required name=search_term_string"
-                              }
-                          }`,
+                    "@context": "https://schema.org/",
+                    "@type": "WebSite",
+                    "name": "ETV Bharat",
+                    "url": "https://www.etvbharat.com",
+                    "potentialAction": {
+                        "@type": "SearchAction",
+                        "target": "https://www.etvbharat.com/english/national/search/{search_term_string}",
+                        "query-input": "required name=search_term_string"
+                    }
+                }`,
             }}
           ></script>
         </Head>
@@ -120,7 +120,7 @@ export default class ETVDocument extends Document {
                   if (!__loaded) {
                     loadScripts();
                   }
-                }, 6000);
+                }, 60000);
               }
               
               const loadScripts = () => {
