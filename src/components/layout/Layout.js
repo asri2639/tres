@@ -11,7 +11,6 @@ import {
   languageMap,
 } from '@utils/Constants';
 import { configStateCodeConverter, stateCodeConverter } from '@utils/Helpers';
-// import Loader from 'react-loader-spinner';
 import { usePromiseTracker } from 'react-promise-tracker';
 import { useRouter } from 'next/router';
 import eventBus from '@utils/EventBus';

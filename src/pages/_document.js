@@ -120,7 +120,7 @@ export default class ETVDocument extends Document {
                   if (!__loaded) {
                     loadScripts();
                   }
-                }, 60000);
+                }, 6000);
               }
               
               const loadScripts = () => {
