@@ -358,12 +358,12 @@ export async function getStaticProps({ params, ...args }) {
     };
   }
 
-  const id = params.slug.slice(-1)[0];
-  const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
+  const id = params.slug.slice(-1)[0];
+  const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
   qparams = {
     state: params.state,
@@ -383,13 +383,14 @@ export async function getStaticProps({ params, ...args }) {
         gallery_ad: true,
         page: 0,
         page_size: 1,
-        portal_state: state, //national
+        portal_state: params.state, //national
         scroll_no: 0,
       },
     });
     const galleryResp = galleryResponse.data.data.catalog_list_items[0];
     const gallery = galleryResp.catalog_list_items;
     if ((!gallery || gallery.length === 0) && res) {
+      console.log(res)
       if (res) res.statusCode = 404;
       return {
         props: {
@@ -410,7 +411,6 @@ export async function getStaticProps({ params, ...args }) {
       revalidate: 120,
     };
   } else {
-    if (res) res.statusCode = 404;
     return {
       props: {
         pageType: 'article',
