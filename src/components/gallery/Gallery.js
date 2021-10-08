@@ -342,7 +342,7 @@ const Gallery = ({
                       />
                     </div>
                          <div className={`${gallery.counter}`}>
-                        <span>{image.order_no}</span>/ {count}
+                        <span>{image.order_no}</span>/ {count+1}
                       </div>
                     </div>
                      
