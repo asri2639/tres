@@ -359,11 +359,11 @@ export async function getStaticProps({ params, ...args }) {
   }
 
   const id = params.slug.slice(-1)[0];
-  const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
+  const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
   qparams = {
     state: params.state,
@@ -372,7 +372,6 @@ export async function getStaticProps({ params, ...args }) {
 
   if (re.test(id)) {
     const api = API(APIEnum.CatalogList);
-
     const galleryResponse = await api.CatalogList.getArticleDetails({
       params: qparams,
       query: {
@@ -383,7 +382,7 @@ export async function getStaticProps({ params, ...args }) {
         gallery_ad: true,
         page: 0,
         page_size: 1,
-        portal_state: state, //national
+        portal_state: params.state, //national
         scroll_no: 0,
       },
     });
@@ -410,7 +409,6 @@ export async function getStaticProps({ params, ...args }) {
       revalidate: 120,
     };
   } else {
-    if (res) res.statusCode = 404;
     return {
       props: {
         pageType: 'article',
