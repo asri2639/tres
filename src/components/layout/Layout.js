@@ -20,13 +20,11 @@ import FileFetcher from '@services/api/FileFetcher';
 
 const country = 'IN';
 export const RTLContext = React.createContext(false);
-export const MenuContext = React.createContext([]);
 export const ScrollContext = React.createContext(false);
 
 
-const Layout = ({ children, accessToken, appConfig, pageType }) => {
+const Layout = ({ children, accessToken, pageType }) => {
   const router = useRouter();
-
   const api = API(APIEnum.Catalog, APIEnum.CatalogList);
   const [data, setData] = useState({
     footer: [],
@@ -38,18 +36,63 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
   const { promiseInProgress } = usePromiseTracker();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    window.addEventListener('script-loaded', () => {
-      setTimeout(() => {
-        setIsScrolled(true);
-      }, 200);
-    });
-  });
+  const fetchMenu = async () => {
+    const menu = {
+        desktop: [],
+        mobile: [],
+      };
+    const response = await fetch(`/api/menu?url=${router.query.language+"/"+router.query.state}`);
+    if (response.ok) {
+      const data = await response.json()
+      menu.desktop = data;
+      menu.mobile = data;
 
-  useEffect(() => {
-    const populateData = async () => {
-      if (!applicationConfig.value) {
-        const res = await FileFetcher.getAppConfig({
+      return menu
+    } else {
+      let convertedState = configStateCodeConverter(state);
+      convertedState =
+        language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
+      const urlSuffix = language == 'ur' ? '-urdu' : '';
+      const headerResp = await api.CatalogList.getMenuDetails({
+        params: {
+          suffix: `msite-new-left-menu${
+            state !== 'national' ? '-' + state : urlSuffix
+          }`,
+        },
+        query: {
+          region: country,
+          response: 'r2',
+          item_languages: language,
+          portal_state: stateCodeConverter(state),
+          only_items: 'catalog_list',
+          //  env: 'staging',
+        },
+        isSSR: true,
+      });
+      if (headerResp && headerResp.data) {
+        menu.desktop = headerResp.data.data.catalog_list_items;
+        menu.mobile = headerResp.data.data.catalog_list_items;
+        fetch(`/api/menu?url=${router.query.language+"/"+router.query.state}`, {
+          method: 'POST',
+          body: JSON.stringify({ data: menu.desktop }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        return menu
+      }
+    }
+  }
+
+  const fetchConfig = async () => {
+    const response = await fetch(`/api/config`);
+    if (response.ok) {
+      const resp = await response.json()
+      applicationConfig.value = resp.data;
+      return resp.data
+    } else {
+       const res = await FileFetcher.getAppConfig({
           query: {
             response: 'r2',
             item_languages: 'en',
@@ -60,59 +103,94 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
           isSSR: true,
         });
 
-        appConfig = res.data.data;
+        const appConfig = res.data.data;
         applicationConfig.value = appConfig;
-      } else {
-        appConfig = applicationConfig.value;
-      }
-
-      if (!data.footer.length) {
-        const result = await FileFetcher.getFooterDetails({
-          query: {
-            region: country,
-            response: 'r2',
-            item_languages: language,
-            // env: 'staging',
-          },
+        console.log(appConfig)
+        fetch(`/api/config`, {
+          method: 'POST',
+          body: JSON.stringify({ data: appConfig }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
         });
-        const requiredData = result.data.data.params_hash2.footer;
-        let languageData = {};
-        requiredData.forEach((state) => {
-          state.item_languages.forEach((language) => {
-            languageData[language] = languageData[language] || [];
-            if (state.state) {
-              if (state.state === 'tamilnadu') {
-                state.state = 'tamil-nadu';
-              } else if (state.state === 'orissa') {
-                state.state = 'odisha';
-              } else if (state.state === 'maharastra') {
-                state.state = 'maharashtra';
-              } else if (state.state === 'Assam') {
-                state.state = 'assam';
-              } else if (state.state === 'tripura') {
-              }
-              state.display_title = state.display_title.replace(' ETV', '');
-              if (state.state !== 'tripura') {
-                languageData[language].push(state);
-              }
+
+        return appConfig
+    }
+  }
+
+  const fetchFooter = async () => {
+    const response = await fetch(`/api/footer`);
+    const footer = {};
+    if (response.ok) {
+      const resp = await response.json();
+      const data = resp.data;
+      footer.languages = data.languages;
+      footer.required = data.required;
+    } else {
+      const result = await FileFetcher.getFooterDetails({
+        query: {
+          region: country,
+          response: 'r2',
+          item_languages: language,
+          // env: 'staging',
+        },
+      });
+      const requiredData = result.data.data.params_hash2.footer;
+      let languageData = {};
+      requiredData.forEach((state) => {
+        state.item_languages.forEach((language) => {
+          languageData[language] = languageData[language] || [];
+          if (state.state) {
+            if (state.state === 'tamilnadu') {
+              state.state = 'tamil-nadu';
+            } else if (state.state === 'orissa') {
+              state.state = 'odisha';
+            } else if (state.state === 'maharastra') {
+              state.state = 'maharashtra';
+            } else if (state.state === 'Assam') {
+              state.state = 'assam';
+            } else if (state.state === 'tripura') {
             }
-          });
+            state.display_title = state.display_title.replace(' ETV', '');
+            if (state.state !== 'tripura') {
+              languageData[language].push(state);
+            }
+          }
         });
-        languageData = Object.keys(languageData)
-          .sort()
-          .reduce((a, c) => ((a[c] = languageData[c]), a), {});
+      });
+      languageData = Object.keys(languageData)
+        .sort()
+        .reduce((a, c) => ((a[c] = languageData[c]), a), {});
 
-        setData({
-          header: {
-            ...data.header,
+      footer.languages = languageData;
+      footer.required = requiredData;
+      
+      fetch(`/api/footer`, {
+        method: 'POST',
+        body: JSON.stringify({
+          data: {
             languages: languageData,
-          },
-          footer: requiredData,
-        });
-      }
-    };
-    populateData();
+            required: requiredData
+          }
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    }
 
+    return footer;
+   }
+
+  useEffect(() => {
+    window.addEventListener('script-loaded', () => {
+      setTimeout(() => {
+        setIsScrolled(true);
+      }, 200);
+    });
+  });
+
+  useEffect(() => {
     eventBus.on('state-selector', (data) => {
       setShowStateModal({ data: data });
     });
@@ -130,64 +208,20 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
 
   useEffect(() => {
     const populateData = async () => {
-      const menu = {
-        desktop: [],
-        mobile: [],
-      };
-      const response = await fetch(`/api/menu?url=${router.query.language+"/"+router.query.state}`);
-      if (response.ok) {
-        const data = await response.json()
-        menu.desktop = data;
-        menu.mobile = data;
-
-         setData((data) => ({
+      const config =  await fetchConfig();
+      const menuData = await fetchMenu();
+      const footer = await fetchFooter();
+      setData((data) => ({
           ...data,
           header: {
             ...data.header,
-            menu: menu,
+            menu: menuData,
+            languages: footer.languages,
           },
-        }));
-      } else {
-        let convertedState = configStateCodeConverter(state);
-        convertedState =
-          language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
-        const urlSuffix = language == 'ur' ? '-urdu' : '';
-        const headerResp = await api.CatalogList.getMenuDetails({
-          params: {
-            suffix: `msite-new-left-menu${
-              state !== 'national' ? '-' + state : urlSuffix
-            }`,
-          },
-          query: {
-            region: country,
-            response: 'r2',
-            item_languages: language,
-            portal_state: stateCodeConverter(state),
-            only_items: 'catalog_list',
-            //  env: 'staging',
-          },
-          isSSR: true,
-        });
-        if (headerResp && headerResp.data) {
-          menu.desktop = headerResp.data.data.catalog_list_items;
-          menu.mobile = headerResp.data.data.catalog_list_items;
-          await fetch(`/api/menu?url=${router.query.language+"/"+router.query.state}`, {
-            method: 'POST',
-            body: JSON.stringify({ data: menu.desktop }),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
+          footer: footer.required,
 
-          setData((data) => ({
-            ...data,
-            header: {
-              ...data.header,
-              menu: menu,
-            },
-          }));
-        }
-      }
+        })
+      );
     };
 
     if (accessToken && accessToken.mobile.length && router.query.language && router.query.state) {
@@ -214,7 +248,6 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
       ) : null}
       <RTLContext.Provider value={language === 'ur' ? true : false}>
         <ScrollContext.Provider value={isScrolled}>
-          <MenuContext.Provider value={appConfig}>
             <Header data={data.header} language={language} />
             {promiseInProgress ? (
               <div
@@ -251,7 +284,6 @@ const Layout = ({ children, accessToken, appConfig, pageType }) => {
                 menu={data.header ? data.header['menu'] : null}
               />
             ) : null}
-          </MenuContext.Provider>
         </ScrollContext.Provider>
       </RTLContext.Provider>
     </>

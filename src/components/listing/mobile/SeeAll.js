@@ -9,8 +9,9 @@ import { useRouter } from 'next/router';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import useSWR, { mutate } from 'swr';
-import { RTLContext, MenuContext } from '@components/layout/Layout';
+import { RTLContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
+import { applicationConfig } from '@utils/Constants';
 
 const capitalize = (s) => {
   return s && s[0].toUpperCase() + s.slice(1);
@@ -18,7 +19,6 @@ const capitalize = (s) => {
 const SeeAll = ({ data, article, className }) => {
   const isRTL = useContext(RTLContext);
   const isAMP = false;
-  const appConfig = useContext(MenuContext);
 
   const router = useRouter();
   const { t, appLanguage } = useTranslator();
@@ -34,7 +34,7 @@ const SeeAll = ({ data, article, className }) => {
   const stopLoading = () => setLoading(false);
 
   const [displayData, setDisplayData] = useState(data);
-
+  const appConfig = applicationConfig.value;
   const constructPayload = (type, code) => {
     if (!type) return;
     if (type === 'district') {
