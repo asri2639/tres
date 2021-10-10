@@ -3,7 +3,6 @@ import API from '@api/API';
 import APIEnum from '@api/APIEnum';
 import ListContainer from '@components/listing/ListContainer';
 import { applicationConfig, languageMap } from '@utils/Constants';
-import { trackPromise } from 'react-promise-tracker';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import {

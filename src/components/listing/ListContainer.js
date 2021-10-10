@@ -1,23 +1,23 @@
+
+import useSWR from 'swr';
+import React,{ useContext, useEffect, useState } from 'react';
+import Sticky from 'wil-react-sticky';
+import dynamic from 'next/dynamic';
+
+import { Media, MediaContextProvider } from '@media';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
-import { useContext, useEffect, useState } from 'react';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
-import { Media, MediaContextProvider } from '@media';
+import { menuClick } from '@utils/GoogleTagManager';
+import useTranslator from '@hooks/useTranslator';
+
 import RectangleCard from '@components/listing/mobile/RectangleCard';
 import NavLink from '@components/common/NavLink';
-import SeeAll from './mobile/SeeAll';
-import SliderSeeAll from './mobile/SliderSeeAll';
-import { menuClick } from '@utils/GoogleTagManager';
 import Loading from './mobile/Loading';
 import { stateCodeConverter } from '@utils/Helpers';
-import useSWR from 'swr';
-import React from 'react';
-import Sticky from 'wil-react-sticky';
 import MainArticles from './MainArticles';
 import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
-import useTranslator from '@hooks/useTranslator';
-import dynamic from 'next/dynamic';
 
 const options = {
   loading: () => <div>Loading....</div>,
@@ -30,6 +30,15 @@ const DesktopAdContainer = dynamic(
   () => import('@components/article/DesktopAdContainer'),
   options
 );
+const SliderSeeAll = dynamic(
+  () => import('./mobile/SliderSeeAll'),
+  options
+);
+const SeeAll = dynamic(
+  () => import('./mobile/SeeAll'),
+  options
+);
+
 
 const ListContainer = ({ children, data, payload }) => {
   const api = API(APIEnum.CatalogList);
