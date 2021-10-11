@@ -2,10 +2,6 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
-import {
-  LazyLoadImage,
-  trackWindowScroll,
-} from 'react-lazy-load-image-component';
 import gallery from './Gallery.module.scss';
 import { articleViewScroll } from '@utils/GoogleTagManager';
 import { pageView, nextPageView } from '@utils/ComScore';
@@ -453,5 +449,4 @@ const Gallery = ({
   );
 };
 
-export default trackWindowScroll(Gallery);
-``;
+export default Gallery;

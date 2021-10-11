@@ -358,11 +358,13 @@ export async function getStaticProps({ params, ...args }) {
     };
   }
 
-  const id = params.slug.slice(-1)[0];
+
 
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
+
+  const id = params.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
   qparams = {
@@ -389,6 +391,7 @@ export async function getStaticProps({ params, ...args }) {
     const galleryResp = galleryResponse.data.data.catalog_list_items[0];
     const gallery = galleryResp.catalog_list_items;
     if ((!gallery || gallery.length === 0) && res) {
+      console.log(res)
       if (res) res.statusCode = 404;
       return {
         props: {
