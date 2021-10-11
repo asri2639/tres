@@ -17,8 +17,7 @@ const localeSubpaths = {
 };
 
 module.exports = {
-  distDir: 'dist',
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   // rewrites: async () => nextI18NextRewrites(localeSubpaths),
   publicRuntimeConfig: {
     localeSubpaths,
