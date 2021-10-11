@@ -11,7 +11,7 @@ export default async (req, res) => {
     'assets',
     fileName
   );
-  console.log(`${domainUrl}/assets/${fileName}`);
+  // console.log(`${domainUrl}/assets/${fileName}`);
   const result = await fetch(`${domainUrl}/assets/${fileName}`).then((res) =>
     res.json()
   );

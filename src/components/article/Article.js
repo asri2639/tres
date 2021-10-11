@@ -159,9 +159,9 @@ export default function Article({
             showAd(ad_id, slotArr, id);
           }
 
-          console.log(window.ads);
-          console.log(adConf.gpt_id);
-          console.log('In-Article ad container not found!!!', contentId);
+          // console.log(window.ads);
+          // console.log(adConf.gpt_id);
+          // console.log('In-Article ad container not found!!!', contentId);
         }
       }
     }

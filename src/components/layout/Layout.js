@@ -104,7 +104,6 @@ const Layout = ({ children, accessToken, pageType }) => {
 
         const appConfig = res.data.data;
         applicationConfig.value = appConfig;
-        console.log(appConfig)
         fetch(`/api/config`, {
           method: 'POST',
           body: JSON.stringify({ data: appConfig }),
