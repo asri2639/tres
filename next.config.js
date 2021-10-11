@@ -1,4 +1,4 @@
-const path = require('path');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const localeSubpaths = {
   asm: 'assamese',
@@ -73,9 +73,15 @@ module.exports = {
   },
 
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // if (!isServer) {
-    //   webpack.resolve = { alias: require("./aliases.config").webpack };
-    // }
+    if (process.env.ANALYZE) {
+     config.plugins.push(
+       new BundleAnalyzerPlugin({
+         analyzerMode: 'server',
+         analyzerPort: isServer ? 8888 : 8889,
+         openAnalyzer: true,
+       })
+     )
+    }
     return config;
   },
 

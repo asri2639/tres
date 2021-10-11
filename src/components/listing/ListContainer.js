@@ -1,23 +1,23 @@
+
+import useSWR from 'swr';
+import React,{ useContext, useEffect, useState } from 'react';
+import Sticky from 'wil-react-sticky';
+import dynamic from 'next/dynamic';
+
+import { Media, MediaContextProvider } from '@media';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
-import { useContext, useEffect, useState } from 'react';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
-import { Media, MediaContextProvider } from '@media';
+import { menuClick } from '@utils/GoogleTagManager';
+import useTranslator from '@hooks/useTranslator';
+
 import RectangleCard from '@components/listing/mobile/RectangleCard';
 import NavLink from '@components/common/NavLink';
-import SeeAll from './mobile/SeeAll';
-import SliderSeeAll from './mobile/SliderSeeAll';
-import { menuClick } from '@utils/GoogleTagManager';
 import Loading from './mobile/Loading';
 import { stateCodeConverter } from '@utils/Helpers';
-import useSWR from 'swr';
-import React from 'react';
-import Sticky from 'wil-react-sticky';
 import MainArticles from './MainArticles';
 import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
-import useTranslator from '@hooks/useTranslator';
-import dynamic from 'next/dynamic';
 
 const options = {
   loading: () => <div>Loading....</div>,
@@ -30,47 +30,29 @@ const DesktopAdContainer = dynamic(
   () => import('@components/article/DesktopAdContainer'),
   options
 );
+const SliderSeeAll = dynamic(
+  () => import('./mobile/SliderSeeAll'),
+  options
+);
+const SeeAll = dynamic(
+  () => import('./mobile/SeeAll'),
+  options
+);
+
 
 const ListContainer = ({ children, data, payload }) => {
   const api = API(APIEnum.CatalogList);
   const isRTL = useContext(RTLContext);
 
-  const { t, appLanguage } = useTranslator();
+  const { t } = useTranslator();
   let totalCalls = Math.ceil(data.total_items_count / 8);
 
   const reArrangeData = (data) => {
-    /*  let extra = [];
-    return data.catalog_list_items.map((v, i) => {
-      if (v.catalog_list_items.length === 5) {
-        if (extra.length === 0) {
-          extra.push(v.catalog_list_items[4]);
-          return {
-            ...v,
-            catalog_list_items: [...v.catalog_list_items.slice(0, 4)],
-          };
-        } else {
-          return {
-            ...v,
-            catalog_list_items: [
-              ...extra.splice(0, 1),
-              ...v.catalog_list_items,
-            ],
-          };
-        }
-      }
-
-      return v;
-    }); */
     return data.catalog_list_items;
   };
   const [isDesktop, setIsDesktop] = useState(false);
 
   const items = reArrangeData(data);
-  const [selected, setSelected] = useState({
-    state: '',
-    language: '',
-    text: '',
-  });
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [callsDone, setCallsDone] = useState(1);
@@ -125,11 +107,6 @@ const ListContainer = ({ children, data, payload }) => {
       const { googletag } = window;
 
       setTimeout(() => {
-        /*  const ads = document.querySelectorAll('.listing-ad');
-        for (let i = 0; i < ads.length; i++) {
-          let elem = ads[i];
-          elem.parentNode.removeChild(elem);
-        } */
         setIsDesktop(true);
       }, 10);
       document.addEventListener('load', () => {
@@ -288,13 +265,6 @@ const ListContainer = ({ children, data, payload }) => {
 
   return (
     <>
-      {/*    <div className="w-full mb-3 lg:container lg:mx-auto ">
-        <MainArticle
-          className="md:w-8/12 "
-          article={listItems[0].catalog_list_items[0]}
-        />
-        <div className="md:w-4/12 "></div>
-      </div> */}
       <MediaContextProvider>
         <Media at="xs" className="w-full mt-2">
           {listItems[0].layout_type == 'featured_topnews_seeall' ||

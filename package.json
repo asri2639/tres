@@ -11,6 +11,7 @@
     "dev": "cross-env NEXT_PUBLIC_APP_ENV=development PORT=3000 NEXT_PUBLIC_TEST=test node server.js",
     "build": "cross-env  NEXT_PUBLIC_APP_ENV=production next build",
     "build-staging": "cross-env NEXT_PUBLIC_APP_ENV=staging next build",
+    "analyze": "cross-env NEXT_PUBLIC_APP_ENV=staging ANALYZE=true next build",
     "staging": "cross-env NEXT_PUBLIC_APP_ENV=staging PORT=3000 node server.js",
     "start": "cross-env NEXT_PUBLIC_APP_ENV=production PORT=3000 node server.js",
     "test-build": "cross-env NEXT_PUBLIC_APP_ENV=production NEXT_PUBLIC_TEST=test next build ",
@@ -56,6 +57,7 @@
     "prettier": "2.1.2",
     "sass": "^1.39.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.4",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "webpack-bundle-analyzer": "^4.4.2"
   }
 }

@@ -2,10 +2,6 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { useInView, InView } from 'react-intersection-observer';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
-import {
-  LazyLoadImage,
-  trackWindowScroll,
-} from 'react-lazy-load-image-component';
 import gallery from './Gallery.module.scss';
 import { articleViewScroll } from '@utils/GoogleTagManager';
 import { pageView, nextPageView } from '@utils/ComScore';
@@ -14,7 +10,7 @@ import Sticky from 'wil-react-sticky';
 import { dateFormatter } from '@utils/Helpers';
 import React from 'react';
 import dynamic from 'next/dynamic';
-import Thumbnail from '@components/common/Thumbnail';
+// import Thumbnail from '@components/common/Thumbnail';
 import Thumbnail1 from '@components/common/Thumbnail1';
 import Image from 'next/image';
 
@@ -453,5 +449,4 @@ const Gallery = ({
   );
 };
 
-export default trackWindowScroll(Gallery);
-``;
+export default Gallery;
