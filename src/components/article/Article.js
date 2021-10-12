@@ -313,9 +313,7 @@ export default function Article({
                 </div>
               </div>
 
-              {htmlShow ||
-              !userAgent ||
-              (userAgent && !userAgent.includes('Mobile')) ? (
+              {htmlShow ? (
                 <div
                   className={`text-base md:text-md `}
                   dangerouslySetInnerHTML={{

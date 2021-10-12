@@ -20,7 +20,7 @@ const ArticleList = ({ articleData }) => {
 
   const [articles, setArticles] = useState(articleData.articles);
   const [loading, setLoading] = useState(false);
-  const [htmlShow, setHtmlShow] = useState(true);
+  const [htmlShow, setHtmlShow] = useState(false);
   const [related, setRelated] = useState([]);
   const [mobileAds, setMobileAds] = useState([]);
   const [rhs, setRhs] = useState(null);
