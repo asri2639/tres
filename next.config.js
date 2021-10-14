@@ -17,7 +17,6 @@ const localeSubpaths = {
 };
 
 module.exports = {
-  trailingSlash: true,
   productionBrowserSourceMaps: false,
   // rewrites: async () => nextI18NextRewrites(localeSubpaths),
   publicRuntimeConfig: {
