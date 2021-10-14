@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer';
 import { dateFormatter, thumbnailExtractor } from '@utils/Helpers';
 import { Media, MediaContextProvider } from '@media';
 import SocialMedia from '@components/article/SocialMedia';
-import Thumbnail from '@components/common/Thumbnail';
+import Thumbnail from '@components/common/Thumbnail1';
 import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import dynamic from 'next/dynamic';
@@ -174,7 +174,7 @@ export default function Article({
   const thumbnail = thumbnailExtractor(
     data.thumbnails,
     '3_2',
-    's2b' ,
+    'b2s' ,
     data.media_type
   );
   return (
@@ -263,20 +263,28 @@ export default function Article({
                     lazy={false}
                   /> */}
 
-                   <div
-                      className="w-full rounded-md -mt-10"
-                      style={{
-                        width: '100%',
-                        padding: '38.25%',
-                      }}
-                    >
-                      <Image
-                        priority
-                        layout="fill"
-                        src={thumbnail.url}
-                        alt="Thumbnail image"
+                   {index === 0 ?
+                      <div
+                        className="w-full rounded-md -mt-10"
+                        style={{
+                          width: '100%',
+                          padding: '38.25%',
+                        }}
+                      >
+                        <Image
+                          priority
+                          layout="fill"
+                          src={thumbnail.url}
+                          alt="Thumbnail image"
+                        />
+                      </div>:
+                      <Thumbnail
+                        thumbnail={thumbnail}
+                        className={'md:rounded-lg w-full'}
+                        type={data.media_type}
+                        lazy={false}
                       />
-                    </div>
+                    }
                 </div>
                 <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
                   <MediaContextProvider>
