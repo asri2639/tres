@@ -72,9 +72,9 @@ const LargeSquareCard = ({
           style={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            webkitBoxOrient: 'vertical',
+            WebkitBoxOrient: 'vertical',
             display: '-webkit-box',
-            webkitLineClamp: '3',
+            WebkitLineClamp: '3',
           }}
           className={`text-base md:text-base relative -top-1 ${
             isRTL ? 'rtl' : ''
