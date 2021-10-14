@@ -1,5 +1,5 @@
 import NavLink from '@components/common/NavLink';
-import Thumbnail from '@components/common/Thumbnail';
+import Thumbnail from '@components/common/Thumbnail1';
 import { RTLContext } from '@components/layout/Layout';
 import { linkInfoGenerator, thumbnailExtractor } from '@utils/Helpers';
 import { useRouter } from 'next/router';
@@ -72,17 +72,12 @@ const PopularList = ({ data }) => {
                 articleClick(v);
               }}
             >
-              <div
-                className="relative"
-                style={{ flex: '1 0 30%', height: '80px' }}
-              >
-                <Thumbnail
-                  thumbnail={{ ...thumbnail, alt_tags: v.alt_tags }}
-                  className={'rounded-md w-32 max-w-32 min-w-32'}
-                  type={''}
-                  creditSize={'small'}
-                />
-              </div>
+               <Thumbnail
+                thumbnail={{ ...thumbnail, alt_tags: v.alt_tags }}
+                className={'rounded-md w-32 max-w-32 min-w-32'}
+                type={''}
+                creditSize={'small'}
+              />
               <div className=" px-3 text-sm text-gray-700">
                 {v.display_title}
               </div>

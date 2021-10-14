@@ -1,5 +1,5 @@
 import NavLink from '@components/common/NavLink';
-import Thumbnail from '@components/common/Thumbnail';
+import Thumbnail from '@components/common/Thumbnail1';
 import { RTLContext } from '@components/layout/Layout';
 import { linkInfoGenerator, thumbnailExtractor } from '@utils/Helpers';
 import { useContext } from 'react';
@@ -33,14 +33,12 @@ const GridList = ({ data }) => {
                 articleClick(v);
               }}
             >
-              <div className="relative" style={{ minHeight: '150px' }}>
-                <Thumbnail
-                  thumbnail={thumbnail}
-                  className={'rounded-lg'}
-                  type={''}
-                  creditSize={'small'}
-                />
-              </div>
+              <Thumbnail
+                thumbnail={thumbnail}
+                className={'rounded-lg'}
+                type={''}
+                creditSize={'small'}
+              />
               <div className="pt-2 leading-tight">{v.display_title}</div>
             </NavLink>
           );
