@@ -122,7 +122,7 @@ const slug = ({
               .replace(
                 '<link rel="stylesheet" href="https://etvbharatimages.akamaized.net/newsroom-metadata/saranyunewsroom-2.css">',
                 ''
-              )
+              ).replace(/src=(['"])/g, "data-etv-src=$1")
           : '';
 
         if (typeof window !== 'undefined') {
