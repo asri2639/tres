@@ -15,19 +15,18 @@ import {
   subMenuClick,
 } from '@utils/GoogleTagManager';
 import { Media, MediaContextProvider } from '@media';
-import { RTLContext } from '@components/layout/Layout';
+import { RTLContext, ScrollContext } from '@components/layout/Layout';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import { getSocialLinks } from '@utils/Helpers';
 import useTranslator from '@hooks/useTranslator';
 
 const DesktopHeader = ({ className, data }) => {
-  const isAMP = false;
   const router = useRouter();
   const { t, appLanguage } = useTranslator();
   const language = router.query.language || 'english';
   const api = API(APIEnum.Catalog);
-
+  const isScrolled = useContext(ScrollContext);
   const isRTL = useContext(RTLContext);
 
   const [stateData, setStateData] = useState(null);
@@ -523,7 +522,7 @@ const DesktopHeader = ({ className, data }) => {
             {/* <iframe className="mx-auto" width={755} height={110} src={`https://www.etvbharat.com/banner-near-logo/${router.query.state}/business/728x90-1.htm`}/> */}
 
             <MediaContextProvider>
-              <Media greaterThan="xs"> {headerAd}</Media>
+              <Media greaterThan="xs"> {isScrolled ? headerAd: null}</Media>
             </MediaContextProvider>
           </div>
         </div>
