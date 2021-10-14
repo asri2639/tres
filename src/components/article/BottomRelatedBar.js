@@ -1,5 +1,5 @@
 import NavLink from '@components/common/NavLink';
-import Thumbnail from '@components/common/Thumbnail';
+import Thumbnail from '@components/common/Thumbnail1';
 import { RTLContext } from '@components/layout/Layout';
 import { thumbnailExtractor } from '@utils/Helpers';
 import { useContext, useEffect, useState } from 'react';
@@ -83,22 +83,12 @@ const BottomRelatedBar = ({ data }) => {
               articleClick(rel);
             }}
           >
-            <div
-              className="relative"
-              style={{
-                flex: '1 0 100px',
-                maxWidth: '100px',
-                marginTop: '-5px',
-                marginBottom: '-3px',
-              }}
-            >
-              <Thumbnail
-                thumbnail={thumbnail}
-                className={'rounded-md w-20'}
-                type={''}
-                creditSize={'no-size'}
-              />
-            </div>
+           <Thumbnail
+              thumbnail={thumbnail}
+              className={'rounded-md w-20'}
+              type={''}
+              creditSize={'no-size'}
+            />
             <div className=" px-1 text-xs text-gray-700 leading-tight">
               {rel.display_title}
             </div>
