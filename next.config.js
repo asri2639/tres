@@ -67,6 +67,11 @@ module.exports = {
         destination: '/english/national',
         permanent: true
       },
+      {
+        source: '/:language/:state/search/:slug',
+        destination: 'https://old.etvbharat.com/:language/:state/search/:slug',
+        permanent: true
+      }
      
     ];
   },
