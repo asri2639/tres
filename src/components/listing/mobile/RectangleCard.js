@@ -1,10 +1,10 @@
 import NavLink from '@components/common/NavLink';
-import Thumbnail from '@components/common/Thumbnail';
+import Thumbnail1 from '@components/common/Thumbnail1';
 import { RTLContext } from '@components/layout/Layout';
 import { articleClick } from '@utils/GoogleTagManager';
 import { linkInfoGenerator, thumbnailExtractor } from '@utils/Helpers';
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 const RectangleCard = ({ data, article, className, keyProp }) => {
   const isRTL = useContext(RTLContext);
@@ -20,19 +20,18 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
   return (
     <NavLink
       key={keyProp}
-      className={`flex  justify-between px-1 pt-1 pb-1 cursor-pointer border shadow ${
+      className={`flex  justify-between px-1 pt-2 pb-1 cursor-pointer border shadow ${
         isRTL ? 'rtl' : ''
       } ${className}`}
       href={linkInfo.href}
       as={linkInfo.as}
       passHref
-      prefetch={false}
       onClick={() => {
         articleClick(article);
       }}
     >
       <div
-        className={`px-1 pt-1 text-base md:text-base text-gray-700 leading-tight ${
+        className={`px-1 text-base md:text-base text-gray-700 leading-tight ${
           isRTL ? 'rtl' : ''
         }`}
         style={{ width: 'calc(100% - 6rem)' }}
@@ -40,13 +39,15 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
         {article.display_title}
       </div>
 
-      <div className="flex items-center w-24 rounded-md flex">
-        <div
-          className="relative"
-          style={{ width: '100%', paddingTop: '75.25%' }}
-        >
-          <Thumbnail thumbnail={thumbnail} className={'w-full'} type={''} />
-        </div>
+      <div className="relative w-24 rounded-md ">
+        <Thumbnail1
+          thumbnail={thumbnail}
+          className={'w-full'}
+          type={''}
+          creditSize={'no-size'}
+          styleObj={{ minHeight: '65px' }}
+        />
+
         {article.overlay_tag ? (
           <img
             loading="lazy"

@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { useContext } from 'react';
 const options = {
-  loading: () => <div>Loading../.</div>,
+  loading: () => <div>Loading...</div>,
 };
 import { ScrollContext } from '@components/layout/Layout';
 

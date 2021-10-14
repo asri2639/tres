@@ -1,5 +1,5 @@
 import NavLink from '@components/common/NavLink';
-import Thumbnail from '@components/common/Thumbnail';
+import Thumbnail1 from '@components/common/Thumbnail1';
 import API from '@services/api/API';
 import APIEnum from '@services/api/APIEnum';
 import { languageMap } from '@utils/Constants';
@@ -74,7 +74,7 @@ export default function DesktopSubMenu({ category }) {
               ) : (
                 <NavLink
                   key={item.content_id}
-                  className="p-3 pt-2 flex-grow-0 flex flex-shrink-0 whitespace-pre-wrap"
+                  className="p-3 pt-0 flex-grow-0 flex flex-shrink-0 whitespace-pre-wrap"
                   style={{ flexBasis: '27%' }}
                   href={linkInfo.href}
                   as={linkInfo.as}
@@ -83,14 +83,13 @@ export default function DesktopSubMenu({ category }) {
                     articleClick(item);
                   }}
                 >
-                  <div className="relative w-full">
+                  <div className="relative w-full p-4 pt-0" >
                     {item.thumbnails ? (
                       <>
                         <div
                           className="relative"
-                          style={{ width: '100%', paddingTop: '60.25%' }}
                         >
-                          <Thumbnail
+                          <Thumbnail1
                             thumbnail={thumbnail}
                             className={`w-full rounded-md`}
                             type={''}
@@ -130,7 +129,7 @@ export default function DesktopSubMenu({ category }) {
             return (
               <div
                 key={item}
-                className="p-3 pt-2 flex-grow-0 flex flex-shrink-0 whitespace-pre-wrap"
+                className="p-3 pt-0 flex-grow-0 flex flex-shrink-0 whitespace-pre-wrap"
                 style={{ flexBasis: '27%' }}
               >
                 <img
