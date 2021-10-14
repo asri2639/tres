@@ -345,18 +345,7 @@ export async function getStaticProps({ params, ...args }) {
     qparams = null;
   const url = `/${params.language}/${params.state}/gallery/${params.slug}`;
 
-  if (url.includes('/search/')) {
-    const redirectUrl = `https://old.etvbharat.com${url}`;
-    if (res) {
-      res.writeHead(302, { Location: `https://old.etvbharat.com${url}` }).end();
-    } else {
-      window.location = redirectUrl;
-    }
-    return {
-      data: {},
-      pageType: 'redirect',
-    };
-  }
+  
 
 
 
@@ -390,15 +379,10 @@ export async function getStaticProps({ params, ...args }) {
     });
     const galleryResp = galleryResponse.data.data.catalog_list_items[0];
     const gallery = galleryResp.catalog_list_items;
-    if ((!gallery || gallery.length === 0) && res) {
-      console.log(res)
-      if (res) res.statusCode = 404;
+    if ((!gallery || gallery.length === 0)) {
       return {
-        props: {
-          pageType: 'article',
-          data: '',
-          statusCode: 404,
-        },
+        notFound: true,
+        revalidate: 120,
       };
     }
     // Pass data to the page via props
@@ -412,13 +396,10 @@ export async function getStaticProps({ params, ...args }) {
       revalidate: 120,
     };
   } else {
-    return {
-      props: {
-        pageType: 'article',
-        data: '',
-        statusCode: 404,
-      },
-    };
+     return {
+        notFound: true,
+        revalidate: 120,
+      };
   }
 }
 export default slug;

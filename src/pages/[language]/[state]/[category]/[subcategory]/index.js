@@ -161,18 +161,7 @@ export async function getStaticProps({ params, ...args }) {
     state = 'na';
   const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}`;
   const urlSplit = url.split('/');
-  if (url.includes('/search/')) {
-    const redirectUrl = `https://old.etvbharat.com${url}`;
-    if (res) {
-      res.writeHead(302, { Location: `https://old.etvbharat.com${url}` }).end();
-    } else {
-      window.location = redirectUrl;
-    }
-    return {
-      data: {},
-      pageType: 'redirect',
-    };
-  }
+  
 
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);

@@ -296,18 +296,7 @@ export async function getStaticProps({ params, ...args }) {
   // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
   const userAgent = 'Mobile';
 
-  if (url.includes('/search/')) {
-    const redirectUrl = `https://old.etvbharat.com${url}`;
-    if (res) {
-      res.writeHead(302, { Location: `https://old.etvbharat.com${url}` }).end();
-    } else {
-      window.location = redirectUrl;
-    }
-    return {
-      data: {},
-      pageType: 'redirect',
-    };
-  }
+  
 
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
@@ -378,11 +367,9 @@ export async function getStaticProps({ params, ...args }) {
     const video = videoResp.catalog_list_items[0];
     // Pass data to the page via props
     if (!video) {
-      if (res) res.statusCode = 404;
       return {
-        pageType: 'listing',
-        data: '',
-        statusCode: 404,
+        notFound: true,
+        revalidate: 120,
       };
     }
     return {
@@ -396,12 +383,10 @@ export async function getStaticProps({ params, ...args }) {
       revalidate: 120,
     };
   } else {
-    if (res) res.statusCode = 404;
-    return {
-      pageType: 'listing',
-      data: '',
-      statusCode: 404,
-    };
+     return {
+        notFound: true,
+        revalidate: 120,
+      };
   }
 }
 export default slug;
