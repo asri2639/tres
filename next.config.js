@@ -26,7 +26,7 @@ module.exports = {
   },
 
   images: {
-    domains: ['etvbharatimages.akamaized.net', 'localhost'],
+    domains: ['etvbharatimages.akamaized.net', 'localhost', 'react.etvbharat.com'],
   },
 
   rewrites: () => {
