@@ -161,7 +161,7 @@ export async function getStaticProps({ params, ...args }) {
   }).catch((e) => {
     return {
       redirect: {
-        destination: `/${params.language}/${params.state}`,
+        destination: params ? `/${params.language}/${params.state}`: `/english/national`,
         permanent: false,
       },
     };
@@ -170,7 +170,7 @@ export async function getStaticProps({ params, ...args }) {
   if (!result) {
     return {
       redirect: {
-        destination: `/${params.language}/${params.state}`,
+        destination: params ? `/${params.language}/${params.state}`: `/english/national`,
         permanent: false,
       },
     };
@@ -236,7 +236,7 @@ export async function getStaticProps({ params, ...args }) {
 
   return {
     redirect: {
-      destination: `/${params.language}/${params.state}`,
+      destination: params ? `/${params.language}/${params.state}`: `/english/national`,
       permanent: false,
     },
   };

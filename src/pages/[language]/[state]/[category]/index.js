@@ -408,7 +408,7 @@ export async function getStaticProps({ params, ...args }) {
   } else {
     return {
       redirect: {
-        destination: `/${params.language}/${params.state}`,
+        destination: params ? `/${params.language}/${params.state}`: `/english/national`,
         permanent: false,
       },
     };

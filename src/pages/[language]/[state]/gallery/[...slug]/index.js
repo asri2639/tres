@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import Error from 'next/error';
 import GalleryList from '@components/gallery/GalleryList';
 
-const slug = ({ data, pageType, appConfig, id }) => {
+const slug = ({ data, pageType, id }) => {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -24,9 +24,9 @@ const slug = ({ data, pageType, appConfig, id }) => {
   let ampUrl = '';
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
-  if (appConfig && appConfig.params_hash2) {
+  if (applicationConfig && applicationConfig.value && applicationConfig.value.params_hash2) {
     const fbContent =
-      appConfig.params_hash2.config_params.fb_pages[convertedState];
+    applicationConfig.value.params_hash2.config_params.fb_pages[convertedState];
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
 
@@ -391,7 +391,6 @@ export async function getStaticProps({ params, ...args }) {
       props: {
         pageType: 'gallery',
         data: { gallery, items_count: galleryResp.total_items_count },
-        appConfig: applicationConfig.value,
         id: id,
       },
       revalidate: 120,

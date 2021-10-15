@@ -23,7 +23,6 @@ const slug = ({
   data,
   initCount,
   pageType,
-  appConfig,
   id,
   payload,
   dropDownData,
@@ -34,9 +33,9 @@ const slug = ({
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
-  if (appConfig && appConfig.params_hash2) {
+  if (applicationConfig && applicationConfig.value && applicationConfig.value.params_hash2) {
     const fbContent =
-      appConfig.params_hash2.config_params.fb_pages[convertedState];
+    applicationConfig.value.params_hash2.config_params.fb_pages[convertedState];
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
 
@@ -460,7 +459,6 @@ export async function getStaticProps({ params, ...args }) {
         props: {
           pageType: 'article',
           data: article,
-          appConfig: applicationConfig.value,
           id: id,
         },
         revalidate: 120,

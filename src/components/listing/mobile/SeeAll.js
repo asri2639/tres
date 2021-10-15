@@ -259,7 +259,7 @@ const SeeAll = ({ data, article, className }) => {
               className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
               on={`tap:${scope.type}-lightbox`}
               role="button"
-              tabindex={0}
+              tabIndex={0}
               onClick={() => {
                 selectorModal(scope);
               }}

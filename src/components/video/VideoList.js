@@ -17,7 +17,7 @@ import Video from '@components/video/Video';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import VideoAPI from '@services/api/Video';
-import { languageMap } from '@utils/Constants';
+import {applicationConfig, languageMap } from '@utils/Constants';
 
 export const smartUrlFetcher = (...args) => {
   const [play_url, hash, envs] = args;
@@ -166,7 +166,7 @@ export const constructPlaybackUrl = (
   return y;
 };
 
-const VideoList = ({ videoData, appConfig }) => {
+const VideoList = ({ videoData }) => {
   const isAMP = false;
   const { publicRuntimeConfig } = getConfig();
 
@@ -190,7 +190,7 @@ const VideoList = ({ videoData, appConfig }) => {
       //  return null;
     }
     let suffix = null;
-    if (appConfig) {
+    if (applicationConfig) {
       let convertedState = configStateCodeConverter(
         location.pathname.split('/')[2]
       );
@@ -198,7 +198,7 @@ const VideoList = ({ videoData, appConfig }) => {
         location.pathname.split('/')[1] === 'urdu' ? 'urdu' : convertedState;
 
       suffix =
-        appConfig['params_hash2'].config_params.ssr_details[convertedState]
+      applicationConfig['params_hash2'].config_params.ssr_details[convertedState]
           .video_details_link;
     }
 

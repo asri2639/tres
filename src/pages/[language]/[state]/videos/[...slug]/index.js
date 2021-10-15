@@ -6,7 +6,6 @@ import Head from 'next/head';
 import {
   configStateCodeConverter,
   getAmpUrl,
-  loadJS,
   stateCodeConverter,
   thumbnailExtractor,
 } from '@utils/Helpers';
@@ -18,7 +17,7 @@ import Error from 'next/error';
 
 import VideoList from '@components/video/VideoList';
 
-const slug = ({ data, pageType, appConfig, id, userAgent }) => {
+const slug = ({ data, pageType, id, userAgent }) => {
   const router = useRouter();
   if (router.isFallback) {
     return <h2 class="loading"></h2>;
@@ -27,9 +26,9 @@ const slug = ({ data, pageType, appConfig, id, userAgent }) => {
   let ampUrl = '';
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
-  if (appConfig && appConfig.params_hash2) {
+  if (applicationConfig && applicationConfig.value && applicationConfig.value.params_hash2) {
     const fbContent =
-      appConfig.params_hash2.config_params.fb_pages[convertedState];
+    applicationConfig.value.params_hash2.config_params.fb_pages[convertedState];
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
 
@@ -137,7 +136,6 @@ const slug = ({ data, pageType, appConfig, id, userAgent }) => {
           contentId: videoDatum.contentId,
         }}
         userAgent={userAgent}
-        appConfig={appConfig}
       />
     );
 
@@ -373,7 +371,6 @@ export async function getStaticProps({ params, ...args }) {
       props: {
         pageType: 'video',
         data: video,
-        appConfig: applicationConfig.value,
         userAgent: userAgent,
         id: id,
       },
