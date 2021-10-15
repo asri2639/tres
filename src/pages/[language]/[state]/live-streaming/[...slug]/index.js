@@ -139,16 +139,6 @@ const slug = ({ data, pageType, appConfig, id }) => {
       />
     );
 
-    let thumbnail = null;
-    if (userAgent && userAgent.includes('Mobile')) {
-      thumbnail = thumbnailExtractor(
-        data.thumbnails,
-        '3_2',
-        's2b',
-        data.media_type
-      );
-    }
-
     return (
       <>
         {headerObj.title ? (
