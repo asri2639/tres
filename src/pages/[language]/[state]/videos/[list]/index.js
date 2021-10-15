@@ -24,7 +24,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
   if (id) {
     const match = id.match(/(\d+)/);
     if (match) {
-      ampExists = +match[0].slice(0, 12) >= 202102120000;
+      // ampExists = +match[0].slice(0, 12) >= 202102120000;
     }
   }
   let readwhere = false;
@@ -35,6 +35,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
     state === 'uttar-pradesh' ||
     (state === 'national' && splitPath[1] !== 'urdu')
   ) {
+    ampExists = true;
     readwhere = true;
   }
 

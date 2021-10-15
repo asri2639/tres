@@ -44,7 +44,7 @@ const slug = ({
   if (id) {
     const match = id.match(/(\d+)/);
     if (match) {
-      ampExists = +match[0].slice(0, 12) >= 202102120000;
+      // ampExists = +match[0].slice(0, 12) >= 202102120000;
     }
   }
   let readwhere = false;
@@ -56,6 +56,7 @@ const slug = ({
     (state === 'national' && splitPath[1] !== 'urdu')
   ) {
     readwhere = true;
+    ampExists = true;
   }
 
   // const ampExists = false; // prod enabling amp
