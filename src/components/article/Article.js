@@ -221,33 +221,34 @@ export default function Article({
                   {/*   {index === 0 ? (
                     <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
                   ) : null} */}
+                  <div class="relative pb-10" >
+                    <h1 ref={ref} className="leading-tight text-xl font-bold p-2">
+                      {data.title}
+                    </h1>
 
-                  <h1 ref={ref} className="leading-tight text-xl font-bold p-2">
-                    {data.title}
-                  </h1>
-
-                  <div className="px-2 mb-2 text-sm text-gray-600 md:text-black always-english">
-                    {data.publish_date_uts
-                      ? `Published on: ${dateFormatter(
-                          data.publish_date_uts,
-                          false
-                        )}`
-                      : ''}
-                    <span className="hidden md:inline-block">
-                      {data.publish_date_uts && data.update_date_uts
-                        ? `  |  `
+                    <div className="px-2 mb-2 text-sm text-gray-600 md:text-black always-english">
+                      {data.publish_date_uts
+                        ? `Published on: ${dateFormatter(
+                            data.publish_date_uts,
+                            false
+                          )}`
                         : ''}
-                    </span>
-                    <br className="md:hidden" />
-                    {data.update_date_uts
-                      ? `Updated on: ${dateFormatter(
-                          data.update_date_uts,
-                          isAMP
-                        )}`
-                      : ''}
-                  </div>
-                  <div className="flex justify-between px-2 w-56 mb-2">
-                    <SocialMedia data={data} />
+                      <span className="hidden md:inline-block">
+                        {data.publish_date_uts && data.update_date_uts
+                          ? `  |  `
+                          : ''}
+                      </span>
+                      <br className="md:hidden" />
+                      {data.update_date_uts
+                        ? `Updated on: ${dateFormatter(
+                            data.update_date_uts,
+                            isAMP
+                          )}`
+                        : ''}
+                    </div>
+                    <div className="flex justify-between px-2 w-56 mb-2 absolute z-10">
+                      <SocialMedia data={data} />
+                    </div>
                   </div>
                 </Media>
               </MediaContextProvider>

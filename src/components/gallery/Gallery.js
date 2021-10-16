@@ -315,52 +315,50 @@ const Gallery = ({
                   <React.Fragment key={image.order_no + ' 1.' + ind}>
 
                     {ind === 0 ? 
-                    
-                <div
-                  className="-mx-3 md:mx-0 relative "
-                  style={{ minWidth: '300px', minHeight: '200px' }}
-                >             
+                      <div
+                    className="-mx-3 md:mx-0 relative "
+                    style={{ minWidth: '300px', minHeight: '200px' }}
+                  >             
 
-                   <div
-                      className="w-full rounded-md"
-                      style={{
-                        width: '100%',
-                        padding: '38.25%',
-                        mariginTop: '30px',
-                        marginBottom:'90px'
-                      }}
-                    >
-                      <Image
-                        priority
-                        layout="fill"
-                        src={image.thumbnails.l_large.url}
-                        alt={image.description || image.title}
-                      />
-                    </div>
-                         <div className={`${gallery.counter}`}>
-                        <span>{image.order_no}</span>/ {count+1}
+                    <div
+                        className="w-full rounded-md"
+                        style={{
+                          width: '100%',
+                          padding: '38.25%',
+                          mariginTop: '30px',
+                          marginBottom:'90px'
+                        }}
+                      >
+                        <Image
+                          priority
+                          layout="fill"
+                          src={image.thumbnails.l_large.url}
+                          alt={image.description || image.title}
+                        />
                       </div>
-                    </div>
-                     
+                          <div className={`${gallery.counter}`}>
+                          <span>{image.order_no}</span>/ {count+1}
+                        </div>
+                      </div>
                       :
-                 (scrolled ? <>  <div className="relative">
-                      {
-                        <Thumbnail1
-                            className={'rounded-lg'}
-                            thumbnail={{
-                              url: image.thumbnails.l_large.url,
-                              alt_tags: image.description || image.title,
-                            }}
-                            lazy={true}
-                          />
-                      }
-                      <div className={`${gallery.counter}`}>
-                        <span>{ind+1}</span>/ {count + 1}
-                      </div>
-                    </div>
-                    <div className="text-md">
-                      {image.description || image.title}
-                    </div></>: null)
+                      (scrolled ? <>  <div className="relative">
+                            {
+                              <Thumbnail1
+                                  className={'rounded-lg'}
+                                  thumbnail={{
+                                    url: image.thumbnails.l_large.url,
+                                    alt_tags: image.description || image.title,
+                                  }}
+                                  lazy={true}
+                                />
+                            }
+                            <div className={`${gallery.counter}`}>
+                              <span>{ind+1}</span>/ {count + 1}
+                            </div>
+                          </div>
+                          <div className="text-md">
+                            {image.description || image.title}
+                          </div></>: null)
                     }
                   </React.Fragment>
                 );
