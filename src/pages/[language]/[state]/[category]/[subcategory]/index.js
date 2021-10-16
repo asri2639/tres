@@ -157,21 +157,7 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params, ...args }) {
-  let language = 'en',
-    state = 'na';
-  const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}`;
-  const urlSplit = url.split('/');
-  
-
-  language = languageMap[urlSplit[1]];
-  state = stateCodeConverter(urlSplit[2]);
-
-  return getData(url, language, state, urlSplit);
-  
-}
-
-export const getData = async (url, language, state, urlSplit) => {
+export const getData = async (url, language, state, urlSplit, qparams) => {
   const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
   if (
     url.includes('state') ||
@@ -226,7 +212,7 @@ export const getData = async (url, language, state, urlSplit) => {
       let otherStates = '';
       if (
         url.includes('english') ||
-        (urlSplit[1] === 'urdu' && query.state === 'national')
+        (urlSplit[1] === 'urdu' && qparams.state === 'national')
       ) {
         otherStates = 'yes';
       }
@@ -419,5 +405,21 @@ export const getData = async (url, language, state, urlSplit) => {
     };
   }
 }
+
+
+export async function getStaticProps({ params, ...args }) {
+  let language = 'en',
+    state = 'na';
+  const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}`;
+  const urlSplit = url.split('/');
+  
+
+  language = languageMap[urlSplit[1]];
+  state = stateCodeConverter(urlSplit[2]);
+
+  return getData(url, language, state, urlSplit, params);
+  
+}
+
 
 export default slug;

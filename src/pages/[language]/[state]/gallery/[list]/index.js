@@ -222,7 +222,7 @@ export async function getStaticProps({ params, ...args }) {
       let otherStates = '';
       if (
         url.includes('english') ||
-        (urlSplit[1] === 'urdu' && query.state === 'national')
+        (urlSplit[1] === 'urdu' && params.state === 'national')
       ) {
         otherStates = 'yes';
       }
