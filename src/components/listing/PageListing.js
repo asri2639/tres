@@ -485,13 +485,12 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
 
                 if (dropdown.title !== district.ml_title[0].text) {
                   let url = '';
-
                   if (
                     router.query.language === 'english' ||
                     (router.query.language === 'urdu' &&
                       router.query.state === 'national')
                   ) {
-                    url = '/english/national/' + dropdown.type;
+                    url = '/'+router.query.language+'/national/' + dropdown.type;
                     router.push(url + '/' + district.friendly_id);
                   } else {
                     if (dropdown.type === 'state') {
