@@ -464,7 +464,7 @@ export async function getStaticProps({ params, ...args }) {
         revalidate: 15*60*1000,
       };
   } else {
-    return getData(url, language, state, urlSplit)
+    return getData(url, language, state, urlSplit, params)
   }
 }
 export default slug;
