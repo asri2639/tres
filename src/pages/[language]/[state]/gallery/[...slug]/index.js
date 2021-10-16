@@ -288,7 +288,7 @@ const slug = ({ data, pageType, id }) => {
                         .map((v) => v.thumbnails.l_large.url)
                         .filter(Boolean)
                     )},
-                    "width": 15*60*10000,
+                    "width": 1200,
                     "height": 800
                   },
                   "datePublished": "${headerObj.publishedAt}",
@@ -383,7 +383,7 @@ export async function getStaticProps({ params, ...args }) {
     if ((!gallery || gallery.length === 0)) {
       return {
         notFound: true,
-        revalidate: 15*60*1000,
+        revalidate: 120,
       };
     }
     // Pass data to the page via props
@@ -393,12 +393,12 @@ export async function getStaticProps({ params, ...args }) {
         data: { gallery, items_count: galleryResp.total_items_count },
         id: id,
       },
-      revalidate: 15*60*1000,
+      revalidate: 120,
     };
   } else {
      return {
         notFound: true,
-        revalidate: 15*60*1000,
+        revalidate: 120,
       };
   }
 }

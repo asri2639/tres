@@ -375,12 +375,12 @@ export async function getStaticProps({ params, ...args }) {
         userAgent: userAgent,
         id: id,
       },
-      revalidate: 15*60*1000,
+      revalidate: 120,
     };
   } else {
     return {
         notFound: true,
-        revalidate: 15*60*1000,
+        revalidate: 120,
       };
   }
 }
