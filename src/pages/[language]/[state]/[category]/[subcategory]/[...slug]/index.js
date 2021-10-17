@@ -455,7 +455,7 @@ export async function getStaticProps({ params, ...args }) {
     if (error || !article) {
       return {
         notFound: true,
-        revalidate: 120,
+        revalidate: 300,
       };
     }
     // Pass data to the page via props
@@ -466,7 +466,7 @@ export async function getStaticProps({ params, ...args }) {
           data: article,
           id: id,
         },
-        revalidate: 120,
+        revalidate: 300,
       };
   } else {
     return getData(url, language, state, urlSplit, params)
