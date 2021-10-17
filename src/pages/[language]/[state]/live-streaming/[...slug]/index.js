@@ -285,7 +285,7 @@ export async function getStaticProps({ params, ...args }) {
     }/live-streaming/${params.slug.join('/')}`;
   
   if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
-      return {
+    return {
       notFound: true
     }
   }

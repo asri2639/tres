@@ -41,13 +41,19 @@ const Layout = ({ children, accessToken, pageType }) => {
         mobile: [],
       };
     const response = await fetch(`/api/menu?url=${router.query.language+"/"+router.query.state}`);
+    let data = null;
+   
     if (response.ok) {
-      const data = await response.json()
-      menu.desktop = data;
-      menu.mobile = data;
+      data = await response.json()
+      if (data) {
+        menu.desktop = data;
+            menu.mobile = data;
 
-      return menu
-    } else {
+            return menu
+      }
+    }
+    
+    if(!data) {
       let convertedState = configStateCodeConverter(state);
       convertedState =
         language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
@@ -207,8 +213,8 @@ const Layout = ({ children, accessToken, pageType }) => {
   useEffect(() => {
     const populateData = async () => {
       const config =  await fetchConfig();
-      const menuData = await fetchMenu();
       const footer = await fetchFooter();
+      const menuData = await fetchMenu();
       setData((data) => ({
           ...data,
           header: {

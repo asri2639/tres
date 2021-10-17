@@ -290,7 +290,7 @@ export async function getStaticProps({ params, ...args }) {
     '/'
   )}`;
   if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
-      return {
+    return {
       notFound: true
     }
   }

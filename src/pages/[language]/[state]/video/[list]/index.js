@@ -164,7 +164,7 @@ export async function getStaticProps({ params, ...args }) {
   const urlSplit = url.split('/');
 
   if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
-      return {
+    return {
       notFound: true
     }
   }
