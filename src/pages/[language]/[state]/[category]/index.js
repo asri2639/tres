@@ -163,6 +163,11 @@ export async function getStaticProps({ params, ...args }) {
   const url = `/${params.language}/${params.state}/${params.category}`;
   const urlSplit = url.split('/');
 
+  if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+      return {
+      notFound: true
+    }
+  }
 
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);

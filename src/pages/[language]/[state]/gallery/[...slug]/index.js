@@ -344,9 +344,13 @@ export async function getStaticProps({ params, ...args }) {
   let language = 'en',
     state = 'na',
     qparams = null;
-  const url = `/${params.language}/${params.state}/gallery/${params.slug}`;
+  const url = `/${params.language}/${params.state}/gallery/${params.slug.join('/')}`;
 
-  
+  if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+      return {
+      notFound: true
+    }
+  }
 
 
 

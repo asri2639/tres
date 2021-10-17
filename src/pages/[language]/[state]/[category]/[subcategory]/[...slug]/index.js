@@ -400,7 +400,13 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params, ...args }) {
   let language = 'en',
     state = 'na', bypass=false,qparams = null;
-  const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}/${params.slug}`;
+  const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}/${params.slug.join('/')}`;
+  console.log(url)
+  if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+      return {
+      notFound: true
+    }
+  }
 
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];

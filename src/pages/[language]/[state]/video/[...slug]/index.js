@@ -289,6 +289,11 @@ export async function getStaticProps({ params, ...args }) {
   const url = `/${params.language}/${params.state}/video/${params.slug.join(
     '/'
   )}`;
+  if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+      return {
+      notFound: true
+    }
+  }
   // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
   const userAgent = 'Mobile';
 
