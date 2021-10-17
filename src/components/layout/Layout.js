@@ -44,12 +44,16 @@ const Layout = ({ children, accessToken, pageType }) => {
     let data = null;
    
     if (response.ok) {
-      data = await response.json()
-      if (data) {
-        menu.desktop = data;
-            menu.mobile = data;
+      try {
+        data = await response.json()
+        if (data) {
+          menu.desktop = data;
+          menu.mobile = data;
 
-            return menu
+          return menu
+        }
+      } catch (e) {
+        data = null;
       }
     }
     
