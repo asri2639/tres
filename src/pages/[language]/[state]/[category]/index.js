@@ -17,7 +17,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
   const { appLanguage } = useTranslator();
 
   if (router.isFallback) {
-    return <h2 class="loading"></h2>;
+    return <h2 className="loading"></h2>;
   }
 
   let ampExists = null;
@@ -413,7 +413,7 @@ export async function getStaticProps({ params, ...args }) {
   } else {
     return {
       redirect: {
-        destination: params ? `/${params.language}/${params.state}`: `/english/national`,
+        destination: typeof params !== 'undefined' ? `/${params.language}/${params.state}`: `/english/national`,
         permanent: false,
       },
     };

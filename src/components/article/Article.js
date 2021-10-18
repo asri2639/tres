@@ -221,7 +221,7 @@ export default function Article({
                   {/*   {index === 0 ? (
                     <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
                   ) : null} */}
-                  <div class="relative pb-10" >
+                  <div className="relative pb-10" >
                     <h1 ref={ref} className="leading-tight text-xl font-bold p-2">
                       {data.title}
                     </h1>

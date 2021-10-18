@@ -19,7 +19,7 @@ const state = ({ data, payload }) => {
   const { appLanguage } = useTranslator();
 
   if (router.isFallback) {
-    return <h2 class="loading"></h2>;
+    return <h2 className="loading"></h2>;
   }
 
   const convertedState = configStateCodeConverter(router.query.state);

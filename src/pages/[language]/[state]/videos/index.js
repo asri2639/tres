@@ -19,7 +19,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
   const { appLanguage } = useTranslator();
 
   if (router.isFallback) {
-    return <h2 class="loading"></h2>;
+    return <h2 className="loading"></h2>;
   }
 
   const getComponent = () => {

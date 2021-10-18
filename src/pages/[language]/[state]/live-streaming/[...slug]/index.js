@@ -21,7 +21,7 @@ import VideoList from '@components/video/VideoList';
 const slug = ({ data, pageType, id }) => {
   const router = useRouter();
   if (router.isFallback) {
-    return <h2 class="loading"></h2>;
+    return <h2 className="loading"></h2>;
   }
 
   let ampUrl = '';
