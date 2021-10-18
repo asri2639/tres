@@ -34,7 +34,7 @@ const slug = ({ data, pageType, id }) => {
   if (id) {
     const match = id.match(/(\d+)/);
     if (match) {
-      // ampExists = +match[0].slice(0, 12) >= 202102120000;
+      ampExists = +match[0].slice(0, 12) >= 202102120000;
     }
   }
   let readwhere = false;
