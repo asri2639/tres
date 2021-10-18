@@ -110,7 +110,7 @@ const slug = ({ data, pageType, id }) => {
     const thumbnail = thumbnailExtractor(
       main.main_thumbnails,
       '3_2',
-      'b2s',
+      's2b',
       main.media_type
     );
     headerObj = {
