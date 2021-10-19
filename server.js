@@ -68,6 +68,7 @@ app
     // Default catch-all handler to allow Next.js to handle all other routes
     server.all('*', (req, res) => {
       if (req.url.startsWith('/amp/')) {
+        console.log(123123123, req.url)
         const id = req.url.split('/').slice(-1)[0];
         const state = stateCodeConverter(req.url.split('/')[3]);
         const re = new RegExp('(' + state + '|na)\\d+', 'gi');
@@ -89,7 +90,12 @@ app
           .then(function (rest) {
             res.set('Content-Type', 'text/html');
             if (listing) {
-              res.send(JSON.parse(rest.data).amp_html);
+              const resp = JSON.parse(rest.data)
+              if (resp !== 'NotFound') { 
+                res.send(resp.amp_html);
+              } else {
+                res.sendStatus(404);
+              }
             } else {
               if (rest.data.amp != '') {
                 res.send(rest.data.amp);
@@ -119,6 +125,9 @@ app
   });
 
 const stateCodeConverter = (e) => {
+  if (!e) {
+    return 'english';
+  }
   return {
     assam: 'assam',
     odisha: 'or',
