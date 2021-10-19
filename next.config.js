@@ -55,10 +55,7 @@ module.exports = {
         source: '/apis/:path*',
         destination: 'https://prod.api.etvbharat.com/:path*',
       },
-      {
-        source: '/:language/:state/search/:slug',
-        destination: 'https://old.etvbharat.com/:language/:state/search/:slug',
-      }
+      
     ];
   },
 
@@ -75,6 +72,11 @@ module.exports = {
         destination: '/english/national',
         permanent: true
       },
+      {
+        source: '/:language(^(?!^ads.txt$|^robots.txt$|^app-ads.txt$))/:state/search/:slug',
+        destination: 'https://old.etvbharat.com/:language/:state/search/:slug',
+        permanent:true
+      }
      
     ];
   },
