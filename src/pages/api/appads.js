@@ -690,7 +690,8 @@ revcontent.com, 161710, RESELLER
 appnexus.com, 7666, RESELLER, f5ab79cb980f11d1
 Pubmatic.com, 160835, RESELLER, 5d62403b186f2ace
 
-#<!GreedyGame>`;
+#<!GreedyGame>
+  `;
 
 export default (req, res) => {
   const { publicRuntimeConfig } = getConfig();

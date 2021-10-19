@@ -40,6 +40,10 @@ module.exports = {
         destination: '/api/ads',
       },
       {
+        source: '/app-ads.txt',
+        destination: '/api/appads',
+      },
+      {
         source: '/:slug*/:slug.xml',
         destination: '/api/sitemap',
       },
@@ -58,7 +62,6 @@ module.exports = {
     ];
   },
 
-
    redirects: () => {
     return [
       {
@@ -66,16 +69,12 @@ module.exports = {
         destination: '/english/national',
         permanent: true
       },
-       {
-        source: '/:language',
+      {
+         
+        source: '/:language(^(?!^ads.txt$|^robots.txt$|^app-ads.txt$).*$)',
         destination: '/english/national',
         permanent: true
       },
-      {
-        source: '/:language/:state/search/:slug',
-        destination: 'https://old.etvbharat.com/:language/:state/search/:slug',
-        permanent: true
-      }
      
     ];
   },
