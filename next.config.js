@@ -51,6 +51,10 @@ module.exports = {
         source: '/apis/:path*',
         destination: 'https://prod.api.etvbharat.com/:path*',
       },
+      {
+        source: '/:language/:state/search/:slug',
+        destination: 'https://old.etvbharat.com/:language/:state/search/:slug',
+      }
     ];
   },
 
