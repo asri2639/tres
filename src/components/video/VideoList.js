@@ -186,9 +186,7 @@ const VideoList = ({ videoData }) => {
 
   const relatedVideosFetcher = (...args) => {
     const [apiEnum, methodName, contentId] = args;
-    if (methodName === 'getVideoDetails' && window.innerWidth < 769) {
-      //  return null;
-    }
+
     let suffix = null;
     if (applicationConfig) {
       let convertedState = configStateCodeConverter(
@@ -198,9 +196,10 @@ const VideoList = ({ videoData }) => {
         location.pathname.split('/')[1] === 'urdu' ? 'urdu' : convertedState;
 
       suffix =
-      applicationConfig['params_hash2'].config_params.ssr_details[convertedState]
+      applicationConfig.value['params_hash2'].config_params.ssr_details[convertedState]
           .video_details_link;
     }
+
 
     return api[apiEnum][methodName]({
       config: { isSSR: methodName !== 'getVideoDetails' },
@@ -224,6 +223,13 @@ const VideoList = ({ videoData }) => {
       return res.data.data;
     });
   };
+
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsDesktop(window.innerWidth >= 768);
+    }
+  }, []);
 
   const { data: smartUrls, error: smartUrlError } = useSWR(
     () => {
@@ -280,11 +286,6 @@ const VideoList = ({ videoData }) => {
     });
   }
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsDesktop(window.innerWidth >= 768);
-    }
-  }, []);
   // Set videos from videoData
   useEffect(() => {
     if (data) {
@@ -312,9 +313,12 @@ const VideoList = ({ videoData }) => {
           'https://www.etvbharat.com/assets/images/newstime.png';
       }
     }
+      console.log(adData)
 
     if (adData) {
+      console.log(1)
       if (video) {
+      console.log(2)
         const data = adData.catalog_list_items.slice(1).filter((v) => {
           return (
             v.layout_type.indexOf('ad_unit') >= 0 ||
