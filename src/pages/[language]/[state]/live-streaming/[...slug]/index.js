@@ -365,7 +365,7 @@ export async function getStaticProps({ params, ...args }) {
     if (!video) {
       return {
         notFound: true,
-        revalidate: 300,
+        revalidate: 30*24*60*60
       };
     }
     return {
@@ -375,12 +375,12 @@ export async function getStaticProps({ params, ...args }) {
         userAgent: userAgent,
         id: id,
       },
-      revalidate: 300,
+      revalidate: 30*24*60*60
     };
   } else {
      return {
         notFound: true,
-        revalidate: 300,
+        revalidate: 30*24*60*60
       };
   }
 }
