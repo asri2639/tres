@@ -387,7 +387,7 @@ export async function getStaticProps({ params, ...args }) {
     if ((!gallery || gallery.length === 0)) {
       return {
         notFound: true,
-        revalidate: 30*24*60*60
+        revalidate: 60 // revalidate
       };
     }
     // Pass data to the page via props
@@ -397,12 +397,12 @@ export async function getStaticProps({ params, ...args }) {
         data: { gallery, items_count: galleryResp.total_items_count },
         id: id,
       },
-      revalidate: 30*24*60*60
+      revalidate: 60 // revalidate
     };
   } else {
      return {
         notFound: true,
-        revalidate: 30*24*60*60
+        revalidate: 60 // revalidate
       };
   }
 }

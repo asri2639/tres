@@ -162,19 +162,19 @@ export async function getStaticProps({ params, ...args }) {
               data: data,
               payload: requestPayload,
             },
-            revalidate: 120,
+            revalidate: 60, // listing
           };
         }
       }
 
       return {
         notFound: true,
-        revalidate: 120,
+        revalidate: 60, // listing
       };
     } else {
       return {
         notFound: true,
-        revalidate: 120,
+        revalidate: 60, // listing
       };
     }
   } catch (e) {

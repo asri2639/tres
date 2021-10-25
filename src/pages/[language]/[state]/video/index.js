@@ -229,7 +229,7 @@ export async function getStaticProps({ params, ...args }) {
           payload: requestPayload,
           dropDownData: finalDataObj,
         },
-        revalidate: 120,
+        revalidate: 60, // listing
       };
     }
   }
