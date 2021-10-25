@@ -15,7 +15,7 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
     router.query.state
   );
 
-  const thumbnail = thumbnailExtractor(article.thumbnails, '1_1', 's2b', null);
+  const thumbnail = thumbnailExtractor(article.thumbnails, '3_2', 's2b', null);
 
   return (
     <NavLink
@@ -42,7 +42,7 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
       <div className="relative w-24 rounded-md ">
         <Thumbnail1
           thumbnail={thumbnail}
-          className={'w-full'}
+          className={'h-full'}
           type={''}
           creditSize={'no-size'}
           styleObj={{ minHeight: '65px' }}
