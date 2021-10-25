@@ -61,7 +61,7 @@ export default function DesktopSubMenu({ category }) {
               const thumbnail = thumbnailExtractor(
                 item.thumbnails,
                 '3_2',
-                'b2s',
+                's2b',
                 ''
               );
               const linkInfo = linkInfoGenerator(

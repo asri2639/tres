@@ -63,7 +63,7 @@ const BottomRelatedBar = ({ data }) => {
         const thumbnail = thumbnailExtractor(
           rel.thumbnails,
           '1_1',
-          'b2s',
+          's2b',
           null
         );
 
