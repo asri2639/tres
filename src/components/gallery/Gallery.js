@@ -13,6 +13,7 @@ import dynamic from 'next/dynamic';
 // import Thumbnail from '@components/common/Thumbnail';
 import Thumbnail1 from '@components/common/Thumbnail1';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const options = {
   loading: () => <div>Loading...</div>,
@@ -43,10 +44,40 @@ const Gallery = ({
   ads,
   index,
   scrolled,
-  thumbnail
+  thumbnail,
 }) => {
   const isAMP = false;
   const isRTL = useContext(RTLContext);
+  const router = useRouter();
+
+  let adlink = null;
+  const lang = router.query.language;
+
+  switch (lang) {
+    case 'marathi':
+      adlink = {
+        text: 'जोडीदार शोधत आहात? मराठी मॅट्रीमोनीमध्ये रजीस्ट्रेशन मोफत आहे!',
+        link:
+          'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401115687',
+      };
+      break;
+    case 'telugu':
+      adlink = {
+        text:
+          'సంబంధం కోసం వెతుకుతున్నారా? తెలుగు మాట్రిమోని లో రిజిస్ట్రేషన్ ఉచితం!',
+        link:
+          'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401015686',
+      };
+      break;
+    case 'kannada':
+      adlink = {
+        text:
+          'ನಿಮ್ಮ ಸೂಕ್ತ ಸಂಗಾತಿ ಹುಡುಕುತ್ತಿರುವಿರಾ? ಕನ್ನಡ ಮ್ಯಾಟ್ರಿಮೋನಿಯಲ್ಲಿ ನೋಂದಣಿ ಉಚಿತ',
+        link:
+          'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401215688',
+      };
+      break;
+  }
 
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
@@ -66,12 +97,20 @@ const Gallery = ({
 
   let properData = [
     {
-      ...data[0], thumbnails: {
-        l_large: {...data[0].main_thumbnails.high_3_2
-      }
-    } }, ...data]
+      ...data[0],
+      thumbnails: {
+        l_large: { ...data[0].main_thumbnails.high_3_2 },
+      },
+    },
+    ...data,
+  ];
 
-  if (thumbnail && data[0].thumbnails && data[0].thumbnails.l_large && data[0].main_thumbnails.high_3_2.url === data[0].thumbnails.l_large.url ) {
+  if (
+    thumbnail &&
+    data[0].thumbnails &&
+    data[0].thumbnails.l_large &&
+    data[0].main_thumbnails.high_3_2.url === data[0].thumbnails.l_large.url
+  ) {
     // properData = data;
   }
   /*   
@@ -313,53 +352,54 @@ const Gallery = ({
               } else {
                 return (
                   <React.Fragment key={image.order_no + ' 1.' + ind}>
-
-                    {ind === 0 ? 
+                    {ind === 0 ? (
                       <div
-                    className="-mx-3 md:mx-0 relative "
-                    style={{ minWidth: '300px', minHeight: '200px' }}
-                  >             
-
-                    <div
-                        className="w-full rounded-md"
-                        style={{
-                          width: '100%',
-                          padding: '38.25%',
-                          mariginTop: '30px',
-                          marginBottom:'90px'
-                        }}
+                        className="-mx-3 md:mx-0 relative "
+                        style={{ minWidth: '300px', minHeight: '200px' }}
                       >
-                        <Image
-                          priority
-                          layout="fill"
-                          src={image.thumbnails.l_large.url}
-                          alt={image.description || image.title}
-                        />
-                      </div>
-                          <div className={`${gallery.counter}`}>
-                          <span>{image.order_no}</span>/ {count+1}
+                        <div
+                          className="w-full rounded-md"
+                          style={{
+                            width: '100%',
+                            padding: '38.25%',
+                            mariginTop: '30px',
+                            marginBottom: '90px',
+                          }}
+                        >
+                          <Image
+                            priority
+                            layout="fill"
+                            src={image.thumbnails.l_large.url}
+                            alt={image.description || image.title}
+                          />
+                        </div>
+                        <div className={`${gallery.counter}`}>
+                          <span>{image.order_no}</span>/ {count + 1}
                         </div>
                       </div>
-                      :
-                      (scrolled ? <>  <div className="relative">
-                            {
-                              <Thumbnail1
-                                  className={'rounded-lg'}
-                                  thumbnail={{
-                                    url: image.thumbnails.l_large.url,
-                                    alt_tags: image.description || image.title,
-                                  }}
-                                  lazy={true}
-                                />
-                            }
-                            <div className={`${gallery.counter}`}>
-                              <span>{ind+1}</span>/ {count + 1}
-                            </div>
+                    ) : scrolled ? (
+                      <>
+                        {' '}
+                        <div className="relative">
+                          {
+                            <Thumbnail1
+                              className={'rounded-lg'}
+                              thumbnail={{
+                                url: image.thumbnails.l_large.url,
+                                alt_tags: image.description || image.title,
+                              }}
+                              lazy={true}
+                            />
+                          }
+                          <div className={`${gallery.counter}`}>
+                            <span>{ind + 1}</span>/ {count + 1}
                           </div>
-                          <div className="text-md">
-                            {image.description || image.title}
-                          </div></>: null)
-                    }
+                        </div>
+                        <div className="text-md">
+                          {image.description || image.title}
+                        </div>
+                      </>
+                    ) : null}
                   </React.Fragment>
                 );
               }
@@ -417,6 +457,18 @@ const Gallery = ({
             <span></span>
           </InView>
 
+          {adlink ? (
+            <div className="matrimony-ad text-lg md:text-xl text-center">
+              <a
+                href={adlink.link}
+                title={adlink.text}
+                target="_blank"
+                className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+              >
+                {adlink.text}
+              </a>
+            </div>
+          ) : null}
           <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
         </div>
       </div>

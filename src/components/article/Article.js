@@ -24,6 +24,7 @@ const AdContainer = dynamic(
 
 import { articleViewScroll } from '@utils/GoogleTagManager';
 import { pageView, nextPageView } from '@utils/ComScore';
+import { useRouter } from 'next/router';
 
 // initialPosition
 // div height
@@ -48,6 +49,31 @@ export default function Article({
 
   const contentRef = useRef(null);
   const isRTL = useContext(RTLContext);
+  const router = useRouter();
+  let adlink = null
+  const lang = router.query.language;
+
+  switch (lang) {
+    case 'marathi':
+      adlink = {
+        text: 'जोडीदार शोधत आहात? मराठी मॅट्रीमोनीमध्ये रजीस्ट्रेशन मोफत आहे!',
+        link:'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401115687'
+      }
+      break;
+    case 'telugu':
+      adlink = {
+        text: 'సంబంధం కోసం వెతుకుతున్నారా? తెలుగు మాట్రిమోని లో రిజిస్ట్రేషన్ ఉచితం!',
+        link:'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401015686'
+      }
+      break;
+    case 'kannada':
+      adlink = {
+        text: 'ನಿಮ್ಮ ಸೂಕ್ತ ಸಂಗಾತಿ ಹುಡುಕುತ್ತಿರುವಿರಾ? ಕನ್ನಡ ಮ್ಯಾಟ್ರಿಮೋನಿಯಲ್ಲಿ ನೋಂದಣಿ ಉಚಿತ',
+        link:'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401215688'
+      }
+      break;
+   }
+  
 
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
@@ -330,6 +356,21 @@ export default function Article({
                   }}
                 />
               ) : null}
+
+              {
+                adlink ?
+                  <div className="matrimony-ad text-lg md:text-xl text-center">
+                    <a
+                      href={adlink.link}
+                      title={adlink.text}
+                      target="_blank"
+                      className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+                      >
+                    {adlink.text}      
+                    </a>
+                  </div>
+                : null
+              }
 
               {ads ? (
                 <div className="pt-3">
