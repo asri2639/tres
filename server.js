@@ -124,7 +124,6 @@ app
   });
 
 const stateCodeConverter = (e) => {
-  console.log('server', e);
   if (!e) {
     return 'english';
   }
