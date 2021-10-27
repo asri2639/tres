@@ -17,7 +17,7 @@ import Video from '@components/video/Video';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import VideoAPI from '@services/api/Video';
-import {applicationConfig, languageMap } from '@utils/Constants';
+import { applicationConfig, languageMap } from '@utils/Constants';
 
 export const smartUrlFetcher = (...args) => {
   const [play_url, hash, envs] = args;
@@ -196,10 +196,10 @@ const VideoList = ({ videoData }) => {
         location.pathname.split('/')[1] === 'urdu' ? 'urdu' : convertedState;
 
       suffix =
-      applicationConfig.value['params_hash2'].config_params.ssr_details[convertedState]
-          .video_details_link;
+        applicationConfig.value['params_hash2'].config_params.ssr_details[
+          convertedState
+        ].video_details_link;
     }
-
 
     return api[apiEnum][methodName]({
       config: { isSSR: methodName !== 'getVideoDetails' },
@@ -223,7 +223,6 @@ const VideoList = ({ videoData }) => {
       return res.data.data;
     });
   };
-
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -313,12 +312,9 @@ const VideoList = ({ videoData }) => {
           'https://www.etvbharat.com/assets/images/newstime.png';
       }
     }
-      console.log(adData)
 
     if (adData) {
-      console.log(1)
       if (video) {
-      console.log(2)
         const data = adData.catalog_list_items.slice(1).filter((v) => {
           return (
             v.layout_type.indexOf('ad_unit') >= 0 ||
@@ -372,7 +368,7 @@ const VideoList = ({ videoData }) => {
               index={i}
               ads={mobileAds}
               thumbnail={video.thumbnail}
-              userAgent={isDesktop? '': 'Mobile'}
+              userAgent={isDesktop ? '' : 'Mobile'}
               updateViewed={(viewed) => {
                 setViewed(viewed);
               }}

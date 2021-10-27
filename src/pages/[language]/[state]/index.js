@@ -167,19 +167,24 @@ export async function getStaticProps({ params, ...args }) {
         }
       }
 
+      console.log(`LISTING_ERR: Data not found in listing response`);
       return {
         notFound: true,
         revalidate: 60, // listing
       };
     } else {
+      console.log(`LISTING_ERR: Failing at getListingApiKey`);
       return {
         notFound: true,
         revalidate: 60, // listing
       };
     }
   } catch (e) {
+    console.log(`LISTING_ERR: Some other error`);
+    console.error(e);
     return {
       notFound: true,
+      revalidate: 60, // listing
     };
   }
 }

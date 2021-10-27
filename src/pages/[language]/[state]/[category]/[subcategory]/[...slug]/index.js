@@ -14,28 +14,26 @@ import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import useTranslator from '@hooks/useTranslator';
 
-
 import ArticleList from '@components/article/ArticleList';
 import PageListing from '@components/listing/PageListing';
 import { getData } from '..';
 
-const slug = ({
-  data,
-  initCount,
-  pageType,
-  id,
-  payload,
-  dropDownData,
-}) => {
+const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
   const router = useRouter();
   const { appLanguage } = useTranslator();
   let ampUrl = '';
   const scriptTagExtractionRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
-  if (applicationConfig && applicationConfig.value && applicationConfig.value.params_hash2) {
+  if (
+    applicationConfig &&
+    applicationConfig.value &&
+    applicationConfig.value.params_hash2
+  ) {
     const fbContent =
-    applicationConfig.value.params_hash2.config_params.fb_pages[convertedState];
+      applicationConfig.value.params_hash2.config_params.fb_pages[
+        convertedState
+      ];
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
 
@@ -122,7 +120,8 @@ const slug = ({
               .replace(
                 '<link rel="stylesheet" href="https://etvbharatimages.akamaized.net/newsroom-metadata/saranyunewsroom-2.css">',
                 ''
-              ).replace(/src=(['"])/g, "data-etv-src=$1")
+              )
+              .replace(/src=(['"])/g, 'data-etv-src=$1')
           : '';
 
         if (typeof window !== 'undefined') {
@@ -181,7 +180,7 @@ const slug = ({
           thumbnail: thumbnailExtractor(
             data.thumbnails,
             '3_2',
-            's2b',
+            'b2s',
             data.media_type
           ),
 
@@ -389,7 +388,6 @@ const slug = ({
   );
 };
 
-
 export async function getStaticPaths() {
   return {
     paths: [],
@@ -399,18 +397,21 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params, ...args }) {
   let language = 'en',
-    state = 'na', bypass=false,qparams = null;
-  const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}/${params.slug.join('/')}`;
+    state = 'na',
+    bypass = false,
+    qparams = null;
+  const url = `/${params.language}/${params.state}/${params.category}/${
+    params.subcategory
+  }/${params.slug.join('/')}`;
   if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
-      return {
-      notFound: true
-    }
+    return {
+      notFound: true,
+    };
   }
 
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
-
 
   qparams = {
     state: params.state,
@@ -447,7 +448,6 @@ export async function getStaticProps({ params, ...args }) {
     try {
       const articleResp = articleResponse.data.data.catalog_list_items[0];
       article = articleResp.catalog_list_items[0];
-	 
     } catch (e) {
       error = 'Invalid URL';
     }
@@ -455,21 +455,21 @@ export async function getStaticProps({ params, ...args }) {
     if (error || !article) {
       return {
         notFound: true,
-        revalidate: 60 // revalidate
+        revalidate: 60, // revalidate
       };
     }
     // Pass data to the page via props
 
-     return {
-        props: {
-          pageType: 'article',
-          data: article,
-          id: id,
-        },
-        revalidate: 60 // revalidate
-      };
+    return {
+      props: {
+        pageType: 'article',
+        data: article,
+        id: id,
+      },
+      revalidate: 60, // revalidate
+    };
   } else {
-    return getData(url, language, state, urlSplit, params)
+    return getData(url, language, state, urlSplit, params);
   }
 }
 export default slug;

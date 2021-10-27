@@ -24,9 +24,15 @@ const slug = ({ data, pageType, id }) => {
   let ampUrl = '';
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
-  if (applicationConfig && applicationConfig.value && applicationConfig.value.params_hash2) {
+  if (
+    applicationConfig &&
+    applicationConfig.value &&
+    applicationConfig.value.params_hash2
+  ) {
     const fbContent =
-    applicationConfig.value.params_hash2.config_params.fb_pages[convertedState];
+      applicationConfig.value.params_hash2.config_params.fb_pages[
+        convertedState
+      ];
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
 
@@ -149,7 +155,7 @@ const slug = ({ data, pageType, id }) => {
               content_id: data.gallery[0].parent_id,
               images: data.gallery,
               count: data.items_count,
-              thumbnail: thumbnail
+              thumbnail: thumbnail,
             },
           ],
           contentId: data.gallery[0].parent_id,
@@ -344,15 +350,15 @@ export async function getStaticProps({ params, ...args }) {
   let language = 'en',
     state = 'na',
     qparams = null;
-  const url = `/${params.language}/${params.state}/gallery/${params.slug.join('/')}`;
+  const url = `/${params.language}/${params.state}/gallery/${params.slug.join(
+    '/'
+  )}`;
 
   if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
-      return {
-      notFound: true
-    }
+    return {
+      notFound: true,
+    };
   }
-
-
 
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
@@ -384,10 +390,10 @@ export async function getStaticProps({ params, ...args }) {
     });
     const galleryResp = galleryResponse.data.data.catalog_list_items[0];
     const gallery = galleryResp.catalog_list_items;
-    if ((!gallery || gallery.length === 0)) {
+    if (!gallery || gallery.length === 0) {
       return {
         notFound: true,
-        revalidate: 60 // revalidate
+        revalidate: 60, // revalidate
       };
     }
     // Pass data to the page via props
@@ -397,13 +403,13 @@ export async function getStaticProps({ params, ...args }) {
         data: { gallery, items_count: galleryResp.total_items_count },
         id: id,
       },
-      revalidate: 60 // revalidate
+      revalidate: 60, // revalidate
     };
   } else {
-     return {
-        notFound: true,
-        revalidate: 60 // revalidate
-      };
+    return {
+      notFound: true,
+      revalidate: 60, // revalidate
+    };
   }
 }
 export default slug;

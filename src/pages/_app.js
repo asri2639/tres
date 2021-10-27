@@ -20,7 +20,7 @@ function App({ Component, pageProps }) {
 
   useEffect(() => {
     const handleRouteChange = (url) => {
-      console.log(`Loading: ${url}`);
+      // console.log(`Loading: ${url}`);
       NProgress.start();
       setIsTransitioning(true);
       // destroy all ad slots
