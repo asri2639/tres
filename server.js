@@ -96,7 +96,7 @@ app
                 res.sendStatus(404);
               }
             } else {
-              if (rest.data.amp != '') {
+              if (rest.data && rest.data.amp != '') {
                 res.send(rest.data.amp);
               } else {
                 res.sendStatus(404);
