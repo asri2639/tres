@@ -1,31 +1,13 @@
 import getConfig from 'next/config';
+const fs = require('fs');
 
-const getRobots = (config) =>
-  config.APP_ENV === 'staging'
-    ? `User-agent: *
-Disallow: /
-`
-    : `User-agent: *
-Allow: /*
-
-Disallow:/api/*
-Disallow:/dai
-Disallow:/ads/
-Disallow:/dfpads
-Disallow:/etvbharat_staging
-Disallow:/react_etvbharat_staging
-Disallow:/gallery-ads
-Disallow:/home-page-ad-units
-Disallow:/in-article-ads/*
-Disallow:/banner-near-logo
-Disallow:/tamara-hospital
-Disallow:/1754*
-Disallow:/elections/*
-
-# Sitemap Files
-Sitemap: https://www.etvbharat.com/sitemap.xml
-Sitemap: https://www.etvbharat.com/googlenewssitemap.xml
-Sitemap: https://www.etvbharat.com/category-sitemap.xml`;
+const getRobots = (config) => {
+  return fs.readFileSync(
+    `public/static/${
+      config.APP_ENV === 'staging' ? 'staging-' : 'prod-'
+    }robots.txt`
+  );
+};
 
 /* class Sitemap extends React.Component {
   static async getInitialProps({ res }) {

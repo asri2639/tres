@@ -1,4 +1,4 @@
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const localeSubpaths = {
   asm: 'assamese',
@@ -26,7 +26,11 @@ module.exports = {
   },
 
   images: {
-    domains: ['etvbharatimages.akamaized.net', 'localhost', 'react.etvbharat.com'],
+    domains: [
+      'etvbharatimages.akamaized.net',
+      'localhost',
+      'react.etvbharat.com',
+    ],
   },
 
   rewrites: () => {
@@ -55,41 +59,39 @@ module.exports = {
         source: '/apis/:path*',
         destination: 'https://prod.api.etvbharat.com/:path*',
       },
-      
     ];
   },
 
-   redirects: () => {
+  redirects: () => {
     return [
       {
         source: '/',
         destination: '/english/national',
-        permanent: true
+        permanent: true,
       },
       {
-         
         source: '/:language(^(?!^ads.txt$|^robots.txt$|^app-ads.txt$).*$)',
         destination: '/english/national',
-        permanent: true
+        permanent: true,
       },
       {
-        source: '/:language(^(?!^ads.txt$|^robots.txt$|^app-ads.txt$))/:state/search/:slug',
+        source:
+          '/:language(^(?!^ads.txt$|^robots.txt$|^app-ads.txt$))/:state/search/:slug',
         destination: 'https://old.etvbharat.com/:language/:state/search/:slug',
-        permanent:true
-      }
-     
+        permanent: true,
+      },
     ];
   },
 
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     if (process.env.ANALYZE) {
-     config.plugins.push(
-       new BundleAnalyzerPlugin({
-         analyzerMode: 'server',
-         analyzerPort: isServer ? 8888 : 8889,
-         openAnalyzer: true,
-       })
-     )
+      config.plugins.push(
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'server',
+          analyzerPort: isServer ? 8888 : 8889,
+          openAnalyzer: true,
+        })
+      );
     }
     return config;
   },
