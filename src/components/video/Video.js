@@ -51,7 +51,7 @@ const Video = ({
       adlink = {
         text: 'जोडीदार शोधत आहात? मराठी मॅट्रीमोनीमध्ये रजीस्ट्रेशन मोफत आहे!',
         link:
-          'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401115687',
+          'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401215688',
       };
       break;
     case 'telugu':
@@ -67,7 +67,7 @@ const Video = ({
         text:
           'ನಿಮ್ಮ ಸೂಕ್ತ ಸಂಗಾತಿ ಹುಡುಕುತ್ತಿರುವಿರಾ? ಕನ್ನಡ ಮ್ಯಾಟ್ರಿಮೋನಿಯಲ್ಲಿ ನೋಂದಣಿ ಉಚಿತ',
         link:
-          'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401215688',
+          'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401115687',
       };
       break;
   }
