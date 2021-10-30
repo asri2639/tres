@@ -13,9 +13,11 @@ import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import Error from 'next/error';
 import GalleryList from '@components/gallery/GalleryList';
+import getConfig from 'next/config';
 
 const slug = ({ data, pageType, id }) => {
   const router = useRouter();
+  const { publicRuntimeConfig } = getConfig();
 
   if (router.isFallback) {
     return <h2 className="loading"></h2>;
