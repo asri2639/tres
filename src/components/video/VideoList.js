@@ -270,11 +270,12 @@ const VideoList = ({ videoData }) => {
   );
 
   if (videos) {
-    videos.forEach((video) => {
+    videos.forEach((video, ind) => {
       video.data.thumbnail = thumbnailExtractor(
         video.data.thumbnails,
         '3_2',
-        !isDesktop ? 's2b' : 'b2s',
+        //!isDesktop ? 's2b' : 'b2s',
+        publicRuntimeConfig.IMG_SIZE === 'sm' ? 's2b' : 'b2s',
         video.data.media_type
       );
 
@@ -303,7 +304,8 @@ const VideoList = ({ videoData }) => {
       video.thumbnail = thumbnailExtractor(
         video.data.thumbnails,
         '3_2',
-        !isDesktop ? 's2b' : 'b2s',
+        // !isDesktop ? 's2b' : 'b2s',
+        'b2s',
         video.data.media_type
       );
 

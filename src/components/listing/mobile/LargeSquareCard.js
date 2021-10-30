@@ -5,6 +5,7 @@ import { articleClick } from '@utils/GoogleTagManager';
 import { thumbnailExtractor, linkInfoGenerator } from '@utils/Helpers';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
+import getConfig from 'next/config';
 
 const LargeSquareCard = ({
   data,
@@ -16,6 +17,7 @@ const LargeSquareCard = ({
 }) => {
   const isRTL = useContext(RTLContext);
   const router = useRouter();
+  const { publicRuntimeConfig } = getConfig();
 
   const linkInfo = linkInfoGenerator(
     article ? article.web_url : data ? data.url : '',
@@ -23,9 +25,19 @@ const LargeSquareCard = ({
   );
 
   const thumbnail = article
-    ? thumbnailExtractor(article.thumbnails, '3_2', 's2b', 'breaking_news')
+    ? thumbnailExtractor(
+        article.thumbnails,
+        '3_2',
+        publicRuntimeConfig.IMG_SIZE === 'sm' ? 's2b' : 'b2s',
+        'breaking_news'
+      )
     : data && data.thumbnails
-    ? thumbnailExtractor(data.thumbnails, '3_2', 's2b', 'breaking_news')
+    ? thumbnailExtractor(
+        data.thumbnails,
+        '3_2',
+        publicRuntimeConfig.IMG_SIZE === 'sm' ? 's2b' : 'b2s',
+        'breaking_news'
+      )
     : null;
 
   return article ? (

@@ -11,12 +11,14 @@ import {
 } from '@utils/Helpers';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import getConfig from 'next/config';
 
 const country = 'IN';
 
 export default function DesktopSubMenu({ category }) {
   const api = API(APIEnum.CatalogList);
   const router = useRouter();
+  const { publicRuntimeConfig } = getConfig();
   const language = languageMap[router.query.language];
 
   let response = null;
@@ -61,7 +63,7 @@ export default function DesktopSubMenu({ category }) {
               const thumbnail = thumbnailExtractor(
                 item.thumbnails,
                 '3_2',
-                's2b',
+                publicRuntimeConfig.IMG_SIZE === 'sm' ? 's2b' : 'b2s',
                 ''
               );
               const linkInfo = linkInfoGenerator(
@@ -83,12 +85,10 @@ export default function DesktopSubMenu({ category }) {
                     articleClick(item);
                   }}
                 >
-                  <div className="relative w-full p-4 pt-0" >
+                  <div className="relative w-full p-4 pt-0">
                     {item.thumbnails ? (
                       <>
-                        <div
-                          className="relative"
-                        >
+                        <div className="relative">
                           <Thumbnail1
                             thumbnail={thumbnail}
                             className={`w-full rounded-md`}

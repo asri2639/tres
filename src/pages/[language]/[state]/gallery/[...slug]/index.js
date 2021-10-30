@@ -116,7 +116,7 @@ const slug = ({ data, pageType, id }) => {
     const thumbnail = thumbnailExtractor(
       main.main_thumbnails,
       '3_2',
-      's2b',
+      publicRuntimeConfig.IMG_SIZE === 'sm' ? 's2b' : 'b2s',
       main.media_type
     );
     headerObj = {

@@ -8,15 +8,15 @@
   },
   "description": "ETV Bharat | NEWS UI",
   "scripts": {
-    "dev": "cross-env NEXT_PUBLIC_APP_ENV=development PORT=3000 NEXT_PUBLIC_TEST=test node server.js",
+    "dev": "cross-env NEXT_PUBLIC_APP_ENV=development PORT=3000 NEXT_PUBLIC_TEST=test NEXT_PUBLIC_IMG_SIZE=bg node server.js",
     "build": "next build",
     "start": "node server.js",
     "build-prod": "cross-env  NEXT_PUBLIC_APP_ENV=production next build",
     "build-staging": "cross-env NEXT_PUBLIC_APP_ENV=staging next build",
     "analyze": "cross-env NEXT_PUBLIC_APP_ENV=staging ANALYZE=true next build",
     "staging": "cross-env NEXT_PUBLIC_APP_ENV=staging PORT=3000 node server.js",
-    "start-prod": "cross-env NEXT_PUBLIC_APP_ENV=production PORT=3000 node server.js",
-    "test-build": "cross-env NEXT_PUBLIC_APP_ENV=production NEXT_PUBLIC_TEST=test next build ",
+    "start-prod": "cross-env NEXT_PUBLIC_APP_ENV=production NEXT_PUBLIC_IMG_SIZE=bg PORT=3000 node server.js",
+    "test-build": "cross-env NEXT_PUBLIC_APP_ENV=production NEXT_PUBLIC_TEST=test NEXT_PUBLIC_IMG_SIZE=bg next build ",
     "test-start": "cross-env NEXT_PUBLIC_APP_ENV=production NEXT_PUBLIC_TEST=test PORT=3000 node server.js",
     "local": "next dev"
   },

@@ -13,6 +13,7 @@ import {
 import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import FileFetcher from '@services/api/FileFetcher';
+import getConfig from 'next/config';
 
 import Error from 'next/error';
 
@@ -20,6 +21,8 @@ import VideoList from '@components/video/VideoList';
 
 const slug = ({ data, pageType, id, userAgent }) => {
   const router = useRouter();
+  const { publicRuntimeConfig } = getConfig();
+
   if (router.isFallback) {
     return <h2 className="loading"></h2>;
   }
@@ -27,9 +30,15 @@ const slug = ({ data, pageType, id, userAgent }) => {
   let ampUrl = '';
   const convertedState = configStateCodeConverter(router.query.state);
   let fbContentId = '';
-  if (applicationConfig && applicationConfig.value && applicationConfig.value.params_hash2) {
+  if (
+    applicationConfig &&
+    applicationConfig.value &&
+    applicationConfig.value.params_hash2
+  ) {
     const fbContent =
-    applicationConfig.value.params_hash2.config_params.fb_pages[convertedState];
+      applicationConfig.value.params_hash2.config_params.fb_pages[
+        convertedState
+      ];
     fbContentId = fbContent ? fbContent.fb_page_id : null;
   }
 
@@ -119,7 +128,7 @@ const slug = ({ data, pageType, id, userAgent }) => {
       thumbnail: thumbnailExtractor(
         data.thumbnails,
         '3_2',
-        's2b',
+        publicRuntimeConfig.IMG_SIZE === 'sm' ? 's2b' : 'b2s',
         data.media_type
       ),
 
@@ -139,16 +148,6 @@ const slug = ({ data, pageType, id, userAgent }) => {
         userAgent={userAgent}
       />
     );
-
-    let thumbnail = null;
-    if (userAgent && userAgent.includes('Mobile')) {
-      thumbnail = thumbnailExtractor(
-        data.thumbnails,
-        '3_2',
-        's2b',
-        data.media_type
-      );
-    }
 
     return (
       <>
@@ -291,13 +290,11 @@ export async function getStaticProps({ params, ...args }) {
   )}`;
   if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
     return {
-      notFound: true
-    }
+      notFound: true,
+    };
   }
   // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
   const userAgent = 'Mobile';
-
-  
 
   const urlSplit = url.split('/');
   language = languageMap[urlSplit[1]];
@@ -370,7 +367,7 @@ export async function getStaticProps({ params, ...args }) {
     if (!video) {
       return {
         notFound: true,
-        revalidate: 60 // revalidate
+        revalidate: 60, // revalidate
       };
     }
     return {
@@ -380,13 +377,13 @@ export async function getStaticProps({ params, ...args }) {
         userAgent: userAgent,
         id: id,
       },
-      revalidate: 60 // revalidate
+      revalidate: 60, // revalidate
     };
   } else {
     return {
-        notFound: true,
-        revalidate: 60 // revalidate
-      };
+      notFound: true,
+      revalidate: 60, // revalidate
+    };
   }
 }
 export default slug;

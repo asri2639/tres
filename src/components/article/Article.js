@@ -8,6 +8,7 @@ import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import getConfig from 'next/config';
 
 const options = {
   loading: () => <div>Loading...</div>,
@@ -50,30 +51,36 @@ export default function Article({
   const contentRef = useRef(null);
   const isRTL = useContext(RTLContext);
   const router = useRouter();
-  let adlink = null
+  const { publicRuntimeConfig } = getConfig();
+
+  let adlink = null;
   const lang = router.query.language;
 
   switch (lang) {
     case 'marathi':
       adlink = {
         text: 'जोडीदार शोधत आहात? मराठी मॅट्रीमोनीमध्ये रजीस्ट्रेशन मोफत आहे!',
-        link:'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401115687'
-      }
+        link:
+          'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401115687',
+      };
       break;
     case 'telugu':
       adlink = {
-        text: 'సంబంధం కోసం వెతుకుతున్నారా? తెలుగు మాట్రిమోని లో రిజిస్ట్రేషన్ ఉచితం!',
-        link:'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401015686'
-      }
+        text:
+          'సంబంధం కోసం వెతుకుతున్నారా? తెలుగు మాట్రిమోని లో రిజిస్ట్రేషన్ ఉచితం!',
+        link:
+          'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401015686',
+      };
       break;
     case 'kannada':
       adlink = {
-        text: 'ನಿಮ್ಮ ಸೂಕ್ತ ಸಂಗಾತಿ ಹುಡುಕುತ್ತಿರುವಿರಾ? ಕನ್ನಡ ಮ್ಯಾಟ್ರಿಮೋನಿಯಲ್ಲಿ ನೋಂದಣಿ ಉಚಿತ',
-        link:'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401215688'
-      }
+        text:
+          'ನಿಮ್ಮ ಸೂಕ್ತ ಸಂಗಾತಿ ಹುಡುಕುತ್ತಿರುವಿರಾ? ಕನ್ನಡ ಮ್ಯಾಟ್ರಿಮೋನಿಯಲ್ಲಿ ನೋಂದಣಿ ಉಚಿತ',
+        link:
+          'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401215688',
+      };
       break;
-   }
-  
+  }
 
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
@@ -200,7 +207,7 @@ export default function Article({
   const thumbnail = thumbnailExtractor(
     data.thumbnails,
     '3_2',
-    's2b' ,
+    publicRuntimeConfig.IMG_SIZE === 'sm' ? 's2b' : 'b2s',
     data.media_type
   );
   return (
@@ -247,8 +254,11 @@ export default function Article({
                   {/*   {index === 0 ? (
                     <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
                   ) : null} */}
-                  <div className="relative pb-10" >
-                    <h1 ref={ref} className="leading-tight text-xl font-bold p-2">
+                  <div className="relative pb-10">
+                    <h1
+                      ref={ref}
+                      className="leading-tight text-xl font-bold p-2"
+                    >
                       {data.title}
                     </h1>
 
@@ -283,35 +293,36 @@ export default function Article({
                   className="-mx-3 md:mx-0 relative "
                   style={{ minWidth: '300px', minHeight: '200px' }}
                 >
-                {/*   <Thumbnail
+                  {/*   <Thumbnail
                     thumbnail={thumbnail}
                     className={'md:rounded-lg w-full'}
                     type={data.media_type}
                     lazy={false}
                   /> */}
 
-                   {index === 0 ?
-                      <div
-                        className="w-full rounded-md -mt-10"
-                        style={{
-                          width: '100%',
-                          padding: '38.25%',
-                        }}
-                      >
-                        <Image
-                          priority
-                          layout="fill"
-                          src={thumbnail.url}
-                          alt="Thumbnail image"
-                        />
-                      </div>:
-                      <Thumbnail
-                        thumbnail={thumbnail}
-                        className={'md:rounded-lg w-full'}
-                        type={data.media_type}
-                        lazy={false}
+                  {index === 0 ? (
+                    <div
+                      className="w-full rounded-md -mt-10"
+                      style={{
+                        width: '100%',
+                        padding: '38.25%',
+                      }}
+                    >
+                      <Image
+                        priority
+                        layout="fill"
+                        src={thumbnail.url}
+                        alt="Thumbnail image"
                       />
-                    }
+                    </div>
+                  ) : (
+                    <Thumbnail
+                      thumbnail={thumbnail}
+                      className={'md:rounded-lg w-full'}
+                      type={data.media_type}
+                      lazy={false}
+                    />
+                  )}
                 </div>
                 <div className="pt-4 pb-3 md:pt-0 md:pb-0 md:mb-3 md:border-b-2 md:border-gray-500">
                   <MediaContextProvider>
@@ -357,20 +368,18 @@ export default function Article({
                 />
               ) : null}
 
-              {
-                adlink ?
-                  <div className="matrimony-ad text-lg md:text-xl text-center">
-                    <a
-                      href={adlink.link}
-                      title={adlink.text}
-                      target="_blank"
-                      className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-                      >
-                    {adlink.text}      
-                    </a>
-                  </div>
-                : null
-              }
+              {adlink ? (
+                <div className="matrimony-ad text-lg md:text-xl text-center">
+                  <a
+                    href={adlink.link}
+                    title={adlink.text}
+                    target="_blank"
+                    className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+                  >
+                    {adlink.text}
+                  </a>
+                </div>
+              ) : null}
 
               {ads ? (
                 <div className="pt-3">
