@@ -80,11 +80,13 @@ const DesktopHeader = ({ className, data }) => {
   };
 
   const searchitem = (e) => {
+    let value = searchInput;
+    setSearchInput('');
     const goTo = () => {
       toggleSearchBox(false);
       searchItem(searchInput);
       router.push(
-        `/${language}/${router.query.state}/search/${decodeURI(searchInput)}`
+        `/${language}/${router.query.state}/search/${decodeURI(value)}`
       );
     };
     if (e) {
@@ -108,7 +110,7 @@ const DesktopHeader = ({ className, data }) => {
   useEffect(() => {
     const splitPath = location.pathname.split('/');
     const state = splitPath[2];
-    const isDesktop = window && window.innerWidth >= 768;
+	const isDesktop = window && window.innerWidth >= 768;
     const socialLinks = getSocialLinks(state);
     setSocialHandlers(socialLinks);
 
@@ -141,18 +143,19 @@ const DesktopHeader = ({ className, data }) => {
         })
         .catch((e) => {});
     };
-    if (isDesktop) {
-      getHeaderAd();
-    }
+	if(isDesktop){
+    getHeaderAd();
+	}
     const handleRouteChange = (url) => {
       const splitPath = location.pathname.split('/');
       const state = splitPath[2];
       const socialLinks = getSocialLinks(state);
       setSocialHandlers(socialLinks);
       // setTwitterHandler();
-      if (isDesktop) {
-        getHeaderAd(url);
-      }
+	  if(isDesktop){
+		  getHeaderAd(url);
+	  }
+      
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);

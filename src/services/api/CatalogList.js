@@ -87,5 +87,12 @@ export default function CatalogList(inst) {
         }?${new URLSearchParams(query)}`
       );
     },
+
+    getSearchdata({param,query, config} = new APIRequest()){
+      return inst.get(
+        `${controller}/${param}?${new URLSearchParams(query)}`,
+        config
+      );
+    },
   };
 }
