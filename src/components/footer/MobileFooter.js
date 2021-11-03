@@ -180,7 +180,11 @@ const MobileFooter = ({ data, menu }) => {
                     </li>
                     <li className="border-r"></li>
                     <li>
-                      <NavLink href={socialHandlers.fb} passHref prefetch={false}>
+                      <NavLink
+                        href={socialHandlers.fb}
+                        passHref
+                        prefetch={false}
+                      >
                         <img
                           loading="lazy"
                           className="h-6"
@@ -192,7 +196,11 @@ const MobileFooter = ({ data, menu }) => {
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink href={socialHandlers.twitter} passHref  prefetch={false}>
+                      <NavLink
+                        href={socialHandlers.twitter}
+                        passHref
+                        prefetch={false}
+                      >
                         <img
                           loading="lazy"
                           className="h-6"
@@ -255,16 +263,6 @@ const MobileFooter = ({ data, menu }) => {
                         href={Constants.appURLs.android}
                         prefetch={false}
                         passHref
-                        style={
-                          isAMP
-                            ? {
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexDirection: 'column',
-                              }
-                            : {}
-                        }
                       >
                         <img
                           className="h-6 mx-auto"
