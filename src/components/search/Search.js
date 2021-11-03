@@ -85,7 +85,7 @@ const Search = ({ data, requestBody, listdata, userAgent, tabindex }) => {
     <>
       {tsrcount > 0 ? (
         <>
-          <span className="searchCount">
+          <span className="searchCount mt-5">
             You have searched for <b>"{decodeURIComponent(requestBody.q)}"</b> :
             {tsrcount} articles found
           </span>
