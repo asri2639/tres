@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { TabView, TabPanel } from 'primereact/tabview';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
-import Breadcrumbs from '@components/article/Breadcrumbs';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.css';
@@ -84,9 +83,6 @@ const Search = ({ data, requestBody, listdata, userAgent, tabindex }) => {
   }
   return (
     <>
-      <Breadcrumbs />
-
-      <br />
       {tsrcount > 0 ? (
         <>
           <span className="searchCount">
