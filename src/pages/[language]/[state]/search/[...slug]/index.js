@@ -40,7 +40,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     response: 'r2',
     item_languages: language,
     portal_state: state,
-    q: searchString[searchString.length - 1],
+    q: decodeURI(searchString[searchString.length - 1]),
     state: state,
   };
   const response = await trackPromise(
