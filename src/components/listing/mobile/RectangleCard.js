@@ -20,7 +20,7 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
   return (
     <NavLink
       key={keyProp}
-      className={`flex  justify-between px-1 pt-2 pb-1 cursor-pointer border shadow ${
+      className={`flex  justify-between px-1 pt-1 pb-1 cursor-pointer border shadow ${
         isRTL ? 'rtl' : ''
       } ${className}`}
       href={linkInfo.href}
@@ -31,10 +31,10 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
       }}
     >
       <div
-        className={`line-clamp-3 px-1 text-base md:text-base text-gray-700 leading-tight ${
+        className={`line-clamp-3 px-1 pt-1 text-base md:text-base text-gray-700 leading-tight ${
           isRTL ? 'rtl' : ''
         }`}
-        style={{ width: 'calc(100% - 6rem)' }}
+        style={{ width: 'calc(100% - 6rem)', maxHeight: '60px' }}
       >
         {article.display_title}
       </div>
