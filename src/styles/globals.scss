@@ -120,7 +120,7 @@ section.content {
 }
 
 .rectangle-card {
-  height: 75px;
+  height: 72px;
 }
 
 @media (min-width: 768px) {
@@ -1240,7 +1240,6 @@ div[dir*='rtl'] #IVCaption {
 }
  */
 
-
 .p-tabview-title {
   color: #c00;
 }
@@ -1260,16 +1259,16 @@ div[dir*='rtl'] #IVCaption {
   gap: 10px;
   grid-auto-rows: minmax(100px, auto);
 }
-.searchCount{
+.searchCount {
   margin-left: 10%;
 }
 .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
   outline: 0 none;
   outline-offset: 0;
-   box-shadow: inset 0 0 0 0.2rem #fff !important; 
+  box-shadow: inset 0 0 0 0.2rem #fff !important;
 }
-.no-results{
-  opacity: .8;
+.no-results {
+  opacity: 0.8;
   border-radius: 10px;
   background-color: #ffe6e7;
   border: solid 1px #ffc3c5;
@@ -1277,41 +1276,41 @@ div[dir*='rtl'] #IVCaption {
   margin-top: 30px;
   margin-bottom: 10%;
 }
-.no-results h1{
+.no-results h1 {
   font-weight: 600;
   color: #6e0000;
   text-align: left;
-  font-size: 20px;  
-} 
-.suggestions{
+  font-size: 20px;
+}
+.suggestions {
   margin-top: 30px;
 }
-.suggestions p{
+.suggestions p {
   font-size: 16px;
-    line-height: 1.13;
-    text-align: left;
-    color: #000;
-    font-weight: 600;
+  line-height: 1.13;
+  text-align: left;
+  color: #000;
+  font-weight: 600;
 }
-.suggestions ul{
+.suggestions ul {
   left: 20px;
-      position: relative;
-      line-height: 25px;
+  position: relative;
+  line-height: 25px;
 }
 
-.suggestions ul li::before{
-  content: "";
-    border-color: transparent #111;
-    border-style: solid;
-    border-width: 0.3em 0 0.3em 0.4em;
-    display: block;
-    height: 0;
-    width: 0;
-    left: -1em;
-    top: 17px;
-    position: relative;
-    -webkit-transition: all .15s linear;
-    -moz-transition: all .15s linear;
-    -o-transition: all .15s linear;
-    transition: all .15s linear;
+.suggestions ul li::before {
+  content: '';
+  border-color: transparent #111;
+  border-style: solid;
+  border-width: 0.3em 0 0.3em 0.4em;
+  display: block;
+  height: 0;
+  width: 0;
+  left: -1em;
+  top: 17px;
+  position: relative;
+  -webkit-transition: all 0.15s linear;
+  -moz-transition: all 0.15s linear;
+  -o-transition: all 0.15s linear;
+  transition: all 0.15s linear;
 }

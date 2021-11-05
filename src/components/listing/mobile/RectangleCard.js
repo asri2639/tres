@@ -31,7 +31,7 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
       }}
     >
       <div
-        className={`px-1 text-base md:text-base text-gray-700 leading-tight ${
+        className={`line-clamp-3 px-1 text-base md:text-base text-gray-700 leading-tight ${
           isRTL ? 'rtl' : ''
         }`}
         style={{ width: 'calc(100% - 6rem)' }}

@@ -259,7 +259,7 @@ export default function MobileHeader({ data, className }) {
             hideTitle={true}
           >
             <div
-              className={`logo ${language}`}
+              className={`logo ${language} ${isRTL ? 'ml-3 rtl' : ''}`}
               style={{ transform: `translate(-24px, -19px) scale(0.6)` }}
             ></div>
           </NavLink>
@@ -292,7 +292,7 @@ export default function MobileHeader({ data, className }) {
           >
             <div
               className={`flex space-x-6 ${
-                isRTL ? 'flex-row-reverse rtl' : ''
+                isRTL ? 'flex-row-reverse space-x-reverse rtl' : ''
               }`}
             >
               {data.languages
@@ -323,7 +323,7 @@ export default function MobileHeader({ data, className }) {
       >
         <div
           className={`bg-mhbg h-7 lg:mx-auto flex items-center py-1 overflow-x-auto space-x-3 ${
-            isRTL ? 'flex-row-reverse rtl' : ''
+            isRTL ? 'flex-row-reverse rtl space-x-reverse' : ''
           }`}
         >
           {data.menu && data.menu.mobile

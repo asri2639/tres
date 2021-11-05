@@ -31,6 +31,7 @@ module.exports = {
   },
   variants: {},
   plugins: [
+    require('@tailwindcss/line-clamp'),
     'postcss-flexbugs-fixes',
     [
       'postcss-preset-env',
