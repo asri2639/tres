@@ -110,7 +110,7 @@ const DesktopHeader = ({ className, data }) => {
   useEffect(() => {
     const splitPath = location.pathname.split('/');
     const state = splitPath[2];
-	const isDesktop = window && window.innerWidth >= 768;
+    const isDesktop = window && window.innerWidth >= 768;
     const socialLinks = getSocialLinks(state);
     setSocialHandlers(socialLinks);
 
@@ -143,19 +143,18 @@ const DesktopHeader = ({ className, data }) => {
         })
         .catch((e) => {});
     };
-	if(isDesktop){
-    getHeaderAd();
-	}
+    if (isDesktop) {
+      getHeaderAd();
+    }
     const handleRouteChange = (url) => {
       const splitPath = location.pathname.split('/');
       const state = splitPath[2];
       const socialLinks = getSocialLinks(state);
       setSocialHandlers(socialLinks);
       // setTwitterHandler();
-	  if(isDesktop){
-		  getHeaderAd(url);
-	  }
-      
+      if (isDesktop) {
+        getHeaderAd(url);
+      }
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);
@@ -295,7 +294,11 @@ const DesktopHeader = ({ className, data }) => {
             isRTL ? 'flex-row-reverse rtl' : ''
           }`}
         >
-          <div className=" bg-hbg flex space-x-6">
+          <div
+            className={`bg-hbg flex space-x-6 ${
+              isRTL ? 'flex-row-reverse space-x-reverse rtl' : ''
+            }`}
+          >
             {data.languages
               ? Object.entries(data.languages).map(([language, states]) => {
                   return (
@@ -525,7 +528,7 @@ const DesktopHeader = ({ className, data }) => {
             {/* <iframe className="mx-auto" width={755} height={110} src={`https://www.etvbharat.com/banner-near-logo/${router.query.state}/business/728x90-1.htm`}/> */}
 
             <MediaContextProvider>
-              <Media greaterThan="xs"> {isScrolled ? headerAd: null}</Media>
+              <Media greaterThan="xs"> {isScrolled ? headerAd : null}</Media>
             </MediaContextProvider>
           </div>
         </div>
