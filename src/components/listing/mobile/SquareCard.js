@@ -91,7 +91,7 @@ const SquareCard = ({
             WebkitBoxOrient: 'vertical',
             display: '-webkit-box',
             WebkitLineClamp: lineClamp || '3',
-            maxHeight: '60px',
+            maxHeight: '62px',
           }}
           className={`text-base md:text-base relative -top-1 pt-1 ${
             isRTL ? 'rtl' : ''
