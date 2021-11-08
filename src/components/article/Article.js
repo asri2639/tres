@@ -221,7 +221,7 @@ export default function Article({
         <MediaContextProvider>
           <Media
             greaterThan="xs"
-            className={`lg-social hidden absolute md:flex flex-col justify-around pt-0 h-56 ${
+            className={`lg-social hidden absolute md:flex flex-col justify-around pt-0 h-64 ${
               isRTL ? 'rtl-social' : ''
             }`}
           >
@@ -282,7 +282,7 @@ export default function Article({
                           )}`
                         : ''}
                     </div>
-                    <div className="flex justify-between px-2 w-56 mb-2 absolute z-10">
+                    <div className="flex justify-between px-6 w-full mb-2 absolute z-10">
                       <SocialMedia data={data} />
                     </div>
                   </div>

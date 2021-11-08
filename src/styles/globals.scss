@@ -316,7 +316,7 @@ button:focus {
   outline: none;
 }
 .lg-social {
-  left: '-8px';
+  left: 65px;
 }
 
 .commentBox {
@@ -1205,7 +1205,32 @@ div[dir*='rtl'] #IVCaption {
   position: relative;
   cursor: pointer;
 }
-.play-button::after {
+
+.play-button img.play-pause {
+  width: 45px;
+  z-index: 1;
+  height: 45px;
+  position: absolute;
+  top: calc(50% - 12px);
+  left: calc(50% - 24px);
+  border-radius: 50%;
+  box-shadow: 0 0 15px #fff;
+}
+
+@media (min-width: 450px) {
+  .play-button img.play-pause {
+    width: 60px;
+    z-index: 1;
+    height: 60px;
+    position: absolute;
+    top: calc(50% - 15px);
+    left: calc(50% - 30px);
+    border-radius: 50%;
+    box-shadow: 0 0 12px #fff;
+  }
+}
+
+/* .play-button::after {
   content: '';
   border: 0;
   background: transparent;
@@ -1224,7 +1249,7 @@ div[dir*='rtl'] #IVCaption {
   border-width: 20px 0 20px 40px;
 
   box-shadow: 0px 0px 5px 5px #1f2937;
-}
+} */
 
 /* .play-button::before {
   content: '';

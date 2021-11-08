@@ -3,7 +3,6 @@
 }
 
 .player {
-  width: 100%;
   position: relative;
   padding-bottom: 56.25%; /* proportion value to aspect ratio 16:9 (9 / 16 = 0.5625 or 56.25%) */
   padding-top: 45px;
@@ -25,7 +24,7 @@
   }
 
   .player {
-    margin: 0 auto;
-    width: 100%;
+    /* margin: 0 auto;
+    width: 100%; */
   }
 }

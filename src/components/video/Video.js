@@ -261,7 +261,7 @@ const Video = ({
       <MediaContextProvider>
         <Media
           greaterThan="xs"
-          className={`lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 ${
+          className={`lg-social hidden absolute md:flex flex-col justify-around pt-2 h-64 ${
             isRTL ? 'rtl-social' : ''
           }`}
         >
@@ -315,7 +315,7 @@ const Video = ({
               <MediaContextProvider>
                 <Media
                   at="xs"
-                  className="flex justify-between mx-auto w-56 mb-2"
+                  className="flex justify-between mx-auto w-full mb-2 px-6"
                 >
                   <SocialMedia data={data} />
                 </Media>
@@ -323,7 +323,7 @@ const Video = ({
             </div>
 
             {
-              <div className={`${video.player} z-0`}>
+              <div className={`${video.player} z-0 md:m-0 -mx-3`}>
                 {!showVideo ? (
                   <div
                     className="play-button"
@@ -345,6 +345,10 @@ const Video = ({
                         alt="Thumbnail image"
                       />
                     </div>
+                    <img
+                      className="play-pause"
+                      src="/assets/images/play_pause.png"
+                    />
                   </div>
                 ) : source ? (
                   <iframe id={'player' + contentId} src={source}></iframe>

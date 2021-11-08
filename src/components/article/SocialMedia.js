@@ -19,7 +19,6 @@ import { useRouter } from 'next/router';
 const SocialMedia = ({ data }) => {
   const router = useRouter();
 
-  const isAMP = false;
   const [isOpen, toggleOpen] = useState(false);
   const query = {
     amp: 'false',
@@ -99,7 +98,7 @@ const SocialMedia = ({ data }) => {
               share(data);
             }}
           >
-            <FacebookIcon size={32} round={true} />
+            <FacebookIcon size={36} round={true} />
           </FacebookShareButton>
           <LinkedinShareButton
             title={data.title}
@@ -108,7 +107,7 @@ const SocialMedia = ({ data }) => {
               share(data);
             }}
           >
-            <LinkedinIcon size={32} round={true} />
+            <LinkedinIcon size={36} round={true} />
           </LinkedinShareButton>
           <TwitterShareButton
             title={data.title}
@@ -117,7 +116,7 @@ const SocialMedia = ({ data }) => {
               share(data);
             }}
           >
-            <TwitterIcon size={32} round={true} />
+            <TwitterIcon size={36} round={true} />
           </TwitterShareButton>
           <WhatsappShareButton
             title={data.title}
@@ -126,7 +125,7 @@ const SocialMedia = ({ data }) => {
               share(data);
             }}
           >
-            <WhatsappIcon size={32} round={true} />
+            <WhatsappIcon size={36} round={true} />
           </WhatsappShareButton>
           <RedditShareButton
             title={data.title}
@@ -135,7 +134,7 @@ const SocialMedia = ({ data }) => {
               share(data);
             }}
           >
-            <RedditIcon size={32} round={true} />
+            <RedditIcon size={36} round={true} />
           </RedditShareButton>
 
           <img

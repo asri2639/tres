@@ -268,7 +268,7 @@ const Gallery = ({
       <MediaContextProvider>
         <Media
           greaterThan="xs"
-          className={`lg-social hidden absolute md:flex flex-col justify-around pt-2 h-56 ${
+          className={`lg-social hidden absolute md:flex flex-col justify-around pt-2  h-64 ${
             isRTL ? 'rtl-social' : ''
           }`}
         >
@@ -323,7 +323,7 @@ const Gallery = ({
 
           <MediaContextProvider>
             <Media at="xs">
-              <div className="flex justify-between px-2 w-56 mb-2">
+              <div className="flex justify-between w-full mb-2 px-6">
                 <SocialMedia data={data} />
               </div>
             </Media>
