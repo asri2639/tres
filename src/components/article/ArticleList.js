@@ -71,7 +71,7 @@ const ArticleList = ({ articleData }) => {
     { dedupingInterval: 5 * 60 * 1000 }
   );
 
-   useEffect(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsDesktop(window.innerWidth >= 768);
     }
@@ -131,7 +131,7 @@ const ArticleList = ({ articleData }) => {
       setHtmlShow(true);
     }
 
-    const iframes = document.querySelectorAll("[data-etv-src]");
+    const iframes = document.querySelectorAll('[data-etv-src]');
     for (let i = 0; i < iframes.length; i++) {
       iframes[i].src = iframes[i].dataset.etvSrc;
       delete iframes[i].dataset.etvSrc;
@@ -237,7 +237,7 @@ const ArticleList = ({ articleData }) => {
               scrollToNextArticle={() => scrollToArticle(related[index + 1])}
               viewed={viewed}
               index={index}
-              userAgent={isDesktop? '': 'Mobile'}
+              userAgent={isDesktop ? '' : 'Mobile'}
               htmlShow={htmlShow}
               ads={mobileAds}
               updateViewed={(viewed) => {
@@ -253,7 +253,7 @@ const ArticleList = ({ articleData }) => {
         <MediaContextProvider>
           <Media
             greaterThan="xs"
-            className="fixed bottom-0 z-20 w-screen h-16 "
+            className="fixed bottom-0 z-1000 w-screen h-16 "
           >
             {' '}
             <BottomRelatedBar data={related} />

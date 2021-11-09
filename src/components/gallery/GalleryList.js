@@ -190,7 +190,7 @@ const GalleryList = ({ galleryData }) => {
   return (
     <>
       <Head>
-      {/*   <link
+        {/*   <link
           rel="preload"
           as="image"
           href={galleries[0].images[0].thumbnails.l_large.url}
@@ -218,7 +218,7 @@ const GalleryList = ({ galleryData }) => {
               related={related}
               index={i}
               ads={mobileAds}
-              userAgent={isDesktop? '': 'Mobile'}
+              userAgent={isDesktop ? '' : 'Mobile'}
               scrolled={loadRelated}
               updateViewed={(viewed) => {
                 setViewed(viewed);
@@ -234,7 +234,7 @@ const GalleryList = ({ galleryData }) => {
         <MediaContextProvider>
           <Media
             greaterThan="xs"
-            className="fixed bottom-0  z-20 w-screen h-16 "
+            className="fixed bottom-0 z-1000 w-screen h-16 "
           >
             {' '}
             <BottomRelatedBar data={related} />
