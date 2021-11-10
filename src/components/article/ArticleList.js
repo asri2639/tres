@@ -253,7 +253,7 @@ const ArticleList = ({ articleData }) => {
         <MediaContextProvider>
           <Media
             greaterThan="xs"
-            className="fixed bottom-0 z-1000 w-screen h-16 "
+            className="fixed bottom-0 z-1100 w-screen h-16 "
           >
             {' '}
             <BottomRelatedBar data={related} />

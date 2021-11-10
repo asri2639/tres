@@ -20,6 +20,8 @@ module.exports = {
       zIndex: {
         '-1': '-1',
         '-10': '-10',
+        1000: '1000',
+        1100: '1100',
       },
       fontFamily: {
         // english: ['LikhithEnglish'],
