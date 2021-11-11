@@ -56,7 +56,10 @@ const ListingStateSelectModal = ({
             </div>
           </div>
 
-          <div className="flex flex-wrap w-80 px-2  mx-auto">
+          <div
+            className="flex flex-wrap w-80 px-2  mx-auto"
+            style={{ maxHeight: '80vh', overflow: 'auto' }}
+          >
             {!loading && data.length > 0
               ? data.map((v) => {
                   return (
