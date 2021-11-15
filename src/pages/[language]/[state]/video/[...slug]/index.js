@@ -288,7 +288,7 @@ export async function getStaticProps({ params, ...args }) {
   const url = `/${params.language}/${params.state}/video/${params.slug.join(
     '/'
   )}`;
-  if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
     return {
       notFound: true,
     };

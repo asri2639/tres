@@ -163,10 +163,10 @@ export async function getStaticProps({ params, ...args }) {
   const url = `/${params.language}/${params.state}/${params.category}`;
   const urlSplit = url.split('/');
 
-  if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
-      return {
-      notFound: true
-    }
+  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+    return {
+      notFound: true,
+    };
   }
 
   language = languageMap[urlSplit[1]];
@@ -413,7 +413,10 @@ export async function getStaticProps({ params, ...args }) {
   } else {
     return {
       redirect: {
-        destination: typeof params !== 'undefined' ? `/${params.language}/${params.state}`: `/english/national`,
+        destination:
+          typeof params !== 'undefined'
+            ? `/${params.language}/${params.state}`
+            : `/english/national`,
         permanent: false,
       },
     };

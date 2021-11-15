@@ -163,10 +163,10 @@ export async function getStaticProps({ params, ...args }) {
   const url = `/${params.language}/${params.state}/video/${params.list}`;
   const urlSplit = url.split('/');
 
-  if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
     return {
-      notFound: true
-    }
+      notFound: true,
+    };
   }
 
   language = languageMap[urlSplit[1]];
@@ -413,7 +413,9 @@ export async function getStaticProps({ params, ...args }) {
   } else {
     return {
       redirect: {
-        destination: params ? `/${params.language}/${params.state}`: `/english/national`,
+        destination: params
+          ? `/${params.language}/${params.state}`
+          : `/english/national`,
         permanent: false,
       },
     };

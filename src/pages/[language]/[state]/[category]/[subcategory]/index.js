@@ -399,32 +399,31 @@ export const getData = async (url, language, state, urlSplit, qparams) => {
   } else {
     return {
       redirect: {
-        destination: qparams ? `/${qparams.language}/${qparams.state}`: `/english/national`,
+        destination: qparams
+          ? `/${qparams.language}/${qparams.state}`
+          : `/english/national`,
         permanent: false,
       },
     };
   }
-}
-
+};
 
 export async function getStaticProps({ params, ...args }) {
   let language = 'en',
     state = 'na';
   const url = `/${params.language}/${params.state}/${params.category}/${params.subcategory}`;
   const urlSplit = url.split('/');
-  
-  if (/[ `!@#$%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
-      return {
-      notFound: true
-    }
+
+  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+    return {
+      notFound: true,
+    };
   }
-  
+
   language = languageMap[urlSplit[1]];
   state = stateCodeConverter(urlSplit[2]);
 
   return getData(url, language, state, urlSplit, params);
-  
 }
-
 
 export default slug;
