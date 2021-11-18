@@ -333,7 +333,7 @@ export async function getStaticProps({ params, ...args }) {
     const qparams = {
       collective_ads_count: 0,
       page: 0,
-      page_size: 4,
+      page_size: 8,
       version: 'v2',
       response: 'r2',
       item_languages: language,
