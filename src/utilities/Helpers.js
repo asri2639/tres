@@ -151,6 +151,9 @@ export const thumbnailExtractor = (
 };
 
 export const stateCodeConverter = (e) => {
+  if (!e) {
+    return 'english';
+  }
   return {
     assam: 'assam',
     odisha: 'or',

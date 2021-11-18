@@ -108,6 +108,12 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, ...args }) {
+  const url = `/${params.language}/${params.state}`;
+  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+    return {
+      notFound: true,
+    };
+  }
   try {
     const api = API(APIEnum.Listing, APIEnum.CatalogList);
     const response = await api.Listing.getListingApiKey({

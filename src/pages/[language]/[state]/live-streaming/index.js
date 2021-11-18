@@ -148,6 +148,12 @@ export async function getStaticProps({ params, ...args }) {
     state = 'na';
   const url = `/${params.language}/${params.state}/live-streaming`;
 
+  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+    return {
+      notFound: true,
+    };
+  }
+
   language = languageMap[params.language];
   state = stateCodeConverter(params.state);
 
@@ -161,7 +167,9 @@ export async function getStaticProps({ params, ...args }) {
   }).catch((e) => {
     return {
       redirect: {
-        destination: params ? `/${params.language}/${params.state}`: `/english/national`,
+        destination: params
+          ? `/${params.language}/${params.state}`
+          : `/english/national`,
         permanent: false,
       },
     };
@@ -170,7 +178,9 @@ export async function getStaticProps({ params, ...args }) {
   if (!result) {
     return {
       redirect: {
-        destination: params ? `/${params.language}/${params.state}`: `/english/national`,
+        destination: params
+          ? `/${params.language}/${params.state}`
+          : `/english/national`,
         permanent: false,
       },
     };
@@ -219,7 +229,7 @@ export async function getStaticProps({ params, ...args }) {
     } catch (e) {
       initCount = 0;
     }
-    
+
     if (initCount) {
       return {
         props: {
@@ -236,7 +246,9 @@ export async function getStaticProps({ params, ...args }) {
 
   return {
     redirect: {
-      destination: params ? `/${params.language}/${params.state}`: `/english/national`,
+      destination: params
+        ? `/${params.language}/${params.state}`
+        : `/english/national`,
       permanent: false,
     },
   };
