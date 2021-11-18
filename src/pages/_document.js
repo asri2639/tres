@@ -27,6 +27,16 @@ export default class ETVDocument extends Document {
 
           <script
             dangerouslySetInnerHTML={{
+              __html: `var VUUKLE_CONFIG = {
+                          apiKey: '99a287d2-81b1-4013-8705-0805df9481e0',
+                          host: 'etvbharat.com',
+                          language: 'en',
+                          endlessMode: true,
+                        };`,
+            }}
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
               __html: `window.dataLayer = window.dataLayer || []; 
                            window.googletag=window.googletag||{cmd:[]};
                            var _comscore = _comscore || [];
@@ -129,6 +139,7 @@ export default class ETVDocument extends Document {
                         "https://securepubads.g.doubleclick.net/tag/js/gpt.js",
                         "https://sb.scorecardresearch.com/beacon.js",
                         "https://www.googletagmanager.com/gtm.js?id=GTM-K3BH7X9",
+                        "https://cdn.vuukle.com/platform.js",
                       ],
                       src,
                       pendingScripts = [],

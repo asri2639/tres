@@ -22,8 +22,7 @@ const SocialMedia = ({ data }) => {
   const [isOpen, toggleOpen] = useState(false);
   const query = {
     amp: 'false',
-    apiKey: '99a287d2-81b1-4013-8705-0805df9481e0',
-    host: 'etvbharat.com',
+    elementsIndex: `${data.content_id}`,
     articleId: data.content_id,
     globalLang: 'en',
     img: thumbnailExtractor(data.thumbnails, '3_2', 's2b', ''),
@@ -85,7 +84,16 @@ const SocialMedia = ({ data }) => {
                 </div>
               </div>
 
-              <iframe className="w-full h-full" src={commentUrl} />
+              {/*  <iframe className="w-full h-full" src={commentUrl} /> */}
+              <div
+                className="w-full h-full"
+                id={`vuukle-comments-${query.articleId}`}
+              ></div>
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `window.newVuukleWidgets(${JSON.stringify(query)});`,
+                }}
+              ></script>
             </div>
           </>
         </Modal>
