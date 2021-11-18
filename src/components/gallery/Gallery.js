@@ -272,7 +272,7 @@ const Gallery = ({
             isRTL ? 'rtl-social' : ''
           }`}
         >
-          <SocialMedia data={data[0]} />
+          <SocialMedia data={data[0]} index={index} />
         </Media>
       </MediaContextProvider>
 
@@ -324,7 +324,7 @@ const Gallery = ({
           <MediaContextProvider>
             <Media at="xs">
               <div className="flex justify-between w-full mb-2 px-6">
-                <SocialMedia data={data} />
+                <SocialMedia data={data} index={index} />
               </div>
             </Media>
           </MediaContextProvider>

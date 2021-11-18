@@ -265,7 +265,7 @@ const Video = ({
             isRTL ? 'rtl-social' : ''
           }`}
         >
-          <SocialMedia data={data} />
+          <SocialMedia data={data} index={index} />
         </Media>
       </MediaContextProvider>
 
@@ -317,7 +317,7 @@ const Video = ({
                   at="xs"
                   className="flex justify-between mx-auto w-full mb-2 px-6"
                 >
-                  <SocialMedia data={data} />
+                  <SocialMedia data={data} index={index} />
                 </Media>
               </MediaContextProvider>
             </div>

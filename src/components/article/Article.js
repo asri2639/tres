@@ -225,7 +225,7 @@ export default function Article({
               isRTL ? 'rtl-social' : ''
             }`}
           >
-            <SocialMedia data={data} />
+            <SocialMedia data={data} index={index} />
           </Media>
         </MediaContextProvider>
 
@@ -283,7 +283,7 @@ export default function Article({
                         : ''}
                     </div>
                     <div className="flex justify-between px-6 w-full mb-2 absolute z-10">
-                      <SocialMedia data={data} />
+                      <SocialMedia data={data} index={index} />
                     </div>
                   </div>
                 </Media>

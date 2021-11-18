@@ -1,5 +1,5 @@
 import Modal from '@components/modal/Modal';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -16,13 +16,13 @@ import { thumbnailExtractor } from '@utils/Helpers';
 import { comment, share } from '@utils/GoogleTagManager';
 import { useRouter } from 'next/router';
 
-const SocialMedia = ({ data }) => {
+const SocialMedia = ({ data, index }) => {
   const router = useRouter();
 
-  const [isOpen, toggleOpen] = useState(false);
+  const [isOpen, toggleOpen] = useState(0);
   const query = {
     amp: 'false',
-    elementsIndex: `${data.content_id}`,
+    elementsIndex: `${index}`,
     articleId: data.content_id,
     globalLang: 'en',
     img: thumbnailExtractor(data.thumbnails, '3_2', 's2b', ''),
@@ -61,7 +61,7 @@ const SocialMedia = ({ data }) => {
           isMobile={true}
           open={!!isOpen}
           onClose={() => {
-            toggleOpen(true);
+            toggleOpen(0);
           }}
           width="100vw"
           height="100vh"
@@ -77,7 +77,7 @@ const SocialMedia = ({ data }) => {
                   <button
                     type="button"
                     className="font-semibold text-gray-500 hover:text-gray-900 text-md"
-                    onClick={() => toggleOpen(false)}
+                    onClick={() => toggleOpen(0)}
                   >
                     &#10005;
                   </button>
@@ -87,13 +87,15 @@ const SocialMedia = ({ data }) => {
               {/*  <iframe className="w-full h-full" src={commentUrl} /> */}
               <div
                 className="w-full h-full"
-                id={`vuukle-comments-${query.articleId}`}
+                id={`vuukle-comments-${isOpen}`}
               ></div>
-              <script
+              {/*   <script
                 dangerouslySetInnerHTML={{
-                  __html: `window.newVuukleWidgets(${JSON.stringify(query)});`,
+                  __html: `setTimeout(()=> {window.newVuukleWidgets(${JSON.stringify(
+                    query
+                  )});},500)`,
                 }}
-              ></script>
+              ></script> */}
             </div>
           </>
         </Modal>
@@ -152,8 +154,15 @@ const SocialMedia = ({ data }) => {
             src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/comment.png"
             alt=""
             onClick={() => {
+              query.elementsIndex = +new Date();
               comment(data);
-              toggleOpen(true);
+              setTimeout(() => {
+                toggleOpen(query.elementsIndex);
+              }, 100);
+
+              setTimeout(() => {
+                window.newVuukleWidgets && window.newVuukleWidgets(query);
+              }, 500);
             }}
           ></img>
         </>
