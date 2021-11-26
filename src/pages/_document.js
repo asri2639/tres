@@ -37,6 +37,11 @@ export default class ETVDocument extends Document {
           ></script>
           <script
             dangerouslySetInnerHTML={{
+              __html: `window._izq = window._izq || []; window._izq.push(["init" ]);`,
+            }}
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
               __html: `window.dataLayer = window.dataLayer || []; 
                            window.googletag=window.googletag||{cmd:[]};
                            var _comscore = _comscore || [];
@@ -130,9 +135,8 @@ export default class ETVDocument extends Document {
                   if (!__loaded) {
                     loadScripts();
                   }
-                }, 4000);
-              }
-              
+                }, 3000);
+              }             
               const loadScripts = () => {
                   try {
                     var scripts = [
@@ -140,6 +144,7 @@ export default class ETVDocument extends Document {
                         "https://sb.scorecardresearch.com/beacon.js",
                         "https://www.googletagmanager.com/gtm.js?id=GTM-K3BH7X9",
                         "https://cdn.vuukle.com/platform.js",
+                        "https://cdn.izooto.com/scripts/c2241b1bc9afd43716376318af12acc70474c96d.js"
                       ],
                       src,
                       pendingScripts = [],

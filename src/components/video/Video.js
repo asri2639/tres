@@ -166,7 +166,7 @@ const Video = ({
         nextPageView();
       }
     }
-    if (typeof window !== 'undefined' && !isAMP && desktop) {
+    if (typeof window !== 'undefined' && !isAMP) {
       const isDesktop = window.innerWidth >= 768;
       const divStyle = isDesktop
         ? `width: 728px; height: 90px;`
@@ -174,20 +174,14 @@ const Video = ({
       const slotArr = isDesktop ? [728, 90] : [300, 250];
       let adHTML = null;
       let adConf = null;
-      if (
-        desktop.ad_conf &&
-        Array.isArray(desktop.ad_conf) &&
-        desktop.ad_conf[0]
-      ) {
-        if (desktop.ad_conf[0].web_msite && desktop.ad_conf[0].web_msite) {
-          adConf = desktop.ad_conf[0].web_msite[0];
+      if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
+        if (data.ad_conf[0].web_msite && data.ad_conf[0].web_msite) {
+          adConf = data.ad_conf[0].web_msite[0];
         } else {
           if (isDesktop) {
-            adConf = desktop.ad_conf[0].web ? desktop.ad_conf[0].web[0] : null;
+            adConf = data.ad_conf[0].web ? data.ad_conf[0].web[0] : null;
           } else {
-            adConf = desktop.ad_conf[0].msite
-              ? desktop.ad_conf[0].msite[0]
-              : null;
+            adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite[0] : null;
           }
         }
       }
@@ -204,6 +198,7 @@ const Video = ({
           const el = document.querySelector(
             `[data-content-id="${contentId}"] .EtvadsSection`
           );
+
           if (el && el.querySelector('#adsContainer')) {
             // document.body.appendChild(s);
             el.innerHTML = adHTML;

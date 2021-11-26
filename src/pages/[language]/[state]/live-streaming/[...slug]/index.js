@@ -310,7 +310,7 @@ export async function getStaticProps({ params, ...args }) {
     language: language,
   };
 
-  bypass = url.indexOf('/live-streaming/') >= 0;
+  // bypass = url.indexOf('/live-streaming/') >= 0;
   const id = params.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
@@ -350,22 +350,24 @@ export async function getStaticProps({ params, ...args }) {
     const videoResponse = await api.CatalogList.getVideoDetails({
       params: {
         ...qparams,
-        suffix: suffix,
+        suffix: 'web-news-details',
       },
       query: {
         response: 'r2',
         item_languages: language,
         content_id: id, //variable
         gallery_ad: true,
+        page: 0,
         page_size: typeof window === 'undefined' ? 1 : 10,
         portal_state: state, //national
-        version: 'v2',
+        region: 'IN',
+        scroll_no: 0,
       },
+
       // config: { isSSR: typeof window === 'undefined' },
 
       // isSSR: typeof window === 'undefined',
     });
-
     const videoResp = videoResponse.data.data.catalog_list_items[0];
     const video = videoResp.catalog_list_items[0];
     // Pass data to the page via props
