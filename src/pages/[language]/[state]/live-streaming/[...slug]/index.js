@@ -310,7 +310,7 @@ export async function getStaticProps({ params, ...args }) {
     language: language,
   };
 
-  // bypass = url.indexOf('/live-streaming/') >= 0;
+  bypass = url.indexOf('/live-streaming/') >= 0;
   const id = params.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
@@ -350,13 +350,14 @@ export async function getStaticProps({ params, ...args }) {
     const videoResponse = await api.CatalogList.getVideoDetails({
       params: {
         ...qparams,
-        suffix: 'web-news-details',
+        suffix: suffix,
       },
       query: {
         response: 'r2',
         item_languages: language,
         content_id: id, //variable
         gallery_ad: true,
+        version: 'v2',
         page: 0,
         page_size: typeof window === 'undefined' ? 1 : 10,
         portal_state: state, //national
