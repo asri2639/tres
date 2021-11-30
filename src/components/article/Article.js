@@ -164,27 +164,11 @@ export default function Article({
 
     const showAd = (ad_id, slotArr, id) => {
       if (window.googletag && googletag.apiReady) {
-        var REFRESH_KEY = 'refresh';
-        var REFRESH_VALUE = 'true';
-
         googletag.cmd.push(function () {
           googletag.pubads().collapseEmptyDivs();
           googletag
             .defineSlot(ad_id, slotArr, id)
-            .setTargeting(REFRESH_KEY, REFRESH_VALUE)
             .addService(googletag.pubads());
-
-          googletag
-            .pubads()
-            .addEventListener('impressionViewable', function (event) {
-              var slot = event.slot;
-              if (slot.getTargeting(REFRESH_KEY).indexOf(REFRESH_VALUE) > -1) {
-                setTimeout(function () {
-                  googletag.pubads().refresh([slot]);
-                }, 30 * 1000);
-              }
-            });
-
           googletag.enableServices();
         });
         googletag.cmd.push(function () {
