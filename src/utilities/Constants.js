@@ -10,7 +10,7 @@ const baseURL =
     ? 'https://prod.api.etvbharat.com'
     : env === 'development' || prd_test
     ? 'http://localhost:3000/apis'
-    : 'https://origin.prod.api.etvbharat.com';
+    : 'https://staging.api.etvbharat.com';
 
 export const domainUrl =
   env === 'production' && !prd_test
@@ -35,7 +35,7 @@ const Constants = Object.freeze({
 
 export const accessToken = {
   web:
-    env === 'production' || env === 'staging' || env === 'development'
+    env === 'production'  || env === 'development'
       ? 'TjeNsXehJqhh2DGJzBY9'
       : 'Fw3196P2FES3HBfytEtn',
   mobile:
