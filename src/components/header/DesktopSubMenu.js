@@ -97,7 +97,7 @@ export default function DesktopSubMenu({ category }) {
                           />
                         </div>
 
-                        <div className="text-sm mt-1 font-semibold">
+                        <div className="text-sm mt-1 capitalize font-semibold">
                           {item.ml_title[0].text}
                         </div>
                       </>
