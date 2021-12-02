@@ -19,8 +19,8 @@ export const domainUrl =
     ? 'http://localhost:3000'
     : 'https://staging.etvbharat.com';
 
-const mAuthToken = 'kmAJAH4RTtqHjgoauC4o';
-const authToken = 'xBUKcKnXfngfrqGoF93y';
+const mAuthToken = env === 'staging' ? 'rss':'kmAJAH4RTtqHjgoauC4o';
+const authToken = env === 'staging' ? 'rss':'xBUKcKnXfngfrqGoF93y';
 
 const Constants = Object.freeze({
   baseURL: baseURL,
