@@ -37,7 +37,7 @@ export const accessToken = {
   web:
     env === 'production'  || env === 'development'
       ? 'TjeNsXehJqhh2DGJzBY9'
-      : 'HZFovAshujgNpQjELyTm',
+      : 'Fw3196P2FES3HBfytEtn',
   mobile:
     env === 'production' || env === 'staging' || env === 'development'
       ? 'woB1UukKSzZ5aduEUxwt'
