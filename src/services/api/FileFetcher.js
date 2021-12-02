@@ -7,11 +7,15 @@ export default {
     return import('../../static/footer').then((r) => r.default);
   },
   getAppConfig({ params, query, ...config }) {
-    
+    if(env === "staging"){
+      return import('../../static/stagingAppconfig')
+      .then((r) => r.default)
+      .catch((e) => {});
+    }else{
       return import('../../static/appConfig')
       .then((r) => r.default)
       .catch((e) => {});
-    
+    }
     
   },
   
