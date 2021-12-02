@@ -16,7 +16,10 @@ import { useRouter } from 'next/router';
 import eventBus from '@utils/EventBus';
 import StateSelectModal from '@components/common/StateSelectModal';
 import FileFetcher from '@services/api/FileFetcher';
+import getConfig from 'next/config';
 
+const { publicRuntimeConfig } = getConfig();
+const env = publicRuntimeConfig.APP_ENV;
 const country = 'IN';
 export const RTLContext = React.createContext(false);
 export const ScrollContext = React.createContext(false);
@@ -64,7 +67,7 @@ const Layout = ({ children, accessToken, pageType }) => {
       const urlSuffix = language == 'ur' ? '-urdu' : '';
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
-          suffix: `msite-new-left-menu${
+          suffix: env === "staging" ?'left-menu-msite' : `msite-new-left-menu`+`${
             state !== 'national' ? '-' + state : urlSuffix
           }`,
         },
