@@ -188,6 +188,13 @@ export default class ETVDocument extends Document {
                         document.write('<script src="' + src + '" defer></' + "script>");
                       }
                     }
+
+                    var link = document.createElement( "link" );
+                    link.href = 'https://etvbharatimages.akamaized.net/newsroom-metadata/saranyunewsroom-2.css';
+                    link.type = "text/css";
+                    link.rel = "stylesheet";
+
+                    document.getElementsByTagName( "head" )[0].appendChild( link );
                   } catch (error) {
                     alert(error);
                   }
