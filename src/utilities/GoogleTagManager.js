@@ -287,7 +287,7 @@ export const articleViewScroll = (e, f, scrolled = null) => {
       district: a,
       constituency: i,
       app_language: s,
-      current_page_url: window.location.href,
+      current_page_url: f.location || window.location.href,
     });
 
     window['dataLayer'].push({

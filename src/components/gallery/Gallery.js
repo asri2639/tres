@@ -380,22 +380,46 @@ const Gallery = ({
                       </div>
                     ) : scrolled ? (
                       <>
-                        {' '}
-                        <div className="relative">
-                          {
-                            <Thumbnail1
-                              className={'rounded-lg'}
-                              thumbnail={{
-                                url: image.thumbnails.l_large.url,
-                                alt_tags: image.description || image.title,
-                              }}
-                              lazy={true}
-                            />
-                          }
+                        <InView
+                          as="div"
+                          className="relative"
+                          triggerOnce={true}
+                          onChange={(inView, entry) => {
+                            if (inView) {
+                              history.pushState(
+                                null,
+                                document.title,
+                                location.origin +
+                                  location.pathname +
+                                  '?c_id=' +
+                                  image.content_id
+                              );
+
+                              articleViewScroll(data, {
+                                galleryArticle: true,
+                                location:
+                                  location.origin +
+                                  location.pathname +
+                                  '?c_id=' +
+                                  image.content_id,
+                              });
+                            }
+                          }}
+                        >
+                          <Thumbnail1
+                            className={'rounded-lg'}
+                            thumbnail={{
+                              url: image.thumbnails.l_large.url,
+                              alt_tags: image.description || image.title,
+                            }}
+                            lazy={true}
+                          />
+
                           <div className={`${gallery.counter}`}>
                             <span>{ind + 1}</span>/ {count + 1}
                           </div>
-                        </div>
+                        </InView>
+                        <div className="relative"></div>
                         <div className="text-md">
                           {image.description || image.title}
                         </div>
