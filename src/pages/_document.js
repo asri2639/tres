@@ -144,7 +144,8 @@ export default class ETVDocument extends Document {
                         "https://sb.scorecardresearch.com/beacon.js",
                         "https://www.googletagmanager.com/gtm.js?id=GTM-K3BH7X9",
                         "https://cdn.vuukle.com/platform.js",
-                        "https://cdn.izooto.com/scripts/c2241b1bc9afd43716376318af12acc70474c96d.js"
+                        "https://cdn.izooto.com/scripts/c2241b1bc9afd43716376318af12acc70474c96d.js",
+                        "https://rtbcdn.andbeyond.media/prod-global-721538.js",
                       ],
                       src,
                       pendingScripts = [],
