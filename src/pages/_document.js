@@ -113,7 +113,9 @@ export default class ETVDocument extends Document {
                     ((document.documentElement.scrollTop && false === scrollDepth) ||
                       (document.body.scrollTop && false === scrollDepth)) &&
                       (!(function () {
-                        loadScripts();
+                         if (!__loaded) {
+                          loadScripts();
+                        }
                       })(),
                       (scrollDepth = true));
                   },
@@ -127,7 +129,7 @@ export default class ETVDocument extends Document {
                 setTimeout(()=>{
                   const event = new Event("script-loaded");
                   window.dispatchEvent(event);
-                },200)
+                },10)
               });
               
               window.onload = ()=> {
@@ -146,6 +148,7 @@ export default class ETVDocument extends Document {
                         "https://cdn.vuukle.com/platform.js",
                         "https://cdn.izooto.com/scripts/c2241b1bc9afd43716376318af12acc70474c96d.js",
                         "https://rtbcdn.andbeyond.media/prod-global-721538.js",
+
                       ],
                       src,
                       pendingScripts = [],
