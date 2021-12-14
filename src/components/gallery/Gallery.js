@@ -385,7 +385,7 @@ const Gallery = ({
                           className="relative"
                           triggerOnce={true}
                           onChange={(inView, entry) => {
-                            if (inView) {
+                            if (inView && false) {
                               history.pushState(
                                 null,
                                 document.title,
