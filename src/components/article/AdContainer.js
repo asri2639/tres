@@ -6,12 +6,15 @@ const options = {
 import { ScrollContext } from '@components/layout/Layout';
 
 const GridList = dynamic(() => import('@components/article/GridList'), options);
-const PopularList = dynamic(() => import('@components/article/PopularList'), options);
+const PopularList = dynamic(
+  () => import('@components/article/PopularList'),
+  options
+);
 const MobileAd = dynamic(() => import('@components/article/MobileAd'), options);
 
 const AdContainer = ({ data, className, type, index }) => {
   const isScrolled = useContext(ScrollContext);
-  return (!isScrolled ? null :
+  return !isScrolled ? null : (
     <>
       {data.map((val, i) => {
         if (val.layout_type.indexOf('ad_unit') >= 0 && val.ad_conf) {
@@ -27,6 +30,14 @@ const AdContainer = ({ data, className, type, index }) => {
               val.ad_conf && val.ad_conf.home_page
                 ? val.ad_conf.home_page['1']
                 : null;
+            if (i === 4 && adData && adData.ad_unit_id) {
+              adData.ad_unit_id = adData.ad_unit_id.replace(
+                '300x250-1',
+                '300x250-2'
+              );
+              // console.log(adData);
+              adData.gpt_id = adData.gpt_id.replace('-1', '-2');
+            }
           }
 
           return adData ? (

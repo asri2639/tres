@@ -158,6 +158,7 @@ const slug = ({ data, pageType, id }) => {
               images: data.gallery,
               count: data.items_count,
               thumbnail: thumbnail,
+              web_url: pathname,
             },
           ],
           contentId: data.gallery[0].parent_id,

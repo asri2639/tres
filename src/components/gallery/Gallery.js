@@ -49,6 +49,7 @@ const Gallery = ({
   const isAMP = false;
   const isRTL = useContext(RTLContext);
   const router = useRouter();
+  const [paramExists, setParamExists] = useState(null);
 
   let adlink = null;
   const lang = router.query.language;
@@ -121,6 +122,28 @@ const Gallery = ({
     threshold: 1,
   });
  */
+
+  useEffect(() => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    if (index !== 0) return;
+    if (
+      !scrolled &&
+      params.c_id &&
+      (!paramExists || (paramExists && paramExists.content_id !== params.c_id))
+    ) {
+      const imageObj = properData.find((v) => v.content_id === params.c_id);
+      setParamExists(imageObj);
+      document.documentElement.scrollTop = 100;
+
+      setTimeout(() => {
+        const el = document.getElementById(params.c_id);
+        if (el) {
+          el.scrollIntoView({ block: 'center' });
+        }
+      }, 500);
+    }
+  });
   useEffect(() => {
     if (viewed.indexOf(contentId) === -1) {
       viewed.push(contentId);
@@ -136,19 +159,31 @@ const Gallery = ({
     }
     if (inView) {
       const main = data[0];
-      const contentIdFromUrl = window.location.href.split('/').slice(-1)[0];
+      const contentIdFromUrl = window.location.pathname.split('/').slice(-1)[0];
       if (contentIdFromUrl === contentId) {
         return;
       } else {
+        if (!scrolled) return;
         if (ref && ref.current) {
           const elBoundary = ref.current.getBoundingClientRect();
           const windowHeight = window.innerHeight;
           if (elBoundary.top > 0 && elBoundary.top < windowHeight) {
             document.title = main.title;
+
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            delete params.c_id;
+            var queryString = Object.keys(params)
+              .map((key) => key + '=' + params[key])
+              .join('&');
+
             window.history.pushState(
               { id: main.title },
               main.title,
-              '/' + webUrl + location.search
+              location.origin +
+                '/' +
+                webUrl +
+                `${queryString ? '?' + queryString : ''}`
             );
 
             var event = new CustomEvent('newurl', {
@@ -171,7 +206,7 @@ const Gallery = ({
       }
     }
 
-    if (typeof window !== 'undefined' && !isAMP) {
+    if (typeof window !== 'undefined') {
       const isDesktop = window.innerWidth >= 768;
       const divStyle = isDesktop
         ? `width: 728px; height: 90px;`
@@ -225,35 +260,6 @@ const Gallery = ({
           } else {
             console.log('In-Article ad container not found!!!', contentId);
           }
-        }
-      }
-    }
-
-    if (typeof window !== 'undefined' && isAMP) {
-      let adConf = null;
-      if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
-        if (data.ad_conf[0].web_msite && data.ad_conf[0].web_msite) {
-          adConf = data.ad_conf[0].web_msite[0];
-        } else {
-          if (isDesktop) {
-            adConf = data.ad_conf[0].web ? data.ad_conf[0].web[0] : null;
-          } else {
-            adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite[0] : null;
-          }
-        }
-      }
-      const id = adConf ? adConf.gpt_id : null;
-      const ad_id = adConf ? adConf.ad_unit_id : null;
-
-      if (ad_id) {
-        const el = document.querySelector(`.EtvadsSection`);
-        if (el) {
-          el.innerHTML = `<amp-ad width=300 height=250
-                  type="doubleclick"
-                  data-slot="${ad_id}">
-                <div placeholder></div>
-                <div fallback></div>
-              </amp-ad>`;
         }
       }
     }
@@ -384,25 +390,36 @@ const Gallery = ({
                           as="div"
                           className="relative"
                           triggerOnce={true}
+                          id={image.content_id}
                           onChange={(inView, entry) => {
-                            if (inView && false) {
-                              history.pushState(
-                                null,
-                                document.title,
-                                location.origin +
-                                  location.pathname +
-                                  '?c_id=' +
-                                  image.content_id
-                              );
+                            if (inView) {
+                              if (!paramExists) {
+                                history.pushState(
+                                  null,
+                                  document.title,
 
-                              articleViewScroll(data, {
-                                galleryArticle: true,
-                                location:
                                   location.origin +
-                                  location.pathname +
-                                  '?c_id=' +
-                                  image.content_id,
-                              });
+                                    '/' +
+                                    webUrl +
+                                    '?c_id=' +
+                                    image.content_id
+                                );
+
+                                articleViewScroll(data, {
+                                  galleryArticle: true,
+                                  location:
+                                    location.origin +
+                                    location.pathname +
+                                    '?c_id=' +
+                                    image.content_id,
+                                });
+                              } else if (
+                                paramExists.content_id === image.content_id
+                              ) {
+                                setParamExists(false);
+                              } else {
+                                setParamExists(false);
+                              }
                             }
                           }}
                         >
@@ -412,11 +429,16 @@ const Gallery = ({
                               url: image.thumbnails.l_large.url,
                               alt_tags: image.description || image.title,
                             }}
-                            lazy={true}
+                            lazy={
+                              paramExists &&
+                              paramExists.content_id === image.content_id
+                                ? false
+                                : true
+                            }
                           />
 
                           <div className={`${gallery.counter}`}>
-                            <span>{ind + 1}</span>/ {count + 1}
+                            <span>{image.order_no + 1}</span>/ {count + 1}
                           </div>
                         </InView>
                         <div className="relative"></div>

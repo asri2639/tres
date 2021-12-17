@@ -152,6 +152,9 @@ const GalleryList = ({ galleryData }) => {
               scroll_no: galleries.length,
             },
           }).then((res) => {
+            if (!res.data || !res.data.data) {
+              return;
+            }
             const newGallery =
               res.data.data.catalog_list_items[0].catalog_list_items;
             // const rhs = res.data.data.catalog_list_items.slice(1);
