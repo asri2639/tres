@@ -172,7 +172,6 @@ const GalleryList = ({ galleryData }) => {
                 count: res.data.data.catalog_list_items[0].total_items_count,
               },
             ];
-            console.log(newList);
             setGalleries(newList);
             stopLoading();
           });

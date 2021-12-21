@@ -182,7 +182,7 @@ const Gallery = ({
               main.title,
               location.origin +
                 '/' +
-                webUrl +
+                (webUrl.startsWith('/') ? webUrl.slice(1) : webUrl) +
                 `${queryString ? '?' + queryString : ''}`
             );
 
@@ -400,7 +400,9 @@ const Gallery = ({
 
                                   location.origin +
                                     '/' +
-                                    webUrl +
+                                    (webUrl.startsWith('/')
+                                      ? webUrl.slice(1)
+                                      : webUrl) +
                                     '?c_id=' +
                                     image.content_id
                                 );
