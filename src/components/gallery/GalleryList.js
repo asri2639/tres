@@ -150,6 +150,10 @@ const GalleryList = ({ galleryData }) => {
               page_size: 1, //window.innerWidth < 769 ? 1 : 10,
               portal_state: stateCodeConverter(location.pathname.split('/')[2]),
               scroll_no: galleries.length,
+              gallery_ad: true,
+
+              region: 'IN',
+              scroll_no: 0,
             },
           }).then((res) => {
             if (!res.data || !res.data.data) {
@@ -168,6 +172,7 @@ const GalleryList = ({ galleryData }) => {
                 count: res.data.data.catalog_list_items[0].total_items_count,
               },
             ];
+            console.log(newList);
             setGalleries(newList);
             stopLoading();
           });
