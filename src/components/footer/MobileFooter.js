@@ -1,4 +1,5 @@
 import NavLink from '@components/common/NavLink';
+import StickyAd from '@components/common/StickyAd';
 import DesktopSidebar from '@components/header/DesktopSidebar';
 import Constants from '@utils/Constants';
 import { backToTop, appInstall } from '@utils/GoogleTagManager';
@@ -89,7 +90,12 @@ const MobileFooter = ({ data, menu }) => {
             next-page-hide="1"
             className="mobile-footer w-full block md:hidden bg-mbg text-white absolute bottom-0"
           >
-            <div className="eb-navbar mb-12 pb-1">
+            <div className="footer-sticky-ad-close">X</div>
+
+            <div className="footer-sticky-ad">
+              <StickyAd />
+            </div>
+            <div className="eb-navbar mb-24 pb-1">
               <button
                 className="btot text-center absolute bg-red-700 w-40 px-4 py-3 rounded-full"
                 style={{
