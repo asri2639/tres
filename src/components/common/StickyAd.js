@@ -28,7 +28,7 @@ const StickyAd = ({ className, refresh }) => {
             if (adEl.current) {
               if (window.googletag && googletag.apiReady) {
                 window[adData.gpt_id] = googletag
-                  .defineSlot(adData.ad_unit, [[300, 50]], adData.gpt_id)
+                  .defineSlot(adData.ad_unit, [[320, 50]], adData.gpt_id)
                   .addService(googletag.pubads());
 
                 googletag.enableServices();
@@ -71,7 +71,7 @@ const StickyAd = ({ className, refresh }) => {
           data-ad-unit={adData.ad_unit}
           id={adData.gpt_id}
           style={{
-            width: '300px',
+            width: '330px',
             height: '50px',
           }}
         ></div>
