@@ -229,8 +229,8 @@ const MobileFooter = ({ data, menu }) => {
 
             {searchBox ? (
               <div
-                className="fixed text-black w-full h-10 z-50"
-                style={{ bottom: '47px' }}
+                className="fixed text-black w-full h-10"
+                style={{ bottom: '47px', zIndex: 200 }}
               >
                 <input
                   placeholder="Search stories"
