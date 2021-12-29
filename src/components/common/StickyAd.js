@@ -3,7 +3,7 @@ import { TransitionContext } from '@pages/_app';
 
 const StickyAd = ({ className, refresh }) => {
   const adData = {
-    gpt_id: 'div-gpt-ad-1639724808270-0',
+    gpt_id: 'div-gpt-ad-8094695-1',
     ad_unit: '/175434344/Mobile_Web_Test_Sticky',
   };
 
@@ -27,10 +27,9 @@ const StickyAd = ({ className, refresh }) => {
           if (adEl.current) {
             if (window.googletag && googletag.apiReady) {
               window[adData.gpt_id] = googletag
-                .defineOutOfPageSlot(adData.ad_unit, adData.gpt_id)
+                .defineSlot(adData.ad_unit, [[300, 50]], adData.gpt_id)
                 .addService(googletag.pubads());
 
-              googletag.pubads().enableSingleRequest();
               googletag.enableServices();
 
               googletag.cmd.push(function () {
