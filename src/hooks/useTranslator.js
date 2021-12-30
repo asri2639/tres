@@ -13,7 +13,7 @@ const useTranslator = (options = { init: false }) => {
 
   const fetchTranslationData = (language) => {
     if (!oLanguage || oLanguage !== language || !translations) {
-      document.documentElement.lang = languageMap[language];
+      document.documentElement.lang = languageMap[language] || 'en';
       import(
         '../static/locales/' + document.documentElement.lang + '/common.js'
       )

@@ -24,7 +24,6 @@ const country = 'IN';
 export const RTLContext = React.createContext(false);
 export const ScrollContext = React.createContext(false);
 
-
 const Layout = ({ children, accessToken, pageType }) => {
   const router = useRouter();
   const api = API(APIEnum.Catalog, APIEnum.CatalogList);
@@ -32,44 +31,51 @@ const Layout = ({ children, accessToken, pageType }) => {
     footer: [],
     header: { menu: { desktop: [], mobile: [] }, languages: null },
   });
-  const language = languageMap[router.query.language];
-  const state = router.query.state;
+  const path = router.asPath;
+  const splitPath = path.split('/');
+  const lang = splitPath[1];
+  const language = languageMap[lang] || 'en';
+  const state = splitPath[2];
+
   const [showStateModal, setShowStateModal] = useState(null);
   const { promiseInProgress } = usePromiseTracker();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const fetchMenu = async () => {
     const menu = {
-        desktop: [],
-        mobile: [],
-      };
-    const response = await fetch(`/api/menu?url=${router.query.language+"/"+router.query.state}`);
+      desktop: [],
+      mobile: [],
+    };
+
+    const response = await fetch(`/api/menu?url=${language + '/' + state}`);
     let data = null;
-   
+
     if (response.ok) {
       try {
-        data = await response.json()
+        data = await response.json();
         if (data) {
           menu.desktop = data;
           menu.mobile = data;
 
-          return menu
+          return menu;
         }
       } catch (e) {
         data = null;
       }
     }
-    
-    if(!data) {
+
+    if (!data) {
       let convertedState = configStateCodeConverter(state);
       convertedState =
         language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
       const urlSuffix = language == 'ur' ? '-urdu' : '';
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
-          suffix: env === "staging" ?'left-menu-msite' : `msite-new-left-menu`+`${
-            state !== 'national' ? '-' + state : urlSuffix
-          }`,
+          suffix:
+            env === 'staging'
+              ? 'left-menu-msite'
+              : `msite-new-left-menu` +
+                `${state !== 'national' ? '-' + state : urlSuffix}`,
         },
         query: {
           region: country,
@@ -84,50 +90,50 @@ const Layout = ({ children, accessToken, pageType }) => {
       if (headerResp && headerResp.data) {
         menu.desktop = headerResp.data.data.catalog_list_items;
         menu.mobile = headerResp.data.data.catalog_list_items;
-        fetch(`/api/menu?url=${router.query.language+"/"+router.query.state}`, {
+        fetch(`/api/menu?url=${language + '/' + state}`, {
           method: 'POST',
           body: JSON.stringify({ data: menu.desktop }),
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         });
 
-        return menu
+        return menu;
       }
     }
-  }
+  };
 
   const fetchConfig = async () => {
     const response = await fetch(`/api/config`);
     if (response.ok) {
-      const resp = await response.json()
+      const resp = await response.json();
       applicationConfig.value = resp.data;
-      return resp.data
+      return resp.data;
     } else {
-       const res = await FileFetcher.getAppConfig({
-          query: {
-            response: 'r2',
-            item_languages: 'en',
-            current_version: '1.1',
-            region: 'IN',
-            version: 'v2',
-          },
-          isSSR: true,
-        });
+      const res = await FileFetcher.getAppConfig({
+        query: {
+          response: 'r2',
+          item_languages: 'en',
+          current_version: '1.1',
+          region: 'IN',
+          version: 'v2',
+        },
+        isSSR: true,
+      });
 
-        const appConfig = res.data.data;
-        applicationConfig.value = appConfig;
-        fetch(`/api/config`, {
-          method: 'POST',
-          body: JSON.stringify({ data: appConfig }),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
+      const appConfig = res.data.data;
+      applicationConfig.value = appConfig;
+      fetch(`/api/config`, {
+        method: 'POST',
+        body: JSON.stringify({ data: appConfig }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-        return appConfig
+      return appConfig;
     }
-  }
+  };
 
   const fetchFooter = async () => {
     const response = await fetch(`/api/footer`);
@@ -175,23 +181,23 @@ const Layout = ({ children, accessToken, pageType }) => {
 
       footer.languages = languageData;
       footer.required = requiredData;
-      
+
       fetch(`/api/footer`, {
         method: 'POST',
         body: JSON.stringify({
           data: {
             languages: languageData,
-            required: requiredData
-          }
+            required: requiredData,
+          },
         }),
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
     }
 
     return footer;
-   }
+  };
 
   useEffect(() => {
     window.addEventListener('script-loaded', () => {
@@ -216,26 +222,23 @@ const Layout = ({ children, accessToken, pageType }) => {
     };
   });
 
-
   useEffect(() => {
     const populateData = async () => {
-      const config =  await fetchConfig();
+      const config = await fetchConfig();
       const footer = await fetchFooter();
       const menuData = await fetchMenu();
       setData((data) => ({
-          ...data,
-          header: {
-            ...data.header,
-            menu: menuData,
-            languages: footer.languages,
-          },
-          footer: footer.required,
-
-        })
-      );
+        ...data,
+        header: {
+          ...data.header,
+          menu: menuData,
+          languages: footer.languages,
+        },
+        footer: footer.required,
+      }));
     };
 
-    if (accessToken && accessToken.mobile.length && router.query.language && router.query.state) {
+    if (accessToken && accessToken.mobile.length && language && state) {
       token.web = accessToken.web;
       token.mobile = accessToken.mobile;
       populateData();
@@ -244,7 +247,7 @@ const Layout = ({ children, accessToken, pageType }) => {
     if (typeof window !== 'undefined') {
       window['menu'] = data.header;
     }
-  }, [language, router.query.state, accessToken]);
+  }, [language, state, accessToken]);
 
   return (
     <>
@@ -259,42 +262,42 @@ const Layout = ({ children, accessToken, pageType }) => {
       ) : null}
       <RTLContext.Provider value={language === 'ur' ? true : false}>
         <ScrollContext.Provider value={isScrolled}>
-            <Header data={data.header} language={language} />
-            {promiseInProgress ? (
-              <div
-                style={{
-                  width: '100%',
-                  height: '100',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                {/*  <Loader
+          <Header data={data.header} language={language} />
+          {promiseInProgress ? (
+            <div
+              style={{
+                width: '100%',
+                height: '100',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {/*  <Loader
                 type="ThreeDots"
                 color="#2BAD60"
                 height="100"
                 width="100"
               /> */}
-                Loading..
-              </div>
-            ) : (
-              <section
-                className={`content ${
-                  pageType === 'listing' || pageType === 'navlisting'
-                    ? 'bg-gray-200'
-                    : 'bg-white'
-                }`}
-              >
-                {children}
-              </section>
-            )}
-            {isScrolled ? (
-              <Footer
-                data={data.footer}
-                menu={data.header ? data.header['menu'] : null}
-              />
-            ) : null}
+              Loading..
+            </div>
+          ) : (
+            <section
+              className={`content ${
+                pageType === 'listing' || pageType === 'navlisting'
+                  ? 'bg-gray-200'
+                  : 'bg-white'
+              }`}
+            >
+              {children}
+            </section>
+          )}
+          {isScrolled ? (
+            <Footer
+              data={data.footer}
+              menu={data.header ? data.header['menu'] : null}
+            />
+          ) : null}
         </ScrollContext.Provider>
       </RTLContext.Provider>
     </>
