@@ -206,13 +206,15 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
         break;
 
       case 'navlisting':
+        const item = data.catalog_list_items[0];
+
         return (
           <>
             <Head>
               <title>
-                {data.meta_tag_title !== '' &&
-                !data.meta_tag_title.includes('canonical tag')
-                  ? data.meta_tag_title
+                {item.meta_tag_title !== '' &&
+                !item.meta_tag_title.includes('canonical tag')
+                  ? item.meta_tag_title
                   : 'ETV Bharat'}
               </title>
               <link rel="canonical" href={canonicalUrl}></link>
@@ -220,17 +222,17 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
 
             <NextSeo
               title={
-                data.meta_tag_title !== '' &&
-                !data.meta_tag_title.includes('canonical tag')
-                  ? data.meta_tag_title
+                item.meta_tag_title !== '' &&
+                !item.meta_tag_title.includes('canonical tag')
+                  ? item.meta_tag_title
                   : 'ETV Bharat'
               }
-              description={data.meta_tag_description}
+              description={item.meta_tag_description}
               additionalMetaTags={[
                 {
                   name: 'keywords',
-                  content: data.meta_tag_keywords
-                    ? data.meta_tag_keywords.join(', ')
+                  content: item.meta_tag_keywords
+                    ? item.meta_tag_keywords.join(', ')
                     : '',
                 },
               ]}
@@ -238,8 +240,8 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                 site_name: 'ETV Bharat News',
                 url: `https://www.etvbharat.com${pathname}`,
                 type: 'article',
-                title: data.meta_tag_title,
-                description: data.meta_tag_description,
+                title: item.meta_tag_title,
+                description: item.meta_tag_description,
                 images: [
                   {
                     url: `https://www.etvbharat.com/assets/logos/${appLanguage.name}.png`,

@@ -490,7 +490,11 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                     (router.query.language === 'urdu' &&
                       router.query.state === 'national')
                   ) {
-                    url = '/'+router.query.language+'/national/' + dropdown.type;
+                    url =
+                      '/' +
+                      router.query.language +
+                      '/national/' +
+                      dropdown.type;
                     router.push(url + '/' + district.friendly_id);
                   } else {
                     if (dropdown.type === 'state') {
@@ -510,6 +514,7 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
               }}
             />
           ) : null}
+
           {dropdown ? (
             dropdown.data && dropdown.data.length > 1 ? (
               <div>
@@ -708,7 +713,13 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
           {dropdown ? (
             dropdown.data && dropdown.data.length > 1 ? (
               <div className="lg:container lg:mx-auto mt-3">
-                <div className="md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row-reverse">
+                <div className="md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row justify-between">
+                  <h1 className="px-2 text-md font-bold capitalize">
+                    {data.catalog_list_items[0].seo_ml_title &&
+                    data.catalog_list_items[0].seo_ml_title[0]
+                      ? data.catalog_list_items[0].seo_ml_title[0].text
+                      : data.catalog_list_items[0].ml_title[0].text}
+                  </h1>
                   <div className="pr-2 text-sm flex">
                     <span className="pr-2">
                       {t('select') + ' ' + t(dropdown.type)}
@@ -723,7 +734,10 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                         className="text-center"
                         style={{ minWidth: '100px' }}
                       >
-                        {dropdown.title}
+                        {data.catalog_list_items[0].seo_ml_title &&
+                        data.catalog_list_items[0].seo_ml_title[0]
+                          ? data.catalog_list_items[0].seo_ml_title[0].text
+                          : data.catalog_list_items[0].ml_title[0].text}
                       </div>
                       <span className="pl-1 caret text-gray-700 ">
                         {' '}
