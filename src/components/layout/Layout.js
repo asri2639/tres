@@ -47,7 +47,7 @@ const Layout = ({ children, accessToken, pageType }) => {
       mobile: [],
     };
 
-    const response = await fetch(`/api/menu?url=${language + '/' + state}`);
+    const response = await fetch(`/api/menu?url=${lang + '/' + state}`);
     let data = null;
 
     if (response.ok) {

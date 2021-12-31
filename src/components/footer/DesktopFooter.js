@@ -14,6 +14,11 @@ const DesktopFooter = ({ data, t }) => {
   const router = useRouter();
   const isRTL = useContext(RTLContext);
 
+  const path = router.asPath;
+  const splitPath = path.split('/');
+  const lang = splitPath[1];
+  const state = splitPath[2];
+
   const [socialHandlers, setSocialHandlers] = useState({
     twitter: 'https://twitter.com/ETVBharatEng',
     fb: 'https://www.facebook.com/ETVBharatEnglish',
@@ -54,14 +59,14 @@ const DesktopFooter = ({ data, t }) => {
               href={{
                 pathname: '/[language]/[state]',
                 query: {
-                  language: router.query.language,
-                  state: router.query.state,
+                  language: lang,
+                  state: state,
                 },
               }}
-              as={`/${router.query.language}/${router.query.state}`}
+              as={`/${lang}/${state}`}
               passHref
             >
-              <div className={`logo ${router.query.language}`}></div>
+              <div className={`logo ${lang}`}></div>
             </NavLink>
 
             <LanguageList languages={data} />

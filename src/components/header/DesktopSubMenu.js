@@ -19,7 +19,12 @@ export default function DesktopSubMenu({ category }) {
   const api = API(APIEnum.CatalogList);
   const router = useRouter();
   const { publicRuntimeConfig } = getConfig();
-  const language = languageMap[router.query.language];
+
+  const path = router.asPath;
+  const splitPath = path.split('/');
+  const lang = splitPath[1];
+  const language = languageMap[lang] || 'en';
+  const state = splitPath[2];
 
   let response = null;
   const catalogFetcher = (...args) => {
@@ -55,7 +60,10 @@ export default function DesktopSubMenu({ category }) {
 
   return (
     <>
-      {response && response.data && response.data.catalog_list_items
+      {response &&
+      response.data &&
+      response.data.catalog_list_items &&
+      response.data.catalog_list_items[0]
         ? response.data.catalog_list_items[0].catalog_list_items
             .slice(0, 3)
             .map((item) => {

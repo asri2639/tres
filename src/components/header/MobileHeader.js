@@ -13,7 +13,10 @@ const country = 'IN';
 export default function MobileHeader({ data, className }) {
   const isAMP = false;
   const router = useRouter();
-  const language = router.query.language || 'english';
+  const path = router.asPath;
+  const splitPath = path.split('/');
+  const language = splitPath[1];
+  const state = splitPath[2];
   const [stateData, setStateData] = useState(null);
   const { t, appLanguage } = useTranslator();
   const isRTL = useContext(RTLContext);
@@ -45,9 +48,7 @@ export default function MobileHeader({ data, className }) {
   useEffect(() => {
     setStateData(
       data && data.languages
-        ? data.languages[language].find(
-            (v) => v.state.toLowerCase() === router.query.state
-          )
+        ? data.languages[language].find((v) => v.state.toLowerCase() === state)
         : null
     );
   }, [data, router, appLanguage]);
@@ -129,10 +130,10 @@ export default function MobileHeader({ data, className }) {
               pathname: '/[language]/[state]',
               query: {
                 language: language,
-                state: router.query.state,
+                state: state,
               },
             }}
-            as={`/${language}/${router.query.state}`}
+            as={`/${language}/${state}`}
             passHref
             title={`ETV ${language}`}
             hideTitle={true}
