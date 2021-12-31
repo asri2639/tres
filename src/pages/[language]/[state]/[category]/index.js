@@ -312,8 +312,24 @@ export async function getStaticProps({ params, ...args }) {
           }
         }
       }
+      let selectedValue = '';
 
+      const state = urlSplit[4] || urlSplit[2];
+      const titleobj = dropDownData.filter((item) => state == item.friendly_id);
+
+      if (titleobj.length > 0) {
+        selectedValue = titleobj[0].ml_title[0].text;
+      } else {
+        selectedValue = dropDownData[0].ml_title[0].text;
+      }
+
+      if (language == 'en' && !selectedValue) {
+        if (url.includes('state')) {
+          selectedValue = 'Delhi';
+        }
+      }
       finalDataObj.data = dropDownData;
+      finalDataObj.title = selectedValue;
     }
 
     const qparams = {
@@ -373,25 +389,6 @@ export async function getStaticProps({ params, ...args }) {
           initCount = 0;
         }
 
-        let selectedValue = '';
-
-        const state = urlSplit[4] || urlSplit[2];
-        const titleobj = dropDownData.filter(
-          (item) => state == item.friendly_id
-        );
-
-        if (titleobj.length > 0) {
-          selectedValue = titleobj[0].ml_title[0].text;
-        } else {
-          selectedValue = dropDownData[0].ml_title[0].text;
-        }
-
-        if (language == 'en' && !selectedValue) {
-          if (url.includes('state')) {
-            selectedValue = 'Delhi';
-          }
-        }
-        finalDataObj.selectedValue = selectedValue;
         if (initCount) {
           return {
             props: {
