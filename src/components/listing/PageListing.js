@@ -731,13 +731,13 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                       }}
                     >
                       <div
-                        className="text-center"
+                        className="text-center capitalize"
                         style={{ minWidth: '100px' }}
                       >
-                        {data.catalog_list_items[0].seo_ml_title &&
-                        data.catalog_list_items[0].seo_ml_title[0]
-                          ? data.catalog_list_items[0].seo_ml_title[0].text
-                          : data.catalog_list_items[0].ml_title[0].text}
+                        {data.catalog_list_items[0].ml_title &&
+                        data.catalog_list_items[0].ml_title[0]
+                          ? data.catalog_list_items[0].ml_title[0].text
+                          : ''}
                       </div>
                       <span className="pl-1 caret text-gray-700 ">
                         {' '}

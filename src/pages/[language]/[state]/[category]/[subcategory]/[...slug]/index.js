@@ -89,17 +89,18 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
       }
     }
 
+    const actualUrl = data.web_url;
     if (stateName) {
       canonicalUrl = `https://www.etvbharat.com${[
         ...splitPath.slice(0, 2),
         stateName,
-        ...splitPath.slice(3),
+        ...actualUrl.split('/').slice(2),
       ].join('/')}`;
     } else {
-      canonicalUrl = `https://www.etvbharat.com${pathname}`;
+      canonicalUrl = `https://www.etvbharat.com${actualUrl}`;
     }
     if (pageType === 'article') {
-      ampUrl = `https://www.etvbharat.com/amp${pathname}`;
+      ampUrl = `https://www.etvbharat.com/amp${actualUrl}`;
     }
 
     const state = splitPath[2];

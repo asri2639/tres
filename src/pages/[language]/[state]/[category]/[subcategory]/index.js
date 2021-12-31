@@ -97,8 +97,8 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
               additionalMetaTags={[
                 {
                   name: 'keywords',
-                  content: item.catalog_list_items[0].meta_tag_keywords
-                    ? item.catalog_list_items[0].meta_tag_keywords.join(', ')
+                  content: item.meta_tag_keywords
+                    ? item.meta_tag_keywords.join(', ')
                     : '',
                 },
               ]}
