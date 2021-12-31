@@ -90,7 +90,7 @@ const Layout = ({ children, accessToken, pageType }) => {
       if (headerResp && headerResp.data) {
         menu.desktop = headerResp.data.data.catalog_list_items;
         menu.mobile = headerResp.data.data.catalog_list_items;
-        fetch(`/api/menu?url=${language + '/' + state}`, {
+        fetch(`/api/menu?url=${lang + '/' + state}`, {
           method: 'POST',
           body: JSON.stringify({ data: menu.desktop }),
           headers: {
