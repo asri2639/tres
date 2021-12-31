@@ -97,10 +97,10 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
         ...actualUrl.split('/').slice(2),
       ].join('/')}`;
     } else {
-      canonicalUrl = `https://www.etvbharat.com${actualUrl}`;
+      canonicalUrl = `https://www.etvbharat.com/${actualUrl}`;
     }
     if (pageType === 'article') {
-      ampUrl = `https://www.etvbharat.com/amp${actualUrl}`;
+      ampUrl = `https://www.etvbharat.com/amp/${actualUrl}`;
     }
 
     const state = splitPath[2];
