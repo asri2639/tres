@@ -517,17 +517,23 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
 
           {dropdown ? (
             dropdown.data && dropdown.data.length > 1 ? (
-              <div>
-                <div className="flex items-center float-right mr-2.5">
-                  <div className="pr-2 text-sm">{t('select')}</div>
+              <div className="w-full flex justify-between flex-wrap items-center float-right mx-2.5">
+                <h1 className="pl-5 pr-4 text-md font-bold capitalize">
+                  {data.catalog_list_items[0].seo_ml_title &&
+                  data.catalog_list_items[0].seo_ml_title[0]
+                    ? data.catalog_list_items[0].seo_ml_title[0].text
+                    : data.catalog_list_items[0].ml_title[0].text}
+                </h1>
+                <div>
+                  {/* <div className="pr-2 text-sm">{}</div> */}
                   <div
-                    className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
+                    className="flex items-center capitalize text-sm  text-sm border border-gray-600 px-2 py-0 cursor-pointer"
                     onClick={() => {
                       setShowStateModal(true);
                     }}
                   >
-                    <div className="text-center" style={{ minWidth: '100px' }}>
-                      {dropdown.title}
+                    <div className="text-center" style={{ minWidth: '60px' }}>
+                      {t('select')}
                     </div>
                     <span className="pl-1 caret text-gray-700 "> &#9660;</span>
                   </div>
