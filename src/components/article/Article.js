@@ -147,18 +147,16 @@ export default function Article({
     let adConf = null;
     if (data.ad_conf && Array.isArray(data.ad_conf) && data.ad_conf[0]) {
       if (data.ad_conf[0].web_msite && data.ad_conf[0].web_msite) {
-        adConf = data.ad_conf[0].web_msite[0];
+        adConf = data.ad_conf[0].web_msite;
       } else {
         if (isDesktop) {
-          adConf = data.ad_conf[0].web ? data.ad_conf[0].web[0] : null;
+          adConf = data.ad_conf[0].web ? data.ad_conf[0].web : null;
         } else {
-          adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite[0] : null;
+          adConf = data.ad_conf[0].msite ? data.ad_conf[0].msite : null;
         }
       }
     }
 
-    const id = adConf ? adConf.gpt_id : null;
-    const ad_id = adConf ? adConf.ad_unit_id : null;
     window.ads = window.ads || new Set();
     const ads = window.ads;
 
@@ -178,26 +176,41 @@ export default function Article({
       }
     };
 
-    if (id && ad_id) {
-      if (!ads.has(adConf.gpt_id)) {
-        adHTML = `<div id='${id}' style='${divStyle}'></div>`;
-        const el = document.querySelector(
-          `[data-content-id="${contentId}"] .EtvadsSection`
-        );
-        if (el && el.querySelector('#adsContainer')) {
-          el.innerHTML = adHTML;
-          showAd(ad_id, slotArr, id);
-        } else {
-          const el = document.getElementById(adConf.gpt_id);
-          if (el && !el.hasChildNodes()) {
-            showAd(ad_id, slotArr, id);
-          }
+    if (adConf && Array.isArray(adConf) && adConf.length > 0) {
+      const els = document.querySelectorAll(
+        `[data-content-id="${contentId}"] .EtvadsSection`
+      );
+      // console.log(els);
+      els.forEach((el, ind) => {
+        const id = adConf[ind] ? adConf[ind].gpt_id : null;
+        const ad_id = adConf[ind] ? adConf[ind].ad_unit_id : null;
+        if (!ads.has(id)) {
+          adHTML = `<div id='${contentId}--${id}' style='${divStyle}'></div>`;
 
-          // console.log(window.ads);
-          // console.log(adConf.gpt_id);
-          // console.log('In-Article ad container not found!!!', contentId);
+          if (el && el.querySelector('#adsContainer')) {
+            el.innerHTML = adHTML;
+            showAd(ad_id, slotArr, id);
+          } else {
+            const el = document.getElementById(id);
+            if (el && !el.hasChildNodes()) {
+              showAd(ad_id, slotArr, id);
+            }
+            // console.log(window.ads);
+            // console.log(adConf.gpt_id);
+            console.log('In-Article ad container not found!!!', contentId);
+          }
+        } else {
+          const adEl = document.getElementById(contentId + '--' + id);
+
+          setTimeout(() => {
+            if (adEl && !adEl.querySelector('iframe')) {
+              googletag.cmd.push(function () {
+                googletag.pubads().refresh([window[ad_id]]);
+              });
+            }
+          }, 300);
         }
-      }
+      });
     }
 
     return () => {
