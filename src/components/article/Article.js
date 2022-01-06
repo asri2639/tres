@@ -180,12 +180,11 @@ export default function Article({
       const els = document.querySelectorAll(
         `[data-content-id="${contentId}"] .EtvadsSection`
       );
-      // console.log(els);
       els.forEach((el, ind) => {
         const id = adConf[ind] ? adConf[ind].gpt_id : null;
         const ad_id = adConf[ind] ? adConf[ind].ad_unit_id : null;
         if (!ads.has(id)) {
-          adHTML = `<div id='${contentId}--${id}' style='${divStyle}'></div>`;
+          adHTML = `<div id='${id}' style='${divStyle}'></div>`;
 
           if (el && el.querySelector('#adsContainer')) {
             el.innerHTML = adHTML;
@@ -197,10 +196,10 @@ export default function Article({
             }
             // console.log(window.ads);
             // console.log(adConf.gpt_id);
-            console.log('In-Article ad container not found!!!', contentId);
+            // console.log('In-Article ad container not found!!!', contentId);
           }
         } else {
-          const adEl = document.getElementById(contentId + '--' + id);
+          const adEl = document.getElementById(id);
 
           setTimeout(() => {
             if (adEl && !adEl.querySelector('iframe')) {
