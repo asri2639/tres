@@ -60,7 +60,7 @@ class APIError extends Error {
 export const accessTokenFetcher = (authToken) => {
   let url =
     Constants.baseURL.indexOf('localhost') != -1
-      ? 'https://prod.api.etvbharat.com/'
+      ? 'https://preprod.api.etvbharat.com/'
       : Constants.baseURL;
 
   url = url + `/access_token?auth_token=${authToken}`;

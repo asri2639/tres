@@ -7,7 +7,7 @@ const prd_test = publicRuntimeConfig.TEST === 'test';
 
 const baseURL =
   env === 'production' && !prd_test
-    ? 'https://prod.api.etvbharat.com'
+    ? 'https://preprod.api.etvbharat.com'
     : env === 'development' || prd_test
     ? 'http://localhost:3000/apis'
     : 'https://staging.api.etvbharat.com';
@@ -19,8 +19,8 @@ export const domainUrl =
     ? 'http://localhost:3000'
     : 'https://staging.etvbharat.com';
 
-const mAuthToken = env === 'staging' ? 'rss':'kmAJAH4RTtqHjgoauC4o';
-const authToken = env === 'staging' ? 'rss':'xBUKcKnXfngfrqGoF93y';
+const mAuthToken = env === 'staging' ? 'rss' : 'kmAJAH4RTtqHjgoauC4o';
+const authToken = env === 'staging' ? 'rss' : 'xBUKcKnXfngfrqGoF93y';
 
 const Constants = Object.freeze({
   baseURL: baseURL,
@@ -35,7 +35,7 @@ const Constants = Object.freeze({
 
 export const accessToken = {
   web:
-    env === 'production'  || env === 'development'
+    env === 'production' || env === 'development'
       ? 'TjeNsXehJqhh2DGJzBY9'
       : 'Fw3196P2FES3HBfytEtn',
   mobile:

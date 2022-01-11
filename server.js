@@ -26,7 +26,7 @@ const devProxy = {
     },
   },
   '/apis': {
-    target: 'https://prod.api.etvbharat.com/',
+    target: 'https://preprod.api.etvbharat.com/',
     pathRewrite: { '^/apis': '/' },
     changeOrigin: true,
     router: {
@@ -74,10 +74,10 @@ app
         let url = '';
         let listing = false;
         if (re.test(id)) {
-          url = `http://prod.api.etvbharat.com/amp/${id}?auth_token=fLd6UcV8zesqNpVRif8N`;
+          url = `http://preprod.api.etvbharat.com/amp/${id}?auth_token=fLd6UcV8zesqNpVRif8N`;
         } else {
           listing = true;
-          url = `https://prod.api.etvbharat.com/amp_listing_pages?url=/${
+          url = `https://preprod.api.etvbharat.com/amp_listing_pages?url=/${
             req.url.split('/amp/')[1]
           }&auth_token=kmAJAH4RTtqHjgoauC4o&access_token=woB1UukKSzZ5aduEUxwt`;
         }
