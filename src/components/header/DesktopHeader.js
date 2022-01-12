@@ -24,10 +24,11 @@ import useTranslator from '@hooks/useTranslator';
 const DesktopHeader = ({ className, data }) => {
   const router = useRouter();
   const { t, appLanguage } = useTranslator();
-  const language = router.query.language || 'english';
   const api = API(APIEnum.Catalog);
   const isScrolled = useContext(ScrollContext);
   const isRTL = useContext(RTLContext);
+  const [state, setState] = useState(router.query.state);
+  const [language, setLanguage] = useState(router.query.language);
 
   const [stateData, setStateData] = useState(null);
   const [headerAd, setHeaderAd] = useState(null);
@@ -85,9 +86,7 @@ const DesktopHeader = ({ className, data }) => {
     const goTo = () => {
       toggleSearchBox(false);
       searchItem(searchInput);
-      router.push(
-        `/${language}/${router.query.state}/search/${decodeURI(value)}`
-      );
+      router.push(`/${language}/${state}/search/${decodeURI(value)}`);
     };
     if (e) {
       if (e.key === 'Enter') {
@@ -98,18 +97,21 @@ const DesktopHeader = ({ className, data }) => {
     }
   };
   useEffect(() => {
-    setStateData(
-      data && data.languages
-        ? data.languages[language].find(
-            (v) => v.state.toLowerCase() === router.query.state
-          )
-        : null
-    );
-  }, [data, router, appLanguage]);
+    if (language && state) {
+      setStateData(
+        data && data.languages
+          ? data.languages[language].find(
+              (v) => v.state.toLowerCase() === state
+            )
+          : null
+      );
+    }
+  }, [data, state, language, appLanguage]);
 
   useEffect(() => {
     const splitPath = location.pathname.split('/');
-    const state = splitPath[2];
+    setLanguage(splitPath[1]);
+    setState(splitPath[2]);
     const isDesktop = window && window.innerWidth >= 768;
     const socialLinks = getSocialLinks(state);
     setSocialHandlers(socialLinks);
@@ -124,8 +126,8 @@ const DesktopHeader = ({ className, data }) => {
           app: 'web',
           item_languages: appLanguage.name,
           response: 'r2',
-          language: splitPath[1],
-          state: splitPath[2],
+          language: language,
+          state: state,
           url: decodeURI(url),
         },
       })
@@ -147,8 +149,6 @@ const DesktopHeader = ({ className, data }) => {
       getHeaderAd();
     }
     const handleRouteChange = (url) => {
-      const splitPath = location.pathname.split('/');
-      const state = splitPath[2];
       const socialLinks = getSocialLinks(state);
       setSocialHandlers(socialLinks);
       // setTwitterHandler();
@@ -491,10 +491,10 @@ const DesktopHeader = ({ className, data }) => {
                 pathname: '/[language]/[state]',
                 query: {
                   language: language,
-                  state: router.query.state,
+                  state: state,
                 },
               }}
-              as={`/${language}/${router.query.state}`}
+              as={`/${language}/${state}`}
               passHref
               title={`ETV ${language}`}
               hideTitle={true}
