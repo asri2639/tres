@@ -389,7 +389,6 @@ const Gallery = ({
                         <InView
                           as="div"
                           className="relative"
-                          triggerOnce={true}
                           id={image.content_id}
                           onChange={(inView, entry) => {
                             if (inView) {
