@@ -352,7 +352,10 @@ const Video = ({
               </div>
             }
 
-            <div className="px-2 py-4 text-sm lg:text-base text-justify lg:text-left">
+            <div
+              className="px-2 pt-4 text-sm lg:text-base text-justify lg:text-left"
+              style={{ paddingBottom: 'calc(100% + 2rem)' }}
+            >
               {data.description}
             </div>
 
