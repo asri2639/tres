@@ -186,7 +186,7 @@ const slug = ({ data, pageType, id }) => {
 
               <link
                 rel="preconnect"
-                href="https://preprod.api.etvbharat.com"
+                href="https://prod.api.etvbharat.com"
               ></link>
 
               <meta

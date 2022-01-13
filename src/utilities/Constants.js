@@ -7,7 +7,7 @@ const prd_test = publicRuntimeConfig.TEST === 'test';
 
 const baseURL =
   env === 'production' && !prd_test
-    ? 'https://preprod.api.etvbharat.com'
+    ? 'https://prod.api.etvbharat.com'
     : env === 'development' || prd_test
     ? 'http://localhost:3000/apis'
     : 'https://staging.api.etvbharat.com';

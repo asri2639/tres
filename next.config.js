@@ -57,7 +57,7 @@ module.exports = {
       },
       {
         source: '/apis/:path*',
-        destination: 'https://preprod.api.etvbharat.com/:path*',
+        destination: 'https://prod.api.etvbharat.com/:path*',
       },
     ];
   },
