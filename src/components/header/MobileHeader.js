@@ -13,10 +13,9 @@ const country = 'IN';
 export default function MobileHeader({ data, className }) {
   const isAMP = false;
   const router = useRouter();
-  const path = router.asPath;
-  const splitPath = path.split('/');
-  const language = splitPath[1];
-  const state = splitPath[2];
+
+  const [state, setState] = useState(router.query.state);
+  const [language, setLanguage] = useState(router.query.language);
   const [stateData, setStateData] = useState(null);
   const { t, appLanguage } = useTranslator();
   const isRTL = useContext(RTLContext);
@@ -46,6 +45,9 @@ export default function MobileHeader({ data, className }) {
     setCategory(null);
   };
   useEffect(() => {
+    const splitPath = location.pathname.split('/');
+    setLanguage(splitPath[1]);
+    setState(splitPath[2]);
     setStateData(
       data && data.languages
         ? data.languages[language].find((v) => v.state.toLowerCase() === state)
