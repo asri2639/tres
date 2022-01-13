@@ -377,7 +377,7 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
         ));
         break;
       case 'ad_unit_square':
-        if (catalog.ad_conf.responsive_ad) {
+        if (catalog.ad_conf && catalog.ad_conf.responsive_ad) {
           if (
             adsMap.findIndex(
               (v) => v && v.gpt_id === catalog.ad_conf.responsive_ad.gpt_id

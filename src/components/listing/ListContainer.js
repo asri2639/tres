@@ -1,6 +1,5 @@
-
 import useSWR from 'swr';
-import React,{ useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Sticky from 'wil-react-sticky';
 import dynamic from 'next/dynamic';
 
@@ -30,15 +29,8 @@ const DesktopAdContainer = dynamic(
   () => import('@components/article/DesktopAdContainer'),
   options
 );
-const SliderSeeAll = dynamic(
-  () => import('./mobile/SliderSeeAll'),
-  options
-);
-const SeeAll = dynamic(
-  () => import('./mobile/SeeAll'),
-  options
-);
-
+const SliderSeeAll = dynamic(() => import('./mobile/SliderSeeAll'), options);
+const SeeAll = dynamic(() => import('./mobile/SeeAll'), options);
 
 const ListContainer = ({ children, data, payload }) => {
   const api = API(APIEnum.CatalogList);
@@ -199,7 +191,7 @@ const ListContainer = ({ children, data, payload }) => {
         ));
         break;
       case 'ad_unit_square':
-        if (catalog.ad_conf.responsive_ad) {
+        if (catalog.ad_conf && catalog.ad_conf.responsive_ad) {
           if (
             adsMap.findIndex(
               (v) => v && v.gpt_id === catalog.ad_conf.responsive_ad.gpt_id
