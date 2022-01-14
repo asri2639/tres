@@ -205,7 +205,6 @@ export async function getStaticProps({ params, ...args }) {
       };
     });
     const result = response.data;
-
     if (!result) {
       return {
         notFound: true,
@@ -352,17 +351,23 @@ export async function getStaticProps({ params, ...args }) {
         );
       }
 
+      let capital = null;
+      if (dropDownData) {
+        capital = dropDownData.find((v) => v.capital === true);
+      }
       if (
         url.includes('city') &&
         Object.keys(finalQueryParamObject).length === 0
       ) {
-        finalQueryParamObject.dynamic_city = dropDownData[0].friendly_id;
+        finalQueryParamObject.dynamic_city =
+          capital.friendly_id || dropDownData[0].friendly_id;
       }
       if (
         url.includes('district') &&
         Object.keys(finalQueryParamObject).length === 0
       ) {
-        finalQueryParamObject.dynamic_district = dropDownData[0].friendly_id;
+        finalQueryParamObject.dynamic_district =
+          capital.friendly_id || dropDownData[0].friendly_id;
       }
       if (
         url.includes('state') &&

@@ -67,6 +67,7 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
     state: '',
     language: '',
     text: '',
+    capital: null,
   });
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
@@ -587,6 +588,9 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                       setSelected({
                         state: e.target.value,
                         text: e.target.text,
+                        capital:
+                          e.target.options[event.target.selectedIndex].dataset
+                            .capital,
                       });
                     }}
                     className="form-control"
@@ -594,16 +598,21 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                     <option value="select">
                       {t('select_' + dropdown.type)}
                     </option>
-                    {dropdown.data.map((v) => {
-                      return (
-                        <option
-                          key={v.state + v.friendly_id}
-                          value={v.friendly_id}
-                        >
-                          {v.ml_title[0].text}
-                        </option>
-                      );
-                    })}
+                    {dropdown.data
+                      .filter((v) => {
+                        return router.query.subcategory || !v.capital;
+                      })
+                      .map((v) => {
+                        return (
+                          <option
+                            key={v.state + v.friendly_id}
+                            value={v.friendly_id}
+                            data-capital={v.capital}
+                          >
+                            {v.ml_title[0].text}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
               </div>
@@ -612,7 +621,12 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                 <div
                   className="button px-4 py-2 border-2 border-red-700 text-red-700 rounded-md cursor-pointer focus:text-white focus:bg-red-700"
                   onClick={() => {
-                    setSelected({ language: '', state: '', text: '' });
+                    setSelected({
+                      language: '',
+                      state: '',
+                      text: '',
+                      capital: null,
+                    });
                     setShowStateModal(false);
                   }}
                 >
@@ -621,7 +635,12 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                 <div
                   className="button yes px-4 py-2 border-2 border-red-700 text-red-700 rounded-md ml-3 cursor-pointer"
                   onClick={() => {
-                    setSelected({ language: '', state: '', text: '' });
+                    setSelected({
+                      language: '',
+                      state: '',
+                      text: '',
+                      capital: null,
+                    });
                     setShowStateModal(false);
 
                     if (dropdown.title !== selected.text) {
@@ -633,6 +652,7 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                           router.query.state === 'national')
                       ) {
                         url = `/${router.query.language}/national/${dropdown.type}`;
+                        console.log(selected);
                         router.push(url + '/' + selected.state);
                       } else {
                         if (dropdown.type === 'state') {
@@ -643,9 +663,13 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                             selected.state +
                             '/state';
                         } else {
-                          url = dropdown.url + '/' + selected.state;
+                          if (selected.capital == 'true') {
+                            url = dropdown.url;
+                          } else {
+                            url = dropdown.url + '/' + selected.state;
+                          }
                         }
-
+                        console.log(url);
                         router.push(url);
                       }
                     }
