@@ -509,7 +509,11 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                       router.query.language +
                       '/national/' +
                       dropdown.type;
-                    router.push(url + '/' + district.friendly_id);
+                    router.push(
+                      `${url}${
+                        district.capital ? '' : '/' + district.friendly_id
+                      }`
+                    );
                   } else {
                     if (dropdown.type === 'state') {
                       url =
@@ -519,7 +523,9 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                         district.friendly_id +
                         '/state';
                     } else {
-                      url = dropdown.url + '/' + district.friendly_id;
+                      url =
+                        dropdown.url +
+                        (district.capital ? '' : '/' + district.friendly_id);
                     }
 
                     router.push(url);
@@ -665,7 +671,6 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                           router.query.state === 'national')
                       ) {
                         url = `/${router.query.language}/national/${dropdown.type}`;
-                        console.log(selected);
                         router.push(url + '/' + selected.state);
                       } else {
                         if (dropdown.type === 'state') {
@@ -682,7 +687,6 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                             url = dropdown.url + '/' + selected.state;
                           }
                         }
-                        console.log(url);
                         router.push(url);
                       }
                     }

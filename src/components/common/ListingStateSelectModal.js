@@ -1,6 +1,7 @@
 import Modal from '@components/modal/Modal';
 import { useEffect, useState } from 'react';
 import useTranslator from '@hooks/useTranslator';
+import { useRouter } from 'next/router';
 
 const ListingStateSelectModal = ({
   data,
@@ -15,6 +16,7 @@ const ListingStateSelectModal = ({
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
   const { t, appLanguage } = useTranslator();
+  const router = useRouter();
 
   const close = () => {
     onClose();
@@ -61,20 +63,24 @@ const ListingStateSelectModal = ({
             style={{ maxHeight: '80vh', overflow: 'auto' }}
           >
             {!loading && data.length > 0
-              ? data.map((v) => {
-                  return (
-                    <div
-                      key={v.id}
-                      onClick={() => {
-                        onStateSelect(v);
-                      }}
-                      className="py-1  cursor-pointer"
-                      style={{ flexBasis: '50%' }}
-                    >
-                      {v.ml_title[0].text}
-                    </div>
-                  );
-                })
+              ? data
+                  .filter((v) => {
+                    return router.query.subcategory || !v.capital;
+                  })
+                  .map((v) => {
+                    return (
+                      <div
+                        key={v.id}
+                        onClick={() => {
+                          onStateSelect(v);
+                        }}
+                        className="py-1  cursor-pointer"
+                        style={{ flexBasis: '50%' }}
+                      >
+                        {v.ml_title[0].text}
+                      </div>
+                    );
+                  })
               : null}
           </div>
         </div>
