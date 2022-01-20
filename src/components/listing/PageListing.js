@@ -261,6 +261,10 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
         }else{
           finalurl = window.location.pathname;
         }
+        if(finalurl.includes('district')){
+         finalurl = finalurl.replace("district","state");
+         
+        }
         const response = await api.Listing.getListingApiKey({
           query: {
             app: 'web',
