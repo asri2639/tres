@@ -215,6 +215,7 @@ export async function getStaticProps({ params, ...args }) {
     let finalDataObj = {
       title: '',
       data: [],
+      captial:'',
     };
     let dropDownData = undefined;
     let changeUrl = false;
@@ -361,6 +362,7 @@ export async function getStaticProps({ params, ...args }) {
       ) {
         finalQueryParamObject.dynamic_city =
           capital.friendly_id || dropDownData[0].friendly_id;
+          finalDataObj.captial = capital.friendly_id || dropDownData[0].friendly_id;
       }
       if (
         url.includes('district') &&
@@ -368,6 +370,7 @@ export async function getStaticProps({ params, ...args }) {
       ) {
         finalQueryParamObject.dynamic_district =
           capital.friendly_id || dropDownData[0].friendly_id;
+          finalDataObj.captial = capital.friendly_id || dropDownData[0].friendly_id;
       }
       if (
         url.includes('state') &&

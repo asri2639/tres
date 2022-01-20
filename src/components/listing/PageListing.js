@@ -229,7 +229,9 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
         );
       }
     } else if (payload && callsDone <= totalCalls && desktopCall) {
+
       if (desktopUrl) {
+        
         const requestPayload = {
           ...payload,
           params: {
@@ -252,10 +254,17 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
         });
         setCallsDone((callsDone) => callsDone + 1);
       } else {
+        let finalurl;
+        
+        if(dropdown.captial){
+          finalurl = window.location.pathname + "/" +dropdown.captial
+        }else{
+          finalurl = window.location.pathname;
+        }
         const response = await api.Listing.getListingApiKey({
           query: {
             app: 'web',
-            url: window.location.pathname,
+            url: finalurl,
           },
         });
         const result = response.data;
