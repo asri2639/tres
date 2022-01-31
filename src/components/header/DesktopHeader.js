@@ -528,8 +528,7 @@ const DesktopHeader = ({ className, data }) => {
             {/* <iframe className="mx-auto" width={755} height={110} src={`https://www.etvbharat.com/banner-near-logo/${router.query.state}/business/728x90-1.htm`}/> */}
 
             <MediaContextProvider>
-              {/*               <Media greaterThan="xs"> {isScrolled ? headerAd : null}</Media>
-               */}
+              <Media greaterThan="xs"> {isScrolled ? headerAd : null}</Media>
             </MediaContextProvider>
           </div>
         </div>

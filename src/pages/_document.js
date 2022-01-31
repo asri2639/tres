@@ -148,13 +148,14 @@ export default class ETVDocument extends Document {
                         "https://cdn.vuukle.com/platform.js",
                         "https://cdn.izooto.com/scripts/c2241b1bc9afd43716376318af12acc70474c96d.js",
                         "https://rtbcdn.andbeyond.media/prod-global-721538.js",
-                         "https://cdn.ergadx.com/js/889/ads.js",
                         "https://adomega-cdn-asia.s3.ap-south-1.amazonaws.com/ETVBharat/ETVBharat_D_S.js",
                       ],
                       src,
                       pendingScripts = [],
                       firstScript = document.scripts[0];
                     //polyfil checks and loads here
+                    //"https://cdn.ergadx.com/js/889/ads.js",
+
                     if (
                       typeof IntersectionObserver === "undefined" ||
                       IntersectionObserver.toString().indexOf("[native code]") === -1
