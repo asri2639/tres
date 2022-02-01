@@ -90,7 +90,7 @@ const slug = ({ data, pageType, id }) => {
       }
     }
 
-    const actualUrl = data.web_url;
+    const actualUrl = `${router.asPath.slice(1)}`;
     if (stateName) {
       canonicalUrl = `https://www.etvbharat.com${[
         ...splitPath.slice(0, 2),
