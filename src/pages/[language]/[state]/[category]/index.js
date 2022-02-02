@@ -69,10 +69,12 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
     ) {
       ampUrl = getAmpUrl(canonicalUrl, splitPath.length === 3);
     }
-
     switch (pageType) {
       case 'navlisting':
-        const item = data.catalog_list_items[0];
+        let item = data.catalog_list_items[0];
+        if (item.meta_tag_keywords && item.meta_tag_keywords.length === 0) {
+          item = data;
+        }
         return (
           <>
             <Head>
@@ -215,7 +217,7 @@ export async function getStaticProps({ params, ...args }) {
     let finalDataObj = {
       title: '',
       data: [],
-      captial:'',
+      captial: '',
     };
     let dropDownData = undefined;
     let changeUrl = false;
@@ -362,7 +364,8 @@ export async function getStaticProps({ params, ...args }) {
       ) {
         finalQueryParamObject.dynamic_city =
           capital.friendly_id || dropDownData[0].friendly_id;
-          finalDataObj.captial = capital.friendly_id || dropDownData[0].friendly_id;
+        finalDataObj.captial =
+          capital.friendly_id || dropDownData[0].friendly_id;
       }
       if (
         url.includes('district') &&
@@ -370,7 +373,8 @@ export async function getStaticProps({ params, ...args }) {
       ) {
         finalQueryParamObject.dynamic_district =
           capital.friendly_id || dropDownData[0].friendly_id;
-          finalDataObj.captial = capital.friendly_id || dropDownData[0].friendly_id;
+        finalDataObj.captial =
+          capital.friendly_id || dropDownData[0].friendly_id;
       }
       if (
         url.includes('state') &&
