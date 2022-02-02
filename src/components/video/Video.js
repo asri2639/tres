@@ -48,11 +48,11 @@ const Video = ({
 
   switch (lang) {
     case 'marathi':
-      adlink = {
+      /* adlink = {
         text: 'जोडीदार शोधत आहात? मराठी मॅट्रीमोनीमध्ये रजीस्ट्रेशन मोफत आहे!',
         link:
           'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401215688',
-      };
+      }; */
       break;
     case 'telugu':
       adlink = {
@@ -71,7 +71,7 @@ const Video = ({
       };
       break;
   }
-  adlink = null;
+  // adlink = null;
 
   const ref = useCallback(
     (node) => {

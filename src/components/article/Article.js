@@ -58,11 +58,11 @@ export default function Article({
 
   switch (lang) {
     case 'marathi':
-      adlink = {
+      /* adlink = {
         text: 'जोडीदार शोधत आहात? मराठी मॅट्रीमोनीमध्ये रजीस्ट्रेशन मोफत आहे!',
         link:
           'http://campaign.bharatmatrimony.com/track/clicktrack.php?trackid=00100401215688',
-      };
+      }; */
       break;
     case 'telugu':
       adlink = {
@@ -81,7 +81,7 @@ export default function Article({
       };
       break;
   }
-  adlink = null;
+  // adlink = null;
 
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
