@@ -753,46 +753,51 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
               </style>
             </Modal>
           ) : null}
-
-          {dropdown ? (
-            dropdown.data && dropdown.data.length > 1 ? (
-              <div className="lg:container lg:mx-auto mt-3">
-                <div className="md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row justify-between">
-                  <h1 className="px-2 text-md font-bold capitalize">
-                    {data.catalog_list_items[0].seo_ml_title &&
-                    data.catalog_list_items[0].seo_ml_title[0]
-                      ? data.catalog_list_items[0].seo_ml_title[0].text
-                      : data.catalog_list_items[0].ml_title[0].text}
-                  </h1>
-                  <div className="pr-2 text-sm flex">
-                    <span className="pr-2">
-                      {t('select') + ' ' + t(dropdown.type)}
-                    </span>
+          {dropdown && dropdown.data && dropdown.data.length > 1 ? (
+            <div className="lg:container lg:mx-auto mt-3">
+              <div className="md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row justify-between">
+                <h1 className="px-2 text-md font-bold capitalize">
+                  {data.catalog_list_items[0].seo_ml_title &&
+                  data.catalog_list_items[0].seo_ml_title[0]
+                    ? data.catalog_list_items[0].seo_ml_title[0].text
+                    : data.catalog_list_items[0].ml_title[0].text}
+                </h1>
+                <div className="pr-2 text-sm flex">
+                  <span className="pr-2">
+                    {t('select') + ' ' + t(dropdown.type)}
+                  </span>
+                  <div
+                    className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
+                    onClick={() => {
+                      setShowStateModal(true);
+                    }}
+                  >
                     <div
-                      className="flex items-center capitalize text-sm border border-gray-600 px-2 py-0 cursor-pointer"
-                      onClick={() => {
-                        setShowStateModal(true);
-                      }}
+                      className="text-center capitalize"
+                      style={{ minWidth: '100px' }}
                     >
-                      <div
-                        className="text-center capitalize"
-                        style={{ minWidth: '100px' }}
-                      >
-                        {data.catalog_list_items[0].ml_title &&
-                        data.catalog_list_items[0].ml_title[0]
-                          ? data.catalog_list_items[0].ml_title[0].text
-                          : ''}
-                      </div>
-                      <span className="pl-1 caret text-gray-700 ">
-                        {' '}
-                        &#9660;
-                      </span>
+                      {data.catalog_list_items[0].ml_title &&
+                      data.catalog_list_items[0].ml_title[0]
+                        ? data.catalog_list_items[0].ml_title[0].text
+                        : ''}
                     </div>
+                    <span className="pl-1 caret text-gray-700 "> &#9660;</span>
                   </div>
                 </div>
               </div>
-            ) : null
-          ) : null}
+            </div>
+          ) : (
+            <div className="lg:container lg:mx-auto mt-3">
+              <div className="md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row justify-between">
+                <h1 className="px-2 text-md font-bold capitalize">
+                  {data.ml_title && data.ml_title[0]
+                    ? data.ml_title[0].text
+                    : data.catalog_list_items[0].ml_title[0].text}
+                </h1>
+                <div className="pr-2 text-sm flex"></div>
+              </div>
+            </div>
+          )}
         </Media>
       </MediaContextProvider>
       <div
