@@ -22,15 +22,18 @@ const Breadcrumbs = () => {
   const splitUrl = router.asPath.split('/');
   splitUrl.shift();
   let route = '';
-
+  const splitUrlArr = splitUrl.slice(2, -1);
   let crumbsMap = [
     {
       name: 'Home',
       label: 'HOME',
       href: `/${router.query.language}/${router.query.state}`,
     },
-    ...splitUrl.slice(2, -1).map((v) => {
+    ...splitUrlArr.map((v, i) => {
       route += '/' + v;
+      if (i === splitUrlArr.length - 1) {
+        route += '/' + splitUrl.slice(-1)[0];
+      }
       return {
         name: capSentence(v.replace(/-/gi, ' ')),
         label: v.toUpperCase().replace(/-/gi, ' '),

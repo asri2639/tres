@@ -136,7 +136,7 @@ const slug = ({ data, pageType, id }) => {
       keywords: data.keywords ? data.keywords.join(', ') : '',
       url: data.web_url,
       contentType: data.content_type,
-      ldjson: false,
+      ldjson: data.is_ldjson,
     };
 
     component = (
@@ -222,39 +222,15 @@ const slug = ({ data, pageType, id }) => {
             dangerouslySetInnerHTML={{
               __html: `
  {
- "@context": "https://schema.org",
- "@type": "NewsArticle",
- "mainEntityOfPage": {
- "@type": "WebPage",
- "@id": "https://www.etvbharat.com/${headerObj.url}"
- },
- "headline": "${headerObj.headline}",
- "description": "${headerObj.description.replace(/\"/gi, '\\"')}",
- "image": {
- "@type": "ImageObject",
- "url": "${headerObj.thumbnailM}",
- "width": 708,
- "height": 474
- },
- "author": {
- "@type": "Organization",
- "name": "ETV Bharat"
- },
- "publisher": {
- "@type": "Organization",
- "name": "ETV Bharat",
- "logo": {
- "@type": "ImageObject",
- "url": "https://www.etvbharat.com/assets/images/etvlogo/${(
-   headerObj.url.split('/')[0] + ''
- ).toLowerCase()}.png",
- "width": 82,
- "height": 60
- }
- },
- "datePublished": "${headerObj.publishedAt}",
- "dateModified": "${headerObj.updatedAt || headerObj.publishedAt}"
- }`,
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "${headerObj.title}",
+  "description": "${headerObj.description.replace(/\"/gi, '\\"')}",
+  "thumbnailUrl": "${data.ldjson.videos[0].thumbnail}",
+  "uploadDate": "${data.ldjson.videos[0].upload_date}",
+  "contentUrl": "${data.ldjson.videos[0].url}",
+  "embedUrl": "${data.ldjson.videos[0].url}",
+}`,
             }}
           ></script>
         ) : null}
