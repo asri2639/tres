@@ -583,6 +583,17 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                 ) : null}
               </div>
             </div>
+          ) : !(dropdown && dropdown.data && dropdown.data.length > 1) ? (
+            <div className="lg:container lg:mx-auto mt-3">
+              <div className="md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row justify-between">
+                <h1 className="px-2 text-md font-bold capitalize">
+                  {data.ml_title && data.ml_title[0]
+                    ? data.ml_title[0].text
+                    : data.catalog_list_items[0].ml_title[0].text}
+                </h1>
+                <div className="pr-2 text-sm flex"></div>
+              </div>
+            </div>
           ) : null}
           {showStateModal ? (
             <Modal
@@ -786,18 +797,7 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
                 </div>
               </div>
             </div>
-          ) : (
-            <div className="lg:container lg:mx-auto mt-3">
-              <div className="md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row justify-between">
-                <h1 className="px-2 text-md font-bold capitalize">
-                  {data.ml_title && data.ml_title[0]
-                    ? data.ml_title[0].text
-                    : data.catalog_list_items[0].ml_title[0].text}
-                </h1>
-                <div className="pr-2 text-sm flex"></div>
-              </div>
-            </div>
-          )}
+          ) : null}
         </Media>
       </MediaContextProvider>
       <div
@@ -811,6 +811,11 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
             {listItems && listItems.length > 0 ? (
               <>
                 <Media at="xs" className="w-full">
+                  <h1 className="px-2 text-md font-bold capitalize">
+                    {data.ml_title && data.ml_title[0]
+                      ? data.ml_title[0].text
+                      : data.catalog_list_items[0].ml_title[0].text}
+                  </h1>
                   <MobileMainArticles
                     list={listItems[0].catalog_list_items}
                     dropdown={dropdown}

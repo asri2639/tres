@@ -75,6 +75,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
         if (item.meta_tag_keywords && item.meta_tag_keywords.length === 0) {
           item = data;
         }
+
         return (
           <>
             <Head>
