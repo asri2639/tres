@@ -463,9 +463,11 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
           listItems[0].layout_type == 'featured_staggered_grid' ||
           listItems[0].layout_type == 'news_card_listing' ? (
             <div>
-              <div className="flex items-center font-extrabold float-left ml-3.5">
-                {listItems[0].ml_title[0].text}
-              </div>
+              <h1 className="flex items-center font-extrabold float-left ml-3.5 px-2 text-md font-bold capitalize">
+                {data.ml_title && data.ml_title[0]
+                  ? data.ml_title[0].text
+                  : data.catalog_list_items[0].ml_title[0].text}
+              </h1>
               <div className="flex items-center font-semibold text-sm text-red-500 float-right mr-10">
                 {listItems[0].url != '' ? (
                   <NavLink
@@ -564,23 +566,27 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
           listItems[0].layout_type == 'slider_seeall' ||
           listItems[0].layout_type == 'featured_staggered_grid' ||
           listItems[0].layout_type == 'news_card_listing' ? (
-            <div style={{ width: '63%', marginLeft: '25px', marginTop: '7px' }}>
-              <div className="flex items-center font-extrabold float-left ml-3.5">
-                {listItems[0].ml_title[0].text}
-              </div>
-              <div className="flex items-center font-semibold text-sm text-red-500 float-right mr-10">
-                {listItems[0].url != '' ? (
-                  <NavLink
-                    href={listItems[0].url}
-                    as={listItems[0].url}
-                    passHref
-                    onClick={() => {
-                      menuClick(listItems[0], 'headermenu');
-                    }}
-                  >
-                    {t('see_all')}
-                  </NavLink>
-                ) : null}
+            <div className="lg:container listing-container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ">
+              <div className="md:w-8/12 h-full md:flex md:justify-between md:flex-wrap">
+                <h1 className="flex items-center font-extrabold float-left ml-3.5 px-2 text-md font-bold capitalize">
+                  {data.ml_title && data.ml_title[0]
+                    ? data.ml_title[0].text
+                    : data.catalog_list_items[0].ml_title[0].text}
+                </h1>
+                <div className="flex items-center font-semibold text-sm text-red-500 float-right mr-10">
+                  {listItems[0].url != '' ? (
+                    <NavLink
+                      href={listItems[0].url}
+                      as={listItems[0].url}
+                      passHref
+                      onClick={() => {
+                        menuClick(listItems[0], 'headermenu');
+                      }}
+                    >
+                      {t('see_all')}
+                    </NavLink>
+                  ) : null}
+                </div>
               </div>
             </div>
           ) : !(dropdown && dropdown.data && dropdown.data.length > 1) ? (
@@ -811,11 +817,17 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
             {listItems && listItems.length > 0 ? (
               <>
                 <Media at="xs" className="w-full">
-                  <h1 className="px-2 text-md font-bold capitalize">
-                    {data.ml_title && data.ml_title[0]
-                      ? data.ml_title[0].text
-                      : data.catalog_list_items[0].ml_title[0].text}
-                  </h1>
+                  {listItems[0].layout_type == 'featured_topnews_seeall' ||
+                  listItems[0].layout_type == 'slider_seeall' ||
+                  listItems[0].layout_type == 'featured_staggered_grid' ||
+                  listItems[0].layout_type == 'news_card_listing' ? null : (
+                    <h1 className="px-2 text-md font-bold capitalize">
+                      {data.ml_title && data.ml_title[0]
+                        ? data.ml_title[0].text
+                        : data.catalog_list_items[0].ml_title[0].text}
+                    </h1>
+                  )}
+
                   <MobileMainArticles
                     list={listItems[0].catalog_list_items}
                     dropdown={dropdown}
