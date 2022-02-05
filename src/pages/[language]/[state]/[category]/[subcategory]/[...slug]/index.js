@@ -207,8 +207,10 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
         break;
 
       case 'navlisting':
-        const item = data.catalog_list_items[0];
-
+        let item = data.catalog_list_items[0];
+        if (item.meta_tag_keywords && item.meta_tag_keywords.length === 0) {
+          item = data;
+        }
         return (
           <>
             <Head>
