@@ -225,7 +225,7 @@ const slug = ({ data, pageType, id, userAgent }) => {
   "thumbnailUrl": "${data.ldjson.videos[0].thumbnail}",
   "uploadDate": "${data.ldjson.videos[0].upload_date}",
   "contentUrl": "${data.ldjson.videos[0].url}",
-  "embedUrl": "${data.ldjson.videos[0].url}",
+  "embedUrl": "${data.ldjson.videos[0].url}"
 }`,
             }}
           ></script>
