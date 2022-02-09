@@ -53,7 +53,7 @@ const SocialMedia = ({ data, index }) => {
 
   const url = data.web_url ? data.web_url : router.asPath.slice(1);
 const kooShare = () =>{
-  let kooShareurl = "https://www.kooapp.com/create?title="+data.title+"&link="+url+"&language="+data.item_languages[0]+"&handle=acme&utm_source=acmeonkoo&utm_campaign=ac meonkoo_share"
+  let kooShareurl = "https://www.kooapp.com/create?title="+data.title+"&link="+data.dynamic_url+"&language="+data.item_languages[0]+"&handle=acme&utm_source=acmeonkoo&utm_campaign=ac meonkoo_share"
   window.open(kooShareurl, "Popup","toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=550, height=400, top=30")
 }
   return (
