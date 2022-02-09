@@ -99,13 +99,7 @@ export default {"data":{"data":{
             "marathi"
           ]
         },
-        {
-          "state": "goa",
-          "display_title": "गोवा",
-          "item_languages": [
-            "english"
-          ]
-        },
+        
         {
           "state": "jammu-and-kashmir",
           "display_title": "ﺞﻣﻭں ﻭ کﺶﻣیﺭ",
@@ -162,13 +156,7 @@ export default {"data":{"data":{
             "assamese"
           ]
         },
-        {
-          "state": "tripura",
-          "display_title": "ত্রিপুরা",
-          "item_languages": [
-            "hindi"
-          ]
-        },
+        
         {
           "state": "orissa",
           "display_title": "ଓଡିଶା",
