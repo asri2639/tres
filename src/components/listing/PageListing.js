@@ -22,6 +22,7 @@ import MainArticles from './MainArticles';
 import { RTLContext } from '@components/layout/Layout';
 import useTranslator from '@hooks/useTranslator';
 import MobileMainArticles from './mobile/MobileMainArticles';
+import Head from 'next/head';
 
 export const totalItemsCount = (latestdata) => {
   let itemsCount = 0;
@@ -45,7 +46,15 @@ const ListingStateSelectModal = dynamic(
   options
 );
 
-const PageListing = ({ children, data, payload, dropdown, initCount }) => {
+const PageListing = ({
+  children,
+  canonicalUrl,
+  item,
+  data,
+  payload,
+  dropdown,
+  initCount,
+}) => {
   const api = API(APIEnum.CatalogList, APIEnum.Listing);
   const router = useRouter();
   const isRTL = useContext(RTLContext);
@@ -70,6 +79,15 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
     capital: null,
   });
   const [listItems, setListItems] = useState(items);
+  let ldJsonList = [];
+  if (items) {
+    ldJsonList = items[0].catalog_list_items.slice(0, 3).map((v, i) => ({
+      '@type': 'ListItem',
+      position: i + 1 + '',
+      url: v.dynamic_url,
+      name: v.display_title,
+    }));
+  }
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [callsDone, setCallsDone] = useState(1);
   const [desktopUrl, setDesktopUrl] = useState(null);
@@ -456,6 +474,26 @@ const PageListing = ({ children, data, payload, dropdown, initCount }) => {
 
   return (
     <React.Fragment>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: `{
+			"@context": "http://schema.org",
+			"@type": "ItemList",
+      "url": "${canonicalUrl}",
+      "name": "${
+        item.meta_tag_title !== '' &&
+        !item.meta_tag_title.includes('canonical tag')
+          ? item.meta_tag_title
+          : 'ETV Bharat'
+      }",
+      "description": "${item.meta_tag_description}",
+			"itemListElement": ${JSON.stringify(ldJsonList)}
+		}  `,
+          }}
+        ></script>
+      </Head>
       <MediaContextProvider>
         <Media at="xs" className="w-full mt-2">
           {listItems[0].layout_type == 'featured_topnews_seeall' ||
