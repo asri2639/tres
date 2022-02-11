@@ -19,6 +19,7 @@ const MobileFooter = ({ data, menu }) => {
   const [socialHandlers, setSocialHandlers] = useState({
     twitter: 'https://twitter.com/ETVBharatEng',
     fb: 'https://www.facebook.com/ETVBharatEnglish',
+    koo: 'https://www.kooapp.com/profile/etvbharat'
   });
   const [searchBox, toggleSearchBox] = useState(false);
   const [searchInput, setSearchInput] = useState('');
@@ -199,6 +200,7 @@ const MobileFooter = ({ data, menu }) => {
                           alt="ETV"
                           src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/facebook_icon-2x.png"
                         />
+                        
                       </NavLink>
                     </li>
                     <li>
@@ -214,6 +216,22 @@ const MobileFooter = ({ data, menu }) => {
                           height="24"
                           alt="ETV"
                           src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/twitter_icon-2x.png"
+                        />
+                      </NavLink>
+                    </li><li>
+                   
+                      <NavLink
+                        href={socialHandlers.koo}
+                        passHref
+                        prefetch={false}
+                      >
+                        <img
+                          loading="lazy"
+                          className="h-6"
+                          width="24"
+                          height="24"
+                          alt="ETV"
+                          src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/koo.svg"
                         />
                       </NavLink>
                     </li>

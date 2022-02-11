@@ -115,6 +115,16 @@ const DesktopFooter = ({ data, t }) => {
                   <p className={footer.img7}></p>
                 </a>
               </li>
+              <li
+                onClick={() => {
+                  window.location.href = socialHandlers.koo;
+                }}
+              >
+                <a href={socialHandlers.koo}>
+                  
+                  <p className={footer.img9}></p>
+                </a>
+              </li>
             </ul>
           </div>
         </div>

@@ -492,136 +492,163 @@ const stateSocialLinks = [
     state: 'National',
     twitter: 'https://twitter.com/ETVBharatEng',
     fb: 'https://www.facebook.com/ETVBharatEnglish',
+    koo: 'https://www.kooapp.com/profile/etvbharat',
   },
   {
     state: 'goa',
     twitter: 'https://twitter.com/ETVBharatEng',
     fb: 'https://www.facebook.com/ETV-Bharat-Goa-176846926538180',
+    koo:''
   },
   {
     state: 'punjab',
     twitter: 'https://twitter.com/ETVBharatPB',
     fb: 'https://www.facebook.com/ETVbharatPunjab',
+    koo:'https://www.kooapp.com/profile/etvbharatpunjab',
   },
   {
     state: 'himachal-pradesh',
     twitter: 'https://twitter.com/ETVBharatHP',
     fb: 'https://www.facebook.com/ETVBharatHimachalPradesh',
+    koo:'https://www.kooapp.com/profile/etvbharathimachalpradesh',
   },
   {
     state: 'Urdu',
     twitter: 'https://twitter.com/ETVBharatUrdu',
     fb: 'https://www.facebook.com/ETVBharatUrdu',
+    koo: 'https://www.kooapp.com/profile/etvbharaturdu',
   },
   {
     state: 'telangana',
     twitter: 'https://twitter.com/ETVBharat_ts',
     fb: 'https://www.facebook.com/ETVBharatTelangana',
+    koo: 'https://www.kooapp.com/profile/etvbharattelangana',
   },
   {
     state: 'andhra-pradesh',
     twitter: 'https://twitter.com/ETVBharatAP',
     fb: 'https://www.facebook.com/ETVBharatAndhraPradesh',
+    koo: 'https://www.kooapp.com/profile/etvbharatandhrapradesh',
   },
   {
     state: 'hindi',
     twitter: 'https://twitter.com/ETVBharatHindi',
     fb: 'https://www.facebook.com/Etv-Bharat-Tripura-1155623571198468',
+    koo: ''
   },
   {
     state: 'tripura',
     twitter: 'https://twitter.com/ETVBharatHindi',
     fb: 'https://www.facebook.com/Etv-Bharat-Tripura-1155623571198468',
+    koo:''
   },
   {
     state: 'assam',
     twitter: 'https://twitter.com/ETVBharatAS',
     fb: 'https://www.facebook.com/ETVBharatAssam',
+    koo: 'https://www.kooapp.com/profile/etvbharatassam',
   },
   {
     state: 'tamil-nadu',
     twitter: 'https://twitter.com/ETVBharatTN',
     fb: 'https://www.facebook.com/ETVBharatTamilnadu',
+    koo: 'https://www.kooapp.com/profile/etvbharattamilnadu',
   },
   {
     state: 'maharashtra',
     twitter: 'https://twitter.com/ETVBharatMA',
     fb: 'https://www.facebook.com/ETVBharatMaharashtra',
+    koo: 'https://www.kooapp.com/profile/etvbharatmaharashtra',
   },
   {
     state: 'west-bengal',
     twitter: 'https://twitter.com/ETVBharatWB',
     fb: 'https://www.facebook.com/ETVBharatWestBengal',
+    koo: 'https://www.kooapp.com/profile/etvbharatwestbengal',
   },
   {
     state: 'karnataka',
     twitter: 'https://twitter.com/ETVBharatKA',
     fb: 'https://www.facebook.com/ETVBharatKarnataka',
+    koo: 'https://www.kooapp.com/profile/etvbharatkarnataka',
   },
   {
     state: 'odisha',
     twitter: 'https://twitter.com/ETVBharatOD',
     fb: 'https://www.facebook.com/ETVBharatOdisha',
+    koo: 'https://www.kooapp.com/profile/etvbharatodisha',
   },
   {
     state: 'gujarat',
     twitter: 'https://twitter.com/ETVBharatGJ',
     fb: 'https://www.facebook.com/ETVBharatGujarat',
+    koo: 'https://www.kooapp.com/profile/etvbharatgujarat',
   },
   {
     state: 'rajasthan',
     twitter: 'https://twitter.com/ETVBharatRJ',
     fb: 'https://www.facebook.com/ETVBharatRajasthan',
+    koo: 'https://www.kooapp.com/profile/etvbharatrajasthan',
   },
   {
     state: 'haryana',
     twitter: 'https://twitter.com/ETVBharatHR',
     fb: 'https://www.facebook.com/ETVBharatHaryana',
+    koo: 'https://www.kooapp.com/profile/etvbharatharyana',
   },
   {
     state: 'jharkhand',
     twitter: 'https://twitter.com/ETVBharatJH',
     fb: 'https://www.facebook.com/ETVBharatJharkhand',
+    koo: 'https://www.kooapp.com/profile/etvbharatjharkhand',
   },
   {
     state: 'bihar',
     twitter: 'https://twitter.com/ETVBharatBR',
     fb: 'https://www.facebook.com/ETVBharatBihar',
+    koo: 'https://www.kooapp.com/profile/etvbharatbihar',
   },
   {
     state: 'madhya-pradesh',
     twitter: 'https://twitter.com/ETVBharatMP',
     fb: 'https://www.facebook.com/ETVBharatMadhyaPradesh',
+    koo: 'https://www.kooapp.com/profile/etvbharatmadhyapradesh',
   },
   {
     state: 'kerala',
     twitter: 'https://twitter.com/ETVBharatKL',
     fb: 'https://www.facebook.com/ETVBharatKerala',
+    koo: 'https://www.kooapp.com/profile/etvbharatkerala',
   },
   {
     state: 'chhattisgarh',
     twitter: 'https://twitter.com/ETVBharatCG',
     fb: 'https://www.facebook.com/ETVBharatChattisgarh',
+    koo: 'https://www.kooapp.com/profile/etvbharatchhattisgarh',
   },
   {
     state: 'delhi',
     twitter: 'https://twitter.com/ETVBharatDelhi',
     fb: 'https://www.facebook.com/ETVBharatDelhi',
+    koo: 'https://www.kooapp.com/profile/etvbharatdelhi',
   },
   {
     state: 'uttar-pradesh',
     twitter: 'https://twitter.com/ETVBharatUP',
     fb: 'https://www.facebook.com/ETVBharatUttarPradesh',
+    koo: 'https://www.kooapp.com/profile/etvbharatuttarpradesh',
   },
   {
     state: 'uttarakhand',
     twitter: 'https://twitter.com/ETVBharatUK',
     fb: 'https://www.facebook.com/ETVBharatUttarakhand',
+    koo: 'https://www.kooapp.com/profile/etvbharatuttarakhand',
   },
   {
     state: 'jammu-and-kashmir',
     twitter: 'https://twitter.com/ETVBharatJK',
     fb: 'https://www.facebook.com/ETVBharatJammuandKashmir',
+    koo: 'https://www.kooapp.com/profile/etvbharatjammukashmir',
   },
 ];
 
