@@ -262,6 +262,8 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
             />
             <PageListing
               key={canonicalUrl}
+              canonicalUrl={canonicalUrl}
+              item={item}
               data={data}
               initCount={initCount}
               payload={payload}

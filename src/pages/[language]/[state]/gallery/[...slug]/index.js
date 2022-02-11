@@ -273,12 +273,13 @@ const slug = ({ data, pageType, id }) => {
               }}
             ></script>
 
-            {/*   <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: `{
+            {
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: `{
                   "@context": "https://schema.org",
-                  "@type": "imageGallery",
+                  "@type": "ImageGallery",
                   "mainEntityOfPage": {
                     "@type": "WebPage",
                     "@id": "https://www.etvbharat.com/${headerObj.url}",
@@ -321,8 +322,9 @@ const slug = ({ data, pageType, id }) => {
                   }
                 }
               `,
-              }}
-            ></script> */}
+                }}
+              ></script>
+            }
           </>
         ) : null}
         {component}
