@@ -305,7 +305,7 @@ const slug = ({ data, pageType, id }) => {
                   "datePublished": "${headerObj.publishedAt}",
                   "dateModified": "${
                     headerObj.updatedAt || headerObj.publishedAt
-                  }"
+                  }",
                   "author": { "@type": "Person", "name": "ETV Bharat" },
                   "publisher": {
                     "@type": "Organization",
