@@ -137,14 +137,10 @@ const slug = ({ data, pageType, id }) => {
       contentType: main.content_type,
       images: [
         {
-          url: main.thumbnails.banner
-            ? main.thumbnails.banner.url
-            : main.thumbnails.web_3_2.url,
+          url: thumbnail.url,
           width: 768,
           height: 512,
-          alt: main.thumbnails.banner
-            ? main.thumbnails.banner.alt_tags
-            : main.thumbnails.web_3_2.alt_tags,
+          alt: thumbnail.alt_tags,
         },
       ],
       ldjson: true,
@@ -166,12 +162,45 @@ const slug = ({ data, pageType, id }) => {
         }}
       />
     );
-
     return (
       <>
         {headerObj.title ? (
           <>
             {' '}
+            <NextSeo
+              title={headerObj.title}
+              description={headerObj.description
+                .replace(/\(/g, '%28')
+                .replace(/\)/g, '%29')
+                .replace(/\[/g, '%5B')
+                .replace(/\]/g, '%5D')}
+              additionalMetaTags={[
+                {
+                  name: 'keywords',
+                  content: headerObj.keywords,
+                },
+              ]}
+              openGraph={{
+                site_name: 'ETV Bharat News',
+                url: `https://www.etvbharat.com/${headerObj.url}`,
+                type: headerObj.contentType,
+                title: headerObj.title,
+                description: headerObj.description,
+                images: [
+                  {
+                    url: headerObj.thumbnail.url,
+                    width: 768,
+                    height: 512,
+                    alt: headerObj.thumbnail.alt_tags,
+                  },
+                ],
+              }}
+              twitter={{
+                handle: '@etvbharat',
+                site: '@etvbharat',
+                cardType: 'summary_large_image',
+              }}
+            />
             <Head>
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
@@ -193,41 +222,8 @@ const slug = ({ data, pageType, id }) => {
                 property="og:image:secure_url"
                 content={headerObj.thumbnail.url}
               />
+              <meta property="og:image" content={headerObj.thumbnail.url} />
             </Head>
-            <NextSeo
-              title={headerObj.title}
-              description={headerObj.description
-                .replace(/\(/g, '%28')
-                .replace(/\)/g, '%29')
-                .replace(/\[/g, '%5B')
-                .replace(/\]/g, '%5D')}
-              additionalMetaTags={[
-                {
-                  name: 'keywords',
-                  content: headerObj.keywords,
-                },
-              ]}
-              openGraph={{
-                site_name: 'ETV Bharat News',
-                url: `https://www.etvbharat.com/${headerObj.url}`,
-                type: headerObj.contentType,
-                title: headerObj.title,
-                description: headerObj.description,
-                images: headerObj.images || [
-                  {
-                    url: headerObj.thumbnail.url,
-                    width: 768,
-                    height: 512,
-                    alt: headerObj.thumbnail.alt_tags,
-                  },
-                ],
-              }}
-              twitter={{
-                handle: '@etvbharat',
-                site: '@etvbharat',
-                cardType: 'summary_large_image',
-              }}
-            />
           </>
         ) : null}
         {headerObj.ldjson ? (
