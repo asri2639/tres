@@ -70,7 +70,7 @@ const SquareCard = ({
           <img
             className="absolute w-6 bottom-1 right-1"
             src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/video_big_icon-2x.png"
-            alt=""
+            alt="etv play button"
           />
         ) : null}
       </div>

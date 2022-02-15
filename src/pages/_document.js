@@ -96,6 +96,7 @@ export default class ETVDocument extends Document {
             <img
               style={{ height: 0, width: 0, visibility: 'hidden' }}
               src="https://sb.scorecardresearch.com/p?c1=2&c2=20416623&cv=2.0&cj=1"
+              alt="sb"
             />
           </noscript>
 

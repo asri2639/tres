@@ -226,7 +226,7 @@ const SocialMedia = ({ data, index }) => {
             width="24"
             className="w-6 lg:mx-auto inline-block cursor-pointer"
             src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/comment.png"
-            alt=""
+            alt="etv comment image"
             onClick={() => {
               query.elementsIndex = +new Date();
               comment(data);

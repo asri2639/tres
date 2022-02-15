@@ -61,7 +61,7 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
           <img
             className="absolute w-5 bottom-2 right-2 "
             src="https://etvbharatimages.akamaized.net/etvbharat/static/assets/images/video_big_icon-2x.png"
-            alt=""
+            alt="etv play button"
           />
         ) : null}
       </div>

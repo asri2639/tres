@@ -26,7 +26,7 @@ const AdContainer = dynamic(
 import { articleViewScroll } from '@utils/GoogleTagManager';
 import { pageView, nextPageView } from '@utils/ComScore';
 import { useRouter } from 'next/router';
-
+// import FirstAd from '@components/Article/FirstAd';
 // initialPosition
 // div height
 // current Scroll position
@@ -264,9 +264,9 @@ export default function Article({
               ) : null}
               <MediaContextProvider>
                 <Media at="xs">
-                  {/*   {index === 0 ? (
+                  {/* {index === 0 ? (
                     <FirstAd adData={ads ? ads['' + (index * 2 + 1)] : null} />
-                  ) : null} */}
+                  ) : null}  */}
                   <div className="relative pb-10">
                     <h1
                       ref={ref}
