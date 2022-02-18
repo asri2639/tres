@@ -71,7 +71,7 @@ const Video = ({
       };
       break;
   }
-  // adlink = null;
+  adlink = null;
 
   const ref = useCallback(
     (node) => {

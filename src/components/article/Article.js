@@ -81,7 +81,7 @@ export default function Article({
       };
       break;
   }
-  // adlink = null;
+  adlink = null;
 
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,

@@ -79,7 +79,7 @@ const Gallery = ({
       };
       break;
   }
-  // adlink = null;
+  adlink = null;
 
   const [inViewRef, inView, entry] = useInView({
     // delay: 200,
