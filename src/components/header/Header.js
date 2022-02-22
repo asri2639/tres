@@ -40,18 +40,24 @@ export default function Header({ data, language }) {
   return (
     <>
       <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: `{
+        {menuHeaders && menuHeaders.names && menuHeaders.urls ? (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: `{
                 "@context": "https://schema.org",
                 "@type": "SiteNavigationElement",
-                "name": ${JSON.stringify(menuHeaders.names)},
-                "url": ${JSON.stringify(menuHeaders.urls)}
+                "name": ${
+                  menuHeaders.names ? JSON.stringify(menuHeaders.names) : ''
+                },
+                "url": ${
+                  menuHeaders.urls ? JSON.stringify(menuHeaders.urls) : ''
+                }
               }
               `,
-          }}
-        ></script>
+            }}
+          ></script>
+        ) : null}
       </Head>
 
       <MediaContextProvider>
