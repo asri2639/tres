@@ -17,9 +17,9 @@ const MobileFooter = ({ data, menu }) => {
   const isiOS = false;
 
   const [socialHandlers, setSocialHandlers] = useState({
-    twitter: 'https://twitter.com/ETVBharatEng',
-    fb: 'https://www.facebook.com/ETVBharatEnglish',
-    koo: 'https://www.kooapp.com/profile/etvbharat'
+    twitter: '',
+    fb: '',
+    koo: ''
   });
   const [searchBox, toggleSearchBox] = useState(false);
   const [searchInput, setSearchInput] = useState('');
@@ -51,6 +51,15 @@ const MobileFooter = ({ data, menu }) => {
       goTo();
     }
   };
+  useEffect(() =>{
+    const splitPath = location.pathname.split('/');
+    const state = splitPath[2];
+    const language = splitPath[1];
+     
+     let finalkey = language === 'urdu' && state === 'national' ? "urdunational":state;
+      const socialLinks = getSocialLinks(finalkey);
+      setSocialHandlers(socialLinks);
+  },[])
   const openSideMenu = () => {};
 
   useEffect(() => {

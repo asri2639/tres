@@ -20,22 +20,34 @@ const DesktopFooter = ({ data, t }) => {
   const state = splitPath[2];
 
   const [socialHandlers, setSocialHandlers] = useState({
-    twitter: 'https://twitter.com/ETVBharatEng',
-    fb: 'https://www.facebook.com/ETVBharatEnglish',
+    twitter: '',
+    fb: '',
     koo:''
   });
   const openFeedback = () => {};
+  useEffect(() =>{
+    const splitPath = location.pathname.split('/');
+    const state = splitPath[2];
+    const language = splitPath[1];
+     
+     let finalkey = language === 'urdu' && state === 'national' ? "urdunational":state;
+      const socialLinks = getSocialLinks(finalkey);
+      setSocialHandlers(socialLinks);
+  },[])
   useEffect(() => {
     const splitPath = location.pathname.split('/');
     const state = splitPath[2];
-    const socialLinks = getSocialLinks(state);
-    setSocialHandlers(socialLinks);
+    const language = splitPath[1];
+     
+     let finalkey = language === 'urdu' && state === 'national' ? "urdunational":state;
+      const socialLinks = getSocialLinks(finalkey);
+      setSocialHandlers(socialLinks);
 
     const handleRouteChange = (url) => {
       const splitPath = location.pathname.split('/');
       const state = splitPath[2];
       const language = splitPath[1];
-      console.log(language,state)
+     
      let finalkey = language === 'urdu' && state === 'national' ? "urdunational":state;
       const socialLinks = getSocialLinks(finalkey);
       setSocialHandlers(socialLinks);
