@@ -164,13 +164,7 @@ export default {"data":{"data":{
             "oriya"
           ]
         },
-        {
-          "state": "",
-          "display_title": "ETV भारत",
-          "item_languages": [
-            "hindi"
-          ]
-        },
+        
         {
           "state": "national",
           "display_title": "ETV Bharat",

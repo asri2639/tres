@@ -645,6 +645,12 @@ const stateSocialLinks = [
     koo: 'https://www.kooapp.com/profile/etvbharatuttarakhand',
   },
   {
+    state: 'urdunational',
+    twitter: 'https://twitter.com/ETVBharatUrdu',
+    fb: 'https://www.facebook.com/ETVBharatUrdu',
+    koo: 'https://www.kooapp.com/profile/etvbharaturdu',
+  },
+  {
     state: 'jammu-and-kashmir',
     twitter: 'https://twitter.com/ETVBharatJK',
     fb: 'https://www.facebook.com/ETVBharatJammuandKashmir',

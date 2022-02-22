@@ -22,6 +22,7 @@ const DesktopFooter = ({ data, t }) => {
   const [socialHandlers, setSocialHandlers] = useState({
     twitter: 'https://twitter.com/ETVBharatEng',
     fb: 'https://www.facebook.com/ETVBharatEnglish',
+    koo:''
   });
   const openFeedback = () => {};
   useEffect(() => {
@@ -33,7 +34,10 @@ const DesktopFooter = ({ data, t }) => {
     const handleRouteChange = (url) => {
       const splitPath = location.pathname.split('/');
       const state = splitPath[2];
-      const socialLinks = getSocialLinks(state);
+      const language = splitPath[1];
+      console.log(language,state)
+     let finalkey = language === 'urdu' && state === 'national' ? "urdunational":state;
+      const socialLinks = getSocialLinks(finalkey);
       setSocialHandlers(socialLinks);
     };
 
@@ -47,6 +51,7 @@ const DesktopFooter = ({ data, t }) => {
   }, []);
   return (
     <footer className="eb-footer footer">
+    {console.log(socialHandlers)}
       <div className="desktop-footer absolute bottom-0 w-full divide-y md:block hidden font-english mb-4">
         {/* {t('top_news')} */}
         <div className="border-t">

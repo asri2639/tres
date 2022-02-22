@@ -63,7 +63,10 @@ const MobileFooter = ({ data, menu }) => {
     const handleRouteChange = (url) => {
       const splitPath = location.pathname.split('/');
       const state = splitPath[2];
-      const socialLinks = getSocialLinks(state);
+      const language = splitPath[1];
+     
+     let finalkey = language === 'urdu' && state === 'national' ? "urdunational":state;
+      const socialLinks = getSocialLinks(finalkey);
       setSocialHandlers(socialLinks);
     };
 
