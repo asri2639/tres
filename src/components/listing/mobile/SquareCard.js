@@ -47,7 +47,7 @@ const SquareCard = ({
     <NavLink
       key={article.friendly_id}
       className={`flex  flex-col pb-1 cursor-pointer rounded-md shadow ${
-        isRTL ? 'rtl' : ''
+        isRTL ? 'rtl ml-5' : ''
       } ${className}`}
       href={linkInfo.href}
       as={linkInfo.as}
@@ -104,7 +104,7 @@ const SquareCard = ({
   ) : data ? (
     <NavLink
       className={`flex md:text-lg relative flex-col pb-1 cursor-pointer rounded-md ${
-        isRTL ? 'rtl' : ''
+        isRTL ? 'rtl ml-5 ' : ''
       } ${className}`}
       href={linkInfo.href}
       as={linkInfo.as}
