@@ -611,7 +611,7 @@ const PageListing = ({
                     ? data.ml_title[0].text
                     : data.catalog_list_items[0].ml_title[0].text}
                 </h1>
-                <div className="flex items-center font-semibold text-sm text-red-500 float-right mr-10">
+                <div className={`flex items-center font-semibold text-sm text-red-500 float-right mr-10 ${isRTL ? 'ml-32':''}`}>
                   {listItems[0].url != '' ? (
                     <NavLink
                       href={listItems[0].url}
@@ -817,7 +817,7 @@ const PageListing = ({
                     ? data.catalog_list_items[0].seo_ml_title[0].text
                     : data.catalog_list_items[0].ml_title[0].text}
                 </h1>
-                <div className="pr-2 text-sm flex">
+                <div className={`pr-2 text-sm flex ${isRTL ? 'ml-20':''}`}>
                   <span className="pr-2">
                     {t('select') + ' ' + t(dropdown.type)}
                   </span>
