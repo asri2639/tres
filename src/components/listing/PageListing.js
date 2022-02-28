@@ -501,7 +501,7 @@ const PageListing = ({
           listItems[0].layout_type == 'featured_staggered_grid' ||
           listItems[0].layout_type == 'news_card_listing' ? (
             <div>
-              <h1 className="flex items-center font-extrabold float-left ml-3.5 px-2 text-md font-bold capitalize">
+              <h1 className={`flex items-center font-extrabold float-left ml-3.5 px-2 text-md font-bold capitalize ${isRTL ? 'md:flex-row-reverse rtl ' : ''}`}>
                 {data.ml_title && data.ml_title[0]
                   ? data.ml_title[0].text
                   : data.catalog_list_items[0].ml_title[0].text}
@@ -574,7 +574,7 @@ const PageListing = ({
 
           {dropdown ? (
             dropdown.data && dropdown.data.length > 1 ? (
-              <div className="w-full flex justify-between flex-wrap items-center float-right mx-2.5">
+              <div className={`w-full flex justify-between flex-wrap items-center float-right mx-2.5 ${isRTL ? 'md:flex-row-reverse rtl ' : ''}`}>
                 <h1 className="pl-5 pr-4 text-md font-bold capitalize">
                   {data.catalog_list_items[0].seo_ml_title &&
                   data.catalog_list_items[0].seo_ml_title[0]
@@ -605,7 +605,7 @@ const PageListing = ({
           listItems[0].layout_type == 'featured_staggered_grid' ||
           listItems[0].layout_type == 'news_card_listing' ? (
             <div className="lg:container listing-container mt-2 lg:mx-auto bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ">
-              <div className="md:w-8/12 h-full md:flex md:justify-between md:flex-wrap">
+              <div className={`md:w-8/12 h-full md:flex md:justify-between md:flex-wrap ${isRTL ? 'md:flex-row-reverse rtl ml-96' : ''}`}>
                 <h1 className="flex items-center font-extrabold float-left ml-3.5 px-2 text-md font-bold capitalize">
                   {data.ml_title && data.ml_title[0]
                     ? data.ml_title[0].text
@@ -629,7 +629,7 @@ const PageListing = ({
             </div>
           ) : !(dropdown && dropdown.data && dropdown.data.length > 1) ? (
             <div className="lg:container lg:mx-auto mt-3">
-              <div className="md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row justify-between">
+              <div className={`md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row justify-between ${isRTL ? 'md:flex-row-reverse rtl ml-96' : ''}`}>
                 <h1 className="px-2 text-md font-bold capitalize">
                   {data.ml_title && data.ml_title[0]
                     ? data.ml_title[0].text
@@ -810,7 +810,7 @@ const PageListing = ({
           ) : null}
           {dropdown && dropdown.data && dropdown.data.length > 1 ? (
             <div className="lg:container lg:mx-auto mt-3">
-              <div className="md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row justify-between">
+              <div className={`md:w-8/12 h-full pl-2 pr-8 md:flex md:flex-wrap flex-row justify-between ${isRTL ? 'md:flex-row-reverse rtl ml-96' : ''}`}>
                 <h1 className="px-2 text-md font-bold capitalize">
                   {data.catalog_list_items[0].seo_ml_title &&
                   data.catalog_list_items[0].seo_ml_title[0]
