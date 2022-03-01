@@ -264,11 +264,12 @@ const PageListing = ({
         };
 
         const listingResp = await api.CatalogList.getListing(requestPayload);
-
+if(listingResp.data){
         setListItems((prevState) => {
           return prevState.concat(listingResp.data.data);
         });
         setCallsDone((callsDone) => callsDone + 1);
+}
       } else {
         let finalurl;
 
