@@ -276,6 +276,7 @@ const SeeAll = ({ data, article, className }) => {
           </div>
         ) : null}
         {scope.see_all ? (
+           <div className={`tems-center font-semibold text-sm text-red-500 `}>
           <NavLink
             className={`text-sm`}
             href={scope.link_info.href}
@@ -287,6 +288,7 @@ const SeeAll = ({ data, article, className }) => {
           >
             {t(scope.text)}
           </NavLink>
+          </div>
         ) : null}
       </div>
 
