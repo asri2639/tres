@@ -48,6 +48,7 @@ const ListContainer = ({ children, data, payload }) => {
   const [listItems, setListItems] = useState(items);
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
   const [callsDone, setCallsDone] = useState(1);
+  const [dataLoading, setDataLoading] = useState(true);
   const [filteredRHS, setFilteredRHS] = useState([]);
   const adsMap = [];
   const [firstSet, setFirstSet] = useState([]);
@@ -126,7 +127,8 @@ const ListContainer = ({ children, data, payload }) => {
   }, [adData]);
 
   async function fetchMoreListItems() {
-    if (payload && callsDone < totalCalls) {
+    if (payload && callsDone < totalCalls && dataLoading) {
+      setDataLoading(false);
       const requestPayload = {
         ...payload,
         query: {
@@ -137,6 +139,7 @@ const ListContainer = ({ children, data, payload }) => {
 
       const listingResp = await api.CatalogList.getListing(requestPayload);
       if (listingResp.data) {
+        setCallsDone((callsDone) => callsDone + 1);
         const data = listingResp.data.data;
         let items = reArrangeData(data);
 
@@ -165,8 +168,8 @@ const ListContainer = ({ children, data, payload }) => {
         setListItems((prevState) => {
           return prevState.concat(items);
         });
-
-        setCallsDone((callsDone) => callsDone + 1);
+        setDataLoading(true);
+        
       }
     }
 
