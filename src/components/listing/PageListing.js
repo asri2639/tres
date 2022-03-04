@@ -61,6 +61,7 @@ const PageListing = ({
   const { t, appLanguage } = useTranslator();
   const [showStateModal, setShowStateModal] = useState(false);
   const [desktopCall, setDesktopCall] = useState(true);
+  const [dataLoading, setDataLoading] = useState(true);
   const [totalCalls, setTotalCalls] = useState(
     Math.ceil(data.total_items_count / 8)
   );
@@ -186,6 +187,8 @@ const PageListing = ({
   }, [adData]);
 
   async function fetchMoreListItems() {
+    if(dataLoading){
+      setDataLoading(false);
     if (
       payload &&
       callsDone <= totalCalls &&
@@ -381,7 +384,8 @@ if(listingResp.data){
         }
       }
     }
-
+   setDataLoading(true);
+    }
     setIsFetching(false);
   }
 
