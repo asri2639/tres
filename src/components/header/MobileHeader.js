@@ -26,10 +26,10 @@ export default function MobileHeader({ data, className }) {
 
   const languageNStateSelect = (language, states) => {
     if (language === 'english') {
-      router.push(`/${language}/national`);
+      router.push(`/${language}/national/elections-2022`);
     } else {
       if (states.length === 1) {
-        router.push(`/${language}/${states[0].state}`);
+        router.push(`/${language}/${states[0].state}/elections-2022`);
       } else {
         setOpenStateModal(states);
       }
@@ -208,6 +208,30 @@ export default function MobileHeader({ data, className }) {
             isRTL ? 'flex-row-reverse rtl space-x-reverse' : ''
           }`}
         >
+         <div
+                    key={"elections"}
+                    className={`${header['header-menu-item']} text-white cursor-pointer whitespace-nowrap hover:text-red-700`}
+                  >
+                    <div className=" flex flex-col items-center relative  text-sm">
+                      <NavLink
+                         href={"/"+language+"/"+state+"/elections-2022"}
+                        as={"/"+language+"/"+state+"/elections-2022"}
+                        passHref
+                        onClick={() => {
+                          menuClick({
+                            "ml_title":[
+                              {
+                                "text":""
+                              }
+                            ],
+                            "url":"/"+language+"/"+state+"/elections-2022"
+                          }, 'headermenu');
+                        }}
+                      >
+                        <div>{"Elections 2022"}</div>
+                      </NavLink>
+                    </div>
+                  </div>
           {data.menu && data.menu.mobile
             ? data.menu.mobile.map((item) => {
                 return (
