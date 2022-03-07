@@ -59,7 +59,7 @@ section.content {
   /* bottom: 10px; */
   .pseudo {
     position: absolute;
-    z-index: 1;
+    z-index: -1;
     height: 20px;
     width: 200px;
   }
