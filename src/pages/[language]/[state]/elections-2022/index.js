@@ -2,17 +2,42 @@ import React from 'react';
 import { NextSeo } from 'next-seo';
 
 import { Media, MediaContextProvider } from '@media';
-
+import Head from 'next/head';
 import Error from 'next/error';
+import { getElectionInfo } from '@utils/Helpers';
 
 
-
-const slug = () => {
+const slug = ({metainfo}) => {
       
     
 
   return (
     <>
+     <Head>
+              <title>{metainfo.title}</title>
+              <link rel="canonical" href={"https://www.etvbharat.com/english/national/elections-2022"}></link>
+              </Head>
+              <NextSeo
+              title={
+                metainfo.title !== '' &&
+                !metainfo.title.includes('canonical tag')
+                  ? metainfo.title
+                  : 'ETV Bharat'
+              }
+              description={metainfo.description}
+              additionalMetaTags={[
+                {
+                  name: 'keywords',
+                  content: metainfo.keywords,
+                },
+              ]}
+              
+              twitter={{
+                handle: '@etvbharat',
+                site: '@etvbharat',
+                cardType: 'summary_large_image',
+              }}
+            />
         <MediaContextProvider>
        <Media at="xs">
        
@@ -36,9 +61,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, ...args }) {
+  const lang = params.language;
+  const state = params.state;
+   let finalkey = lang === 'urdu' && state === 'national' ? "urdunational":state;
+   let metadata = getElectionInfo(finalkey);
   return{
     props:   {
-
+      metainfo: metadata
       }
   }
 }

@@ -487,6 +487,200 @@ export const dateFormatter = (uts, amp = false) => {
     );
   }
 };
+const electionMetainfo = [
+ {
+  "Prtal": "ETV Bharat Andhra Pradesh",
+  "state": "andhra-pradesh",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, అసెంబ్లీ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్ , ఉత్తరాఖండ్ అసెంబ్లీ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్, యూపీ ఎలక్షన్ రిజల్ట్ 2022 లైవ్, పంజాబ్ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్ , మణిపూర్ ఎలక్షన్ రిజల్ట్ లైవ్, గోవా ఎలక్షన్ రిజల్ట్ లైవ్",
+  "title": "అసెంబ్లీ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్ - ETV Bharat",
+  "description": "అసెంబ్లీ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్ - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat",
+  "heading Tag": "అసెంబ్లీ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్"
+ },
+ {
+  "Prtal": "ETV Bharat Assam",
+  "state": "assam",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, বিধানসভা নিৰ্বাচন 2022 ৰ ফলাফল লাইভ, উত্তৰাখণ্ড বিধানসভা নিৰ্বাচন 2022 ৰ ফলাফল লাইভ, উত্তৰ প্ৰদেশ বিধানসভা নিৰ্বাচন 2022 ৰ ফলাফল লাইভ, পঞ্জাৱ বিধানসভা নিৰ্বাচন 2022ৰ ফলাফল লাইভ, মণিপুৰ বিধানসভা নিৰ্বাচন 2022 ৰ ফলাফল লাইভ, গোৱা বিধানসভা নিৰ্বাচনৰ ফলাফল লাইভ ৷",
+  "title": "বিধানসভা নিৰ্বাচন 2022 ৰ ফলাফল লাইভ - ETV Bharat",
+  "description": "বিধানসভা নিৰ্বাচন 2022 ৰ ফলাফল লাইভ - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat",
+  "heading Tag": "বিধানসভা নিৰ্বাচন 2022 ৰ ফলাফল লাইভ"
+ },
+ {
+  "Prtal": "ETV Bharat Bihar",
+  "state": "bihar",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, विधानसभा चुनाव 2022 परिणाम लाइव, उत्तराखंड विधानसभा चुनाव 2022 परिणाम लाइव, यूपी चुनाव परिणाम 2022 लाइव, पंजाब चुनाव 2022 परिणाम लाइव, मणिपुर चुनाव परिणाम लाइव, गोवा चुनाव परिणाम लाइव",
+  "title": "विधानसभा चुनाव 2022 परिणाम लाइव - ETV Bharat",
+  "description": "विधानसभा चुनाव 2022 परिणाम लाइव - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "विधानसभा चुनाव 2022 परिणाम लाइव"
+ },
+ {
+  "Prtal": "ETV Bharat Chhattisgarh",
+  "state": "chhattisgarh",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, विधानसभा चुनाव 2022 परिणाम लाइव, उत्तराखंड विधानसभा चुनाव 2022 परिणाम लाइव, यूपी चुनाव परिणाम 2022 लाइव, पंजाब चुनाव 2022 परिणाम लाइव, मणिपुर चुनाव परिणाम लाइव, गोवा चुनाव परिणाम लाइव",
+  "title": "विधानसभा चुनाव 2022 परिणाम लाइव - ETV Bharat",
+  "description": "विधानसभा चुनाव 2022 परिणाम लाइव - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "विधानसभा चुनाव 2022 परिणाम लाइव"
+ },
+ {
+  "Prtal": "ETV Bharat Delhi",
+  "state": "delhi",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, विधानसभा चुनाव 2022 परिणाम लाइव, उत्तराखंड विधानसभा चुनाव 2022 परिणाम लाइव, यूपी चुनाव परिणाम 2022 लाइव, पंजाब चुनाव 2022 परिणाम लाइव, मणिपुर चुनाव परिणाम लाइव, गोवा चुनाव परिणाम लाइव",
+  "title": "विधानसभा चुनाव 2022 परिणाम लाइव - ETV Bharat",
+  "description": "विधानसभा चुनाव 2022 परिणाम लाइव - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "विधानसभा चुनाव 2022 परिणाम लाइव"
+ },
+ {
+  "Prtal": "ETV Bharat English",
+  "state": "National",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live",
+  "title": "Assembly Elections 2022 Result Live – ETV Bharat",
+  "description": "Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "Assembly Elections 2022 Result Live"
+ },
+ {
+  "Prtal": "ETV Bharat Gujarat",
+  "state": "gujarat",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, વિધાનસભા ચૂંટણી 2022નું પરિણામ લાઈવ, ઉત્તરાખંડ વિધાનસભા ચૂંટણી 2022નું પરિણામ લાઈવ, યુપી ચૂંટણી પરિણામ 2022નું લાઈવ, પંજાબ ચૂંટણી 2022નું પરિણામ લાઈવ, મણિપુર ચૂંટણીનું પરિણામ લાઈવ, ગોવા ચૂંટણીનું પરિણામ લાઈવ",
+  "title": "વિધાનસભા ચૂંટણી 2022નું પરિણામ લાઈવ - ETV Bharat",
+  "description": "વિધાનસભા ચૂંટણી 2022નું પરિણામ લાઈવ - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "વિધાનસભા ચૂંટણી 2022નું પરિણામ લાઈવ"
+ },
+ {
+  "Prtal": "ETV Bharat Haryana",
+  "state": "haryana",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, विधानसभा चुनाव 2022 परिणाम लाइव, उत्तराखंड विधानसभा चुनाव 2022 परिणाम लाइव, यूपी चुनाव परिणाम 2022 लाइव, पंजाब चुनाव 2022 परिणाम लाइव, मणिपुर चुनाव परिणाम लाइव, गोवा चुनाव परिणाम लाइव",
+  "title": "विधानसभा चुनाव 2022 परिणाम लाइव - ETV Bharat",
+  "description": "विधानसभा चुनाव 2022 परिणाम लाइव - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "विधानसभा चुनाव 2022 परिणाम लाइव"
+ },
+ {
+  "Prtal": "ETV Bharat Himachal Pradesh",
+  "state": "himachal-pradesh",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, विधानसभा चुनाव 2022 परिणाम लाइव, उत्तराखंड विधानसभा चुनाव 2022 परिणाम लाइव, यूपी चुनाव परिणाम 2022 लाइव, पंजाब चुनाव 2022 परिणाम लाइव, मणिपुर चुनाव परिणाम लाइव, गोवा चुनाव परिणाम लाइव",
+  "title": "विधानसभा चुनाव 2022 परिणाम लाइव - ETV Bharat",
+  "description": "विधानसभा चुनाव 2022 परिणाम लाइव - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "विधानसभा चुनाव 2022 परिणाम लाइव"
+ },
+ {
+  "Prtal": "ETV Bharat Jammu& Kashmir",
+  "state": "jammu-and-kashmir",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, اسمبلی انتخابات 2022 نتیجہ لائیو, اتراکھنڈ اسمبلی انتخابات 2022 نتیجہ لائیو, یوپی انتخابات نتیجہ 2022 لائیو, پنجاب انتخابات نتیجہ 2022 لائیو, منی پور انتخابات نتیجہ لائیو, گوا انتخابات نتیجہ لائیو",
+  "title": "اسمبلی انتخابات 2022 نتیجہ لائیو,- ETV Bharat",
+  "description": "اسمبلی انتخابات 2022 نتیجہ لائیو, - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "اسمبلی انتخابات 2022 نتیجہ لائیو,"
+ },
+ {
+  "Prtal": "ETV Bharat Jharkhand",
+  "state": "jharkhand",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, विधानसभा चुनाव 2022 परिणाम लाइव, उत्तराखंड विधानसभा चुनाव 2022 परिणाम लाइव, यूपी चुनाव परिणाम 2022 लाइव, पंजाब चुनाव 2022 परिणाम लाइव, मणिपुर चुनाव परिणाम लाइव, गोवा चुनाव परिणाम लाइव",
+  "title": "विधानसभा चुनाव 2022 परिणाम लाइव - ETV Bharat",
+  "description": "विधानसभा चुनाव 2022 परिणाम लाइव - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "विधानसभा चुनाव 2022 परिणाम लाइव"
+ },
+ {
+  "Prtal": "ETV Bharat Karnataka",
+  "state": "karnataka",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, ವಿಧಾನಸಭಾ ಚುನಾವಣೆ 2022 ಫಲಿತಾಂಶ ನೇರಪ್ರಸಾರ, ಉತ್ತರಾಖಂಡ್ ವಿಧಾನಸಭಾ ಚುನಾವಣೆ 2022 ಫಲಿತಾಂಶ ನೇರಪ್ರಸಾರ, ಯುಪಿ ಚುನಾವಣೆ ಫಲಿತಾಂಶ 2022 ಲೈವ್, ಪಂಜಾಬ್ ಎಲೆಕ್ಷನ್ 2022 ರಿಸಲ್ಟ್ ಲೈವ್, ಮಣಿಪುರ ಚುನಾವಣೆ ಫಲಿತಾಂಶ ನೇರಪ್ರಸಾರ, ಗೋವಾ ಚುನಾವಣೆ ಫಲಿತಾಂಶ ನೇರಪ್ರಸಾರ",
+  "title": "ವಿಧಾನಸಭಾ ಚುನಾವಣೆ 2022 ಫಲಿತಾಂಶ ನೇರಪ್ರಸಾರ - ETV Bharat",
+  "description": "ವಿಧಾನಸಭಾ ಚುನಾವಣೆ 2022 ಫಲಿತಾಂಶ ನೇರಪ್ರಸಾರ - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "ವಿಧಾನಸಭಾ ಚುನಾವಣೆ 2022 ಫಲಿತಾಂಶ ನೇರಪ್ರಸಾರ"
+ },
+ {
+  "Prtal": "ETV Bharat Kerala",
+  "state": "kerala",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, നിയമസഭ തെരഞ്ഞെടുപ്പ്  ഫലം 2022 തത്സമയം, ഉത്തരാഖണ്ഡ് നിയമസഭ തെരഞ്ഞെടുപ്പ്  ഫലം 2022 തത്സമയം, യുപി തെരഞ്ഞെടുപ്പ്  ഫലം 2022 തത്സമയം, പഞ്ചാബ് തെരഞ്ഞെടുപ്പ്  ഫലം 2022 തത്സമയം, മണിപ്പുർ തെരഞ്ഞെടുപ്പ്  ഫലം 2022 തത്സമയം, ഗോവ  തെരഞ്ഞെടുപ്പ്  ഫലം തത്സമയം",
+  "title": "നിയമസഭ തെരഞ്ഞെടുപ്പ്  ഫലം 2022 തത്സമയം - ETV Bharat",
+  "description": "നിയമസഭ തെരഞ്ഞെടുപ്പ്  ഫലം 2022 തത്സമയം - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "നിയമസഭ തെരഞ്ഞെടുപ്പ്  ഫലം 2022 തത്സമയം "
+ },
+ {
+  "Prtal": "ETV Bharat Madhya Pradesh",
+  "state": "madhya-pradesh",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, विधानसभा चुनाव 2022 परिणाम लाइव, उत्तराखंड विधानसभा चुनाव 2022 परिणाम लाइव, यूपी चुनाव परिणाम 2022 लाइव, पंजाब चुनाव 2022 परिणाम लाइव, मणिपुर चुनाव परिणाम लाइव, गोवा चुनाव परिणाम लाइव",
+  "title": "विधानसभा चुनाव 2022 परिणाम लाइव - ETV Bharat",
+  "description": "विधानसभा चुनाव 2022 परिणाम लाइव - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "विधानसभा चुनाव 2022 परिणाम लाइव"
+ },
+ {
+  "Prtal": "ETV Bharat Maharashtra",
+  "state": "maharashtra",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, विधानसभा निवडणूक २०२२ निकाल लाईव्ह, उत्तराखंड  विधानसभा निवडणूक २०२२ निकाल लाईव्ह , उत्तर प्रदेश निवडणूक २०२२ निकाल लाईव्ह , पंजाब निवडणूक २०२२ निकाल लाईव्ह , मणिपूर निवडणूक निकाल लाईव्ह, गोवा निवडणूक निकाल लाईव्ह",
+  "title": "विधानसभा निवडणूक २०२२ निकाल लाईव्ह - ETV Bharat",
+  "description": "विधानसभा निवडणूक २०२२ निकाल लाईव्ह- Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "विधानसभा निवडणूक २०२२ निकाल लाईव्ह"
+ },
+ {
+  "Prtal": "ETV Bharat Odisha",
+  "state": "odisha",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, ବିଧାନସଭା ନିର୍ବାଚନ 2022 ଫଳାଫଳ ଲାଇଭ, ଉତ୍ତରାଖଣ୍ଡ ବିଧାନସଭା ନିର୍ବାଚନ 2022 ଫଳାଫଳ ଲାଇଭ, ଉତ୍ତରପ୍ରଦେଶ ନିର୍ବାଚନ 2022  ଫଳାଫଳ ଲାଇଭ, ପଞ୍ଜାବ ନିର୍ବାଚନ 2022 ଫଳାଫଳ ଲାଇଭ, ମଣିପୁର ନିର୍ବାଚନ ଫଳାଫଳ ଲାଇଭ, ଗୋଆ ନିର୍ବାଚନ ଫଳାଫଳ ଲାଇଭ",
+  "title": "ବିଧାନସଭା ନିର୍ବାଚନ 2022 ଫଳାଫଳ ଲାଇଭ - ETV Bharat",
+  "description": "ବିଧାନସଭା ନିର୍ବାଚନ 2022 ଫଳାଫଳ ଲାଇଭ - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "ବିଧାନସଭା ନିର୍ବାଚନ 2022 ଫଳାଫଳ ଲାଇଭ"
+ },
+ {
+  "Prtal": "ETV Bharat Punjab",
+  "state": "punjab",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, ਪੰਜਾਬ ਚੋਣ 2022 ਨਤੀਜੇ LIVE, ਪੰਜਾਬ ਵਿਧਾਨ ਸਭਾ ਚੋਣ ਨਿਊਜ਼, ਪੰਜਾਬ ਵਿਧਾਨ ਸਭਾ ਚੋਣ 2022 ਨਤੀਜੇ, ਪੰਜਾਬ ਚੋਣ 2022 ਲਾਈਵ, ਪੰਜਾਬ ਚੋਣ ਨਤੀਜੇ 2022, ਭਾਜਪਾ ਪੰਜਾਬ ਚੋਣ",
+  "title": "Punjab Election 2022 Results Live, ਪੰਜਾਬ ਚੋਣ 2022 ਨਤੀਜੇ LIVE – ETV Bharat",
+  "description": "ਪੰਜਾਬ ਚੋਣ 2022 ਨਤੀਜੇ LIVE - Read latest news and live updates of Punjab assembly (vidhan sabha) elections result including election photos, videos and many more at ETV Bharat.",
+  "heading Tag": "Punjab Election 2022 Results Live"
+ },
+ {
+  "Prtal": "ETV Bharat Rajasthan",
+  "state": "rajasthan",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, विधानसभा चुनाव 2022 परिणाम लाइव, उत्तराखंड विधानसभा चुनाव 2022 परिणाम लाइव, यूपी चुनाव परिणाम 2022 लाइव, पंजाब चुनाव 2022 परिणाम लाइव, मणिपुर चुनाव परिणाम लाइव, गोवा चुनाव परिणाम लाइव",
+  "title": "विधानसभा चुनाव 2022 परिणाम लाइव - ETV Bharat",
+  "description": "विधानसभा चुनाव 2022 परिणाम लाइव - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "विधानसभा चुनाव 2022 परिणाम लाइव"
+ },
+ {
+  "Prtal": "ETV Bharat Tamilnadu",
+  "state": "tamil-nadu",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, சட்டப்பேரவை தேர்தல் 2022 முடிவுகள் நேரலை, உத்தரகாண்ட் சட்டப்பேரவை தேர்தல் 2022 முடிவுகள் நேரலை, உத்தரப் பிரதேசம் சட்டப்பேரவை தேர்தல் முடிவுகள் 2022 நேரலை, பஞ்சாப்  சட்டப்பேரவை தேர்தல் 2022 முடிவுகள் நேரலை, மணிப்பூர் சட்டப்பேரவை தேர்தல் 2022 முடிவுகள் நேரலை, கோவா  சட்டப்பேரவை தேர்தல் 2022 முடிவுகள் நேரலை",
+  "title": "சட்டப்பேரவை தேர்தல் 2022 முடிவுகள் நேரலை -ETV Bharat",
+  "description": "சட்டப்பேரவை தேர்தல் 2022 முடிவுகள் நேரலை - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "சட்டப்பேரவை தேர்தல் 2022 முடிவுகள் நேரலை"
+ },
+ {
+  "Prtal": "ETV Bharat Telangana",
+  "state": "telangana",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, అసెంబ్లీ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్ , ఉత్తరాఖండ్ అసెంబ్లీ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్, యూపీ ఎలక్షన్ రిజల్ట్ 2022 లైవ్, పంజాబ్ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్ , మణిపూర్ ఎలక్షన్ రిజల్ట్ లైవ్, గోవా ఎలక్షన్ రిజల్ట్ లైవ్",
+  "title": "అసెంబ్లీ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్ - ETV Bharat",
+  "description": "అసెంబ్లీ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్ - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat",
+  "heading Tag": "అసెంబ్లీ ఎలక్షన్స్ 2022 రిజల్ట్ లైవ్"
+ },
+ {
+  "Prtal": "ETV Bharat Urdu",
+  "state": "urdunational",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, اسمبلی انتخابات 2022 نتیجہ لائیو, اتراکھنڈ اسمبلی انتخابات 2022 نتیجہ لائیو, یوپی انتخابات نتیجہ 2022 لائیو, پنجاب انتخابات نتیجہ 2022 لائیو, منی پور انتخابات نتیجہ لائیو, گوا انتخابات نتیجہ لائیو",
+  "title": "اسمبلی انتخابات 2022 نتیجہ لائیو,- ETV Bharat",
+  "description": "اسمبلی انتخابات 2022 نتیجہ لائیو, - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "اسمبلی انتخابات 2022 نتیجہ لائیو,"
+ },
+ {
+  "Prtal": "ETV Bharat Uttar Pradesh",
+  "state": "uttar-pradesh",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, विधानसभा चुनाव 2022 परिणाम लाइव, उत्तराखंड विधानसभा चुनाव 2022 परिणाम लाइव, यूपी चुनाव परिणाम 2022 लाइव, पंजाब चुनाव 2022 परिणाम लाइव, मणिपुर चुनाव परिणाम लाइव, गोवा चुनाव परिणाम लाइव",
+  "title": "विधानसभा चुनाव 2022 परिणाम लाइव - ETV Bharat",
+  "description": "विधानसभा चुनाव 2022 परिणाम लाइव - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "विधानसभा चुनाव 2022 परिणाम लाइव"
+ },
+ {
+  "Prtal": "ETV Bharat Uttarakhand",
+  "state": "uttarakhand",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, विधानसभा चुनाव 2022 परिणाम लाइव, उत्तराखंड विधानसभा चुनाव 2022 परिणाम लाइव, यूपी चुनाव परिणाम 2022 लाइव, पंजाब चुनाव 2022 परिणाम लाइव, मणिपुर चुनाव परिणाम लाइव, गोवा चुनाव परिणाम लाइव",
+  "title": "विधानसभा चुनाव 2022 परिणाम लाइव - ETV Bharat",
+  "description": "विधानसभा चुनाव 2022 परिणाम लाइव - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "विधानसभा चुनाव 2022 परिणाम लाइव"
+ },
+ {
+  "Prtal": "ETV Bharat West Bengal",
+  "state": "west-bengal",
+  "keywords": "Assembly Elections 2022 Result Live, Uttarakhand Assembly Elections 2022 Result Live, UP Election Results 2022 Live, Punjab Election 2022 Result Live, Manipur Election Result Live, Goa Election Result Live, বিধানসভা নির্বাচন ২০২২ ফলাফল লাইভ, উত্তরাখণ্ড বিধানসভা নির্বাচন ২০২২ ফলাফল লাইভ, উত্তরপ্রদেশ নির্বাচন ফলাফল ২০২২ লাইভ, পাঞ্জাব নির্বাচন ২০২২ ফলাফল লাইভ, মণিপুর নির্বাচনের ফলাফল লাইভ, গোয়া নির্বাচনের ফলাফল লাইভ",
+  "title": "বিধানসভা নির্বাচন ২০২২ ফলাফল লাইভ - ETV Bharat",
+  "description": "বিধানসভা নির্বাচন ২০২২ ফলাফল লাইভ - Get all the latest news and updates on Uttarakhand Assembly Elections 2022 Result, UP Election Results 2022, Punjab Election 2022 Result, Manipur and Goa Election Result Live on ETV Bharat.",
+  "heading Tag": "বিধানসভা নির্বাচন ২০২২ ফলাফল লাইভ"
+ }
+]
 const stateSocialLinks = [
   {
     state: 'National',
@@ -667,6 +861,17 @@ export const getSocialLinks = (state) => {
   }
   return links ? links : stateSocialLinks[0];
 };
+
+export const getElectionInfo = (state) => {
+  let info;
+  if(state){
+    info = electionMetainfo.find(
+      (v) => v.state.toLowerCase() === state.toLowerCase()
+    );
+  }
+  return info ? info : electionMetainfo[0];
+  
+}
 
 export const getAmpUrl = (dynamic_purl, listing) => {
   var amphtml_fields = dynamic_purl.split('/');
