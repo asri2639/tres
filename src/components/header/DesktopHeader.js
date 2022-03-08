@@ -58,11 +58,11 @@ const DesktopHeader = ({ className, data }) => {
   };
   const languageNStateSelect = (language, states) => {
     if (language === 'english') {
-      goToLanguageListing(language, [`/national/elections-2022`, `/${language}/national/elections-2022`]);
+      goToLanguageListing(language, [`/national`, `/${language}/national`]);
     } else {
       if (states.length === 1 && states[0].state) {
         const state = states[0].state.toLowerCase();
-        goToLanguageListing(language, [`/${state}/elections-2022`, `/${language}/${state}/elections-2022`]);
+        goToLanguageListing(language, [`/${state}`, `/${language}/${state}`]);
       } else {
         setSelected({ state: '', language: '' });
         setOpenStateModal(states);
@@ -382,33 +382,7 @@ const DesktopHeader = ({ className, data }) => {
             className={`${header.hamburger} ml-2`}
             onClick={() => toggleSidebar(true)}
           ></div>
-<div
-                    key={"elections"}
-                    className={`${header['header-menu-item']} text-white cursor-pointer whitespace-nowrap hover:text-red-700`}
-                  >
-                    <div
-                      className=" flex flex-col items-center relative"
-                      
-                    >
-                      <NavLink
-                        href={"/"+language+"/"+state+"/elections-2022"}
-                        as={"/"+language+"/"+state+"/elections-2022"}
-                        passHref
-                        onClick={() => {
-                          menuClick({
-                            "ml_title":[
-                              {
-                                "text":""
-                              }
-                            ],
-                            "url":"/"+language+"/"+state+"/elections-2022"
-                          }, 'headermenu');
-                        }}
-                      >
-                        {"Elections 2022"}
-                      </NavLink>
-                      
-                    </div></div>
+
           {data.menu && data.menu.desktop
             ? data.menu.desktop.map((item) => {
                 return (

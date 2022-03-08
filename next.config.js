@@ -66,7 +66,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/english/national/elections-2022',
+        destination: '/english/national',
         permanent: true,
       },
       {
