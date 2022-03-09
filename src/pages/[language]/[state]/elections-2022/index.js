@@ -41,10 +41,10 @@ const slug = ({metainfo}) => {
         <MediaContextProvider>
        <Media at="xs">
        
-       <iframe frameBorder={0} style={{height: '3900px', overflow: 'scroll', width: '100%'}} src="https://www.etvbharat.com/elections"  name="elections" id="elections" seamless="seamless" scrolling="no" allowTransparency="true" />
+       <iframe frameBorder={0} style={{height: '3900px', overflow: 'scroll', width: '100%'}} src="https://preprod.etvbharat.com/elections"  name="elections" id="elections" seamless="seamless" scrolling="no" allowTransparency="true" />
        </Media>
        <Media greaterThan="xs" >
-       <iframe frameBorder={0} style={{height: '1700px', overflow: 'scroll', width: '100%'}} src="https://www.etvbharat.com/elections"  name="elections" id="elections" seamless="seamless" scrolling="no" allowTransparency="true" />
+       <iframe frameBorder={0} style={{height: '1700px', overflow: 'scroll', width: '100%'}} src="https://preprod.etvbharat.com/elections"  name="elections" id="elections" seamless="seamless" scrolling="no" allowTransparency="true" />
         </Media>
       </MediaContextProvider>
     </>
