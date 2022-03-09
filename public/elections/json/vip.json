@@ -1,0 +1,8 @@
+{
+  "results": [{ "party_name": "AIADMK+", "const_name": "RFC", "cand_name": "Afzal", "status": "won" },
+  { "party_name": "DMK+", "const_name": "HYD", "cand_name": "candidate1","status": "won" },
+  { "party_name": "MNM+", "const_name": "SANGAREDDY", "cand_name": "Navya" ,"status": "lost"},
+  { "party_name": "AMMK+", "const_name": "RANGAREDDY", "cand_name": "Anitha", "status": "lead" },
+ { "party_name": "MNM+", "const_name": "SANGAREDDY", "cand_name": "Navya" ,"status": "lost"},
+  { "party_name": "AMMK+", "const_name": "RANGAREDDY", "cand_name": "Anitha", "status": "lead" }]
+}

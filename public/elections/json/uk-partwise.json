@@ -1,0 +1,97 @@
+{
+    "total_seats": "ASSAM(126/126)",
+    "winning_seats": 126,
+    "results": [
+    {
+    "party_name": "BJP+",
+    "Seats Contested": 125,
+    "won": "75",
+    "lead": "1",
+    "total": 75
+    },
+    {
+    "party_name": "INC+",
+    "Seats Contested": 124,
+    "won": "50",
+    "lead": "2",
+    "total": 50
+    },
+    {
+    "party_name": "AJP",
+    "Seats Contested": 82,
+    "won": "0",
+    "lead": "3",
+    "total": 0
+    },
+    {
+    "party_name": "OTHER",
+    "Seats Contested": 122,
+    "won": "1",
+    "lead": "4",
+    "total": 1
+    },
+    {
+    "alliance_name": "BJP+",
+    "party_name": "BJP",
+    "lead": "5",
+    "won": "60",
+    "total": 60
+    },
+    {
+    "alliance_name": "BJP+",
+    "party_name": "UPPL",
+    "lead": "6",
+    "won": "6",
+    "total": 6
+    },
+    {
+    "alliance_name": "BJP+",
+    "party_name": "AGP",
+    "lead": "7",
+    "won": "9",
+    "total": 9
+    },
+    {
+    "alliance_name": "INC+",
+    "party_name": "INC",
+    "lead": "5",
+    "won": "29",
+    "total": 29
+    },
+    {
+    "alliance_name": "INC+",
+    "party_name": "BPF",
+    "lead": "4",
+    "won": "4",
+    "total": 4
+    },
+    {
+    "alliance_name": "INC+",
+    "party_name": "AIUDF",
+    "lead": "3",
+    "won": "16",
+    "total": 16
+    },
+    {
+    "alliance_name": "INC+",
+    "party_name": "CPI(M)",
+    "lead": "4",
+    "won": "0",
+    "total": 0
+    },
+    {
+    "alliance_name": "INC+",
+    "party_name": "CPI (ML)",
+    "lead": "1",
+    "won": "1",
+    "total": 1
+    },
+    {
+    "alliance_name": "AJP",
+    "party_name": "AJP",
+    "lead": "0",
+    "won": "0",
+    "total": 0
+    }
+    ]
+    }

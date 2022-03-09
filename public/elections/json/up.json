@@ -1,0 +1,64 @@
+{
+  "results": [
+    {
+      "dist_name": "District1",
+      "count_seats": "10",
+      "total_seats": "20",
+      "bjp_wonlead": "1",
+      "sp_wonlead": "4",
+      "bsp_wonlead": "3",
+      "inc_wonlead": "3",
+      "oth_wonlead": "2"
+    },
+    {
+      "dist_name": "District2",
+      "count_seats": "10",
+      "total_seats": "20",
+      "bjp_wonlead": "1",
+      "sp_wonlead": "4",
+      "bsp_wonlead": "3",
+      "inc_wonlead": "3",
+      "oth_wonlead": "2"
+    },
+    {
+      "dist_name": "District3",
+      "count_seats": "10",
+      "total_seats": "20",
+      "bjp_wonlead": "1",
+      "sp_wonlead": "4",
+      "bsp_wonlead": "3",
+      "inc_wonlead": "3",
+      "oth_wonlead": "2"
+    },
+    {
+      "dist_name": "District4",
+      "count_seats": "10",
+      "total_seats": "20",
+      "bjp_wonlead": "1",
+      "sp_wonlead": "4",
+      "bsp_wonlead": "3",
+      "inc_wonlead": "3",
+      "oth_wonlead": "2"
+    },
+    {
+      "dist_name": "District5",
+      "count_seats": "10",
+      "total_seats": "20",
+      "bjp_wonlead": "1",
+      "sp_wonlead": "4",
+      "bsp_wonlead": "3",
+      "inc_wonlead": "3",
+      "oth_wonlead": "2"
+    },
+    {
+      "dist_name": "District6",
+      "count_seats": "10",
+      "total_seats": "20",
+      "bjp_wonlead": "1",
+      "sp_wonlead": "4",
+      "bsp_wonlead": "3",
+      "inc_wonlead": "3",
+      "oth_wonlead": "2"
+    }
+  ]
+}

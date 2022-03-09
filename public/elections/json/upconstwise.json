@@ -1,0 +1,87 @@
+{"results": [
+  {
+  "state_name": "UTTARPRADESH",
+  "const_name": "up-const",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "N/A"
+  },
+  {
+  "state_name": "UTTARPRADESH",
+  "const_name": "up-const",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "won"
+  },
+  {
+  "state_name": "UTTARPRADESH",
+  "const_name": "up-const",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "N/A"
+  },
+  {
+  "state_name": "UTTARPRADESH",
+  "const_name": "up-const",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "lead"
+  },
+  {
+  "state_name": "UTTARPRADESH",
+  "const_name": "up-const",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "N/A"
+  },
+  {
+  "state_name": "UTTARPRADESH",
+  "const_name": "up-const",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "lead"
+  },
+  {
+  "state_name": "UTTARPRADESH",
+  "const_name": "up-const",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "N/A"
+  },
+  {
+  "state_name": "up-const",
+  "const_name": "ALAPUR",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "N/A"
+  },
+  {
+  "state_name": "UTTARPRADESH",
+  "const_name": "up-const",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "N/A"
+  },
+  {
+  "state_name": "UTTARPRADESH",
+  "const_name": "up-const",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "N/A"
+  },
+  {
+  "state_name": "UTTARPRADESH",
+  "const_name": "up-const",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "N/A"
+  },
+  {
+  "state_name": "UTTARPRADESH",
+  "const_name": "up-const",
+  "candidate_name": "up-cand-name",
+  "party_name": "party-name",
+  "status": "N/A"
+  }
+]
+}
