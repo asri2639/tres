@@ -232,6 +232,31 @@ export default function MobileHeader({ data, className }) {
                 );
               })
             : null}
+            <div
+                    key={"elections"}
+                    className={`${header['header-menu-item']} text-white cursor-pointer whitespace-nowrap hover:text-red-700`}
+                  >
+                    <div className=" flex flex-col items-center relative  text-sm">
+                      <NavLink
+                         href={"/"+language+"/"+state+"/elections-2022"}
+                        as={"/"+language+"/"+state+"/elections-2022"}
+                        passHref
+                        onClick={() => {
+                          menuClick({
+                            "ml_title":[
+                              {
+                                "text":""
+                              }
+                            ],
+                            "url":"/"+language+"/"+state+"/elections-2022"
+                          }, 'headermenu');
+                        }}
+                      >
+                        <div>{"Elections 2022"}</div>
+                      </NavLink>
+                    </div>
+                  </div>
+
         </div>
       </div>
     </>

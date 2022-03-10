@@ -384,7 +384,7 @@ const DesktopHeader = ({ className, data }) => {
           ></div>
 
           {data.menu && data.menu.desktop
-            ? data.menu.desktop.map((item) => {
+            ? (data.menu.desktop.map((item) => {
                 return (
                   <div
                     key={item.list_id}
@@ -394,7 +394,7 @@ const DesktopHeader = ({ className, data }) => {
                       className=" flex flex-col items-center relative"
                       onMouseEnter={() => setInitialCategory(item)}
                     >
-                    {console.log(item)}
+                    
                       <NavLink
                         href={item.url}
                         as={item.url}
@@ -471,7 +471,16 @@ const DesktopHeader = ({ className, data }) => {
                   </div>
                 );
               })
+              )
             : null}
+            { data.menu && data.menu.desktop
+              ? (<div key={"election"} className={`${header['header-menu-item']} text-white cursor-pointer whitespace-nowrap hover:text-red-700`}>
+  <div className=" flex flex-col items-center relative">
+    <NavLink href={"/"+language+"/"+state+"/elections-2022"} as={"/"+language+"/"+state+"/elections-2022"} passHref onClick={()=> { menuClick({ "ml_title":[ { "text":"" } ], "url":"/"+language+"/"+state+"/elections-2022" }, 'headermenu'); }} > {"Elections 2022"} </NavLink>
+  </div>
+</div> ): null
+            }
+            
         </div>
       </div>
 
