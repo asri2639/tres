@@ -473,13 +473,7 @@ const DesktopHeader = ({ className, data }) => {
               })
               )
             : null}
-            { data.menu && data.menu.desktop
-              ? (<div key={"election"} className={`${header['header-menu-item']} text-white cursor-pointer whitespace-nowrap hover:text-red-700`}>
-  <div className=" flex flex-col items-center relative">
-    <NavLink href={"/"+language+"/"+state+"/elections-2022"} as={"/"+language+"/"+state+"/elections-2022"} passHref onClick={()=> { menuClick({ "ml_title":[ { "text":"" } ], "url":"/"+language+"/"+state+"/elections-2022" }, 'headermenu'); }} > {"Elections 2022"} </NavLink>
-  </div>
-</div> ): null
-            }
+            
             
         </div>
       </div>

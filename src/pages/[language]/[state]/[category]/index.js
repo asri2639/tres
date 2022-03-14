@@ -429,13 +429,14 @@ export async function getStaticProps({ params, ...args }) {
     }
   } else {
     return {
-      redirect: {
-        destination:
-          typeof params !== 'undefined'
-            ? `/${params.language}/${params.state}`
-            : `/english/national`,
-        permanent: false,
-      },
+      // redirect: {
+      //   destination:
+      //     typeof params !== 'undefined'
+      //       ? `/${params.language}/${params.state}`
+      //       : `/english/national`,
+      //   permanent: false,
+      // },
+       notFound: true,
     };
   }
 }

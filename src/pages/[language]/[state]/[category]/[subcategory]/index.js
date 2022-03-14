@@ -404,12 +404,13 @@ export const getData = async (url, language, state, urlSplit, qparams) => {
     }
   } else {
     return {
-      redirect: {
-        destination: qparams
-          ? `/${qparams.language}/${qparams.state}`
-          : `/english/national`,
-        permanent: false,
-      },
+      // redirect: {
+      //   destination: qparams
+      //     ? `/${qparams.language}/${qparams.state}`
+      //     : `/english/national`,
+      //   permanent: false,
+      // },
+       notFound: true,
     };
   }
 };
