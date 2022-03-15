@@ -330,14 +330,14 @@ function getVipResult() {
   const tbody = document.querySelector("#AP_Constituency > tbody");
   if (state == "Up") {
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.uttarpradesh.viplistup;
-    url = "./elections/json/upvip.json";
+    url = "./json/upvip.json";
   }
   else if (state == "Pb") {
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.punjab.viplistpb;
-    url = "./elections/json/pbvip.json";
+    url = "./json/pbvip.json";
   } else if (state == "Uk") {
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.uttarakhand.viplistuk;
-    url = "./elections/json/ukvip.json";
+    url = "./json/ukvip.json";
   }
   while (tbody.firstChild) {
     tbody.removeChild(tbody.firstChild);
@@ -385,20 +385,20 @@ function getVipResult() {
         leadingBlogElement =
           "<span class='leading-blog'>" + leadings + "</span>";
         var winlose =
-          '<div><img class="win" style="margin-left:-40px" src="/elections/images/states/WIN_THUMB.png"  alt=""/></div>';
+          '<div><img class="win" style="margin-left:-40px" src="/images/states/WIN_THUMB.png"  alt=""/></div>';
       } else if (personailty.leadings.toLowerCase() == "won") {
         leadingBlogElement = "<span class='won-blog'>" + leadings + "</span>";
         var winlose =
-          '<div><img class="win" style="margin-left:-40px" src="/elections/images/states/WIN_THUMB.png"  alt=""/></div>';
+          '<div><img class="win" style="margin-left:-40px" src="/images/states/WIN_THUMB.png"  alt=""/></div>';
       } else if (personailty.leadings.toLowerCase() == "trailing") {
         leadingBlogElement =
           "<span class='trailing-blog'>" + leadings + "</span>";
         var winlose =
-          '<div><img src="/elections/images/states/LOOSE_THUMB.png" class="lose" alt=""/></div>';
+          '<div><img src="/images/states/LOOSE_THUMB.png" class="lose" alt=""/></div>';
       } else if (personailty.leadings.toLowerCase() == "lost") {
         leadingBlogElement = "<span class='lost-blog'>" + leadings + "</span>";
         var winlose =
-          '<div><img src="/elections/images/states/LOOSE_THUMB.png" class="lose" alt=""/></div>';
+          '<div><img src="/images/states/LOOSE_THUMB.png" class="lose" alt=""/></div>';
       } else {
         leadingBlogElement = "<span class='lost-blog'>" + leadings + "</span>";
         var winlose = "";
@@ -908,7 +908,7 @@ function getDistrictResult() {
   if (state == "Up") {
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.uttarpradesh.distResult;
     // url = "http://65.0.40.45/web_api/website/uttarpradesh_2022/districtwise_party_tally.php";
-    url='./elections/json/up.json';
+    url='./json/up.json';
     $.getJSON(url, function (successdata) {
       CombinedHTMLTable = "";
       var thead = "";
@@ -931,7 +931,7 @@ function getDistrictResult() {
   }
   else if (state == "Pb") {
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.punjab.distResult;
-    url = "./elections/json/pb.json";
+    url = "./json/pb.json";
     $.getJSON(url, function (successdata) {
       CombinedHTMLTable = "";
       var thead = "";
@@ -953,7 +953,7 @@ function getDistrictResult() {
     });
   } else if (state == "Uk") {
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.uttarakhand.distResult;
-    url = "./elections/json/uk.json";
+    url = "./json/uk.json";
     $.getJSON(url, function (successdata) {
       CombinedHTMLTable = "";
       var thead = "";
@@ -1015,16 +1015,16 @@ function getPartyResult() {
   const tbody = document.querySelector("#AP_Constituency > tbody");
   var state = document.getElementById("mySelect").value;
   if (state == "Up") {
-    url="./elections/json/uppartywise.json"
+    url="./json/uppartywise.json"
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.uttarpradesh.allianceWiseR;
     // url = "http://65.0.40.45/web_api/website/uttarpradesh_2022/partywise_wonlead_total.php";
   }
   else if (state == "Pb") {
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.punjab.allianceWiseR;
-    url = "./elections/json/pbpartywise.json";
+    url = "./json/pbpartywise.json";
   } else if (state == "Uk") {
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.uttarakhand.allianceWiseR;
-    url = "./elections/json/uk-partwise.json";
+    url = "./json/uk-partwise.json";
   }
   while (tbody.firstChild) {
     tbody.removeChild(tbody.firstChild);
@@ -1152,16 +1152,16 @@ function getConstResult() {
   var state = document.getElementById("mySelect").value;
   // debugger;
   if (state == "Up") {
-    url='./elections/json/upconstwise.json';
+    url='./json/upconstwise.json';
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.uttarpradesh.constwiseR;
     // url = "http://65.0.40.45/web_api/website/uttarpradesh_2022/statewise_const_tally.php";
   }
   else if (state == "Pb") {
-    url='./elections/json/pbconstwise.json';
+    url='./json/pbconstwise.json';
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.punjab.constwiseR;
     // url = "http://65.0.40.45/web_api/website/kerala_2021/statewise_const_tally.php";
   } else if (state == "Uk") {
-    url= './elections/json/ukconstwise.json';
+    url= './json/ukconstwise.json';
     // url = appData.apiConfig.baseURL + appData.apiConfig.suffixes.uttarakhand.constwiseR;
     // url = "http://65.0.40.45/web_api/website/tamilnadu_2021/statewise_const_tally.php";
   }
