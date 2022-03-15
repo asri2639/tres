@@ -8,12 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ETV Bharat Election</title>
   <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <link href="css/responsive.css" rel="stylesheet">
-  <!-- <link href="css/flowplayer.min.css" rel="stylesheet"> -->
-  <link rel="stylesheet" href="css/data-tables.css">
+  <link href="/elections/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/elections/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/elections/css/styles.css" rel="stylesheet">
+  <link href="/elections/css/responsive.css" rel="stylesheet">
+  <!-- <link href="elections/css/flowplayer.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/elections/css/data-tables.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"
     type="text/css" />
   <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet"
@@ -54,12 +54,12 @@
 
     <div>
       <!-- <div id="test-player"></div> -->
-      <section class="content-sec section-pan" style="background: #EEEEEE;">
+      <section class="content-sec section-pan" style="background: #EEEEEE; ">
         <div class="container-fluid">
           <div class="row headingh5">
-            <h3 id="heading-tag" style="margin-left: 30px; font-weight: bold;"></h2>
+            <h3 id="heading-tag" style="margin-left: 30px; font-weight: bold; font-size: 20px;"></h2>
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="col-lg-4 col-md-4 col-sm-12 live-mob">
                 <!-- <div class="col-lg-12 col-md-12 col-sm-12 no-pad"> -->
                 <!-- <div class="main-heading">
                   <div class="row">
@@ -80,7 +80,12 @@
                   <!-- <div class="col-lg-4 col-md-4 col-sm-12 no-pad"> -->
                   <div class="col-blg col-bg col-last-child-resp"
                     style="margin-right: 10px; margin-bottom: 10px;border: 1px solid #b80403;">
-                    <div class="live-news live-option" id="test-player">
+                    <div class="live-news live-option" id="test-player1">
+                      <div id='div-gpt-ad-1646308362127-0' style='min-width: 300px; min-height: 250px;margin-top:40px;'>
+                        <script>
+                          googletag.cmd.push(function() { googletag.display('div-gpt-ad-1646308362127-0'); });
+                        </script>
+                      </div>
                     </div>
                     <!-- <img src="./images/ads/standard-side-ad-2.jpg" style="margin-top: 45px;"> -->
                   </div>
@@ -542,16 +547,16 @@
 
   </div>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="js/jquery.v3.3.1.js"></script>
+  <script src="/elections/js/jquery.v3.3.1.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/Highcharts.js"></script>
-  <script type="text/javascript" src="js/youtube-lightbox.js"></script>
-  <!-- <script type="text/javascript" src="js/flowplayer-1.js"></script> -->
-  <!-- <script type="text/javascript" src="js/flowplayer-2.js"></script> -->
-  <!-- <script src="js/jquery.dataTables.min.js"></script> -->
-  <!-- <script src="js/dataTables.bootstrap.min.js"></script> -->
-  <script src="js/tableHeadFixer.js"></script>
+  <script src="/elections/js/bootstrap.min.js"></script>
+  <script src="/elections/js/Highcharts.js"></script>
+  <script type="text/javascript" src="/elections/js/youtube-lightbox.js"></script>
+  <!-- <script type="text/javascript" src="/elections/js/flowplayer-1.js"></script> -->
+  <!-- <script type="text/javascript" src="/elections/js/flowplayer-2.js"></script> -->
+  <!-- <script src="/elections/js/jquery.dataTables.min.js"></script> -->
+  <!-- <script src="/elections/js/dataTables.bootstrap.min.js"></script> -->
+  <script src="/elections/js/tableHeadFixer.js"></script>
   <script>
     $(document).ready(function () {
       $(".fixTable").tableHeadFixer();
@@ -574,13 +579,17 @@
       // $('button.party').click(function(){
       //   document.getElementById('tdSearch').value = '';
       //   });
-
+      try {
+    return window.top !== window.self;
+  } catch(e) {
+    return false;
+  }
 
 
     });
   </script>
   <!-- <script src="js/plugins.js"></script> -->
-  <script src="customJS/lokSabhaEresult.js"></script>
+  <script src="/elections/customJS/lokSabhaEresult.js"></script>
   <script type="text/javascript">
     $(window).ready(function () {
       $(".scroll-blog").removeAttr('style');

@@ -1,91 +1,90 @@
 {
-    "total_seats": "WEST BENGAL(292/292)",
-    "winning_seats": 292,
+    "total_seats": "PUNJAB(117/117)",
+    "winning_seats": 117,
     "results": [
-   
     {
-    "party_name": "BJP",
-   " Seats Contested": 293,
-    "won": "77",
-    "lead": "77",
-    "total": 77
+    "party_name": "INC",
+    "Seats Contested": 117,
+    "won": "18",
+    "lead": "0",
+    "total": 18
     },
     {
-    "party_name": "LEFT+",
-   " Seats Contested": 294,
-    "won": "1",
-    "lead": "2",
-    "total": 3
+    "party_name": "AAP",
+    "Seats Contested": 117,
+    "won": "92",
+    "lead": "0",
+    "total": 92
+    },
+    {
+    "party_name": "SAD+",
+    "Seats Contested": 117,
+    "won": "4",
+    "lead": "0",
+    "total": 4
+    },
+    {
+    "party_name": "BJP+",
+    "Seats Contested": 116,
+    "won": "2",
+    "lead": "0",
+    "total": 2
     },
     {
     "party_name": "OTHER",
-   " Seats Contested": 291,
+    "Seats Contested": 117,
     "won": "1",
-    "lead": "4",
-    "total": 5
+    "lead": "0",
+    "total": 1
     },
     {
-    "alliance_name": "AITC",
-    "party_name": "AITC",
-    "lead": "5",
-    "won": "213",
-    "total": 213
+    "alliance_name": "INC",
+    "party_name": "INC",
+    "lead": "0",
+    "won": "18",
+    "total": 18
     },
     {
-    "alliance_name": "BJP",
-    "party_name": "BJP",
-    "lead": "77",
-    "won": "77",
-    "total": 77
+    "alliance_name": "AAP",
+    "party_name": "AAP",
+    "lead": "0",
+    "won": "92",
+    "total": 92
     },
     {
-    "alliance_name": "LEFT+",
-    "party_name": "RSMP",
-    "lead": "1",
+    "alliance_name": "SAD+",
+    "party_name": "SAD",
+    "lead": "0",
+    "won": "3",
+    "total": 3
+    },
+    {
+    "alliance_name": "SAD+",
+    "party_name": "BSP",
+    "lead": "0",
     "won": "1",
     "total": 1
     },
     {
-    "alliance_name": "LEFT+",
-    "party_name": "CPI",
-    "lead": "10",
-    "won": "6",
-    "total": 10
-    },
-    {
-    "alliance_name": "LEFT+",
-    "party_name": "INC",
-    "lead": "20",
-    "won": "0",
-    "total": 20
-    },
-    {
-    "alliance_name": "LEFT+",
-    "party_name": "AIFB",
+    "alliance_name": "BJP+",
+    "party_name": "PLC",
     "lead": "0",
     "won": "0",
     "total": 0
     },
     {
-    "alliance_name": "LEFT+",
-    "party_name": "RSP",
-    "lead": "6",
-    "won": "0",
-    "total": 7
-    },
-    {
-        "party_name": "AITC",
-       " Seats Contested": 290,
-        "won": "213",
-        "lead": "220",
-        "total": 213
-    },
-    {
-    "alliance_name": "LEFT+",
-    "party_name": "CPI(M)",
+    "alliance_name": "BJP+",
+    "party_name": "BJP",
     "lead": "0",
-    "won": "20",
-    "total": 20
+    "won": "2",
+    "total": 2
+    },
+    {
+    "alliance_name": "BJP+",
+    "party_name": "SAD (SANYUKT)",
+    "lead": "0",
+    "won": "0",
+    "total": 0
     }
     ]
     }

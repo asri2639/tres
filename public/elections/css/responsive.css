@@ -342,6 +342,9 @@
 	}
 }
 @media only screen and (max-width : 991px) {
+	.live-mob{
+		display: none;
+	}
 	.uk-rsp{
 		padding-right: 15px !important;
 	}
@@ -696,6 +699,9 @@
 		
 }
 @media only screen and (max-width: 460px){
+	.tally-mob{
+		overflow: auto;
+	}
 	.selectState{
 		padding-right: 5% !important;
 	}
