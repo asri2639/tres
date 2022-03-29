@@ -9,7 +9,7 @@ import APIEnum from '@api/APIEnum';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { menuClick } from '@utils/GoogleTagManager';
 import useTranslator from '@hooks/useTranslator';
-
+import NativeAd from '@components/article/NativeAd'
 import RectangleCard from '@components/listing/mobile/RectangleCard';
 import NavLink from '@components/common/NavLink';
 import Loading from './mobile/Loading';
@@ -246,6 +246,11 @@ const ListContainer = ({ children, data, payload }) => {
     return (
       <React.Fragment key={ind}>
         {returnValue}
+        {
+          ind == 9 ? <NativeAd />
+        :null
+        }
+        
         {desktopAdIndex !== -1 && adsMap[desktopAdIndex] ? (
           <DesktopAdContainer
             desktop={isDesktop}
