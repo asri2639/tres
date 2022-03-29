@@ -96,6 +96,8 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
         stateName,
         ...actualUrl.split('/').slice(2),
       ].join('/')}`;
+    }else if(router.asPath){
+      canonicalUrl = `https://www.etvbharat.com/${router.asPath}`;
     } else {
       canonicalUrl = `https://www.etvbharat.com/${actualUrl}`;
     }
