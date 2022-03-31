@@ -51,7 +51,7 @@ export default class ETVDocument extends Document {
                             });`,
             }}
           ></script>
-
+          <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{

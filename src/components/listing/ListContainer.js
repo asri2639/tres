@@ -10,6 +10,9 @@ import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { menuClick } from '@utils/GoogleTagManager';
 import useTranslator from '@hooks/useTranslator';
 import NativeAd from '@components/article/NativeAd'
+import MobileAd from '@components/article/MobileAd'
+import {Adsense} from '@ctrl/react-adsense';
+import SkyScaper from '@components/article/SkyScaper'
 import RectangleCard from '@components/listing/mobile/RectangleCard';
 import NavLink from '@components/common/NavLink';
 import Loading from './mobile/Loading';
@@ -246,10 +249,7 @@ const ListContainer = ({ children, data, payload }) => {
     return (
       <React.Fragment key={ind}>
         {returnValue}
-        {
-          ind == 9 ? <NativeAd />
-        :null
-        }
+      
         
         {desktopAdIndex !== -1 && adsMap[desktopAdIndex] ? (
           <DesktopAdContainer
@@ -296,6 +296,7 @@ const ListContainer = ({ children, data, payload }) => {
           isRTL ? 'md:flex-row-reverse rtl' : ''
         }`}
       >
+       
         <div className="md:w-8/12 h-full px-2 md:flex md:flex-wrap">
           {/* Mobile listing */}
           <MediaContextProvider>
@@ -306,10 +307,14 @@ const ListContainer = ({ children, data, payload }) => {
                 </Media>
                 <Media greaterThan="xs" className="w-full flex space-x-2">
                   <MainArticles list={listItems[0].catalog_list_items} />
+                  
                 </Media>
+               
                 {listItems.slice(1).map((subList, ind) => {
                   return renderLayout(subList, ind);
                 })}
+                <NativeAd />
+                 
               </>
             ) : null}
 
