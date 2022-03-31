@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import React, { useContext, useEffect, useState } from 'react';
 import Sticky from 'wil-react-sticky';
 import dynamic from 'next/dynamic';
-
+import { DFPSlotsProvider, AdSlot } from 'react-dfp';
 import { Media, MediaContextProvider } from '@media';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
@@ -309,11 +309,18 @@ const ListContainer = ({ children, data, payload }) => {
                   <MainArticles list={listItems[0].catalog_list_items} />
                   
                 </Media>
-               
+                {/* {filteredRHS ? (<NativeAd />
+              ) : null} */}
+              <DFPSlotsProvider dfpNetworkId="175434344">
+              <div className="native-ads">
+          <AdSlot sizes={[['fluid']]} adUnit="Native_adunit" />
+        </div>
+       
+      </DFPSlotsProvider>
                 {listItems.slice(1).map((subList, ind) => {
                   return renderLayout(subList, ind);
                 })}
-                <NativeAd />
+               
                  
               </>
             ) : null}

@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@artsy/fresnel": "^1.2.2",
+    "@ctrl/react-adsense": "^1.5.0",
     "@tailwindcss/line-clamp": "^0.2.2",
     "axios": "^0.21.2",
     "compression": "^1.7.4",
@@ -36,10 +37,13 @@
     "primeicons": "^4.1.0",
     "primereact": "^6.6.0",
     "react": "^17.0.2",
+    "react-dfp": "^0.21.0",
     "react-dom": "^17.0.2",
+    "react-google-ad": "^1.0.2",
     "react-intersection-observer": "^8.29.1",
     "react-promise-tracker": "^2.1.0",
     "react-share": "^4.3.1",
+    "react-ssr-adsense": "^1.0.1",
     "react-transition-group": "^4.4.2",
     "swr": "^0.5.6",
     "wil-react-sticky": "^1.0.5"

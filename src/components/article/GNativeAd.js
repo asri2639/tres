@@ -44,23 +44,19 @@ const GNativeAd = ({ adData, className, refresh }) => {
                   .defineSlot(
                     adData.ad_unit,
                     [
-                      [300, 250],
-                      [728, 90],
+                      'fluid'
                     ],
                     adData.gpt_id
                   )
                   .addService(googletag.pubads());
+                  googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
-                var mapping = googletag
-                  .sizeMapping()
-                  .addSize([980, 90], [728, 90])
-                  .addSize([320, 480], [300, 250])
-                  .build();
-                window[adData.gpt_id].defineSizeMapping(mapping);
+               
               } else {
                 window[adData.gpt_id] = googletag
                   .defineSlot(adData.ad_unit, ['fluid'], adData.gpt_id)
                   .addService(googletag.pubads());
+                  googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
               }
 

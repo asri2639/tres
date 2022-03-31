@@ -7,7 +7,8 @@ const NativeAd = () => {
   <GNativeAd
     
   key={`ad-lhs-native`}
-  adData={{ ad_unit: "/175434344/Native_adunit", gpt_id: "div-gpt-ad-2416481-1" }}
+  
+  adData={{ ad_unit: "/175434344/ETB-English-National-Home-728x90-300x250-1", gpt_id: "div-gpt-ad-1622699007284-1" }}
 />
  )
 };
