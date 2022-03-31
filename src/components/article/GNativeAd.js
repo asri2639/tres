@@ -95,8 +95,7 @@ const GNativeAd = ({ adData, className, refresh }) => {
     >
       {adData ? (
         <div
-          ref={adEl}
-          data-ad-unit={adData.ad_unit}
+         
           id={adData.gpt_id}
           
         ></div>
