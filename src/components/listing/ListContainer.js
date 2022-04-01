@@ -35,7 +35,7 @@ const DesktopAdContainer = dynamic(
 const SliderSeeAll = dynamic(() => import('./mobile/SliderSeeAll'), options);
 const SeeAll = dynamic(() => import('./mobile/SeeAll'), options);
 
-const ListContainer = ({ children, data, payload }) => {
+const ListContainer = ({ children, data, payload,adinfo }) => {
   const api = API(APIEnum.CatalogList);
   const isRTL = useContext(RTLContext);
 
@@ -295,20 +295,22 @@ const ListContainer = ({ children, data, payload }) => {
         className={`lg:container lg:mx-auto listing-container mt-2 bg-gray-200 relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
           isRTL ? 'md:flex-row-reverse rtl' : ''
         }`}
-      >
-        <MediaContextProvider>
+      >{
+        adinfo && adinfo.lhs_skyscapper_ads ? (<MediaContextProvider>
           <Media
             greaterThan="xs"
             className={``}
           >
             <DFPSlotsProvider dfpNetworkId="175434344">
               <div className="skysacper sticky top-0" >
-          <AdSlot sizes={[[120,600]]} adUnit="etb-web-adp-hindi-rajasthan-rhs-120x600" />
+          <AdSlot sizes={[[120,600]]} adUnit={adinfo.lhs_skyscapper_ads.ad_unit_id.substring(adinfo.lhs_skyscapper_ads.ad_unit_id.lastIndexOf("/") + 1, adinfo.lhs_skyscapper_ads.ad_unit_id.length)} />
         </div>
        
       </DFPSlotsProvider>
           </Media>
-        </MediaContextProvider>
+        </MediaContextProvider>):null
+      }
+        
         <div className="md:w-8/12 h-full px-2 md:flex md:flex-wrap">
           {/* Mobile listing */}
           <MediaContextProvider>
@@ -316,12 +318,15 @@ const ListContainer = ({ children, data, payload }) => {
               <>
                 <Media at="xs" className="w-full">
                   <MobileMainArticles list={listItems[0].catalog_list_items} />
-                  <DFPSlotsProvider dfpNetworkId="175434344">
-              <div className="native-ads mt-2" >
-          <AdSlot sizes={[['fluid']]} adUnit="Native_adunit" />
-        </div>
-       
-      </DFPSlotsProvider>
+                  {
+                     adinfo && adinfo.native_ads ? (<DFPSlotsProvider dfpNetworkId="175434344">
+                     <div className="native-ads mt-2" >
+                 <AdSlot sizes={[['fluid']]} adUnit={adinfo.native_ads.ad_unit_id.substring(adinfo.native_ads.ad_unit_id.lastIndexOf("/") + 1, adinfo.native_ads.ad_unit_id.length)} />
+               </div>
+              
+             </DFPSlotsProvider>):null
+                  }
+                  
                 </Media>
                 <Media greaterThan="xs" className="w-full flex space-x-2">
                   <MainArticles list={listItems[0].catalog_list_items} />

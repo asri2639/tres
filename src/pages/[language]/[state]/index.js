@@ -14,7 +14,7 @@ import { NextSeo } from 'next-seo';
 import useTranslator from '@hooks/useTranslator';
 import { totalItemsCount } from '@components/listing/PageListing';
 
-const state = ({ data, payload }) => {
+const state = ({ data, adinfo, payload }) => {
   const router = useRouter();
   const { appLanguage } = useTranslator();
 
@@ -95,6 +95,7 @@ const state = ({ data, payload }) => {
         key={router.query.language + '-' + router.query.state}
         data={data}
         payload={payload}
+        adinfo={adinfo}
       ></ListContainer>
     </>
   ) : null;
@@ -152,7 +153,23 @@ export async function getStaticProps({ params, ...args }) {
         },
       };
       const listingResp = await api.CatalogList.getListing(requestPayload);
-
+      const skyscaperrequestPayload = {
+        params: {
+          key: result.home_link,
+        },
+        query: {
+         url:`/${params.language}/${params.state}`
+         
+        },
+      };
+      const skyscaperdata = await api.CatalogList.getSkyScaperAds(skyscaperrequestPayload);
+      console.log(skyscaperdata.data.data);
+      let adinfo;
+      if(skyscaperdata.data){
+        adinfo= skyscaperdata.data.data;
+      }else{
+        adinfo =undefined;
+      }
       if (listingResp && listingResp.data && listingResp.data.data) {
         const data = listingResp.data.data;
         let initCount = 0;
@@ -166,6 +183,7 @@ export async function getStaticProps({ params, ...args }) {
             props: {
               pageType: 'listing',
               data: data,
+              adinfo: adinfo,
               payload: requestPayload,
             },
             revalidate: 60, // listing

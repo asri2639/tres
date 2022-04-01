@@ -179,6 +179,7 @@ export async function getStaticProps({ params, ...args }) {
   state = stateCodeConverter(urlSplit[2]);
 
   const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
+  
   if (
     url.includes('state') ||
     url.substring(url.length - 'state'.length) == 'state' ||

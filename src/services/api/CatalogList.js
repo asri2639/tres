@@ -37,6 +37,12 @@ export default function CatalogList(inst) {
         config
       );
     },
+    getSkyScaperAds({query,config} = new APIRequest()) {
+      return inst.get(
+        `/native_ads?${new URLSearchParams(query)}`,
+        config
+      );
+    },
     getVideoDetails({ params, query, config } = new APIRequest()) {
       config = config || {};
       return inst.get(

@@ -29,25 +29,7 @@ const PopularList = ({ data }) => {
         {data.ml_title[0].text.toUpperCase()}
       </div>
 
-      <div
-        className={`py-4 ${
-          isRTL ? 'text-base' : 'text-lg'
-        } flex justify-center items-center space-x-2  border-t border-b font-bold divide-x divide-gray-600`}
-      >
-        {data.catalog_list_items.map((val) => {
-          return (
-            <div
-              key={val.list_id}
-              className={`pl-2 cursor-pointer ${
-                currentSelection == val.list_id ? 'text-red-700' : ''
-              }`}
-              onClick={() => setCurrentSelection(val.list_id)}
-            >
-              {val.ml_title[0].text}
-            </div>
-          );
-        })}
-      </div>
+      
       <div className={`space-y-5 my-3  ${popular.list}`}>
         {selectedList.map((v) => {
           const splitUrl = v.web_url.split('/');
