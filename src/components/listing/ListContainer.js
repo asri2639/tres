@@ -296,7 +296,19 @@ const ListContainer = ({ children, data, payload }) => {
           isRTL ? 'md:flex-row-reverse rtl' : ''
         }`}
       >
+        <MediaContextProvider>
+          <Media
+            greaterThan="xs"
+            className={``}
+          >
+            <DFPSlotsProvider dfpNetworkId="175434344">
+              <div className="skysacper sticky top-0" >
+          <AdSlot sizes={[[120,600]]} adUnit="etb-web-adp-hindi-rajasthan-rhs-120x600" />
+        </div>
        
+      </DFPSlotsProvider>
+          </Media>
+        </MediaContextProvider>
         <div className="md:w-8/12 h-full px-2 md:flex md:flex-wrap">
           {/* Mobile listing */}
           <MediaContextProvider>
