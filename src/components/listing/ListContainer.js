@@ -305,7 +305,7 @@ const ListContainer = ({ children, data, payload }) => {
                 <Media at="xs" className="w-full">
                   <MobileMainArticles list={listItems[0].catalog_list_items} />
                   <DFPSlotsProvider dfpNetworkId="175434344">
-              <div className="native-ads mt-2 -mb-2" >
+              <div className="native-ads mt-2" >
           <AdSlot sizes={[['fluid']]} adUnit="Native_adunit" />
         </div>
        
