@@ -304,6 +304,12 @@ const ListContainer = ({ children, data, payload }) => {
               <>
                 <Media at="xs" className="w-full">
                   <MobileMainArticles list={listItems[0].catalog_list_items} />
+                  <DFPSlotsProvider dfpNetworkId="175434344">
+              <div className="native-ads mt-2 -mb-2" >
+          <AdSlot sizes={[['fluid']]} adUnit="Native_adunit" />
+        </div>
+       
+      </DFPSlotsProvider>
                 </Media>
                 <Media greaterThan="xs" className="w-full flex space-x-2">
                   <MainArticles list={listItems[0].catalog_list_items} />
@@ -311,12 +317,7 @@ const ListContainer = ({ children, data, payload }) => {
                 </Media>
                 {/* {filteredRHS ? (<NativeAd />
               ) : null} */}
-              <DFPSlotsProvider dfpNetworkId="175434344">
-              <div className="native-ads">
-          <AdSlot sizes={[['fluid']]} adUnit="Native_adunit" />
-        </div>
-       
-      </DFPSlotsProvider>
+              
                 {listItems.slice(1).map((subList, ind) => {
                   return renderLayout(subList, ind);
                 })}
