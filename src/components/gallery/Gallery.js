@@ -341,7 +341,7 @@ const Gallery = ({
               if (
                 image.layout_type &&
                 image.layout_type.indexOf('ad_unit') >= 0 &&
-                image.ad_url.length > 0
+                image.msite_ad_url.length > 0
               ) {
                 const [width, height] =
                   image.layout_type === 'ad_unit_sqaure_gallery'
@@ -353,7 +353,7 @@ const Gallery = ({
                     key={image.ad_unit_id + ' ' + ind}
                     width={width + 50}
                     height={height + 50}
-                    src={image.ad_url}
+                    src={image.msite_ad_url}
                   />
                 ) : null;
               } else {
