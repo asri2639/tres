@@ -189,6 +189,7 @@ export async function getStaticProps({ params, ...args }) {
     url.includes('city') ||
     url.includes('district') ||
     url.includes('sitara') ||
+    url.includes('entertainment') ||
     url.includes('film-and-tv') ||
     url.includes('international') ||
     url.includes('business') ||
@@ -196,7 +197,7 @@ export async function getStaticProps({ params, ...args }) {
     url.includes('science-and-technology') ||
     url.includes('sukhibhava') ||
     url.includes('opinion') ||
-    url.includes('sports')
+    url.includes('sports') || true
   ) {
     const response = await api.Listing.getListingApiKey({
       query: {

@@ -174,7 +174,7 @@ export const getData = async (url, language, state, urlSplit, qparams) => {
     url.includes('gallery') ||
     url.includes('city') ||
     url.includes('district') ||
-    url.includes('sitara') ||
+    url.includes('entertainment') ||
     url.includes('film-and-tv') ||
     url.includes('international') ||
     url.includes('business') ||
