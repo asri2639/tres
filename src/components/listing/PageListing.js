@@ -860,17 +860,15 @@ if(listingResp.data){
             {listItems && listItems.length > 0 ? (
               <>
                 <Media at="xs" className="w-full">
-                  {listItems[0].layout_type == 'featured_topnews_seeall' ||
-                  listItems[0].layout_type == 'slider_seeall' ||
-                  listItems[0].layout_type == 'featured_staggered_grid' ||
-                  listItems[0].layout_type == 'news_card_listing' ? null : (
+                  
+                  { dropdown.title !== '' ? null : (
                     <h1 className="px-2 text-md font-bold capitalize">
-                      {data.ml_title && data.ml_title[0]
-                        ? data.ml_title[0].text
-                        : data.catalog_list_items[0].ml_title[0].text}
+                       {data.ml_title && data.ml_title[0]
+                    ? data.ml_title[0].text
+                    : data.catalog_list_items[0].ml_title[0].text}
                     </h1>
                   )}
-
+                 {console.log()}
                   <MobileMainArticles
                     list={listItems[0].catalog_list_items}
                     dropdown={dropdown}
