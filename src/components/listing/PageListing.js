@@ -501,10 +501,10 @@ if(listingResp.data){
       </Head>
       <MediaContextProvider>
         <Media at="xs" className="w-full mt-2">
-          {listItems[0].layout_type == 'featured_topnews_seeall' ||
+          {dropdown.title !== '' && (listItems[0].layout_type == 'featured_topnews_seeall' ||
           listItems[0].layout_type == 'slider_seeall' ||
           listItems[0].layout_type == 'featured_staggered_grid' ||
-          listItems[0].layout_type == 'news_card_listing' ? (
+          listItems[0].layout_type == 'news_card_listing') ? (
             <div>
               <h1 className={`flex items-center font-extrabold float-left ml-3.5 px-2 text-md font-bold capitalize ${isRTL ? 'md:flex-row-reverse rtl ' : ''}`}>
                 {data.ml_title && data.ml_title[0]
@@ -577,7 +577,7 @@ if(listingResp.data){
             />
           ) : null}
 
-          {dropdown ? (
+          {dropdown.title !== '' ? (
             dropdown.data && dropdown.data.length > 1 ? (
               <div className={`w-full flex justify-between flex-wrap items-center float-right mx-2.5 ${isRTL ? 'md:flex-row-reverse rtl ' : ''}`}>
                 <h1 className="pl-5 pr-4 text-md font-bold capitalize">
