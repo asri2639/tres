@@ -501,10 +501,10 @@ if(listingResp.data){
       </Head>
       <MediaContextProvider>
         <Media at="xs" className="w-full mt-2">
-          {dropdown.title !== '' && (listItems[0].layout_type == 'featured_topnews_seeall' ||
+          {listItems[0].layout_type == 'featured_topnews_seeall' ||
           listItems[0].layout_type == 'slider_seeall' ||
           listItems[0].layout_type == 'featured_staggered_grid' ||
-          listItems[0].layout_type == 'news_card_listing') ? (
+          listItems[0].layout_type == 'news_card_listing' ? (
             <div>
               <h1 className={`flex items-center font-extrabold float-left ml-3.5 px-2 text-md font-bold capitalize ${isRTL ? 'md:flex-row-reverse rtl ' : ''}`}>
                 {data.ml_title && data.ml_title[0]
@@ -861,14 +861,14 @@ if(listingResp.data){
               <>
                 <Media at="xs" className="w-full">
                   
-                  { dropdown.title !== '' ? null : (
+                  { dropdown.title === '' && (listItems[0].layout_type === 'featured_topnews' || listItems[0].layout_type === 'slider' || listItems[0].layout_type === 'featured_staggered_grid_seeall' || listItems[0].layout_type === 'staggered_grid_seeall') ? (
                     <h1 className="px-2 text-md font-bold capitalize">
                        {data.ml_title && data.ml_title[0]
                     ? data.ml_title[0].text
                     : data.catalog_list_items[0].ml_title[0].text}
                     </h1>
-                  )}
-                 {console.log()}
+                  ):null}
+                 {console.log( listItems[0].layout_type)}
                   <MobileMainArticles
                     list={listItems[0].catalog_list_items}
                     dropdown={dropdown}
