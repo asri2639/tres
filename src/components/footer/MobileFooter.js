@@ -101,7 +101,7 @@ const MobileFooter = ({ data, menu }) => {
           ) : null}
           <div
             next-page-hide="1"
-            className="mobile-footer w-full block md:hidden bg-mbg text-white absolute bottom-0"
+            className="mobile-footer w-full block md:hidden bg-mbg text-white relative bottom-0"
           >
             <div className="footer-sticky-ad-close">X</div>
 
@@ -110,7 +110,7 @@ const MobileFooter = ({ data, menu }) => {
             </div>
             <div className="eb-navbar mb-24 pb-1">
               <button
-                className="btot text-center absolute bg-red-700 w-40 px-4 py-3 rounded-full"
+                className="btot text-center relative bg-red-700 w-40 px-4 py-3 rounded-full"
                 style={{
                   top: '-2.5rem',
                   left: 'calc(50% - 5rem)',

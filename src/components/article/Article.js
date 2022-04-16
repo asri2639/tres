@@ -375,7 +375,6 @@ export default function Article({
               {htmlShow ? (
                 <div
                   className={`text-base md:text-md `}
-                  style={{ paddingBottom: 'calc(100% + 2rem)' }}
                   dangerouslySetInnerHTML={{
                     __html: html,
                   }}
