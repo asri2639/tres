@@ -45,7 +45,7 @@ const GalleryList = ({ galleryData }) => {
         gallery_ad: true,
         scroll_no: 0,
         // portal_state: english,
-        state: stateCodeConverter(location.pathname.split('/')[2]),
+        portal_state: stateCodeConverter(location.pathname.split('/')[2]),
       },
     }).then((res) => {
       return res.data.data;
