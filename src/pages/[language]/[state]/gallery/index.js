@@ -205,7 +205,7 @@ export async function getStaticProps({ params, ...args }) {
     response: 'r2',
     item_languages: language,
     portal_state: state,
-    state:state,
+   
   };
 
   var finalQueryParamObject = {};
