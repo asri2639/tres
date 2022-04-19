@@ -387,6 +387,7 @@ export async function getStaticProps({ params, ...args }) {
         page: 0,
         page_size: 1,
         portal_state: params.state, //national
+        state:params.state,
         scroll_no: 0,
       },
     });

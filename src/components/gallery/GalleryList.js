@@ -46,6 +46,7 @@ const GalleryList = ({ galleryData }) => {
         scroll_no: 0,
         // portal_state: english,
         portal_state: stateCodeConverter(location.pathname.split('/')[2]),
+        state: stateCodeConverter(location.pathname.split('/')[2]),
       },
     }).then((res) => {
       return res.data.data;
@@ -149,6 +150,7 @@ const GalleryList = ({ galleryData }) => {
               content_id: related[curIndex + 1].content_id, //variable
               page_size: 1, //window.innerWidth < 769 ? 1 : 10,
               portal_state: stateCodeConverter(location.pathname.split('/')[2]),
+              state: stateCodeConverter(location.pathname.split('/')[2]),
               scroll_no: galleries.length,
               gallery_ad: true,
 
