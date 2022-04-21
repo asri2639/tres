@@ -13,7 +13,7 @@ import {
 import { NextSeo } from 'next-seo';
 import useTranslator from '@hooks/useTranslator';
 import { totalItemsCount } from '@components/listing/PageListing';
-
+import {fetchMenuData} from '@utils/MenuData';
 const state = ({ data, adinfo, payload }) => {
   const router = useRouter();
   const { appLanguage } = useTranslator();
@@ -110,13 +110,21 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params, ...args }) {
   const url = `/${params.language}/${params.state}`;
+  const language = languageMap[params.language];
+  const state = stateCodeConverter(params.state);
+  const api = API(APIEnum.Listing, APIEnum.CatalogList);
+  const urlSplit = url.split('/');
+ let headerData = await    fetchMenuData(api,urlSplit,language,state);
   if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
     return {
       notFound: true,
+      
+      headerData: headerData,
+      
     };
   }
   try {
-    const api = API(APIEnum.Listing, APIEnum.CatalogList);
+   
     const response = await api.Listing.getListingApiKey({
       query: {
         app: 'msite',
@@ -134,8 +142,7 @@ export async function getStaticProps({ params, ...args }) {
       };
     }
 
-    const language = languageMap[params.language];
-    const state = stateCodeConverter(params.state);
+   
 
     if (result) {
       const requestPayload = {
@@ -163,7 +170,7 @@ export async function getStaticProps({ params, ...args }) {
         },
       };
       const skyscaperdata = await api.CatalogList.getSkyScaperAds(skyscaperrequestPayload);
-      console.log(skyscaperdata.data.data);
+      
       let adinfo;
       if(skyscaperdata.data){
         adinfo= skyscaperdata.data.data;
@@ -185,6 +192,7 @@ export async function getStaticProps({ params, ...args }) {
               data: data,
               adinfo: adinfo,
               payload: requestPayload,
+              headerData: headerData,
             },
             revalidate: 60, // listing
           };
@@ -194,6 +202,9 @@ export async function getStaticProps({ params, ...args }) {
       console.log(`LISTING_ERR: Data not found in listing response`);
       return {
         notFound: true,
+        
+        headerData: headerData,
+      
         revalidate: 60, // listing
       };
     } else {
@@ -201,6 +212,9 @@ export async function getStaticProps({ params, ...args }) {
       return {
         notFound: true,
         revalidate: 60, // listing
+       
+        headerData: headerData,
+       
       };
     }
   } catch (e) {
@@ -209,6 +223,9 @@ export async function getStaticProps({ params, ...args }) {
     return {
       notFound: true,
       revalidate: 60, // listing
+     
+      headerData: headerData,
+      
     };
   }
 }

@@ -1,4 +1,6 @@
 import Layout from '@components/layout/Layout';
+import ErrorLayout from '@components/layout/ErrorLayout';
+
 import React, { useEffect, useState } from 'react';
 import '@styles/tailwind.css';
 import '@styles/_fonts.scss';
@@ -77,10 +79,15 @@ function App({ Component, pageProps }) {
       </Head>
 
       <TransitionContext.Provider value={isTransitioning}>
+       
         {/*   {isTransitioning ? <GlobalSpinner /> : null} */}
-        <Layout accessToken={accessToken} pageType={pageProps.pageType}>
+       {console.log(pageProps)}
+       {
+         pageProps.headerData !== undefined ? (  <Layout key={pageProps.headerData.language} accessToken={accessToken} headerData={pageProps.headerData} pageType={pageProps.pageType}>
           <Component {...pageProps} />
-        </Layout>
+        </Layout>):( <ErrorLayout><Component {...pageProps} /></ErrorLayout>)
+       }
+       
       </TransitionContext.Provider>
     </>
   );

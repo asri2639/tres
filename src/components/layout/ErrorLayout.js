@@ -24,18 +24,17 @@ const country = 'IN';
 export const RTLContext = React.createContext(false);
 export const ScrollContext = React.createContext(false);
 
-const Layout = ({ children, accessToken, pageType, headerData }) => {
+const ErrorLayout = ({ children, accessToken, pageType }) => {
   const router = useRouter();
   const api = API(APIEnum.Catalog, APIEnum.CatalogList);
   const [data, setData] = useState({
-    footer: headerData.footer,
-    header: headerData.header,
+    footer: [],
+    header: { menu: { desktop: [], mobile: [] }, languages: null },
   });
-  
   const path = router.asPath;
   const splitPath = path.split('/');
   const lang = splitPath[1];
-  const language = headerData.language;
+  const language = languageMap[lang] || 'en';
   const state = splitPath[2];
 
   const [showStateModal, setShowStateModal] = useState(null);
@@ -50,7 +49,7 @@ const Layout = ({ children, accessToken, pageType, headerData }) => {
 
     const response = await fetch(`/api/menu?url=${lang + '/' + state}`);
     let data = null;
-
+    console.log('error', response)
     if (response.ok) {
       try {
         data = await response.json();
@@ -223,7 +222,32 @@ const Layout = ({ children, accessToken, pageType, headerData }) => {
     };
   });
 
-  
+  useEffect(() => {
+    const populateData = async () => {
+      const config = await fetchConfig();
+      const footer = await fetchFooter();
+      const menuData = await fetchMenu();
+      setData((data) => ({
+        ...data,
+        header: {
+          ...data.header,
+          menu: menuData,
+          languages: footer.languages,
+        },
+        footer: footer.required,
+      }));
+    };
+    console.log('token',accessToken)
+    if (accessToken && accessToken.mobile.length && language && state) {
+      token.web = accessToken.web;
+      token.mobile = accessToken.mobile;
+     
+    }
+    populateData();
+    if (typeof window !== 'undefined') {
+      window['menu'] = data.header;
+    }
+  }, [language, state, accessToken]);
 
   return (
     <>
@@ -270,10 +294,8 @@ const Layout = ({ children, accessToken, pageType, headerData }) => {
           )}
           {isScrolled ? (
             <Footer
-              data={data.footer.required}
+              data={data.footer}
               menu={data.header ? data.header['menu'] : null}
-              language={headerData.language}
-              state={headerData.state}
             />
           ) : null}
         </ScrollContext.Provider>
@@ -282,4 +304,4 @@ const Layout = ({ children, accessToken, pageType, headerData }) => {
   );
 };
 
-export default Layout;
+export default ErrorLayout;

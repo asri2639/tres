@@ -8,7 +8,7 @@ import { getAmpUrl, stateCodeConverter } from '@utils/Helpers';
 import { languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import useTranslator from '@hooks/useTranslator';
-
+import {fetchMenuData} from '@utils/MenuData';
 import { totalItemsCount } from '@components/listing/PageListing';
 import Error from 'next/error';
 
@@ -150,18 +150,20 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, ...args }) {
-  let language = 'en',
-    state = 'na';
+  
   const url = `/${params.language}/${params.state}/videos`;
+  const language = languageMap[params.language];
+  const state = stateCodeConverter(params.state);
+  const api = API(APIEnum.Listing, APIEnum.CatalogList,  APIEnum.Catalog);
+  const urlSplit = url.split('/');
+ let headerData = await    fetchMenuData(api,urlSplit,language,state);
   if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
     return {
       notFound: true,
+      headerData:headerData
     };
   }
-  language = languageMap[params.language];
-  state = stateCodeConverter(params.state);
 
-  const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
 
   const response = await api.Listing.getListingApiKey({
     query: {
@@ -242,6 +244,7 @@ export async function getStaticProps({ params, ...args }) {
           initCount: initCount,
           payload: requestPayload,
           dropDownData: finalDataObj,
+          headerData:headerData,
         },
         revalidate: 60, // listing
       };

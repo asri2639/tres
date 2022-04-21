@@ -258,7 +258,7 @@ const Gallery = ({
               }
             }, 10);
           } else {
-            console.log('In-Article ad container not found!!!', contentId);
+           // console.log('In-Article ad container not found!!!', contentId);
           }
         }
       }

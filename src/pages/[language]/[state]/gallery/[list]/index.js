@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import useTranslator from '@hooks/useTranslator';
 import Error from 'next/error';
 import PageListing, { totalItemsCount } from '@components/listing/PageListing';
-
+import {fetchMenuData} from '@utils/MenuData';
 const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
   const router = useRouter();
   const { appLanguage } = useTranslator();
@@ -164,21 +164,24 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, ...args }) {
-  let language = 'en',
-    state = 'na';
+ 
   const url = `/${params.language}/${params.state}/gallery/${params.list}`;
+ 
+  const language = languageMap[params.language];
+  const state = stateCodeConverter(params.state);
+  const api = API(APIEnum.Listing, APIEnum.CatalogList,  APIEnum.Catalog);
   const urlSplit = url.split('/');
-
+ let headerData = await    fetchMenuData(api,urlSplit,language,state);
   if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
     return {
       notFound: true,
+      props:{
+        headerData:headerData,
+      }
     };
   }
 
-  language = languageMap[urlSplit[1]];
-  state = stateCodeConverter(urlSplit[2]);
-
-  const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
+ 
   if (
     url.includes('state') ||
     url.substring(url.length - 'state'.length) == 'state' ||
@@ -216,6 +219,9 @@ export async function getStaticProps({ params, ...args }) {
       return {
         notFound: true,
         revalidate: 60, // listing
+        props:{
+          headerData:headerData,
+        }
       };
     }
 
@@ -403,6 +409,7 @@ export async function getStaticProps({ params, ...args }) {
               initCount: initCount,
               payload: requestPayload,
               dropDownData: finalDataObj,
+              headerData:headerData
             },
             revalidate: 60, // listing
           };
@@ -412,6 +419,9 @@ export async function getStaticProps({ params, ...args }) {
       return {
         notFound: true,
         revalidate: 60, // listing
+        props:{
+          headerData:headerData
+        }
       };
 
       //console.log(data);

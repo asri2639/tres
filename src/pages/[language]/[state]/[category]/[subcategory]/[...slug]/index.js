@@ -13,7 +13,7 @@ import {
 import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import useTranslator from '@hooks/useTranslator';
-
+import {fetchMenuData} from '@utils/MenuData';
 import ArticleList from '@components/article/ArticleList';
 import PageListing from '@components/listing/PageListing';
 import { getData } from '..';
@@ -405,22 +405,28 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, ...args }) {
-  let language = 'en',
-    state = 'na',
-    bypass = false,
+  
+   let bypass = false,
     qparams = null;
   const url = `/${params.language}/${params.state}/${params.category}/${
     params.subcategory
   }/${params.slug.join('/')}`;
+  const language = languageMap[params.language];
+  const state = stateCodeConverter(params.state);
+  const api = API(APIEnum.Listing, APIEnum.CatalogList);
+  const urlSplit = url.split('/');
+ let headerData = await    fetchMenuData(api,urlSplit,language,state);
+
   if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
     return {
       notFound: true,
+     
+        headerData: headerData,
+        
     };
   }
 
-  const urlSplit = url.split('/');
-  language = languageMap[urlSplit[1]];
-  state = stateCodeConverter(urlSplit[2]);
+  
 
   qparams = {
     state: params.state,
@@ -431,7 +437,7 @@ export async function getStaticProps({ params, ...args }) {
   const id = params.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
   if (re.test(id) || bypass) {
-    const api = API(APIEnum.CatalogList);
+   
     let type = urlSplit[0].toLowerCase();
     if (bypass) {
       type = 'live-streaming';
@@ -463,8 +469,17 @@ export async function getStaticProps({ params, ...args }) {
 
     if (error || !article) {
       return {
+        props:{
+          pageType: 'article',
+          
+          headerData: headerData,
+        },
+       
         notFound: true,
         revalidate: 60, // revalidate
+       
+          
+          
       };
     }
     // Pass data to the page via props
@@ -474,11 +489,12 @@ export async function getStaticProps({ params, ...args }) {
         pageType: 'article',
         data: article,
         id: id,
+        headerData: headerData,
       },
       revalidate: 60, // revalidate
     };
   } else {
-    return getData(url, language, state, urlSplit, params);
+    return getData(url, language, state, urlSplit, params,headerData);
   }
 }
 export default slug;

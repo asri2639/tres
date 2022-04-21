@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import Error from 'next/error';
 import GalleryList from '@components/gallery/GalleryList';
 import getConfig from 'next/config';
-
+import {fetchMenuData} from '@utils/MenuData';
 const slug = ({ data, pageType, id }) => {
   const router = useRouter();
   const { publicRuntimeConfig } = getConfig();
@@ -349,22 +349,25 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, ...args }) {
-  let language = 'en',
-    state = 'na',
-    qparams = null;
+  let qparams = null;
   const url = `/${params.language}/${params.state}/gallery/${params.slug.join(
     '/'
   )}`;
-
+  const language = languageMap[params.language];
+  const state = stateCodeConverter(params.state);
+  const api = API(APIEnum.Listing, APIEnum.CatalogList,  APIEnum.Catalog);
+  const urlSplit = url.split('/');
+ let headerData = await    fetchMenuData(api,urlSplit,language,state);
   if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
     return {
       notFound: true,
+      props:{
+        headerData:headerData,
+      }
     };
   }
 
-  const urlSplit = url.split('/');
-  language = languageMap[urlSplit[1]];
-  state = stateCodeConverter(urlSplit[2]);
+  
 
   const id = params.slug.slice(-1)[0];
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
@@ -375,7 +378,7 @@ export async function getStaticProps({ params, ...args }) {
   };
 
   if (re.test(id)) {
-    const api = API(APIEnum.CatalogList);
+
     const galleryResponse = await api.CatalogList.getArticleDetails({
       params: qparams,
       query: {
@@ -397,6 +400,9 @@ export async function getStaticProps({ params, ...args }) {
       return {
         notFound: true,
         revalidate: 60, // revalidate
+        props:{
+          headerData:headerData
+        }
       };
     }
     // Pass data to the page via props
@@ -405,6 +411,7 @@ export async function getStaticProps({ params, ...args }) {
         pageType: 'gallery',
         data: { gallery, items_count: galleryResp.total_items_count },
         id: id,
+        headerData:headerData
       },
       revalidate: 60, // revalidate
     };
@@ -412,6 +419,9 @@ export async function getStaticProps({ params, ...args }) {
     return {
       notFound: true,
       revalidate: 60, // revalidate
+      props:{
+        headerData:headerData
+      }
     };
   }
 }

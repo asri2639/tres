@@ -10,14 +10,14 @@ import LanguageList from '@components/footer/LanguageList';
 import { RTLContext } from '@components/layout/Layout';
 import { getSocialLinks } from '@utils/Helpers';
 
-const DesktopFooter = ({ data, t }) => {
+const DesktopFooter = ({ data, t , language, state}) => {
   const router = useRouter();
   const isRTL = useContext(RTLContext);
 
   const path = router.asPath;
   const splitPath = path.split('/');
-  const lang = splitPath[1];
-  const state = splitPath[2];
+  const lang = language;
+  
 
   const [socialHandlers, setSocialHandlers] = useState({
     twitter: '',
@@ -27,26 +27,21 @@ const DesktopFooter = ({ data, t }) => {
   const openFeedback = () => {};
   useEffect(() =>{
     const splitPath = location.pathname.split('/');
-    const state = splitPath[2];
-    const language = splitPath[1];
+    
      
      let finalkey = language === 'urdu' && state === 'national' ? "urdunational":state;
       const socialLinks = getSocialLinks(finalkey);
       setSocialHandlers(socialLinks);
   },[])
   useEffect(() => {
-    const splitPath = location.pathname.split('/');
-    const state = splitPath[2];
-    const language = splitPath[1];
+   
      
      let finalkey = language === 'urdu' && state === 'national' ? "urdunational":state;
       const socialLinks = getSocialLinks(finalkey);
       setSocialHandlers(socialLinks);
 
     const handleRouteChange = (url) => {
-      const splitPath = location.pathname.split('/');
-      const state = splitPath[2];
-      const language = splitPath[1];
+     
      
      let finalkey = language === 'urdu' && state === 'national' ? "urdunational":state;
       const socialLinks = getSocialLinks(finalkey);
@@ -63,7 +58,7 @@ const DesktopFooter = ({ data, t }) => {
   }, []);
   return (
     <footer className="eb-footer footer">
-    {console.log(socialHandlers)}
+   {console.log(data)}
       <div className="desktop-footer absolute bottom-0 w-full divide-y md:block hidden font-english mb-4">
         {/* {t('top_news')} */}
         <div className="border-t">
@@ -86,7 +81,7 @@ const DesktopFooter = ({ data, t }) => {
               <div className={`logo ${lang}`}></div>
             </NavLink>
 
-            <LanguageList languages={data} />
+            <LanguageList languages={data} language={language} state={state}/>
           </div>
         </div>
         <div>

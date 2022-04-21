@@ -10,7 +10,7 @@ import eventBus from '@utils/EventBus';
 import { useRouter } from 'next/router';
 import useTranslator from '@hooks/useTranslator';
 
-const MobileFooter = ({ data, menu }) => {
+const MobileFooter = ({ data, menu,language, state }) => {
   const router = useRouter();
   const { t } = useTranslator();
 
@@ -53,8 +53,7 @@ const MobileFooter = ({ data, menu }) => {
   };
   useEffect(() =>{
     const splitPath = location.pathname.split('/');
-    const state = splitPath[2];
-    const language = splitPath[1];
+    
      
      let finalkey = language === 'urdu' && state === 'national' ? "urdunational":state;
       const socialLinks = getSocialLinks(finalkey);
@@ -64,15 +63,14 @@ const MobileFooter = ({ data, menu }) => {
 
   useEffect(() => {
     const splitPath = location.pathname.split('/');
-    const state = splitPath[2];
+  
 
     const socialLinks = getSocialLinks(state);
     setSocialHandlers(socialLinks);
 
     const handleRouteChange = (url) => {
       const splitPath = location.pathname.split('/');
-      const state = splitPath[2];
-      const language = splitPath[1];
+      
      
      let finalkey = language === 'urdu' && state === 'national' ? "urdunational":state;
       const socialLinks = getSocialLinks(finalkey);

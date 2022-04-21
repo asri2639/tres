@@ -868,7 +868,7 @@ if(listingResp.data){
                     : data.catalog_list_items[0].ml_title[0].text}
                     </h1>
                   ):null}
-                 {console.log( listItems[0].layout_type)}
+                
                   <MobileMainArticles
                     list={listItems[0].catalog_list_items}
                     dropdown={dropdown}

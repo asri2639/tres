@@ -10,6 +10,7 @@ import { languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import useTranslator from '@hooks/useTranslator';
 import Error from 'next/error';
+import {fetchMenuData} from '@utils/MenuData';
 import PageListing, { totalItemsCount } from '@components/listing/PageListing';
 
 const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
@@ -164,21 +165,25 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, ...args }) {
-  let language = 'en',
-    state = 'na';
+  
   const url = `/${params.language}/${params.state}/${params.category}`;
+ 
+  const language = languageMap[params.language];
+  const state = stateCodeConverter(params.state);
+  const api = API(APIEnum.Listing, APIEnum.CatalogList,  APIEnum.Catalog);
   const urlSplit = url.split('/');
+ let headerData = await    fetchMenuData(api,urlSplit,language,state);
 
   if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
     return {
       notFound: true,
+      
+      headerData: headerData,
+     
     };
   }
 
-  language = languageMap[urlSplit[1]];
-  state = stateCodeConverter(urlSplit[2]);
-
-  const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
+  
   
   if (
     url.includes('state') ||
@@ -216,6 +221,9 @@ export async function getStaticProps({ params, ...args }) {
       return {
         notFound: true,
         revalidate: 60, // listing
+       
+         headerData: headerData,
+        
       };
     }
 
@@ -413,6 +421,7 @@ export async function getStaticProps({ params, ...args }) {
               data: data,
               initCount: initCount,
               payload: requestPayload,
+              headerData: headerData,
               dropDownData: finalDataObj,
             },
             revalidate: 60, // listing
@@ -423,6 +432,9 @@ export async function getStaticProps({ params, ...args }) {
       return {
         notFound: true,
         revalidate: 60, // listing
+        
+        headerData: headerData,
+        
       };
 
       //console.log(data);
@@ -439,6 +451,9 @@ export async function getStaticProps({ params, ...args }) {
       //   permanent: false,
       // },
        notFound: true,
+     
+       headerData: headerData,
+       
     };
   }
 }

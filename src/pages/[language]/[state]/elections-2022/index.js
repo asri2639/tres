@@ -5,8 +5,11 @@ import { Media, MediaContextProvider } from '@media';
 import Head from 'next/head';
 import Error from 'next/error';
 import { getElectionInfo } from '@utils/Helpers';
-
-
+import {fetchMenuData} from '@utils/MenuData';
+import API from '@api/API';
+import { getAmpUrl, stateCodeConverter } from '@utils/Helpers';
+import { languageMap } from '@utils/Constants';
+import APIEnum from '@api/APIEnum';
 const slug = ({metainfo,language}) => {
       
     
@@ -62,13 +65,20 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params, ...args }) {
   const lang = params.language;
-  const state = params.state;
-   let finalkey = lang === 'urdu' && state === 'national' ? "urdunational":state;
+  const statev = params.state;
+  const url = `/${params.language}/${params.state}/${params.category}`;
+  const language = languageMap[params.language];
+  const state = stateCodeConverter(params.state);
+  const api = API(APIEnum.Listing, APIEnum.CatalogList);
+  const urlSplit = url.split('/');
+ let headerData = await    fetchMenuData(api,urlSplit,language,state);
+   let finalkey = lang === 'urdu' && statev === 'national' ? "urdunational":statev;
    let metadata = getElectionInfo(finalkey);
   return{
     props:   {
       metainfo: metadata,
-      language:lang
+      language:lang,
+      headerData:headerData
       }
   }
 }

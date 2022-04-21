@@ -6,6 +6,7 @@ import Head from 'next/head';
 import { trackPromise } from 'react-promise-tracker';
 import { stateCodeConverter } from '@utils/Helpers';
 import { languageMap } from '@utils/Constants';
+import {fetchMenuData} from '@utils/MenuData';
 
 const slug = ({ data, payload, dropDownData, userAgent }) => {
   return (
@@ -33,6 +34,7 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
   const state = stateCodeConverter(urlSplit[2]);
   const searchString = url.split('/');
   const api = API(APIEnum.Listing, APIEnum.CatalogList, APIEnum.Catalog);
+  let headerData = await    fetchMenuData(api,urlSplit,language,state);
   const params = {
     page: 0,
     page_size: 45,
@@ -73,6 +75,8 @@ slug.getInitialProps = async ({ query, req, res, ...args }) => {
     pageType: 'search',
     dropDownData: initialresponse.data,
     userAgent: userAgent,
+    headerData:headerData
+    
   };
 
   return {};

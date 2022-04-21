@@ -137,7 +137,7 @@ export default function Article({
       }
     }
 
-    console.log('inside non-amp!!!!');
+   // console.log('inside non-amp!!!!');
     const isDesktop = window.innerWidth >= 768;
     const divStyle = isDesktop
       ? `width: 728px; height: 90px;`

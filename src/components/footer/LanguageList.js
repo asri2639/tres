@@ -5,6 +5,7 @@ import { stateChange } from '@utils/GoogleTagManager';
 
 export default function LanguageList({ languages }) {
   const isRTL = useContext(RTLContext);
+  console.log('footerstate',languages)
   const listItems = languages.map((language, index) => {
     const state =
       language.state && language.state === 'Assam' ? 'assam' : language.state;

@@ -14,7 +14,7 @@ import { applicationConfig, languageMap } from '@utils/Constants';
 import { useRouter } from 'next/router';
 import FileFetcher from '@services/api/FileFetcher';
 import getConfig from 'next/config';
-
+import {fetchMenuData} from '@utils/MenuData';
 import Error from 'next/error';
 
 import VideoList from '@components/video/VideoList';
@@ -260,26 +260,30 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, ...args }) {
-  let language = 'en',
-    state = 'na',
-    qparams = null,
+  let  qparams = null,
     bypass = false;
 
   const url = `/${params.language}/${
     params.state
   }/live-streaming/${params.slug.join('/')}`;
-
+  
+  const language = languageMap[params.language];
+  const state = stateCodeConverter(params.state);
+  const api = API(APIEnum.Listing, APIEnum.CatalogList,  APIEnum.Catalog);
+  const urlSplit = url.split('/');
+ let headerData = await    fetchMenuData(api,urlSplit,language,state);
   if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
     return {
       notFound: true,
+      props:{
+        headerData:headerData
+      }
     };
   }
   // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
   const userAgent = 'Mobile';
 
-  const urlSplit = url.split('/');
-  language = languageMap[urlSplit[1]];
-  state = stateCodeConverter(urlSplit[2]);
+ 
 
   qparams = {
     state: params.state,
@@ -291,7 +295,7 @@ export async function getStaticProps({ params, ...args }) {
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
   if (re.test(id) || bypass) {
-    const api = API(APIEnum.CatalogList);
+    
     let type = params.slug[0].toLowerCase();
     if (bypass) {
       type = 'live-streaming';
@@ -352,6 +356,9 @@ export async function getStaticProps({ params, ...args }) {
       return {
         notFound: true,
         revalidate: 60, // revalidate
+        props:{
+          headerData:headerData,
+        }
       };
     }
     return {
@@ -360,6 +367,7 @@ export async function getStaticProps({ params, ...args }) {
         data: video,
         userAgent: userAgent,
         id: id,
+        headerData:headerData,
       },
       revalidate: 60, // revalidate
     };
@@ -367,6 +375,9 @@ export async function getStaticProps({ params, ...args }) {
     return {
       notFound: true,
       revalidate: 60, // revalidate
+      props:{
+        headerData:headerData
+      }
     };
   }
 }
