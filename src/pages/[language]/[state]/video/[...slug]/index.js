@@ -276,9 +276,7 @@ export async function getStaticProps({ params, ...args }) {
   // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
   const userAgent = 'Mobile';
 
-  const urlSplit = url.split('/');
-  language = languageMap[urlSplit[1]];
-  state = stateCodeConverter(urlSplit[2]);
+  
 
   qparams = {
     state: params.state,
