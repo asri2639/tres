@@ -217,7 +217,7 @@ export async function getStaticProps({ params, ...args }) {
     if (!result) {
       return {
         notFound: true,
-        headerData:headerData
+        
         revalidate: 60, // listing
       };
     }
