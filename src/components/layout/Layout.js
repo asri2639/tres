@@ -268,14 +268,15 @@ const Layout = ({ children, accessToken, pageType, headerData }) => {
               {children}
             </section>
           )}
-          {isScrolled ? (
+          
             <Footer
+              key={headerData.language}
               data={data.footer.required}
               menu={data.header ? data.header['menu'] : null}
               language={headerData.language}
               state={headerData.state}
             />
-          ) : null}
+          
         </ScrollContext.Provider>
       </RTLContext.Provider>
     </>
