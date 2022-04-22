@@ -5,7 +5,7 @@ import { Media, MediaContextProvider } from 'media';
 export default function Footer({ data, menu,language,state }) {
   return (
     <MediaContextProvider>
-      {console.log('footer data',data)}
+     
       <Media at="xs">
         {' '}
         <MobileFooter data={data} menu={menu} language={language} state={state}/>

@@ -81,7 +81,7 @@ function App({ Component, pageProps }) {
       <TransitionContext.Provider value={isTransitioning}>
        
         {/*   {isTransitioning ? <GlobalSpinner /> : null} */}
-       {console.log(pageProps)}
+  
        {
          pageProps.headerData !== undefined ? (  <Layout key={pageProps.headerData.language} accessToken={accessToken} headerData={pageProps.headerData} pageType={pageProps.pageType}>
           <Component {...pageProps} />
