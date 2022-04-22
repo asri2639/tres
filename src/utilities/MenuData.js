@@ -2,7 +2,8 @@ import FileFetcher from '@services/api/FileFetcher';
 
 
 export const fetchMenuData = async (api, urlSplit, language, state) => {
-  const urlSuffix = urlSplit[1] == 'ur' ? '-urdu' : '';
+  console.log(urlSplit)
+  const urlSuffix = urlSplit[1] == 'urdu' ? '-urdu' : '';
   const headerResp = await api.CatalogList.getMenuDetails({
     params: {
       suffix: `msite-new-left-menu${
@@ -57,7 +58,7 @@ export const fetchMenuData = async (api, urlSplit, language, state) => {
     .reduce((a, c) => ((a[c] = languageData[c]), a), {});
   footer.languages = languageData;
   footer.required = requiredData;
-
+  //console.log('menu',headerResp)
   let hdata = {
     footer: footer,
     header: {
