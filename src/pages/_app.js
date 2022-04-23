@@ -83,7 +83,7 @@ function App({ Component, pageProps }) {
         {/*   {isTransitioning ? <GlobalSpinner /> : null} */}
   
        {
-         pageProps.headerData !== undefined ? (  <Layout key={pageProps.headerData.language} accessToken={accessToken} headerData={pageProps.headerData} pageType={pageProps.pageType}>
+         pageProps.headerData !== undefined ? (  <Layout key={pageProps.headerData.language + pageProps.headerData.state} accessToken={accessToken} headerData={pageProps.headerData} pageType={pageProps.pageType}>
           <Component {...pageProps} />
         </Layout>):( <ErrorLayout><Component {...pageProps} /></ErrorLayout>)
        }
