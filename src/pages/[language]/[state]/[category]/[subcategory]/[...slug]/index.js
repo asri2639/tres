@@ -349,6 +349,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
  "mainEntityOfPage": {
  "@type": "WebPage",
  "@id": "https://www.etvbharat.com/${headerObj.url}"
+ "keywords":"${headerObj.keywords}"
  },
  "headline": "${headerObj.headline}",
  "description": "${headerObj.description.replace(/\"/gi, '\\"')}",
