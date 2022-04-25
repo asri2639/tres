@@ -1,9 +1,9 @@
 import Modal from '@components/modal/Modal';
 import { useState } from 'react';
-
+import { useRouter } from 'next/router';
 const StateSelectModal = ({ data, callback, onClose }) => {
   const [isShowing, setIsShowing] = useState(true);
-
+  const router = useRouter();
   const close = () => {
     onClose();
     setIsShowing(false);

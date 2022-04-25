@@ -229,7 +229,7 @@ const Layout = ({ children, accessToken, pageType, headerData }) => {
     <>
       {showStateModal ? (
         <StateSelectModal
-          data={data ? data.footer : {}}
+          data={data ? data.footer.required : {}}
           callback={showStateModal.data.callback}
           onClose={() => {
             setShowStateModal(null);
