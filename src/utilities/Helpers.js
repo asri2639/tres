@@ -179,7 +179,7 @@ export const stateCodeConverter = (e) => {
     manipur: 'mn',
     'west-bengal': 'wb',
     national: 'na',
-    'jammu-and-kashmir': 'jammu-and-kashmir',
+    'jammu-and-kashmir': 'jk',
     'tamil-nadu': 'tamil-nadu',
     kerala: 'kerala',
     uttarakhand: 'uttarakhand',
