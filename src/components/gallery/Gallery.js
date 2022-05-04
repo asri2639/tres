@@ -335,7 +335,10 @@ const Gallery = ({
               </div>
             </Media>
           </MediaContextProvider>
-
+          {
+            data[0].main_description !== "" ? (  <div className="about-gallery">{data[0].main_description}</div>):null
+          }
+         
           <div className="space-y-5 p-3 pt-0">
             {properData.map((image, ind) => {
               if (

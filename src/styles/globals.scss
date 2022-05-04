@@ -11,7 +11,17 @@ body {
   font-size: 1rem;
   line-height: 1.25rem;
 }
-
+.about-gallery {
+  background: #f1f1f1;
+  border-left: 3.5pt solid #cc1218;
+  font-size: 18px;
+  line-height: 24px;
+  border-radius: 0;
+  padding: 12px 15px 10px;
+  max-width: 1366px;
+  margin: 0 auto;
+  margin-bottom: 13px;
+}
 .rtl {
   text-align: right;
 }

@@ -112,9 +112,7 @@ const slug = ({ data, pageType, id }) => {
     }
 
     const main = data.gallery[0];
-    const keywords = data.gallery.map((v) => {
-      return v.description;
-    });
+    const keywords = main.keywords;
 
     const thumbnail = thumbnailExtractor(
       main.main_thumbnails,
