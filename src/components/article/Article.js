@@ -402,6 +402,22 @@ export default function Article({
                   />
                 </div>
               ) : null}
+              {
+                htmlShow ? (<><div id={`taboola-below-article-${index}`}></div>
+              
+                <script
+                dangerouslySetInnerHTML={{
+                  __html: ` 
+                  taboola_container_id = 'taboola-below-article-' + ${index} ;
+                  window._taboola = window._taboola || [];
+
+                  _taboola.push({mode:' thumbnails-a', container: taboola_container_id, placement: 'Below Article Widget', target_type: 'mix'});
+                  
+                  _taboola.push({article:'auto', url:'https://preprod.etvbharat.com/${data.web_url}'});
+                 `
+                }} /></>):null
+              }
+              
             </div>
           </Sticky>
         </div>
@@ -423,7 +439,15 @@ export default function Article({
             </div>
           </Media>
         </MediaContextProvider>
+        {
+          htmlShow ? ( <script
+            dangerouslySetInnerHTML={{
+              __html: ` `
+            }}
+            />): null
+        }
       </div>
     </>
   );
 }
+
