@@ -6,19 +6,19 @@ const InfiniteTaboolaAd = ({ index,url }) => {
 
   useEffect(() => {
     
-        window._taboola = window._taboola || [];
-       
-    window._taboola.push({mode: 'alternating-thumbnails-a', 
-    container: `taboola-below-article-feed`, 
-    placement: 'Below Article Feed', target_type: 'mix'});
-    window._taboola.push({ flush: true });
+    window._taboola = window._taboola || [];
+    window._taboola.push({article:'auto', url:url});
+window._taboola.push({mode: 'alternating-thumbnails-a', 
+container: `taboola-below-article-thumbnails-${index}`, 
+placement: 'Below Article Feed', target_type: 'mix'});
+window._taboola.push({ flush: true });
    
 
     
   }, [index]);
 
   return (
-    <div id={`taboola-below-article-feed`}></div>
+    <div id={`taboola-below-article-thumbnails-${index}`}></div>
   );
 };
 
