@@ -16,6 +16,21 @@ export default class ETVDocument extends Document {
             dangerouslySetInnerHTML={{ __html: mediaStyles }}
           />
           {
+             <script
+             dangerouslySetInnerHTML={{
+               __html: `!function (e, f, u) {
+
+                e.async = 1;
+                
+                e.src = u;
+                
+                f.parentNode.insertBefore(e, f);
+                
+                }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharatenglish/loader.js');`,
+             }}
+           ></script>
+          }
+          {
             <script
               dangerouslySetInnerHTML={{
                 __html: ` if (location.protocol === 'http:' && !location.hostname === 'localhost') {
@@ -141,15 +156,7 @@ export default class ETVDocument extends Document {
                 }, 4000);
               }             
               const loadScripts = () => {
-                !function (e, f, u) {
-
-                  e.async = 1;
-                  
-                  e.src = u;
-                  
-                  f.parentNode.insertBefore(e, f);
-                  
-                  }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharatenglish/loader.js');
+                
                 try {
                     var scripts = [
                         "https://securepubads.g.doubleclick.net/tag/js/gpt.js",

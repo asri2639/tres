@@ -223,6 +223,19 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                   : 'ETV Bharat'}
               </title>
               <link rel="canonical" href={canonicalUrl}></link>
+              <script
+             dangerouslySetInnerHTML={{
+               __html: `!function (e, f, u) {
+
+                e.async = 1;
+                
+                e.src = u;
+                
+                f.parentNode.insertBefore(e, f);
+                
+                }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharatenglish/loader.js');`,
+             }}
+           ></script>
             </Head>
 
             <NextSeo

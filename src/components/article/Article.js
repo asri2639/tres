@@ -9,7 +9,8 @@ import Sticky from 'wil-react-sticky';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import getConfig from 'next/config';
-
+import TaboolaAd from '@components/article/TaboolaAd'
+import InfiniteTaboolaAd from '@components/article/InfiniteTaboolaAd'
 const options = {
   loading: () => <div>Loading...</div>,
 };
@@ -25,6 +26,7 @@ const AdContainer = dynamic(
 
 import { articleViewScroll } from '@utils/GoogleTagManager';
 import { pageView, nextPageView } from '@utils/ComScore';
+
 import { useRouter } from 'next/router';
 // import FirstAd from '@components/Article/FirstAd';
 // initialPosition
@@ -45,9 +47,10 @@ export default function Article({
   index,
   userAgent,
   htmlShow,
+  infiniteTaboola
 }) {
   const isAMP = false;
-
+  const [istaboolaShow, setIstaboolaShow] = useState(true);
   const contentRef = useRef(null);
   const isRTL = useContext(RTLContext);
   const router = useRouter();
@@ -130,7 +133,8 @@ export default function Article({
             var event = new CustomEvent('newurl', {
               detail: contentId,
             });
-
+            
+            setIstaboolaShow(true);
             window.dispatchEvent(event);
           }
         }
@@ -403,29 +407,10 @@ export default function Article({
                   />
                 </div>
               ) : null}
-              <div id={'taboola-'+contentId}></div>
               {
-                htmlShow ? (<>
-              
-                <script
-                dangerouslySetInnerHTML={{
-                  __html: ` 
-                  taboola_container_id = 'taboola-below-article-' + ${index};
-// Create DOM element to contain the widget using above id
- 
-var div = document.createElement('div');
-  div.setAttribute('id',taboola_container_id);
-  document.getElementById("taboola-${contentId}").appendChild(div);
-                 
-                 `
-                }} />
-                <script dangerouslySetInnerHTML={{
-                  __html:`window._taboola = window._taboola || [];
-                  taboola_container_id = 'taboola-below-article-' + ${index};
-                  _taboola.push({mode:'thumbnails-a', container: taboola_container_id, placement: 'Below Article Widget', target_type: 'mix'});
-                  _taboola.push({article:'auto', url:'https://preprod.etvbharat.com/${data.web_url}'});`
-                }} /></>):null
+                !infiniteTaboola ? <TaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />:<InfiniteTaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />
               }
+            
               
             </div>
           </Sticky>
@@ -448,13 +433,7 @@ var div = document.createElement('div');
             </div>
           </Media>
         </MediaContextProvider>
-        {
-          htmlShow ? ( <script
-            dangerouslySetInnerHTML={{
-              __html: ` `
-            }}
-            />): null
-        }
+       
       </div>
     </>
   );

@@ -17,7 +17,7 @@ const ArticleList = ({ articleData }) => {
   const router = useRouter();
   const language = languageMap[router.query.language];
   const [isDesktop, setIsDesktop] = useState(null);
-
+  const [infiniteTaboola, setInfiniteTaboola] = useState(false)
   const [articles, setArticles] = useState(articleData.articles);
   const [loading, setLoading] = useState(false);
   const [htmlShow, setHtmlShow] = useState(true);
@@ -200,6 +200,8 @@ const ArticleList = ({ articleData }) => {
             setArticles(newList);
             stopLoading();
           });
+        }else if(!infiniteTaboola){
+          setInfiniteTaboola(true);
         }
       }
     }
@@ -231,6 +233,7 @@ const ArticleList = ({ articleData }) => {
               key={article.contentId}
               {...article}
               rhs={rhs}
+              infiniteTaboola={infiniteTaboola}
               related={related}
               desktop={article.desktop}
               nextArticle={index < 9 ? related[index + 1] : null}
