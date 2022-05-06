@@ -227,6 +227,7 @@ export default function Article({
     <>
       <div
         data-content-id={contentId}
+        id={contentId}
         className={`article relative flex flex-col md:flex-row w-full border-b-2 border-grey-500 md:space-x-10 ${
           isRTL ? 'md:flex-row-reverse rtl' : ''
         }`}
@@ -402,6 +403,7 @@ export default function Article({
                   />
                 </div>
               ) : null}
+              <div id={'taboola-'+contentId}></div>
               {
                 htmlShow ? (<>
               
@@ -413,7 +415,7 @@ export default function Article({
  
 var div = document.createElement('div');
   div.setAttribute('id',taboola_container_id);
-  document.body.appendChild(div);
+  document.getElementById("taboola-${contentId}").appendChild(div);
                  
                  `
                 }} />
