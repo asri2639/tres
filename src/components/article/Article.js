@@ -408,9 +408,11 @@ export default function Article({
                 </div>
               ) : null}
               {
-                !infiniteTaboola ? <TaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />:<InfiniteTaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />
+                !infiniteTaboola ? <TaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />: null
               }
-            
+            {
+              setIstaboolaShow && nextArticle === null ? (<InfiniteTaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />): null
+            }
               
             </div>
           </Sticky>

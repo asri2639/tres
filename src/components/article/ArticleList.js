@@ -200,8 +200,6 @@ const ArticleList = ({ articleData }) => {
             setArticles(newList);
             stopLoading();
           });
-        }else if(!infiniteTaboola){
-          setInfiniteTaboola(true);
         }
       }
     }
@@ -233,7 +231,7 @@ const ArticleList = ({ articleData }) => {
               key={article.contentId}
               {...article}
               rhs={rhs}
-              infiniteTaboola={infiniteTaboola}
+              infiniteTaboola={false}
               related={related}
               desktop={article.desktop}
               nextArticle={index < 9 ? related[index + 1] : null}
