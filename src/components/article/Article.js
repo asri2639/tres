@@ -403,18 +403,25 @@ export default function Article({
                 </div>
               ) : null}
               {
-                htmlShow ? (<><div id={`taboola-below-article-${index}`}></div>
+                htmlShow ? (<>
               
                 <script
                 dangerouslySetInnerHTML={{
                   __html: ` 
-                  taboola_container_id = 'taboola-below-article-' + ${index} ;
-                  window._taboola = window._taboola || [];
-
-                  _taboola.push({mode:' thumbnails-a', container: taboola_container_id, placement: 'Below Article Widget', target_type: 'mix'});
-                  
-                  _taboola.push({article:'auto', url:'https://preprod.etvbharat.com/${data.web_url}'});
+                  taboola_container_id = 'taboola-below-article-' + ${index};
+// Create DOM element to contain the widget using above id
+ 
+var div = document.createElement('div');
+  div.setAttribute('id',taboola_container_id);
+  document.body.appendChild(div);
+                 
                  `
+                }} />
+                <script dangerouslySetInnerHTML={{
+                  __html:`window._taboola = window._taboola || [];
+                  taboola_container_id = 'taboola-below-article-' + ${index};
+                  _taboola.push({mode:'thumbnails-a', container: taboola_container_id, placement: 'Below Article Widget', target_type: 'mix'});
+                  _taboola.push({article:'auto', url:'https://preprod.etvbharat.com/${data.web_url}'});`
                 }} /></>):null
               }
               
