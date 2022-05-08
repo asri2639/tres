@@ -2,7 +2,7 @@ import FileFetcher from '@services/api/FileFetcher';
 
 
 export const fetchMenuData = async (api, urlSplit, language, state) => {
-  console.log(urlSplit)
+  //console.log(urlSplit)
   const urlSuffix = urlSplit[1] == 'urdu' ? '-urdu' : '';
   const headerResp = await api.CatalogList.getMenuDetails({
     params: {

@@ -7,7 +7,7 @@ const InfiniteTaboolaAd = ({ index,url }) => {
   useEffect(() => {
     
     window._taboola = window._taboola || [];
-    window._taboola.push({article:'auto', url:url});
+    window._taboola.push({article:index, url:url});
 window._taboola.push({mode: 'alternating-thumbnails-a', 
 container: `taboola-below-article-thumbnails-${index}`, 
 placement: 'Below Article Feed', target_type: 'mix'});
