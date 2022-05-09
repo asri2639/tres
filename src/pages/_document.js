@@ -18,15 +18,7 @@ export default class ETVDocument extends Document {
           {
              <script
              dangerouslySetInnerHTML={{
-               __html: `!function (e, f, u) {
-
-                e.async = 1;
-                
-                e.src = u;
-                
-                f.parentNode.insertBefore(e, f);
-                
-                }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharatenglish/loader.js');`,
+               __html: ``,
              }}
            ></script>
           }
@@ -156,6 +148,15 @@ export default class ETVDocument extends Document {
                 }, 4000);
               }             
               const loadScripts = () => {
+                !function (e, f, u) {
+
+                  e.async = 1;
+                  
+                  e.src = u;
+                  
+                  f.parentNode.insertBefore(e, f);
+                  
+                  }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharatenglish/loader.js');
                 
                 try {
                     var scripts = [
