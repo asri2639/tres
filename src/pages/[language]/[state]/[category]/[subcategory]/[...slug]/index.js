@@ -223,6 +223,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                   : 'ETV Bharat'}
               </title>
               <link rel="canonical" href={canonicalUrl}></link>
+              
             </Head>
 
             <NextSeo
