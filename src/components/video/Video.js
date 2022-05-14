@@ -9,6 +9,7 @@ import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import { createHash, dateFormatter, loadJS } from '@utils/Helpers';
 import AdContainer from '@components/article/AdContainer';
+import InfiniteTaboolaAd from '@components/article/InfiniteTaboolaAd'
 import useSWR from 'swr';
 import {
   constructPlaybackUrl,
@@ -265,7 +266,7 @@ const Video = ({
         </Media>
       </MediaContextProvider>
 
-      <div className={`${video.container} md:w-8/12  md:h-full`}>
+      <div className={`${video.container} md:w-8/12  md:h-full`} style={{ paddingBottom: 'calc(100% + 2rem)' }}>
         <Sticky
           containerSelectorFocus={`.article[data-content-id="${contentId}"]`}
           stickyEnableRange={[768, Infinity]}
@@ -319,7 +320,7 @@ const Video = ({
             </div>
 
             {
-              <div className={`${video.player} z-0 md:m-0 -mx-3`}>
+              <div className={`${video.player} z-0 md:m-0 -mx-3`} >
                 {!showVideo ? (
                   <div
                     className="play-button"
@@ -354,7 +355,7 @@ const Video = ({
 
             <div
               className="px-2 pt-4 text-sm lg:text-base text-justify lg:text-left"
-              style={{ paddingBottom: 'calc(100% + 2rem)' }}
+              
             >
               {data.description}
             </div>
@@ -424,6 +425,10 @@ const Video = ({
                 </a>
               </div>
             ) : null}
+            
+             
+            <InfiniteTaboolaAd index={0} url={'https://www.etvbharat.com/${data.web_url}'} />
+            
           </div>
         </Sticky>
       </div>

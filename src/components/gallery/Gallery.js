@@ -12,6 +12,8 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 // import Thumbnail from '@components/common/Thumbnail';
 import Thumbnail1 from '@components/common/Thumbnail1';
+import TaboolaAd from '@components/article/TaboolaAd'
+import InfiniteTaboolaAd from '@components/article/InfiniteTaboolaAd'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -521,6 +523,13 @@ const Gallery = ({
             </div>
           ) : null}
           <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
+          {
+                (nextGallery !==null && lang === 'english') ? <TaboolaAd index={index} url={'https://www.etvbharat.com/${data.web_url}'} />: null
+              }
+             
+            {
+              (nextGallery === null && lang === 'english') ? (<InfiniteTaboolaAd index={index} url={'https://www.etvbharat.com/${data.web_url}'} />): null
+            }
         </div>
       </div>
 
