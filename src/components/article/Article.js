@@ -408,11 +408,11 @@ export default function Article({
                 </div>
               ) : null}
               {
-                (!infiniteTaboola && htmlShow) ? <TaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />: null
+                (nextArticle !== null && htmlShow) ? <TaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />: null
               }
-             
+             {console.log('infinite',nextArticle,htmlShow)}
             {
-              (nextArticle === null && htmlShow) ? (<InfiniteTaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />): null
+              (nextArticle === null && index !== 0 && htmlShow) ? (<InfiniteTaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />): null
             }
               
             </div>
