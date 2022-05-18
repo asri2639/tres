@@ -316,6 +316,8 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                   f.parentNode.insertBefore(e, f);
                   
                   }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharat${appLanguage.name}/loader.js');
+                  var eventt = new Event("script-load");
+                  window.dispatchEvent(eventt);
                 }
                 var scrollDeptht = false;
                 window.addEventListener(
