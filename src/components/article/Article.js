@@ -410,7 +410,7 @@ export default function Article({
               {
                 (nextArticle !== null && related.length !== 0  && htmlShow) ? <TaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />: null
               }
-             {console.log('infinite',related.length)}
+             
             {
               (nextArticle === null && related.length !== 0 && htmlShow) ? (<InfiniteTaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />): null
             }
