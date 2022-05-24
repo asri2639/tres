@@ -321,12 +321,12 @@ const ListContainer = ({ children, data, payload,adinfo }) => {
                     console.log('ach',adinfo)
                   }
                   {
-                     adinfo && adinfo.native_ads ? (<DFPSlotsProvider dfpNetworkId="175434344">
+                     adinfo && adinfo.native_ads ? (
                      <div className="native-ads mt-2" >
-                 <AdSlot sizes={[['fluid']]} adUnit="Native_adunit" />
+                 <NativeAd index={0} />
                </div>
               
-             </DFPSlotsProvider>):null
+            ):null
                   }
                   
                 </Media>
