@@ -158,12 +158,10 @@ export async function getStaticProps({ params, ...args }) {
   const urlSplit = url.split('/');
  let headerData = await    fetchMenuData(api,urlSplit,language,state);
 
-  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url) || headerData === undefined) {
     return {
       notFound: true,
-      props:{
-        headerData : headerData
-      }
+     
     };
   }
 

@@ -58,20 +58,26 @@ export const fetchMenuData = async (api, urlSplit, language, state) => {
     .reduce((a, c) => ((a[c] = languageData[c]), a), {});
   footer.languages = languageData;
   footer.required = requiredData;
-  //console.log('menu',headerResp)
-  let hdata = {
-    footer: footer,
-    header: {
-      menu: {
-        desktop: headerResp.data.data.catalog_list_items,
-        mobile: headerResp.data.data.catalog_list_items,
+  
+  let hdata;
+  if(headerResp.data !== undefined){
+     hdata = {
+      footer: footer,
+      header: {
+        menu: {
+          desktop: headerResp.data.data.catalog_list_items,
+          mobile: headerResp.data.data.catalog_list_items,
+        },
+        languages: languageData,
       },
-      languages: languageData,
-    },
-    language: language,
-    state:state,
-    keystate:urlSplit[2],
-  };
+      language: language,
+      state:state,
+      keystate:urlSplit[2],
+    };
+  }else{
+    hdata = undefined;
+  }
+  
    
   return hdata;
 };

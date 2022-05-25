@@ -74,6 +74,12 @@ export async function getStaticProps({ params, ...args }) {
  let headerData = await    fetchMenuData(api,urlSplit,language,state);
    let finalkey = lang === 'urdu' && statev === 'national' ? "urdunational":statev;
    let metadata = getElectionInfo(finalkey);
+   if (headerData === undefined) {
+    return {
+      notFound: true,
+      
+    };
+  }
   return{
     props:   {
       metainfo: metadata,

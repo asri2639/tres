@@ -157,12 +157,10 @@ export async function getStaticProps({ params, ...args }) {
   const api = API(APIEnum.Listing, APIEnum.CatalogList,  APIEnum.Catalog);
   const urlSplit = url.split('/');
  let headerData = await    fetchMenuData(api,urlSplit,language,state);
-  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url) || headerData === undefined) {
     return {
       notFound: true,
-      props:{
-        headerData:headerData,
-      }
+     
     };
   }
 

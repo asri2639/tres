@@ -69,6 +69,8 @@ const ErrorLayout = ({ children, accessToken, pageType }) => {
       convertedState =
         language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
       const urlSuffix = language == 'ur' ? '-urdu' : '';
+      console.log('hi sla')
+      try {
       const headerResp = await api.CatalogList.getMenuDetails({
         params: {
           suffix:
@@ -98,8 +100,82 @@ const ErrorLayout = ({ children, accessToken, pageType }) => {
           },
         });
 
-        return menu;
+       
+      }else{
+        console.log('hi english sla')
+        console.log('hi sla')
+        let convertedState = configStateCodeConverter('national');
+      convertedState =
+        language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
+      const urlSuffix = language == 'ur' ? '-urdu' : '';
+      const headerResp = await api.CatalogList.getMenuDetails({
+        params: {
+          suffix:
+            env === 'staging'
+              ? 'left-menu-msite'
+              : `msite-new-left-menu` ,
+        },
+        query: {
+          region: country,
+          response: 'r2',
+          item_languages: 'en',
+          portal_state: stateCodeConverter('national'),
+          only_items: 'catalog_list',
+          //  env: 'staging',
+        },
+        isSSR: true,
+      });
+      if (headerResp && headerResp.data) {
+        menu.desktop = headerResp.data.data.catalog_list_items;
+        menu.mobile = headerResp.data.data.catalog_list_items;
+        fetch(`/api/menu?url=${lang + '/' + state}`, {
+          method: 'POST',
+          body: JSON.stringify({ data: menu.desktop }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
       }
+      }}catch (e) {
+       
+        let convertedState = configStateCodeConverter('national');
+      convertedState =
+        language === 'ur' && convertedState !== 'jk' ? 'urdu' : convertedState;
+      const urlSuffix = language == 'ur' ? '-urdu' : '';
+      const headerResp = await api.CatalogList.getMenuDetails({
+        params: {
+          suffix:
+            env === 'staging'
+              ? 'left-menu-msite'
+              : `msite-new-left-menu`,
+        },
+        query: {
+          region: country,
+          response: 'r2',
+          item_languages: 'en',
+          portal_state: stateCodeConverter('national'),
+          only_items: 'catalog_list',
+          //  env: 'staging',
+        },
+        isSSR: true,
+      });
+      if (headerResp && headerResp.data) {
+        menu.desktop = headerResp.data.data.catalog_list_items;
+        menu.mobile = headerResp.data.data.catalog_list_items;
+        fetch(`/api/menu?url=${lang + '/' + state}`, {
+          method: 'POST',
+          body: JSON.stringify({ data: menu.desktop }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+       
+      } 
+      }
+
+      return menu;
     }
   };
 

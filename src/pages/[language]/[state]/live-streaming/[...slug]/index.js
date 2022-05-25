@@ -272,12 +272,10 @@ export async function getStaticProps({ params, ...args }) {
   const api = API(APIEnum.Listing, APIEnum.CatalogList,  APIEnum.Catalog);
   const urlSplit = url.split('/');
  let headerData = await    fetchMenuData(api,urlSplit,language,state);
-  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url) || headerData === undefined) {
     return {
       notFound: true,
-      props:{
-        headerData:headerData
-      }
+   
     };
   }
   // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
@@ -356,9 +354,7 @@ export async function getStaticProps({ params, ...args }) {
       return {
         notFound: true,
         revalidate: 60, // revalidate
-        props:{
-          headerData:headerData,
-        }
+       
       };
     }
     return {
@@ -375,9 +371,7 @@ export async function getStaticProps({ params, ...args }) {
     return {
       notFound: true,
       revalidate: 60, // revalidate
-      props:{
-        headerData:headerData
-      }
+      
     };
   }
 }
