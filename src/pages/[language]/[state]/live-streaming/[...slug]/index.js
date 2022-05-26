@@ -2,7 +2,6 @@ import React from 'react';
 import { NextSeo } from 'next-seo';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
-import Head from 'next/head';
 import {
   configStateCodeConverter,
   getAmpUrl,
