@@ -64,6 +64,11 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params, ...args }) {
+  return {
+    notFound: true,
+    
+  };
+  if(false){
   const lang = params.language;
   const statev = params.state;
   const url = `/${params.language}/${params.state}/${params.category}`;
@@ -87,4 +92,5 @@ export async function getStaticProps({ params, ...args }) {
       headerData:headerData
       }
   }
+}
 }

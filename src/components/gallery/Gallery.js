@@ -527,9 +527,9 @@ const Gallery = ({
                 (nextGallery !==null) ? <TaboolaAd index={index} url={'https://www.etvbharat.com/${data.web_url}'} />: null
               }
              
-            {
+            {/* {
               (nextGallery === null ) ? (<InfiniteTaboolaAd index={index} url={'https://www.etvbharat.com/${data.web_url}'} />): null
-            }
+            } */}
         </div>
       </div>
 
