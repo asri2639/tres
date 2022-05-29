@@ -317,14 +317,16 @@ const ListContainer = ({ children, data, payload,adinfo }) => {
             {listItems && listItems.length > 0 ? (
               <>
                 <Media at="xs" className="w-full">
-                  <MobileMainArticles list={listItems[0].catalog_list_items} />
+                  <MobileMainArticles list={listItems[0].catalog_list_items} />{
+                    console.log('ach',adinfo)
+                  }
                   {
-                     adinfo && adinfo.native_ads ? (<DFPSlotsProvider dfpNetworkId="175434344">
+                     adinfo && adinfo.native_ads ? (
                      <div className="native-ads mt-2" >
-                 <AdSlot sizes={[['fluid']]} adUnit={adinfo.native_ads.ad_unit_id.substring(adinfo.native_ads.ad_unit_id.lastIndexOf("/") + 1, adinfo.native_ads.ad_unit_id.length)} />
+                 <NativeAd index={0} />
                </div>
               
-             </DFPSlotsProvider>):null
+            ):null
                   }
                   
                 </Media>

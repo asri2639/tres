@@ -115,11 +115,11 @@ export async function getStaticProps({ params, ...args }) {
   const api = API(APIEnum.Listing, APIEnum.CatalogList);
   const urlSplit = url.split('/');
  let headerData = await    fetchMenuData(api,urlSplit,language,state);
-  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url) || headerData === undefined) {
     return {
       notFound: true,
       
-      headerData: headerData,
+     
       
     };
   }
@@ -202,19 +202,13 @@ export async function getStaticProps({ params, ...args }) {
       console.log(`LISTING_ERR: Data not found in listing response`);
       return {
         notFound: true,
-        
-        headerData: headerData,
-      
         revalidate: 60, // listing
       };
     } else {
       console.log(`LISTING_ERR: Failing at getListingApiKey`);
       return {
         notFound: true,
-        revalidate: 60, // listing
-       
-        headerData: headerData,
-       
+        revalidate: 60, // listing 
       };
     }
   } catch (e) {
@@ -222,10 +216,7 @@ export async function getStaticProps({ params, ...args }) {
     console.error(e);
     return {
       notFound: true,
-      revalidate: 60, // listing
-     
-      headerData: headerData,
-      
+      revalidate: 60, // listing      
     };
   }
 }

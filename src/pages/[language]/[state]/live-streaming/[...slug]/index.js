@@ -2,7 +2,6 @@ import React from 'react';
 import { NextSeo } from 'next-seo';
 import API from '@api/API';
 import APIEnum from '@api/APIEnum';
-import Head from 'next/head';
 import {
   configStateCodeConverter,
   getAmpUrl,
@@ -16,7 +15,7 @@ import FileFetcher from '@services/api/FileFetcher';
 import getConfig from 'next/config';
 import {fetchMenuData} from '@utils/MenuData';
 import Error from 'next/error';
-
+import Head from 'next/head';
 import VideoList from '@components/video/VideoList';
 
 const slug = ({ data, pageType, id }) => {
@@ -179,6 +178,62 @@ const slug = ({ data, pageType, id }) => {
                 property="og:image:secure_url"
                 content={headerObj.thumbnail.url}
               />
+               <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              
+              function taboolascript () {
+                !function (e, f, u) {
+
+                  e.async = 1;
+                  
+                  e.src = u;
+                  
+                  f.parentNode.insertBefore(e, f);
+                  
+                  }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharat${appLanguage.name}/loader.js');
+                  var eventt = new Event("script-load");
+                  window.dispatchEvent(eventt);
+                }
+                var scrollDeptht = false;
+                window.addEventListener(
+                  "scroll",
+                  function () {
+                    ((document.documentElement.scrollTop && false === scrollDeptht) ||
+                      (document.body.scrollTop && false === scrollDeptht)) &&
+                      (!(function () {
+                         if (!__loadedt) {
+                          taboolascript();
+                        }
+                      })(),
+                      (scrollDeptht = true));
+                  },
+                  true
+                );
+              
+              
+              var __loadedt = false;
+              window.addEventListener("script-load", () => {
+                __loadedt = true;
+                setTimeout(()=>{
+                  const event = new Event("script-loaded");
+                  window.dispatchEvent(event);
+                },10)
+              });
+              
+                setTimeout(() => {
+                  if (!__loadedt) {
+                    taboolascript();
+                  }
+                }, 4000);
+                       
+                    
+                  
+                 
+               
+              `
+            }}
+            />
             </Head>
             <NextSeo
               title={headerObj.title}
@@ -272,12 +327,10 @@ export async function getStaticProps({ params, ...args }) {
   const api = API(APIEnum.Listing, APIEnum.CatalogList,  APIEnum.Catalog);
   const urlSplit = url.split('/');
  let headerData = await    fetchMenuData(api,urlSplit,language,state);
-  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url)) {
+  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url) || headerData === undefined) {
     return {
       notFound: true,
-      props:{
-        headerData:headerData
-      }
+   
     };
   }
   // const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
@@ -356,9 +409,7 @@ export async function getStaticProps({ params, ...args }) {
       return {
         notFound: true,
         revalidate: 60, // revalidate
-        props:{
-          headerData:headerData,
-        }
+       
       };
     }
     return {
@@ -375,9 +426,7 @@ export async function getStaticProps({ params, ...args }) {
     return {
       notFound: true,
       revalidate: 60, // revalidate
-      props:{
-        headerData:headerData
-      }
+      
     };
   }
 }
