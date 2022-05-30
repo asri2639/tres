@@ -165,7 +165,10 @@ const slug = ({ data, pageType, id, userAgent }) => {
                 property="fb:pages"
                 content={headerObj.fbContentId}
               ></meta>
-
+              <meta 
+                itemprop="datePublished"
+                content={headerObj.publish_date_string}
+                ></meta>
               <link
                 rel="preconnect"
                 href="https://prod.api.etvbharat.com"

@@ -207,6 +207,10 @@ const slug = ({ data, pageType, id }) => {
             <Head>
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
+              <meta 
+                itemprop="datePublished"
+                content={headerObj.publish_date_string}
+                ></meta>
               {ampExists && (data.is_amp || readwhere) ? (
                 <link rel="amphtml" href={headerObj.ampUrl}></link>
               ) : null}

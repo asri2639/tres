@@ -362,6 +362,10 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                 property="og:image:secure_url"
                 content={headerObj.thumbnail.url}
               />
+              <meta 
+                itemprop="datePublished"
+                content={headerObj.publish_date_string}
+                ></meta>
             </Head>
             <NextSeo
               title={headerObj.title}

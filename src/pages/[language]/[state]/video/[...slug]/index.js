@@ -175,6 +175,10 @@ const slug = ({ data, pageType, id, userAgent }) => {
                 property="og:image:secure_url"
                 content={headerObj.thumbnail.url}
               />
+              <meta 
+                itemprop="datePublished"
+                content={headerObj.publish_date_string}
+                ></meta>
                <script
             dangerouslySetInnerHTML={{
               __html: `
