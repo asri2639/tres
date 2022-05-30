@@ -243,7 +243,10 @@ const slug = ({ data, pageType, id, userAgent }) => {
                 {
                   name: 'keywords',
                   content: headerObj.keywords,
-                },
+                },{
+                  name: 'datePublished',
+                  content: headerObj.publishedAt,
+                }
               ]}
               openGraph={{
                 site_name: 'ETV Bharat News',

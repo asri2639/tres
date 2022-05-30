@@ -370,7 +370,10 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                 {
                   name: 'keywords',
                   content: headerObj.keywords,
-                },
+                },{
+                  name: 'datePublished',
+                  content: headerObj.publishedAt,
+                }
               ]}
               openGraph={{
                 site_name: 'ETV Bharat News',
