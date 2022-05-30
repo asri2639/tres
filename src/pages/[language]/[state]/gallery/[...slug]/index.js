@@ -15,6 +15,7 @@ import Error from 'next/error';
 import GalleryList from '@components/gallery/GalleryList';
 import getConfig from 'next/config';
 import {fetchMenuData} from '@utils/MenuData';
+import { dateFormatter } from '@utils/Helpers';
 import useTranslator from '@hooks/useTranslator';
 const slug = ({ data, pageType, id }) => {
   const router = useRouter();
@@ -115,6 +116,7 @@ const slug = ({ data, pageType, id }) => {
 
     const main = data.gallery[0];
     const keywords = main.keywords;
+    
 
     const thumbnail = thumbnailExtractor(
       main.main_thumbnails,
@@ -124,11 +126,12 @@ const slug = ({ data, pageType, id }) => {
     );
     headerObj = {
       title: main.display_title,
+      publish_date_string: data.publish_date_string,
       canonicalUrl: canonicalUrl,
       ampUrl: ampUrl,
       fbContentId: fbContentId,
       thumbnail: thumbnail,
-
+      publishedAt: dateFormatter(main.publish_date_uts,false),
       description:
         main.short_description || main.description || main.display_title,
       keywords: keywords ? keywords.join(', ') : '',
@@ -207,10 +210,9 @@ const slug = ({ data, pageType, id }) => {
             <Head>
               <title>{headerObj.title}</title>
               <link rel="canonical" href={headerObj.canonicalUrl}></link>
-              <meta 
-                itemprop="datePublished"
-                content={headerObj.publish_date_string}
-                ></meta>
+             
+             
+                
               {ampExists && (data.is_amp || readwhere) ? (
                 <link rel="amphtml" href={headerObj.ampUrl}></link>
               ) : null}
@@ -288,6 +290,7 @@ const slug = ({ data, pageType, id }) => {
             </Head>
           </>
         ) : null}
+        {}
         {headerObj.ldjson ? (
           <>
             <script

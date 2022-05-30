@@ -125,6 +125,8 @@ const slug = ({ data, pageType, id, userAgent }) => {
       canonicalUrl: canonicalUrl,
       ampUrl: ampUrl,
       fbContentId: fbContentId,
+      publish_date_string: data.publish_date_string,
+      publishedAt: data.publish_date_string,
       thumbnail: thumbnailExtractor(
         data.thumbnails,
         '3_2',
@@ -175,14 +177,14 @@ const slug = ({ data, pageType, id, userAgent }) => {
                 property="og:image:secure_url"
                 content={headerObj.thumbnail.url}
               />
-              <meta 
-                itemprop="datePublished"
-                content={headerObj.publish_date_string}
-                ></meta>
+               <meta 
+                name="datePublished"
+                content={headerObj.publishedAt}
+                />
                <script
             dangerouslySetInnerHTML={{
               __html: `
-              
+      
               function taboolascript () {
                 !function (e, f, u) {
 

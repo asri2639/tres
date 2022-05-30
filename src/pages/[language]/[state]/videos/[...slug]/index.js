@@ -123,6 +123,8 @@ const slug = ({ data, pageType, id, userAgent }) => {
     headerObj = {
       title: data.title,
       canonicalUrl: canonicalUrl,
+      publish_date_string: data.publish_date_string,
+      publishedAt: data.publish_date_string,
       ampUrl: ampUrl,
       fbContentId: fbContentId,
       thumbnail: thumbnailExtractor(
@@ -165,10 +167,8 @@ const slug = ({ data, pageType, id, userAgent }) => {
                 property="fb:pages"
                 content={headerObj.fbContentId}
               ></meta>
-              <meta 
-                itemprop="datePublished"
-                content={headerObj.publish_date_string}
-                ></meta>
+              {console.log('gallery',headerObj.publishedAt)}
+              <meta   name="datePublished" content={headerObj.publishedAt} />
               <link
                 rel="preconnect"
                 href="https://prod.api.etvbharat.com"

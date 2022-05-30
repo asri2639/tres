@@ -179,6 +179,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
           title: data.title,
           canonicalUrl: canonicalUrl,
           ampUrl: ampUrl,
+          publish_date_string: data.publish_date_string,
           fbContentId: fbContentId,
           thumbnail: thumbnailExtractor(
             data.thumbnails,
@@ -350,11 +351,6 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                     taboolascript();
                   }
                 }, 4000);
-                       
-                    
-                  
-                 
-               
               `
             }}
             />
@@ -363,9 +359,9 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                 content={headerObj.thumbnail.url}
               />
               <meta 
-                itemprop="datePublished"
-                content={headerObj.publish_date_string}
-                ></meta>
+                name="datePublished"
+                content={headerObj.publishedAt}
+                />
             </Head>
             <NextSeo
               title={headerObj.title}
