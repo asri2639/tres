@@ -179,6 +179,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
           title: data.title,
           canonicalUrl: canonicalUrl,
           ampUrl: ampUrl,
+          publish_date_string: data.publish_date_string,
           fbContentId: fbContentId,
           thumbnail: thumbnailExtractor(
             data.thumbnails,
@@ -350,11 +351,6 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                     taboolascript();
                   }
                 }, 4000);
-                       
-                    
-                  
-                 
-               
               `
             }}
             />
@@ -362,6 +358,10 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                 property="og:image:secure_url"
                 content={headerObj.thumbnail.url}
               />
+              <meta 
+                name="datePublished"
+                content={headerObj.publishedAt}
+                />
             </Head>
             <NextSeo
               title={headerObj.title}
@@ -370,7 +370,10 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                 {
                   name: 'keywords',
                   content: headerObj.keywords,
-                },
+                },{
+                  name: 'datePublished',
+                  content: headerObj.publishedAt,
+                }
               ]}
               openGraph={{
                 site_name: 'ETV Bharat News',

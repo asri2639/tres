@@ -122,7 +122,9 @@ const slug = ({ data, pageType, id }) => {
     headerObj = {
       title: data.title,
       canonicalUrl: canonicalUrl,
+      publish_date_string: data.publish_date_string,
       ampUrl: ampUrl,
+      publishedAt: data.publish_date_string,
       fbContentId: fbContentId,
       thumbnail: thumbnailExtractor(
         data.thumbnails,
@@ -168,7 +170,10 @@ const slug = ({ data, pageType, id }) => {
                 property="fb:pages"
                 content={headerObj.fbContentId}
               ></meta>
-
+             <meta 
+                name="datePublished"
+                content={headerObj.publishedAt}
+                />
               <link
                 rel="preconnect"
                 href="https://prod.api.etvbharat.com"
@@ -246,7 +251,10 @@ const slug = ({ data, pageType, id }) => {
                 {
                   name: 'keywords',
                   content: headerObj.keywords,
-                },
+                },{
+                  name: 'datePublished',
+                  content: headerObj.publishedAt,
+                }
               ]}
               openGraph={{
                 site_name: 'ETV Bharat News',

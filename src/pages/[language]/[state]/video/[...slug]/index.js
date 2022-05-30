@@ -125,6 +125,8 @@ const slug = ({ data, pageType, id, userAgent }) => {
       canonicalUrl: canonicalUrl,
       ampUrl: ampUrl,
       fbContentId: fbContentId,
+      publish_date_string: data.publish_date_string,
+      publishedAt: data.publish_date_string,
       thumbnail: thumbnailExtractor(
         data.thumbnails,
         '3_2',
@@ -175,10 +177,14 @@ const slug = ({ data, pageType, id, userAgent }) => {
                 property="og:image:secure_url"
                 content={headerObj.thumbnail.url}
               />
+               <meta 
+                name="datePublished"
+                content={headerObj.publishedAt}
+                />
                <script
             dangerouslySetInnerHTML={{
               __html: `
-              
+      
               function taboolascript () {
                 !function (e, f, u) {
 
@@ -243,7 +249,10 @@ const slug = ({ data, pageType, id, userAgent }) => {
                 {
                   name: 'keywords',
                   content: headerObj.keywords,
-                },
+                },{
+                  name: 'datePublished',
+                  content: headerObj.publishedAt,
+                }
               ]}
               openGraph={{
                 site_name: 'ETV Bharat News',
