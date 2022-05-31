@@ -17,9 +17,10 @@ import {fetchMenuData} from '@utils/MenuData';
 import Error from 'next/error';
 import Head from 'next/head';
 import VideoList from '@components/video/VideoList';
-
+import useTranslator from '@hooks/useTranslator';
 const slug = ({ data, pageType, id }) => {
   const router = useRouter();
+  const { appLanguage } = useTranslator();
   const { publicRuntimeConfig } = getConfig();
 
   if (router.isFallback) {
