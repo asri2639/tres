@@ -310,7 +310,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
               />
               <meta 
                 name="datePublished"
-                content={headerObj.publishedAt}
+                content={headerObj.publish_date_string}
                 />
             </Head>
             <NextSeo
