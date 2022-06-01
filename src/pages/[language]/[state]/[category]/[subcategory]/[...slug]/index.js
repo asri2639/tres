@@ -308,10 +308,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                 property="og:image:secure_url"
                 content={headerObj.thumbnail.url}
               />
-              <meta 
-                name="datePublished"
-                content={headerObj.publish_date_string}
-                />
+             
             </Head>
             <NextSeo
               title={headerObj.title}
@@ -322,7 +319,7 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
                   content: headerObj.keywords,
                 },{
                   name: 'datePublished',
-                  content: headerObj.publishedAt,
+                  content: headerObj.publish_date_string,
                 }
               ]}
               openGraph={{

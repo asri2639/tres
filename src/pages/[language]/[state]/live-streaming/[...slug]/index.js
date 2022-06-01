@@ -171,10 +171,7 @@ const slug = ({ data, pageType, id }) => {
                 property="fb:pages"
                 content={headerObj.fbContentId}
               ></meta>
-             <meta 
-                name="datePublished"
-                content={headerObj.publishedAt}
-                />
+             
               <link
                 rel="preconnect"
                 href="https://prod.api.etvbharat.com"
@@ -198,7 +195,7 @@ const slug = ({ data, pageType, id }) => {
                   content: headerObj.keywords,
                 },{
                   name: 'datePublished',
-                  content: headerObj.publishedAt,
+                  content: headerObj.publish_date_string,
                 }
               ]}
               openGraph={{
