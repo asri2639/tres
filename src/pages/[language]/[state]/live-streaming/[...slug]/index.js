@@ -184,62 +184,6 @@ const slug = ({ data, pageType, id }) => {
                 property="og:image:secure_url"
                 content={headerObj.thumbnail.url}
               />
-               <script
-            dangerouslySetInnerHTML={{
-              __html: `
-              
-              function taboolascript () {
-                !function (e, f, u) {
-
-                  e.async = 1;
-                  
-                  e.src = u;
-                  
-                  f.parentNode.insertBefore(e, f);
-                  
-                  }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharat${appLanguage.name}/loader.js');
-                  var eventt = new Event("script-load");
-                  window.dispatchEvent(eventt);
-                }
-                var scrollDeptht = false;
-                window.addEventListener(
-                  "scroll",
-                  function () {
-                    ((document.documentElement.scrollTop && false === scrollDeptht) ||
-                      (document.body.scrollTop && false === scrollDeptht)) &&
-                      (!(function () {
-                         if (!__loadedt) {
-                          taboolascript();
-                        }
-                      })(),
-                      (scrollDeptht = true));
-                  },
-                  true
-                );
-              
-              
-              var __loadedt = false;
-              window.addEventListener("script-load", () => {
-                __loadedt = true;
-                setTimeout(()=>{
-                  const event = new Event("script-loaded");
-                  window.dispatchEvent(event);
-                },10)
-              });
-              
-                setTimeout(() => {
-                  if (!__loadedt) {
-                    taboolascript();
-                  }
-                }, 4000);
-                       
-                    
-                  
-                 
-               
-              `
-            }}
-            />
             </Head>
             <NextSeo
               title={headerObj.title}
