@@ -132,6 +132,8 @@ export default class ETVDocument extends Document {
               })();
               
               let __loaded = false;
+              var pathArray = window.location.pathname.split('/');
+              var lang = pathArray[1];
               window.addEventListener("script-load", () => {
                 __loaded = true;
                 setTimeout(()=>{
@@ -149,9 +151,18 @@ export default class ETVDocument extends Document {
               }             
               const loadScripts = () => {
                 
-                
                
-                try {
+                !function (e, f, u) {
+
+                  e.async = 1;
+                  
+                  e.src = u;
+                  
+                  f.parentNode.insertBefore(e, f);
+                  
+                  }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharatenglish/loader.js');
+                
+                  try {
                     var scripts = [
                         "https://securepubads.g.doubleclick.net/tag/js/gpt.js",
                         "https://sb.scorecardresearch.com/beacon.js",

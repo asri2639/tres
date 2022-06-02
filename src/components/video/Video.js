@@ -425,9 +425,11 @@ const Video = ({
                 </a>
               </div>
             ) : null}
-            
+            {
+               lang === 'english' ?  <InfiniteTaboolaAd index={0} url={`https://www.etvbharat.com/${data.web_url}`} /> : null
+            }
              
-            <InfiniteTaboolaAd index={0} url={'https://www.etvbharat.com/${data.web_url}'} />
+           
             
           </div>
         </Sticky>

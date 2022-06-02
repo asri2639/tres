@@ -524,11 +524,11 @@ const Gallery = ({
           ) : null}
           <MobileAd adData={ads ? ads[index * 2 + 2] : null} />
           {
-                (nextGallery !==null) ? <TaboolaAd index={index} url={'https://www.etvbharat.com/${data.web_url}'} />: null
+                (nextGallery !==null && lang === 'english') ? <TaboolaAd index={index} url={'https://www.etvbharat.com/${data.web_url}'} />: null
               }
              
             {
-              (nextGallery === null ) ? (<InfiniteTaboolaAd index={index} url={'https://www.etvbharat.com/${data.web_url}'} />): null
+              (nextGallery === null && lang === 'english') ? (<InfiniteTaboolaAd index={index} url={'https://www.etvbharat.com/${data.web_url}'} />): null
             }
         </div>
       </div>

@@ -149,7 +149,7 @@ const ArticleList = ({ articleData }) => {
       if (window.innerWidth < 769) {
         offsetHeight -= 350;
       }
-      if (window.innerHeight + window.pageYOffset >= offsetHeight) {
+      if (Math.round(window.innerHeight + window.pageYOffset) >= offsetHeight) {
         const curIndex = related.findIndex(
           (v) =>
             v.content_id === lastArticleLoaded.getAttribute('data-content-id')
