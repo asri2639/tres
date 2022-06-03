@@ -134,6 +134,18 @@ export default class ETVDocument extends Document {
               let __loaded = false;
               var pathArray = window.location.pathname.split('/');
               var lang = pathArray[1];
+              var state = pathArray[2];
+              if(state = 'haryana'){
+                var adgh_p1 = "5795";
+                var adgh_p2 = "";
+                var adgh_p3 = "0";
+                var adgHdSc = document.createElement("script");
+                document.head.appendChild(adgHdSc);
+                adgHdSc.async = true;
+                var adgHscParam = "p1=" + adgh_p1 + "&p2=" + adgh_p2 + "&p3=" + adgh_p3;
+                adgHdSc.id = "adg_pixel_header_script";
+                adgHdSc.src = "//adgebra.co.in/afph/afph.js?" + adgHscParam;
+              }
               window.addEventListener("script-load", () => {
                 __loaded = true;
                 setTimeout(()=>{
