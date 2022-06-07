@@ -190,6 +190,9 @@ const DesktopFooter = ({ data, t }) => {
             </ul>
           </div>
           {
+            console.log('cgj',state)
+          }
+          {
             state === 'haryana' ? (<div dangerouslySetInnerHTML={{
               __html:`<noscript>	<iframe id='adg_footer_pixel_script' src="//adgebra.co.in/afpf/afpf?p1=5795&amp;p2=0&amp;p3=1&amp;p4=&amp;p5=" width="0" height="0" frameBorder="0" scrolling="no" marginheight="0" marginwidth="0">
             </iframe>
