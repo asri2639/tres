@@ -135,7 +135,7 @@ export default class ETVDocument extends Document {
               let __loaded = false;
               var pathArray = window.location.pathname.split('/');
               var lang = pathArray[1];
-              var state = pathArray[2].replace("-","");
+              var state = pathArray[2];
               if(state === 'haryana'){
                 var adgh_p1 = "5795";
                 var adgh_p2 = "";
@@ -173,7 +173,7 @@ export default class ETVDocument extends Document {
                   
                   f.parentNode.insertBefore(e, f);
                   
-                  }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharat'+state+'/loader.js');
+                  }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharat'+lang+'-'+state+'/loader.js');
                 
                   try {
                     var scripts = [
