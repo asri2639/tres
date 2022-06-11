@@ -171,10 +171,13 @@ const Gallery = ({
           const windowHeight = window.innerHeight;
           if (elBoundary.top > 0 && elBoundary.top < windowHeight) {
             document.title = main.title;
-
+            var pathArray  = window.location.pathname.split('/');
+            
             const urlSearchParams = new URLSearchParams(window.location.search);
             const params = Object.fromEntries(urlSearchParams.entries());
+            console.log(params)
             delete params.c_id;
+
             var queryString = Object.keys(params)
               .map((key) => key + '=' + params[key])
               .join('&');
@@ -398,6 +401,7 @@ const Gallery = ({
                           onChange={(inView, entry) => {
                             if (inView) {
                               if (!paramExists) {
+                                console.log('mysla',webUrl.startsWith('/'))
                                 history.pushState(
                                   null,
                                   document.title,
@@ -405,9 +409,9 @@ const Gallery = ({
                                   location.origin +
                                     '/' +
                                     (webUrl.startsWith('/')
-                                      ? webUrl.slice(1)
-                                      : webUrl) +
-                                    '?c_id=' +
+                                      ? webUrl.includes('c_id') ? webUrl.slice(1).substring(0, webUrl.slice(1).lastIndexOf('/')): webUrl.slice(1)
+                                      : webUrl.includes('c_id') ? webUrl.substring(0, webUrl.lastIndexOf('/')):webUrl) +
+                                    '/c_id_' +
                                     image.content_id
                                 );
 
@@ -415,8 +419,8 @@ const Gallery = ({
                                   galleryArticle: true,
                                   location:
                                     location.origin +
-                                    location.pathname +
-                                    '?c_id=' +
+                                    location.pathname.includes('c_id') ? location.pathname.substring(0, webUrl.lastIndexOf('/')) : location.pathname +
+                                    '/c_id=' +
                                     image.content_id,
                                 });
                               } else if (

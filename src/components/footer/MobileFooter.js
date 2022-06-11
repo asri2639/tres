@@ -266,9 +266,9 @@ const MobileFooter = ({ data, menu,language, state }) => {
             }}>
             </script>
             <div dangerouslySetInnerHTML={{
-              __html:`<noscript>	<iframe id='adg_footer_pixel_script' src="//adgebra.co.in/afpf/afpf?p1=5795&amp;p2=0&amp;p3=1&amp;p4=&amp;p5=" width="0" height="0" frameBorder="0" scrolling="no" marginheight="0" marginwidth="0">
+              __html:`	<iframe id='adg_footer_pixel_script' src="//adgebra.co.in/afpf/afpf?p1=5795&amp;p2=0&amp;p3=1&amp;p4=&amp;p5=" width="0" height="0" frameBorder="0" scrolling="no" marginheight="0" marginwidth="0">
             </iframe>
-            </noscript>`}} /></>):null
+            `}} /></>):null
           }
                 <div className="copyright w-full px-6 py-2 opacity-75 text-tiny text-center">
                   Copyright © 2021 Ushodaya Enterprises Pvt. Ltd., All Rights
