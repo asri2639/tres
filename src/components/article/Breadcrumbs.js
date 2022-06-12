@@ -9,8 +9,12 @@ export function capSentence(text) {
     return '';
   }
   let wordsArray = text.toLowerCase().split(' ');
+
   let capsArray = wordsArray.map((word) => {
-    return word[0].toUpperCase() + word.slice(1);
+    if(word !== ''){
+      return word[0].toUpperCase() + word.slice(1);
+    }
+    
   });
   return capsArray.join(' ');
 }
