@@ -17,7 +17,7 @@ import getConfig from 'next/config';
 import {fetchMenuData} from '@utils/MenuData';
 import { dateFormatter } from '@utils/Helpers';
 import useTranslator from '@hooks/useTranslator';
-const slug = ({ data, pageType, id }) => {
+const slug = ({ data,cId, pageType, id }) => {
   const router = useRouter();
   const { appLanguage } = useTranslator();
   const { publicRuntimeConfig } = getConfig();
@@ -151,6 +151,7 @@ const slug = ({ data, pageType, id }) => {
 
     component = (
       <GalleryList
+       c_id= {cId}
         galleryData={{
           galleries: [
             {
@@ -367,8 +368,10 @@ export async function getStaticProps({ params, ...args }) {
   const urlSplit = url.split('/');
   let lastelement = urlSplit[urlSplit.length - 1];
   let c_id = '';
+  let C_idcheck = false;
   if(lastelement.includes('c_id_')){
    c_id = lastelement.split('id_')[1];
+   C_idcheck = true;
   }
 
   let headerData = await    fetchMenuData(api,urlSplit,language,state);
@@ -425,6 +428,7 @@ if(lastelement.includes('c_id_')){
       props: {
         pageType: 'gallery',
         data: { gallery, items_count: galleryResp.total_items_count },
+        cId: C_idcheck,
         id: id,
         headerData:headerData
       },

@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 import { languageMap } from '@utils/Constants';
 import Head from 'next/head';
 
-const GalleryList = ({ galleryData }) => {
+const GalleryList = ({ c_id, galleryData }) => {
   const router = useRouter();
   const api = API(APIEnum.CatalogList);
   const language = languageMap[router.query.language];
@@ -217,6 +217,7 @@ const GalleryList = ({ galleryData }) => {
               contentId={gallery.content_id}
               data={gallery.images}
               rhs={rhs}
+              c_id={c_id}
               desktop={gallery.desktop}
               count={gallery.count}
               thumbnail={gallery.thumbnail}

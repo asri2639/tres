@@ -35,6 +35,7 @@ const Gallery = ({
   data,
   className,
   rhs,
+  c_id,
   desktop,
   nextGallery,
   scrollToNextGallery,
@@ -88,7 +89,14 @@ const Gallery = ({
     // triggerOnce: true,
     threshold: 1,
   });
+ const getThumbnail = () => {
+  if(c_id && index === 0){
+     return data[0].thumbnails.l_large
+  }else{
+     return data[0].main_thumbnails.high_3_2;
+  }
 
+ }
   const ref = useCallback(
     (node) => {
       if (node !== null && node) {
@@ -99,11 +107,12 @@ const Gallery = ({
     [inViewRef]
   );
 
+  
   let properData = [
     {
       ...data[0],
       thumbnails: {
-        l_large: { ...data[0].main_thumbnails.high_3_2 },
+        l_large:  getThumbnail(),
       },
     },
     ...data,
@@ -367,7 +376,7 @@ const Gallery = ({
               } else {
                 return (
                   <React.Fragment key={image.order_no + ' 1.' + ind}>
-                    {ind === 0 ? (
+                    {ind === 0  ? (
                       <div
                         className="-mx-3 md:mx-0 relative "
                         style={{ minWidth: '300px', minHeight: '200px' }}
@@ -389,7 +398,7 @@ const Gallery = ({
                           />
                         </div>
                         <div className={`${gallery.counter}`}>
-                          <span>{image.order_no}</span>/ {count + 1}
+                          <span>{image.order_no}</span>/ {image.gallery_image_count + 1}
                         </div>
                       </div>
                     ) : scrolled ? (
@@ -448,7 +457,7 @@ const Gallery = ({
                           />
 
                           <div className={`${gallery.counter}`}>
-                            <span>{image.order_no + 1}</span>/ {count + 1}
+                            <span>{image.order_no + 1}</span>/ {image.gallery_image_count + 1} 
                           </div>
                         </InView>
                         <div className="relative"></div>
