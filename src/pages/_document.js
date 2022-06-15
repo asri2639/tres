@@ -173,7 +173,7 @@ export default class ETVDocument extends Document {
                   
                   f.parentNode.insertBefore(e, f);
                   
-                  }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharat'+lang+'-'+state+'/loader.js');
+                  }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharat'+lang+state+'/loader.js');
                 
                   try {
                     var scripts = [
