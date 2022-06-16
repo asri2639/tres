@@ -248,6 +248,7 @@ const MobileFooter = ({ data, menu,language, state }) => {
                   </ul>
                   <hr className="custom-hr" />
                 </div>
+          
                 <div className="copyright w-full px-6 py-2 opacity-75 text-tiny text-center">
                   Copyright © 2021 Ushodaya Enterprises Pvt. Ltd., All Rights
                   Reserved.

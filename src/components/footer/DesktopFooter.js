@@ -189,7 +189,9 @@ const DesktopFooter = ({ data, t }) => {
               </li> */}
             </ul>
           </div>
-
+          
+          
+          
           <div className="text-center text-sm text-gray-500">
             Copyright © 2021 Ushodaya Enterprises Pvt. Ltd., All Rights
             Reserved.

@@ -17,7 +17,7 @@ import getConfig from 'next/config';
 import {fetchMenuData} from '@utils/MenuData';
 import { dateFormatter } from '@utils/Helpers';
 import useTranslator from '@hooks/useTranslator';
-const slug = ({ data, pageType, id }) => {
+const slug = ({ data,cId, pageType, id }) => {
   const router = useRouter();
   const { appLanguage } = useTranslator();
   const { publicRuntimeConfig } = getConfig();
@@ -151,6 +151,7 @@ const slug = ({ data, pageType, id }) => {
 
     component = (
       <GalleryList
+       c_id= {cId}
         galleryData={{
           galleries: [
             {
@@ -365,17 +366,29 @@ export async function getStaticProps({ params, ...args }) {
   const state = stateCodeConverter(params.state);
   const api = API(APIEnum.Listing, APIEnum.CatalogList,  APIEnum.Catalog);
   const urlSplit = url.split('/');
- let headerData = await    fetchMenuData(api,urlSplit,language,state);
-  if (/[ `!@#%^&*()_+\=\[\]{};':"\\|,.<>~]/gi.test(url) || headerData === undefined) {
+  let lastelement = urlSplit[urlSplit.length - 1];
+  let c_id = '';
+  let C_idcheck = false;
+  if(lastelement.includes('c_id_')){
+   c_id = lastelement.split('id_')[1];
+   C_idcheck = true;
+  }
+
+  let headerData = await    fetchMenuData(api,urlSplit,language,state);
+  if (/[ `!@#%^&*()+\=\[\]{};':"\\|,.<>~]/gi.test(url) || headerData === undefined) {
     return {
       notFound: true,
-    
     };
   }
 
-  
-
-  const id = params.slug.slice(-1)[0];
+  console.log('test',params.slug.slice(-2))
+let id;
+if(lastelement.includes('c_id_')){
+  id = params.slug.slice(-2)[0];
+}else{
+  id = params.slug.slice(-1)[0];
+}
+   
   const re = new RegExp('(' + state + '|na)\\d+', 'gi');
 
   qparams = {
@@ -393,6 +406,7 @@ export async function getStaticProps({ params, ...args }) {
         response: 'r2',
         content_id: id, //variable
         gallery_ad: true,
+        c_id: c_id,
         page: 0,
         page_size: 1,
         portal_state: stateCodeConverter(params.state), //national
@@ -414,6 +428,7 @@ export async function getStaticProps({ params, ...args }) {
       props: {
         pageType: 'gallery',
         data: { gallery, items_count: galleryResp.total_items_count },
+        cId: C_idcheck,
         id: id,
         headerData:headerData
       },

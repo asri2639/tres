@@ -53,7 +53,7 @@ const DesktopHeader = ({ className, data }) => {
   const goToLanguageListing = (language, routeParams) => {
     languageChange(language);
     setTimeout(() => {
-      router.push(routeParams[1]);
+      window.location.pathname = routeParams[1];
     }, 10);
   };
   const languageNStateSelect = (language, states) => {
