@@ -10,6 +10,8 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import getConfig from 'next/config';
 import TaboolaAd from '@components/article/TaboolaAd'
+import MicroPayment from '@components/article/MicroPayment'
+
 import InfiniteTaboolaAd from '@components/article/InfiniteTaboolaAd'
 const options = {
   loading: () => <div>Loading...</div>,
@@ -376,7 +378,9 @@ export default function Article({
                   </MediaContextProvider>
                 </div>
               </div>
-
+              {
+                htmlShow ? (<MicroPayment contentId={contentId} title={data.title} index={index} url={`https://www.etvbharat.com/${data.web_url}`} />) : null
+              }
               {htmlShow ? (
                 <div
                   className={`text-base md:text-md `}
@@ -385,6 +389,11 @@ export default function Article({
                   }}
                 />
               ) : null}
+              {/* {
+                htmlShow ? (    ) : null
+              } */}
+           
+
 
               {adlink ? (
                 <div className="matrimony-ad text-lg md:text-xl text-center">
@@ -408,11 +417,11 @@ export default function Article({
                 </div>
               ) : null}
               {
-                (nextArticle !== null && related.length !== 0  && htmlShow ) ? <TaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />: null
+                (nextArticle !== null && related.length !== 0  && htmlShow ) ? <TaboolaAd index={index} url={`https://www.etvbharat.com/${data.web_url}`} />: null
               }
              
             {
-              (nextArticle === null && related.length !== 0 && htmlShow ) ? (<InfiniteTaboolaAd index={index} url={'https://preprod.etvbharat.com/${data.web_url}'} />): null
+              (nextArticle === null && related.length !== 0 && htmlShow ) ? (<InfiniteTaboolaAd index={index} url={`https://www.etvbharat.com/${data.web_url}`} />): null
             }
               
             </div>

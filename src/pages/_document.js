@@ -111,7 +111,7 @@ export default class ETVDocument extends Document {
           <Main />
           {/* Here we will mount our modal portal */}
           <div id="modal" style={{ height: 'auto' }} />
-
+     
           <script
             dangerouslySetInnerHTML={{
               __html: `(function () {
@@ -132,21 +132,28 @@ export default class ETVDocument extends Document {
                 );
               })();
               
+              const SDK_URL = "https://sandbox-sdk.conscent.in/csc-sdk.js";
+              const clientId = "6290aa6ba440b0205b72833b";
+              (function (w, d, s, o, f, cid) {
+              if (!w[o]) {
+              w[o] = function () {
+              w[o].q.push(arguments);
+              };
+              w[o].q = [];
+              }
+              (js = d.createElement(s)), (fjs = d.getElementsByTagName(s)[0]);
+              js.id = o;
+              js.src = f;
+              js.async = 1;
+              js.title = cid;
+              fjs.parentNode.insertBefore(js, fjs);
+              })(window, document, 'script', '_csc', SDK_URL, clientId);
+
               let __loaded = false;
               var pathArray = window.location.pathname.split('/');
               var lang = pathArray[1];
               var state = pathArray[2];
-              if(state === 'haryana'){
-                var adgh_p1 = "5795";
-                var adgh_p2 = "";
-                var adgh_p3 = "0";
-                var adgHdSc = document.createElement("script");
-                document.head.appendChild(adgHdSc);
-                adgHdSc.async = true;
-                var adgHscParam = "p1=" + adgh_p1 + "&p2=" + adgh_p2 + "&p3=" + adgh_p3;
-                adgHdSc.id = "adg_pixel_header_script";
-                adgHdSc.src = "//adgebra.co.in/afph/afph.js?" + adgHscParam;
-              }
+              
               window.addEventListener("script-load", () => {
                 __loaded = true;
                 setTimeout(()=>{
@@ -164,7 +171,7 @@ export default class ETVDocument extends Document {
               }             
               const loadScripts = () => {
                 
-               
+                
                 !function (e, f, u) {
 
                   e.async = 1;
