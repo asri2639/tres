@@ -9,7 +9,7 @@ import { RTLContext } from '@components/layout/Layout';
 import Sticky from 'wil-react-sticky';
 import { createHash, dateFormatter, loadJS } from '@utils/Helpers';
 import AdContainer from '@components/article/AdContainer';
-import InfiniteTaboolaAd from '@components/article/InfiniteTaboolaAd'
+import VideoTaboolaAd from '@components/article/VideoTaboolaAd'
 import useSWR from 'swr';
 import {
   constructPlaybackUrl,
@@ -425,7 +425,7 @@ const Video = ({
                 </a>
               </div>
             ) : null}
-              <InfiniteTaboolaAd index={0} url={`https://www.etvbharat.com/${data.web_url}`} /> 
+              <VideoTaboolaAd index={0} url={`https://www.etvbharat.com/${data.web_url}`} /> 
             
              
            

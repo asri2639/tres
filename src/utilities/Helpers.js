@@ -687,19 +687,19 @@ export const getAmpUrl = (dynamic_purl, listing) => {
   var ampHTML_contentid = amphtml_fields[amphtml_fields.length - 1];
   var ampHTML_baseurl = '';
 
-  if (listing) {
-    if (ampHTML_category == 'english') {
-      return 'https://englishamp.etvbharat.com/';
-    } else if (ampHTML_category == 'hindi') {
-      return 'https://hindiamp.etvbharat.com/';
-    }
-  }
+  // if (listing) {
+  //   if (ampHTML_category == 'english') {
+  //     return 'https://englishamp.etvbharat.com/';
+  //   } else if (ampHTML_category == 'hindi') {
+  //     return 'https://hindiamp.etvbharat.com/';
+  //   }
+  // }
 
-  if (ampHTML_category == 'english') {
-    ampHTML_baseurl = 'https://englishamp.etvbharat.com/article/';
-  } else if (ampHTML_category == 'hindi') {
-    ampHTML_baseurl = 'https://hindiamp.etvbharat.com/article/';
-  }
+  // if (ampHTML_category == 'english') {
+  //   ampHTML_baseurl = 'https://englishamp.etvbharat.com/article/';
+  // } else if (ampHTML_category == 'hindi') {
+  //   ampHTML_baseurl = 'https://hindiamp.etvbharat.com/article/';
+  // }
   var final_AMPHTML_url =
     ampHTML_baseurl +
     ampHTML_category +
