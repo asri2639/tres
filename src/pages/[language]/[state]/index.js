@@ -38,13 +38,7 @@ const state = ({ data, adinfo, payload }) => {
 
   const splitPath = router.asPath.split('/');
   const state = splitPath[2];
-  if (
-    state === 'uttar-pradesh' ||
-    (state === 'national' && splitPath[1] !== 'urdu')
-  ) {
-    ampExists = true;
-    ampUrl = getAmpUrl(canonicalUrl, true);
-  }
+ 
 
   return data ? (
     <>
