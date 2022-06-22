@@ -378,9 +378,9 @@ export default function Article({
                   </MediaContextProvider>
                 </div>
               </div>
-              {
+              {/* {
                 htmlShow ? (<MicroPayment contentId={contentId} title={data.title} index={index} url={`https://www.etvbharat.com/${data.web_url}`} />) : null
-              }
+              } */}
               {htmlShow ? (
                 <div
                   className={`text-base md:text-md `}
