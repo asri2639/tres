@@ -107,12 +107,7 @@ const slug = ({ data, pageType, id, userAgent }) => {
     ampUrl = `https://www.etvbharat.com/amp/${actualUrl}`;
 
     const state = splitPath[2];
-    if (
-      state === 'uttar-pradesh' ||
-      (state === 'national' && splitPath[1] !== 'urdu')
-    ) {
-      ampUrl = getAmpUrl(canonicalUrl, splitPath.length === 3);
-    }
+   
 
     let videoDatum = {};
     videoDatum.data = data;

@@ -106,12 +106,12 @@ const slug = ({ data, initCount, pageType, id, payload, dropDownData }) => {
     }
 
     const state = splitPath[2];
-    if (
-      state === 'uttar-pradesh' ||
-      (state === 'national' && splitPath[1] !== 'urdu')
-    ) {
-      ampUrl = getAmpUrl(canonicalUrl, splitPath.length === 3);
-    }
+    // if (
+    //   state === 'uttar-pradesh' ||
+    //   (state === 'national' && splitPath[1] !== 'urdu')
+    // ) {
+    //   ampUrl = getAmpUrl(canonicalUrl, splitPath.length === 3);
+    // }
 
     switch (pageType) {
       case 'article':

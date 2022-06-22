@@ -107,12 +107,7 @@ const slug = ({ data,cId, pageType, id }) => {
     ampUrl = `https://www.etvbharat.com/amp/${pathname}`;
 
     const state = splitPath[2];
-    if (
-      state === 'uttar-pradesh' ||
-      (state === 'national' && splitPath[1] !== 'urdu')
-    ) {
-      ampUrl = getAmpUrl(canonicalUrl, splitPath.length === 3);
-    }
+    
 
     const main = data.gallery[0];
     const keywords = main.keywords;
