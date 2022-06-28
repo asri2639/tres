@@ -8,9 +8,9 @@ const TaboolaAd = ({ index,url }) => {
     
         window._taboola = window._taboola || [];
         
-        // window._taboola.push({notify:'newPageLoad'});
+         window._taboola.push({notify:'newPageLoad'});
         
-        window._taboola.push({article:index, url:url});
+        window._taboola.push({article:'auto', url:url});
     window._taboola.push({mode: 'thumbnails-a', 
     container: `taboola-below-article-thumbnails-${index}`, 
     placement: 'Below Article Thumbnails', target_type: 'mix'});
