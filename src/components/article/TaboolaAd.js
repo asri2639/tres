@@ -8,7 +8,7 @@ const TaboolaAd = ({ index,url }) => {
     
         window._taboola = window._taboola || [];
         
-         window._taboola.push({notify:'newPageLoad'});
+       //  window._taboola.push({notify:'newPageLoad'});
         
         window._taboola.push({article:index, url:url});
     window._taboola.push({mode: 'thumbnails-a', 

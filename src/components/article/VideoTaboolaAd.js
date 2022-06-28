@@ -7,7 +7,7 @@ const VideoTaboolaAd = ({ index,url }) => {
   useEffect(() => {
     
         window._taboola = window._taboola || [];
-        window._taboola.push({notify:'newPageLoad'});
+      //  window._taboola.push({notify:'newPageLoad'});
         window._taboola.push({video:index, url:url});
         
         
