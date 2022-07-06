@@ -140,7 +140,7 @@ const Gallery = ({
     if (index !== 0) return;
     if (
       !scrolled &&
-      params.c_id &&
+      params.c_id_checj &&
       (!paramExists || (paramExists && paramExists.content_id !== params.c_id))
     ) {
       const imageObj = properData.find((v) => v.content_id === params.c_id);

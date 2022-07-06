@@ -161,7 +161,18 @@ export default class ETVDocument extends Document {
                   window.dispatchEvent(event);
                 },10)
               });
-              
+              setTimeout(() => {
+               
+                !function (e, f, u) {
+
+                  e.async = 1;
+                  
+                  e.src = u;
+                  
+                  f.parentNode.insertBefore(e, f);
+                  
+                  }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharat'+lang+state+'/loader.js');
+              },2000)
               window.onload = ()=> {
                 setTimeout(() => {
                   if (!__loaded) {
@@ -172,15 +183,6 @@ export default class ETVDocument extends Document {
               const loadScripts = () => {
                 
                 
-                !function (e, f, u) {
-
-                  e.async = 1;
-                  
-                  e.src = u;
-                  
-                  f.parentNode.insertBefore(e, f);
-                  
-                  }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharat'+lang+state+'/loader.js');
                 
                   try {
                     var scripts = [
