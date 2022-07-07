@@ -134,27 +134,27 @@ const Gallery = ({
   });
  */
 
-  useEffect(() => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
-    if (index !== 0) return;
-    if (
-      !scrolled &&
-      params.c_id_checj &&
-      (!paramExists || (paramExists && paramExists.content_id !== params.c_id))
-    ) {
-      const imageObj = properData.find((v) => v.content_id === params.c_id);
-      setParamExists(imageObj);
-      document.documentElement.scrollTop = 100;
+  // useEffect(() => {
+  //   const urlSearchParams = new URLSearchParams(window.location.search);
+  //   const params = Object.fromEntries(urlSearchParams.entries());
+  //   if (index !== 0) return;
+  //   if (
+  //     !scrolled &&
+  //     params.c_id_checj &&
+  //     (!paramExists || (paramExists && paramExists.content_id !== params.c_id))
+  //   ) {
+  //     const imageObj = properData.find((v) => v.content_id === params.c_id);
+  //     setParamExists(imageObj);
+  //     document.documentElement.scrollTop = 100;
 
-      setTimeout(() => {
-        const el = document.getElementById(params.c_id);
-        if (el) {
-          el.scrollIntoView({ block: 'center' });
-        }
-      }, 500);
-    }
-  });
+  //     setTimeout(() => {
+  //       const el = document.getElementById(params.c_id);
+  //       if (el) {
+  //         el.scrollIntoView({ block: 'center' });
+  //       }
+  //     }, 500);
+  //   }
+  // });
   useEffect(() => {
     if (viewed.indexOf(contentId) === -1) {
       viewed.push(contentId);

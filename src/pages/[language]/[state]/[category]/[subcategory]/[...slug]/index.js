@@ -484,6 +484,16 @@ export async function getStaticProps({ params, ...args }) {
           
       };
     }
+    if(article.html_tag === undefined){
+      return {
+       
+        notFound: true,
+        revalidate: 60, // revalidate
+       
+          
+          
+      };
+    }
     // Pass data to the page via props
 
     return {
