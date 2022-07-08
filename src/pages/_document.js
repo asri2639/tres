@@ -171,7 +171,6 @@ export default class ETVDocument extends Document {
               }             
               const loadScripts = () => {
                 
-                
                 !function (e, f, u) {
 
                   e.async = 1;
