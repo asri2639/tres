@@ -164,13 +164,7 @@ export default class ETVDocument extends Document {
               
               window.onload = ()=> {
                 setTimeout(() => {
-                  if (!__loaded) {
-                    loadScripts();
-                  }
-                }, 4000);
-              }             
-              const loadScripts = () => {
-                
+
                 !function (e, f, u) {
 
                   e.async = 1;
@@ -180,6 +174,15 @@ export default class ETVDocument extends Document {
                   f.parentNode.insertBefore(e, f);
                   
                   }(document.createElement('script'), document.getElementsByTagName('script')[0], '//cdn.taboola.com/libtrc/etvbharat-etvbharat'+lang+state+'/loader.js');
+                })
+                setTimeout(() => {
+                  if (!__loaded) {
+                    loadScripts();
+                  }
+                }, 4000);
+              }             
+              const loadScripts = () => {
+                
                 
                   try {
                     var scripts = [
