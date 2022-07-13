@@ -389,7 +389,7 @@ export default function Article({
                   premiumPaymentCompleted ? <div
                   className={`text-base md:text-md `}
                   dangerouslySetInnerHTML={{
-                    __html: data.html_tag,
+                    __html: html,
                   }}
                 /> : <div
                 className={`text-base md:text-md `}
