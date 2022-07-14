@@ -102,7 +102,10 @@ const ListContainer = ({ children, data, payload,adinfo }) => {
     // setListItems(reArrangeData(data));
     if (typeof window !== 'undefined' && window.innerWidth >= 768) {
       const { googletag } = window;
-      setEnableAd(true);
+      if(window.location.pathname.includes('seach')){
+        setEnableAd(true);
+      }
+     
       setTimeout(() => {
         setIsDesktop(true);
       }, 10);
