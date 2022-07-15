@@ -20,7 +20,7 @@ import { stateCodeConverter } from '@utils/Helpers';
 import MainArticles from './MainArticles';
 import MobileMainArticles from './mobile/MobileMainArticles';
 import { RTLContext } from '@components/layout/Layout';
-
+import { useRouter } from 'next/router';
 const options = {
   loading: () => <div>Loading....</div>,
 };
@@ -38,7 +38,7 @@ const SeeAll = dynamic(() => import('./mobile/SeeAll'), options);
 const ListContainer = ({ children, data, payload,adinfo }) => {
   const api = API(APIEnum.CatalogList);
   const isRTL = useContext(RTLContext);
-
+  const router = useRouter();
   const { t } = useTranslator();
   let totalCalls = Math.ceil(data.total_items_count / 8);
 
@@ -46,6 +46,7 @@ const ListContainer = ({ children, data, payload,adinfo }) => {
     return data.catalog_list_items;
   };
   const [isDesktop, setIsDesktop] = useState(false);
+  const [enableAd, setEnableAd] = useState(false);
 
   const items = reArrangeData(data);
   const [listItems, setListItems] = useState(items);
@@ -101,7 +102,10 @@ const ListContainer = ({ children, data, payload,adinfo }) => {
     // setListItems(reArrangeData(data));
     if (typeof window !== 'undefined' && window.innerWidth >= 768) {
       const { googletag } = window;
-
+      if(window.location.pathname.includes('seach')){
+        setEnableAd(true);
+      }
+     
       setTimeout(() => {
         setIsDesktop(true);
       }, 10);
@@ -321,7 +325,7 @@ const ListContainer = ({ children, data, payload,adinfo }) => {
                     console.log('ach',adinfo)
                   }
                   {
-                     adinfo && adinfo.native_ads ? (
+                     adinfo && adinfo.native_ads && enableAd ? (
                      <div className="native-ads mt-2" >
                  <NativeAd index={0} />
                </div>
