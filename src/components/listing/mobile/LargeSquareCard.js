@@ -61,7 +61,10 @@ const LargeSquareCard = ({
           creditSize={'no-size'}
           lazy={!main}
         ></Thumbnail>
-
+         {
+         article.is_premium ? (<span class="absolute w-15 top-1 right-1 text-xs inline-block py-1 px-2.5 leading-none 
+         text-center whitespace-nowrap align-baseline font-bold bg-yellow-500 text-white rounded">Premium</span>) : null
+        }
         {article.overlay_tag ? (
           <img
             className="absolute bottom-0 left-0 h-full "

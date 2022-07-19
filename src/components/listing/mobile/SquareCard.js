@@ -58,6 +58,7 @@ const SquareCard = ({
       style={style}
     >
       <div className="relative" style={{ width: '100%', paddingTop: '75.25%' }}>
+     
         <Thumbnail
           thumbnail={thumbnail}
           className={`rounded-t-md w-full ${imgHeight ? 'h-full' : ''}`}
@@ -65,6 +66,11 @@ const SquareCard = ({
           styleObj={styleObj}
           lazy={!main}
         ></Thumbnail>
+        {
+         article.is_premium ? (<span class="absolute w-15 top-1 right-1 text-xs inline-block py-1 px-2.5 leading-none 
+         text-center whitespace-nowrap align-baseline font-bold bg-yellow-500 text-white rounded">Premium</span>) : null
+        }
+  
 
         {article.overlay_tag ? (
           <img

@@ -47,7 +47,10 @@ const RectangleCard = ({ data, article, className, keyProp }) => {
           creditSize={'no-size'}
           styleObj={{ minHeight: '65px' }}
         />
-
+         {
+         article.is_premium ? (<span class="absolute w-13 top-0 right-0 text-xs inline-block py-1 px-1.5 leading-none 
+         text-center whitespace-nowrap align-baseline font-bold bg-yellow-500 text-white rounded">Premium</span>) : null
+        }
         {article.overlay_tag ? (
           <img
             loading="lazy"
