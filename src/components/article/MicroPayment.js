@@ -1,9 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { TransitionContext } from '@pages/_app';
 
-const MicroPayment = ({ contentId,title,index,url }) => {
+const MicroPayment = ({ contentId,title,index,url,premiumCallback }) => {
   const isTransitioning = useContext(TransitionContext);
-
+ 
   useEffect(() => {
     
        
@@ -17,7 +17,7 @@ const MicroPayment = ({ contentId,title,index,url }) => {
                  isMobile: 'false',
                  screenType: 'beta',
                  accentColor: '#cc3333',
-                 successCallback: 'console.log("hi")',
+                 successCallback: premiumCallback,
                  wrappingElementId: `csc-paywall-${contentId}`,
                  fullScreenMode: 'false',
                  })
