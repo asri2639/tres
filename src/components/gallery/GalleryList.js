@@ -27,6 +27,7 @@ const GalleryList = ({ c_id, galleryData }) => {
   const stopLoading = () => setLoading(false);
   const [viewed, setViewed] = useState([]);
   const [rhs, setRhs] = useState(null);
+  const [backtotop, setBacktotop] = useState(false)
   const [loadRelated, setLoadRelated] = useState(false);
 
   const relatedGalleriesFetcher = (...args) => {
@@ -126,6 +127,14 @@ const GalleryList = ({ c_id, galleryData }) => {
   });
 
   const handleScroll = async () => {
+    if (
+      document.body.scrollTop > 20 ||
+      document.documentElement.scrollTop > 20
+    ) {
+      setBacktotop(true);
+    }else{
+      setBacktotop(false);
+    }
     setLoadRelated(true);
     // To get page offset of last article
     const lastGalleryLoaded = document.querySelector(
@@ -227,6 +236,7 @@ const GalleryList = ({ c_id, galleryData }) => {
               viewed={viewed}
               related={related}
               index={i}
+              backtotop={backtotop}
               ads={mobileAds}
               userAgent={isDesktop ? '' : 'Mobile'}
               scrolled={loadRelated}
