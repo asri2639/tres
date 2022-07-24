@@ -403,14 +403,7 @@ export default function Article({
                  <MicroPayment contentId={contentId} title={data.title} 
                  index={index} url={`https://www.etvbharat.com/${data.web_url}`}
                  premiumCallback={premiumCallback} /> </> : <>
-                 {htmlShow ? (
-                <div
-                  className={`text-base md:text-md `}
-                  dangerouslySetInnerHTML={{
-                    __html: html,
-                  }}
-                />
-              ) : null}
+               
                  </>
               } 
               
